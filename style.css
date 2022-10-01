@@ -1,0 +1,535 @@
+/* general stuff */
+
+:root {
+    --white: #fff;
+    --black: #222741;
+    --gray: #99A4AE;
+    --blue: #66DCEC;
+    --yellow: #FDCA40;
+    --green: #86D8C9;
+
+    --gray-darker: #9FAAB7;
+    --gray-base: #99A4AE;
+    --gray-light: #DCDCE3;
+    --gray-lighter: #BEC1CA;
+    --gray-lightest: #F2F6F8;
+
+    --slotHeight: 50px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+input,
+textarea {
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+    border: none;
+}
+
+/* header */
+
+.header {
+    line-height: 1vh;
+    height: 80px;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    text-align: center;
+    padding: 20px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    background-color: var(--gray);
+}
+
+
+.header img {
+    width: 90px;
+    height: 90px;
+    margin-right: 20px;
+}
+
+.header img {
+    width: 50px;
+    height: 50px;
+    margin: 0 10px 20px 10px;
+}
+
+.header h1 {
+    color: var(--white);
+    font-weight: 400;
+}
+
+.header i {
+    cursor: pointer;
+    margin: 0px 5px;
+    color: var(--white);
+    transition: all 80ms linear;
+}
+
+.header i:hover {
+    color: var(--black);
+}
+
+/* controls */
+
+.weekControls {
+    position: absolute;
+    left: 50px;
+    font-size: 25px;
+}
+
+#prevWeekBtn  {
+    margin-right: 25px;
+}
+
+.generalControls {
+    position: absolute;
+    display: flex;
+    right: 50px;
+    font-size: 20px;
+}
+
+.generalControls i {
+    line-height: 30px;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin-left: 15px;
+}
+
+/* Toggle Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    margin-left: 20px;
+    width: 52px;
+    height: 30px;
+}
+  
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+  
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--blue);
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 3px;
+    box-shadow: 0 0 3px #666;
+
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    border-radius: 3px;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: var(--green);
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(22px);
+    -ms-transform: translateX(22px);
+    transform: translateX(22px);
+}
+
+
+/* calendar */
+
+#calendar {
+    display: flex;
+    width: 100%;
+    transition: opacity 200ms ease-in;
+}
+
+.opaque::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    z-index: 2;
+    opacity: 0.8;
+    transition: opacity 200ms ease-in;
+}
+
+/* columns */
+
+.dayTime {
+    width: 100%;
+    min-width: 50px;
+    max-width: 50px;
+    text-align: center;
+    align-self: center;
+    justify-self: center;
+    background-color: var(--white);
+    color: var(--gray);
+}
+
+.day {
+    width: 100%;
+    min-width: 110px;
+}
+
+.columnHeader {
+    position: sticky;
+    top: 80px;
+    text-align: center;
+    font-size: 20px;
+    padding: 10px 0px;
+    height: 60px;
+    background-color: var(--white);
+    z-index: 1;
+}
+
+.day.currentDay .columnHeader, .day.currentDay .dayDisplay {
+    color: var(--green);
+}
+
+.dayDisplay {
+    font-size: 15px;
+    color: var(--gray-darker);
+}
+
+/* slots */
+
+.slots {
+    position: relative;
+    border-left: 1px solid var(--gray-lightest);
+}
+
+.slot,
+.time {
+    height: var(--slotHeight);
+}
+
+.slot {
+    border-top: 1px solid var(--gray-lightest);
+    background-color: var(--white);
+    transition: all 0.5s linear ;
+}
+
+.time {
+    position: relative;
+    top: -8px;
+    font-size: 14px;
+}
+
+.time[data-hour="0"] {
+    visibility: hidden;
+}
+
+.slot:hover {
+    cursor: pointer;
+    background-color: var(--gray-light);
+}
+
+/* events */
+
+.event {
+    position: absolute;
+    left: 0px;
+    width: calc(100% - 5px);
+    line-height: 1rem;
+    font-size: 0.8rem;
+    padding: 1rem 1rem;
+    color: var(--white);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.5s linear ;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+}
+
+.event:hover {
+    background-color: var(--gray-darker) !important;
+}
+
+.shortEvent {
+    padding: 0px 5px;
+    font-size: 12px;
+}
+
+.veryShortEvent {
+    margin-top: -1px;
+    padding: 0px 5px;
+    font-size: 10px;
+}
+
+/* event modal */
+
+#eventModal {
+    display: none;
+    border-radius: 5px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    z-index: 10;
+    width: 500px;
+    height: 500px;
+}
+
+#errors {
+    color: var(--yellow);
+}
+
+#modalTitle {
+    margin: 50px 0 30px 0;
+    padding: 30px 0;
+    height: 100px;
+    color: var(--black);
+    text-align: center;
+}
+
+.shortInput {
+    border: 1px solid var(--gray-light);
+    border-radius: 2px;
+    background-color: var(--white);
+    padding: 10px 20px;
+    color: var(--gray-light);
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.shortInput:focus {
+    border-color: var(--blue);
+    color: var(--black)
+}
+
+.shortInput::placeholder {
+    color: var(--gray-light);
+}
+
+#eventStart {
+    margin-right: 8%;
+    width: 45%;
+}
+
+#eventEnd {
+    width: 45%;
+}
+
+.button {
+    padding: 10px 20px;
+    background-color: var(--blue);
+    color: white;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-right: 3%;
+    border-radius: 2px;
+    width: 40%;
+    transition: all 0.3s linear;
+}
+
+.button:last-child {
+    margin-right: 0;
+}
+
+#deleteButton {
+    background-color: var(--yellow);
+    color: var(--black)
+}
+
+#deleteButton:hover {
+    background-color: var(--gray-darker);
+    color: var(--white)
+}
+
+.button:hover,
+.button:focus {
+    background-color: var(--gray-base);
+    color: var(--white)
+}
+
+#cancelButton {
+    height: 30px;
+    width: 30px;
+    position: sticky;
+    top: 0;
+    display: block;
+    float: right;
+  }
+  
+  #cancelButton .cross {
+    position: absolute;
+    left: 15px;
+    height: 30px;
+    width: 1px;
+    background-color: black;
+    transform: rotate(45deg);
+  }
+  
+  #cancelButton .cross::before {
+    content: '';
+    height: 30px;
+    width: 1px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: black;
+    display: block;
+    transform: rotate(90deg);
+  }
+
+/* flip-card */
+
+.flip-card {
+    background-color: transparent;
+    width: 500px;
+    height: 500px;
+    perspective: 1000px;
+}
+  
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+  
+/* .flip-card:hover .flip-card-inner  */
+.flip {
+    transform: rotateY(180deg);
+}
+  
+.flip-card-front, .flip-card-back {
+    background-color: var(--white);
+    position: absolute;
+    padding: 30px 50px;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+  
+.flip-card-back {
+    padding-top: 200px;
+    transform: rotateY(180deg);
+}
+
+@media (max-width: 800px) {
+    :root {
+        --slotHeight: 50px;
+    }
+    
+    .header {
+        justify-content: flex-start;
+    }
+
+
+    .header img {
+        width: 50px;
+        height: 50px;
+        margin: 0 10px 20px 20px;
+    }
+
+    .header h1 {
+        font-size: 3vh;
+    }
+
+    .weekControls {
+        display: none;
+    }
+
+    #trashButton {
+        display: none;
+    }
+
+    .dayTime {
+        min-width: 30px;
+    }
+    
+    .day {
+        min-width: 30px;
+    }
+
+    .weekControls {
+        left: 20px;
+    }
+    
+    #prevWeekBtn  {
+        margin-right: 20px;
+    }
+    
+    .generalControls {
+        right: 20px;
+    }
+
+    #addButton {
+        border: var(--yellow);
+        background-color: #666;
+        border-radius: 50%;
+        position: fixed;
+        bottom: 40px;
+        right: 40px;
+        font-size: 25px;
+        line-height: 65px;
+        width: 65px;
+        height: 65px;
+    }
+
+    #eventModal {
+        left: 5vw;
+        top: 25vh;
+        transform: translate(0, 0);
+        width: 90vw;
+        height: 50vh;
+    }
+
+    #modalTitle {
+        margin: 5vh 0 3vh 0;
+        padding: 3vh 0;
+        height: 10vh;
+        color: var(--black);
+        text-align: center;
+    }
+
+    
+    .flip-card {
+        width: 90vw;
+        height: 50vh;
+        perspective: 1000px;
+    }
+
+    .flip {
+        transform: rotateX(180deg);
+    }
+
+    .flip-card-back {
+        transform: rotateX(180deg);
+    }
+
+}

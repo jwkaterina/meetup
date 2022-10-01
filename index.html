@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <script src="https://kit.fontawesome.com/589de0edaf.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">    
+</head>
+<body>
+    <main>
+        <header class="header">
+            <div class="weekControls">
+                <i id="prevWeekBtn" class="fas fa-angle-left"></i>
+                <i id="nextWeekBtn" class="fas fa-angle-right"></i>
+    
+            </div>
+            <img src="Watchtower.svg" alt="">
+            <h1 id="currentMonth"></h1>
+            <div class="generalControls">
+                <i id="todayButton" class="fas fa-solid fa-calendar-day"></i>
+                <i id="addButton" class="fas fa-solid fa-plus"></i>                
+                <i id="trashButton" class="fas fa-trash-alt"></i>
+                <label id="toggleSwitch" class="switch">
+                    <input id="checkBox" type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </header>
+    
+        <section id="calendar">
+            <div class="dayTime">            
+            </div>
+            <div data-name="Lundi" data-shortName="L" data-dayIndex = "0" class="day">           
+            </div>
+            <div data-name="Mardi" data-shortName="M" data-dayIndex = "1" class="day">           
+            </div>
+            <div data-name="Mercredi" data-shortName="M" data-dayIndex = "2" class="day">           
+            </div>
+            <div data-name="Jeudi" data-shortName="J" data-dayIndex = "3" class="day">            
+            </div>
+            <div data-name="Vendredi" data-shortName="V" data-dayIndex = "4" class="day">           
+            </div>
+            <div data-name="Samedi" data-shortName="S" data-dayIndex = "5" class="day">            
+            </div>
+            <div data-name="Dimanche" data-shortName="D" data-dayIndex = "6" class="day">           
+            </div>
+        </section>
+
+        <div id="eventModal">
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <a href="" id="cancelButton">
+                        <div class="cross"></div>
+                    </a>
+                    <h2 id="modalTitle"></h2>
+                    <div>
+                        <input required type="text" id="eventName" name="name" placeholder="Nom et Prenom" class="shortInput"></input>
+                    </div>
+                    <div>
+                        <input required type="date" id="eventDate" name="date" class="shortInput"></input>
+                    </div>
+                    <div>
+                        <input required type="time" id="eventStart" name="time" class="shortInput"></input>
+                        <input required type="time" id="eventEnd" name="time" class="shortInput"></input>
+                    </div>
+            
+                    <div id="eventControls">
+                        <input type="submit" value="Soumettre" class="button" id="submitButton">
+                        <!-- <input type="button" value="Anuller" class="button" id="cancelButton"> -->
+                        <input type="button" value="Annuler" class="button" id="deleteButton">
+                    </div>
+                    <div id="errors">    
+                    </div>     
+                </div>
+                <div class="flip-card-back">
+                    <h2 id="flipCardText"></h2> 
+                </div>
+                </div>
+            </div>
+        </div>  
+    </main>    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="main.js" type="module"></script>
+
+</body>
+</html>
