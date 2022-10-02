@@ -1,6 +1,7 @@
 import { dateString, getDayIndex, addDays } from "./helper.js";
 import { Event } from "./event.js";
 import { Ctx, MODE } from "./ctx.js";
+import './style.css';
 
 export class Calendar {
     constructor() {
