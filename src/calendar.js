@@ -9,6 +9,8 @@ export class Calendar {
         this.weekOffset = 0;
         this.readyToTrash = false;
         this.slotHeight = 50;
+        this.dayStarts = 6;
+        this.dayEnds = 21;
         this.weekStart = null;
         this.weekEnd = null;
         this.eventsLoaded = false;
@@ -34,7 +36,7 @@ export class Calendar {
         $("#checkBox").click(() => this.userChange());
         $("#cancelButton").click((e) => {
             e.preventDefault();
-            this.closeModal();
+            this.closeFormModal();
         })
     }
 
@@ -46,7 +48,7 @@ export class Calendar {
     setupTimes() {
         const header = $("<div></div>").addClass("columnHeader");
         const slots = $("<div></div>").addClass("slots");
-        for (let hour = 0; hour < 24; hour++) {
+        for (let hour = this.dayStarts; hour < this.dayEnds; hour++) {
             $("<div></div>")
                 .attr("data-hour", hour)
                 .addClass("time")
@@ -54,6 +56,7 @@ export class Calendar {
                 .appendTo(slots);
         }
         $(".dayTime").append(header).append(slots);
+        $(`.time[data-hour=${this.dayStarts}]`).css("visibility", "hidden");
     }
 
 
@@ -80,7 +83,7 @@ export class Calendar {
         $(".day").each(function () {
         const dayIndex = parseInt($(this).attr("data-dayIndex"));
         const slots = $("<div></div>").addClass("slots");
-        for (let hour = 0; hour < 24; hour++) {
+        for (let hour = cal.dayStarts; hour < cal.dayEnds; hour++) {
             $("<div></div>")
                 .attr("data-hour", hour)
                 .appendTo(slots)
@@ -138,6 +141,7 @@ export class Calendar {
         this.calculateCurrentWeek();
         this.showWeek();
         this.loadEvents();
+
     }
 
     showCurrentDay() {
@@ -169,24 +173,27 @@ export class Calendar {
 
         const date = dateString(addDays(this.weekStart, dayIndex));
         const event = new Event({
+            place: "",
             start,
             end,
             date,
             name: [],
             color: "var(--green)"
         });
-        this.openModal(event);
+        this.openFormModal(event);
     }
 
-    openModal(event) {
-        this.ctx.principal.openModal(this, event);
+    openFormModal(event) {
+        const addOnclickListener = this.ctx.principal.openFormModal(this, event);
         document.querySelector('body').style.overflow = 'hidden';
-        $("#submitButton")
+        if(addOnclickListener) {
+            $("#submitButton")
             .off("submit")
             .click((e) => {
                 e.preventDefault();
                 this.submitModal(event);
             });
+        }
     }
 
     submitModal(event) {
@@ -197,22 +204,12 @@ export class Calendar {
         this.ctx.principal.submitModal();
         let that = this;
         setTimeout(function(){
-            that.closeModal();
+            that.closeFormModal();
         },1000);
-
-        // const success = this.ctx.principal.submitModal();
-        // if(success) {
-        //     this.updateEvent(event);
-        //     let that = this;
-        //     setTimeout(function(){
-        //         that.closeModal();
-        //     },1000);
-        // }
-        
     }
 
-    closeModal() {
-        this.ctx.principal.closeModal();
+    closeFormModal() {
+        this.ctx.principal.closeFormModal();
         document.querySelector('body').style.overflow = 'auto';
         $("#submitButton").unbind("click");
     }
@@ -220,14 +217,57 @@ export class Calendar {
     addNewEvent() {
         const event = this.ctx.principal.createNewEvent();
         if(event) {
-            this.openModal(event);
+            this.openFormModal(event);
         }
     }
 
     clickIn(event) {
         if (this.ctx.mode != MODE.VIEW) return;
         this.ctx.mode = MODE.UPDATE;
-        this.openModal(event);
+        this.openEventModal(event);
+    }
+
+    openEventModal(event) {
+        $("#eventModal").fadeIn(200);
+        $("#calendar").addClass("opaque");
+        document.querySelector('body').style.overflow = 'hidden';
+        $("#editButton")
+            .val("Éditer")
+            .show()
+            .off("click")
+            .click(() => {
+                this.closeEventModal(event);
+                this.openFormModal(event);
+            });
+
+        let lis = "";
+        event.name.forEach(addToList)
+        function addToList(value, index) {
+            lis += `<li class="member" member=${index + 1}>${value}</li>`
+        };
+
+        let txt = "";
+        txt = `<a class="place" href="http://maps.google.com/?q=${event.place}" target="_blank">
+            <i id="mapIcon" class="fas fa-map"></i>
+            ${event.place}
+            </a>
+            <ol class="list">${lis}</ol>`
+        $("#eventContent").html(txt);
+
+        
+        if(event.name.length <= 1) {
+            $("#eventModal").css("backgroundColor", "var(--green");
+        } else {
+            $("#eventModal").css("backgroundColor", "var(--blue");
+        }
+    }
+
+    closeEventModal() {
+        $("#eventModal").fadeOut(200);
+        $("#errors").text("");
+        $("#calendar").removeClass("opaque");
+        document.querySelector('body').style.overflow = 'auto';
+
     }
 
     saveEvent(event) {
@@ -255,7 +295,7 @@ export class Calendar {
     }
 
     deleteEvent(event) {
-        this.closeModal();
+        this.closeFormModal();
         $(`#${event.id}`).remove();
         delete this.events[event.date][event.id];
         if (Object.values(this.events[event.date]).length == 0) {
@@ -265,7 +305,7 @@ export class Calendar {
     }
 
     deleteName(event) {
-        this.closeModal();
+        this.closeFormModal();
         event.name.pop(event);
         this.saveEvent(event);
         this.showEvent(event);    }
@@ -288,32 +328,45 @@ export class Calendar {
                 .click(() => this.clickIn(event));
         }
         const h = this.slotHeight;
+
+        // let txt = "";
+        // event.name.forEach(myFunction);            
+        // function myFunction(value, index) {
+        // txt += 1 + index + "." + value + "<br>"; 
+        // }
+
+        let lis = "";
+        event.name.forEach(addToList)
+        function addToList(value, index) {
+            lis += `<li class="member" member=${index + 1}>${value}</li>`
+        };
+
         let txt = "";
-        event.name.forEach(myFunction);            
-        function myFunction(value, index) {
-        txt += 1 + index + "." + value + "<br>"; 
-        }
+        txt = `<a class="place" target="_blank">${event.place}</a>
+            <ol class="list">${lis}</ol>`
+
         eventSlot
             .html(txt)
-            .css("top", (event.startHour + event.startMinutes / 60) * h + 1 + "px")
-            .css("bottom", 24 * h - (event.endHour + event.endMinutes / 60) * h + 5 + "px")
-            // .css("backgroundColor", event.color)
+            // .css("top", (event.startHour + event.startMinutes / 60) * h + 1 + "px")
+            // .css("bottom", 24 * h - (event.endHour + event.endMinutes / 60) * h + 5 + "px")
+            .css("top", (event.startHour + event.startMinutes / 60 - this.dayStarts) * h -+ 1 + "px")
+            .css("bottom", (this.dayEnds - event.endHour + event.endMinutes / 60) * h + 5 + "px")
             .appendTo(`.day[data-dayIndex=${event.dayIndex}] .slots`);
-        if(event.name.length == 0) {
+
+        if(event.name.length <= 1) {
             eventSlot.css("backgroundColor", "var(--green");
         } else {
             eventSlot.css("backgroundColor", "var(--blue");
-
         }
 
-        const duration = event.duration;
-        if (duration < 45) {
-            eventSlot.removeClass("shortEvent").addClass("veryShortEvent");
-        } else if (duration < 59) {
-            eventSlot.removeClass("veryShortEvent").addClass("shortEvent");
-        } else {
-            eventSlot.removeClass("shortEvent").removeClass("veryShortEvent");
-        }
+        // const duration = event.duration;
+        // if (duration < 45) {
+        //     eventSlot.removeClass("shortEvent").addClass("veryShortEvent");
+        // } else if (duration < 59) {
+        //     eventSlot.removeClass("veryShortEvent").addClass("shortEvent");
+        // } else {
+        //     eventSlot.removeClass("shortEvent").removeClass("veryShortEvent");
+        // }
 
         const media = window.matchMedia("(max-width: 800px)");
         if (media.matches) {
@@ -323,6 +376,8 @@ export class Calendar {
                 eventSlot.text(event.name.length);
             }
         }
+
+
     }
 
     loadEvents() {
@@ -354,10 +409,13 @@ export class Calendar {
     }
 
     isEventValid(event) {
+        console.log("validation");
         const newStart = $("#eventStart").val();
         const newEnd = $("#eventEnd").val();
         const newDate = $("#eventDate").val();
         if (this.events[newDate]) {
+            console.log(this.events[newDate]);
+            console.log(Object.values(this.events[newDate]));
             const e = Object.values(this.events[newDate]).find(
                 (evt) =>
                     evt.id != event.id && evt.end > newStart && evt.start < newEnd
@@ -367,6 +425,8 @@ export class Calendar {
                     `This collides with the event '${e.name}'
                 (${e.start} - ${e.end}).`
                 );
+                console.log(e);
+                console.log(event);
                 return false;
             }
         }
@@ -414,3 +474,4 @@ export class Calendar {
         }
     }
 }
+
