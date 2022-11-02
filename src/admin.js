@@ -15,45 +15,26 @@ export class Admin {
     }
 
     openFormModal(calendar, event) {
-        $("#eventPlace")
-            .show()
-            .val(event.place);
-        $("#eventName")
-            // .hide();
-            .show()
-            .val(this.userName);          
-        $("#eventDate")
-            .show()
-            .val(event.date);
-        $("#eventStart")
-            .show()
-            .val(event.start);
-        $("#eventEnd")
-            .show()
-            .val(event.end);
         if (this.ctx.mode == MODE.UPDATE) {
-            $("#modalTitle").text("Changer l'équipe?");
-            $("#submitButton").val("Changer");
+            $("#adminChangeFormModal").fadeIn(200);
             $("#deleteButton")
-                .val("Effacer")
-                .show()
                 .off("click")
                 .click(() => calendar.deleteEvent(event));
         } else if (this.ctx.mode == MODE.CREATE) {
-            $("#modalTitle").text("Créer l'équipe?");
-            // event.color = "var(--green)";
-            $("#submitButton").val("Creer");
-            $("#deleteButton").hide();
+            $("#adminCreateFormModal").fadeIn(200);
         }
 
-        $("#formModal").fadeIn(200);
-        $("#eventDate").focus();
+        $("#eventPlace").val(event.place);
+        $("#eventName").val(this.userName);          
+        $("#eventDate").val(event.date);
+        $("#eventStart").val(event.start);
+        $("#eventEnd").val(event.end);
+        $("#eventPlace").focus();
         $("#calendar").addClass("opaque");
         return true;
     }
 
     submitModal() {
-        $("#flipCardText").text("Ça y est!");
         $(".flip-card-inner").addClass("flip");
             setTimeout(function() {
                 $(".flip-card-inner").removeClass("flip");

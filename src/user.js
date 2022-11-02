@@ -21,32 +21,20 @@ export class User {
             this.ctx.mode = MODE.VIEW;
             return false;
         } else if(this.ctx.mode == MODE.UPDATE) {
-            $("#eventPlace")
-                .hide();
-            $("#modalTitle").text("Veux-tu prêcher avec cette équipe?");
-            $("#eventName")
-                .show()
-                .val(this.userName);
-            $("#eventDate").hide();
-            $("#eventStart").hide();
-            $("#eventEnd").hide();
+            $("#eventName").val(this.userName);
             // event.color = "var(--blue)";
-            $("#submitButton").val("S'inscrire");
             $("#deleteButton")
-                .val("Annuler")
-                .show()
                 .off("click")
                 .click(() => calendar.deleteName(event));
         }
 
-        $("#formModal").fadeIn(200);
+        $("#userChangeFormModal").fadeIn(200);
         $("#eventName").focus();
         $("#calendar").addClass("opaque");
         return true;
     }
 
     submitModal() {
-        $("#flipCardText").text("Bon predication!");
         $(".flip-card-inner").addClass("flip");
             setTimeout(function() {
                 $(".flip-card-inner").removeClass("flip");

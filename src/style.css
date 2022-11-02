@@ -301,8 +301,8 @@ input:checked + .slider:before {
     font-size: 10px;
 }
 
-/* event modal */
-#eventModal {
+/* Modals */
+.modal {
     display: none;
     border-radius: 5px;
     left: 50%;
@@ -313,48 +313,13 @@ input:checked + .slider:before {
     width: 500px;
     height: 500px;
     padding: 30px 50px;
-
-}
-
-#eventContent {
-    margin: 70px;
-    /* height: 100px; */
-    color: var(--white);
-    text-align: center;
-    line-height: 2rem;
-    font-size: 1rem;
-}
-
-#editButton {
-    background-color: var(--white);
-    color: var(--black);
-    margin-left: 50px;
-}
-
-#editButton:hover {
-    background-color: var(--yellow);
-    color: var(--white);
-}
-
-/* form modal */
-
-#formModal {
-    display: none;
-    border-radius: 5px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    position: absolute;
-    z-index: 10;
-    width: 500px;
-    height: 500px;
 }
 
 #errors {
     color: var(--yellow);
 }
 
-#modalTitle {
+.modalTitle {
     margin: 10px 0 10px 0;
     padding: 30px 0;
     height: 100px;
@@ -381,15 +346,6 @@ input:checked + .slider:before {
     color: var(--gray-light);
 }
 
-#eventStart {
-    margin-right: 8%;
-    width: 45%;
-}
-
-#eventEnd {
-    width: 45%;
-}
-
 .button {
     padding: 10px 20px;
     background-color: var(--blue);
@@ -406,23 +362,13 @@ input:checked + .slider:before {
     margin-right: 0;
 }
 
-#deleteButton {
-    background-color: var(--yellow);
-    color: var(--black);
-}
-
-#deleteButton:hover {
-    background-color: var(--gray-darker);
-    color: var(--white);
-}
-
 .button:hover,
 .button:focus {
     background-color: var(--gray-base);
     color: var(--white);
 }
 
-#cancelButton {
+.cancelButton {
     height: 30px;
     width: 30px;
     position: sticky;
@@ -431,7 +377,7 @@ input:checked + .slider:before {
     float: right;
   }
   
-#cancelButton .cross {
+.cancelButton .cross {
     position: absolute;
     left: 15px;
     height: 30px;
@@ -440,7 +386,7 @@ input:checked + .slider:before {
     transform: rotate(45deg);
 }
 
-#cancelButton .cross::before {
+.cancelButton .cross::before {
     content: '';
     height: 30px;
     width: 1px;
@@ -450,6 +396,48 @@ input:checked + .slider:before {
     background-color: black;
     display: block;
     transform: rotate(90deg);
+}
+
+/* event modal */
+
+#eventContent {
+    margin: 70px;
+    /* height: 100px; */
+    color: var(--white);
+    text-align: center;
+    line-height: 2rem;
+    font-size: 1rem;
+}
+
+#editButton {
+    background-color: var(--white);
+    color: var(--black);
+    margin-left: 50px;
+}
+
+#editButton:hover {
+    background-color: var(--yellow);
+    color: var(--white);
+}
+
+/* form modal */
+#eventStart {
+    margin-right: 8%;
+    width: 45%;
+}
+
+#eventEnd {
+    width: 45%;
+}
+
+#deleteButton {
+    background-color: var(--yellow);
+    color: var(--black);
+}
+
+#deleteButton:hover {
+    background-color: var(--gray-darker);
+    color: var(--white);
 }
 
 /* flip-card */
@@ -552,13 +540,8 @@ input:checked + .slider:before {
         height: 65px;
     }
 
-    #eventModal {
-        width: 90vw;
-        height: 50vh;
+    .modal {
         padding: 10px 20px;
-    }
-
-    #formModal {
         left: 5vw;
         top: 25vh;
         transform: translate(0, 0);
@@ -566,7 +549,7 @@ input:checked + .slider:before {
         height: 50vh;
     }
 
-    #modalTitle {
+    .modalTitle {
         margin: 1vh 0 1vh 0;
         padding: 1vh 0;
         height: 8vh;

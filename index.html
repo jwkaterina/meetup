@@ -47,49 +47,116 @@
             </div>
         </section>
 
-        <div id="FormModal">
+        <!-- Event Modal -->
+        <div id="eventModal" class="modal">
+            <a href="" class="cancelButton">
+                <div class="cross"></div>
+            </a>
+            <div id="eventContent"></div>
+            <div class="eventControls">
+                <input type="button" value="Éditer" class="button" id="editButton">
+            </div>
+        </div>
+
+
+        <!-- Form Modals -->
+        <div id="adminCreateFormModal" class="modal">
             <div class="flip-card">
                 <div class="flip-card-inner">
-                <div class="flip-card-front">
-                    <a href="" id="cancelButton">
-                        <div class="cross"></div>
-                    </a>
-                    <h2 id="modalTitle"></h2>
-                    <div>
-                        <input required type="adress" id="eventPlace" name="place" class="shortInput"></input>
+                    <div class="flip-card-front">
+                        <a href="" class="cancelButton">
+                            <div class="cross"></div>
+                        </a>
+                        <h2 class="modalTitle">Créer l'équipe?</h2>
+                        <div>
+                            <input required type="adress" id="eventPlace" name="place" class="shortInput"></input>
+                        </div>
+                        <div>
+                            <input required type="text" id="eventName" name="name" placeholder="Nom et Prenom" class="shortInput"></input>
+                        </div>
+                        <div>
+                            <input required type="date" id="eventDate" name="date" class="shortInput"></input>
+                        </div>
+                        <div>
+                            <input required type="time" id="eventStart" name="time" class="shortInput"></input>
+                            <input required type="time" id="eventEnd" name="time" class="shortInput"></input>
+                        </div>
+                
+                        <div class="eventControls">
+                            <input type="submit" value="Creer" class="button" id="submitButton">
+                        </div>
+                        <div id="errors">    
+                        </div>     
                     </div>
-                    <div>
-                        <input required type="text" id="eventName" name="name" placeholder="Nom et Prenom" class="shortInput"></input>
-                    </div>
-                    <div>
-                        <input required type="date" id="eventDate" name="date" class="shortInput"></input>
-                    </div>
-                    <div>
-                        <input required type="time" id="eventStart" name="time" class="shortInput"></input>
-                        <input required type="time" id="eventEnd" name="time" class="shortInput"></input>
-                    </div>
-            
-                    <div id="eventControls">
-                        <input type="submit" value="Soumettre" class="button" id="submitButton">
-                        <input type="button" value="Annuler" class="button" id="deleteButton">
-                    </div>
-                    <div id="errors">    
-                    </div>     
-                </div>
                 <div class="flip-card-back">
-                    <h2 id="flipCardText"></h2> 
+                    <h2 class="flipCardText">Ça y est! L'équipe est crée.</h2> 
                 </div>
                 </div>
             </div>
         </div>  
 
-        <div id="eventModal">
-            <a href="" id="cancelButton">
-                <div class="cross"></div>
-            </a>
-            <div id="eventContent"></div>
-            <input type="edit" value="Éditer" class="button" id="editButton">
-        </div>
+
+        <div id="adminChangeFormModal" class="modal">
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <a href="" class="cancelButton">
+                            <div class="cross"></div>
+                        </a>
+                        <h2 class="modalTitle">Changer l'équipe?</h2>
+                        <div>
+                            <input required type="adress" id="eventPlace" name="place" class="shortInput"></input>
+                        </div>
+                        <div>
+                            <input required type="text" id="eventName" name="name" placeholder="Nom et Prenom" class="shortInput"></input>
+                        </div>
+                        <div>
+                            <input required type="date" id="eventDate" name="date" class="shortInput"></input>
+                        </div>
+                        <div>
+                            <input required type="time" id="eventStart" name="time" class="shortInput"></input>
+                            <input required type="time" id="eventEnd" name="time" class="shortInput"></input>
+                        </div>
+                
+                        <div class="eventControls">
+                            <input type="submit" value="Changer" class="button" id="submitButton">
+                            <input type="button" value="Annuler" class="button" id="deleteButton">
+                        </div>
+                        <div id="errors">    
+                        </div>     
+                    </div>
+                <div class="flip-card-back">
+                    <h2 class="flipCardText">Ça y est! L'équipe est changée.</h2> 
+                </div>
+                </div>
+            </div>
+        </div>  
+
+
+        <div id="userChangeFormModal" class="modal">
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <a href="" class="cancelButton">
+                            <div class="cross"></div>
+                        </a>
+                        <h2 class="modalTitle">Veux-tu prêcher avec cette équipe?</h2>
+                        <div>
+                            <input required type="text" id="eventName" name="name" placeholder="Nom et Prenom" class="shortInput"></input>
+                        </div>            
+                        <div class="eventControls">
+                            <input type="submit" value="S'inscrire" class="button" id="submitButton">
+                            <input type="button" value="Annuler" class="button" id="deleteButton">
+                        </div>
+                        <div id="errors">    
+                        </div>     
+                    </div>
+                <div class="flip-card-back">
+                    <h2 class="flipCardText">Bon predication!</h2> 
+                </div>
+                </div>
+            </div>
+        </div>  
     </main>    
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
