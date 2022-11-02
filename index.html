@@ -47,7 +47,7 @@
             </div>
         </section>
 
-        <div id="eventModal">
+        <div id="FormModal">
             <div class="flip-card">
                 <div class="flip-card-inner">
                 <div class="flip-card-front">
@@ -55,6 +55,9 @@
                         <div class="cross"></div>
                     </a>
                     <h2 id="modalTitle"></h2>
+                    <div>
+                        <input required type="adress" id="eventPlace" name="place" class="shortInput"></input>
+                    </div>
                     <div>
                         <input required type="text" id="eventName" name="name" placeholder="Nom et Prenom" class="shortInput"></input>
                     </div>
@@ -68,7 +71,6 @@
             
                     <div id="eventControls">
                         <input type="submit" value="Soumettre" class="button" id="submitButton">
-                        <!-- <input type="button" value="Anuller" class="button" id="cancelButton"> -->
                         <input type="button" value="Annuler" class="button" id="deleteButton">
                     </div>
                     <div id="errors">    
@@ -80,6 +82,14 @@
                 </div>
             </div>
         </div>  
+
+        <div id="eventModal">
+            <a href="" id="cancelButton">
+                <div class="cross"></div>
+            </a>
+            <div id="eventContent"></div>
+            <input type="edit" value="Éditer" class="button" id="editButton">
+        </div>
     </main>    
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

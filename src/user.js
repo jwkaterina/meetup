@@ -16,11 +16,13 @@ export class User {
         return false;
     }
 
-    openModal(calendar, event) {
+    openFormModal(calendar, event) {
         if(this.ctx.mode == MODE.CREATE) {
             this.ctx.mode = MODE.VIEW;
-            return;
+            return false;
         } else if(this.ctx.mode == MODE.UPDATE) {
+            $("#eventPlace")
+                .hide();
             $("#modalTitle").text("Veux-tu prêcher avec cette équipe?");
             $("#eventName")
                 .show()
@@ -37,9 +39,10 @@ export class User {
                 .click(() => calendar.deleteName(event));
         }
 
-        $("#eventModal").fadeIn(200);
+        $("#formModal").fadeIn(200);
         $("#eventName").focus();
         $("#calendar").addClass("opaque");
+        return true;
     }
 
     submitModal() {
@@ -50,8 +53,8 @@ export class User {
             },1000);
     }
 
-    closeModal() {
-        $("#eventModal").fadeOut(200);
+    closeFormModal() {
+        $("#formModal").fadeOut(200);
         $("#errors").text("");
         $("#calendar").removeClass("opaque");
         this.ctx.mode = MODE.VIEW;

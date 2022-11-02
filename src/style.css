@@ -245,10 +245,6 @@ input:checked + .slider:before {
     font-size: 14px;
 }
 
-.time[data-hour="0"] {
-    visibility: hidden;
-}
-
 .slot:hover {
     cursor: pointer;
     background-color: var(--gray-light);
@@ -262,7 +258,7 @@ input:checked + .slider:before {
     width: calc(100% - 5px);
     line-height: 1rem;
     font-size: 0.8rem;
-    padding: 1rem 1rem;
+    padding: 0.5rem 2rem;
     color: var(--white);
     overflow: hidden;
     cursor: pointer;
@@ -272,6 +268,26 @@ input:checked + .slider:before {
 
 .event:hover {
     background-color: var(--gray-darker) !important;
+}
+
+.place {
+    /* text-decoration: none; */
+    transition: all 80ms linear;
+    color: var(--white);
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.list {
+    margin-top: 0.7rem;
+}
+
+.place:hover {
+    color: var(--black);
+}
+
+#mapIcon {
+    padding: 10px;
 }
 
 .shortEvent {
@@ -286,8 +302,43 @@ input:checked + .slider:before {
 }
 
 /* event modal */
-
 #eventModal {
+    display: none;
+    border-radius: 5px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    z-index: 10;
+    width: 500px;
+    height: 500px;
+    padding: 30px 50px;
+
+}
+
+#eventContent {
+    margin: 70px;
+    /* height: 100px; */
+    color: var(--white);
+    text-align: center;
+    line-height: 2rem;
+    font-size: 1rem;
+}
+
+#editButton {
+    background-color: var(--white);
+    color: var(--black);
+    margin-left: 50px;
+}
+
+#editButton:hover {
+    background-color: var(--yellow);
+    color: var(--white);
+}
+
+/* form modal */
+
+#formModal {
     display: none;
     border-radius: 5px;
     left: 50%;
@@ -304,7 +355,7 @@ input:checked + .slider:before {
 }
 
 #modalTitle {
-    margin: 50px 0 30px 0;
+    margin: 10px 0 10px 0;
     padding: 30px 0;
     height: 100px;
     color: var(--black);
@@ -317,7 +368,7 @@ input:checked + .slider:before {
     background-color: var(--white);
     padding: 10px 20px;
     color: var(--gray-light);
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     width: 100%;
 }
 
@@ -344,7 +395,7 @@ input:checked + .slider:before {
     background-color: var(--blue);
     color: white;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 10px;
     margin-right: 3%;
     border-radius: 2px;
     width: 40%;
@@ -357,18 +408,18 @@ input:checked + .slider:before {
 
 #deleteButton {
     background-color: var(--yellow);
-    color: var(--black)
+    color: var(--black);
 }
 
 #deleteButton:hover {
     background-color: var(--gray-darker);
-    color: var(--white)
+    color: var(--white);
 }
 
 .button:hover,
 .button:focus {
     background-color: var(--gray-base);
-    color: var(--white)
+    color: var(--white);
 }
 
 #cancelButton {
@@ -380,16 +431,16 @@ input:checked + .slider:before {
     float: right;
   }
   
-  #cancelButton .cross {
+#cancelButton .cross {
     position: absolute;
     left: 15px;
     height: 30px;
     width: 1px;
     background-color: black;
     transform: rotate(45deg);
-  }
-  
-  #cancelButton .cross::before {
+}
+
+#cancelButton .cross::before {
     content: '';
     height: 30px;
     width: 1px;
@@ -399,7 +450,7 @@ input:checked + .slider:before {
     background-color: black;
     display: block;
     transform: rotate(90deg);
-  }
+}
 
 /* flip-card */
 
@@ -502,6 +553,12 @@ input:checked + .slider:before {
     }
 
     #eventModal {
+        width: 90vw;
+        height: 50vh;
+        padding: 10px 20px;
+    }
+
+    #formModal {
         left: 5vw;
         top: 25vh;
         transform: translate(0, 0);
@@ -510,9 +567,9 @@ input:checked + .slider:before {
     }
 
     #modalTitle {
-        margin: 5vh 0 3vh 0;
-        padding: 3vh 0;
-        height: 10vh;
+        margin: 1vh 0 1vh 0;
+        padding: 1vh 0;
+        height: 8vh;
         color: var(--black);
         text-align: center;
     }

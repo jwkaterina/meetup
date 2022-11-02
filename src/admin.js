@@ -14,8 +14,14 @@ export class Admin {
         return true;
     }
 
-    openModal(calendar, event) {
-        $("#eventName").hide();            
+    openFormModal(calendar, event) {
+        $("#eventPlace")
+            .show()
+            .val(event.place);
+        $("#eventName")
+            // .hide();
+            .show()
+            .val(this.userName);          
         $("#eventDate")
             .show()
             .val(event.date);
@@ -36,14 +42,14 @@ export class Admin {
         } else if (this.ctx.mode == MODE.CREATE) {
             $("#modalTitle").text("Créer l'équipe?");
             // event.color = "var(--green)";
-            event.name = [];
             $("#submitButton").val("Creer");
             $("#deleteButton").hide();
         }
 
-        $("#eventModal").fadeIn(200);
+        $("#formModal").fadeIn(200);
         $("#eventDate").focus();
         $("#calendar").addClass("opaque");
+        return true;
     }
 
     submitModal() {
@@ -55,14 +61,17 @@ export class Admin {
     }
 
     updateEvent(event) {
+        event.place = $("#eventPlace").val();
+        this.newName = $("#eventName").val();
+        event.name[0] = this.newName;
         event.prevDate = event.date;
         event.start = $("#eventStart").val();
         event.end = $("#eventEnd").val();
         event.date = $("#eventDate").val();
     }
 
-    closeModal() {
-        $("#eventModal").fadeOut(200);
+    closeFormModal() {
+        $("#formModal").fadeOut(200);
         $("#errors").text("");
         $("#calendar").removeClass("opaque");
         this.ctx.mode = MODE.VIEW;
