@@ -312,7 +312,6 @@ input:checked + .slider:before {
     z-index: 10;
     width: 500px;
     height: 500px;
-    padding: 30px 50px;
 }
 
 #errors {
@@ -399,6 +398,10 @@ input:checked + .slider:before {
 }
 
 /* event modal */
+
+#eventModal {
+    padding: 30px 50px;
+}
 
 #eventContent {
     margin: 70px;

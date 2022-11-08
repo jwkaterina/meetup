@@ -1,5 +1,5 @@
 import { Event } from "./event.js";
-import { dateString } from "./helper.js";
+import { dateString, addDays} from "./helper.js";
 import { MODE } from "./ctx.js";
 
 
@@ -14,15 +14,50 @@ export class Admin {
         return true;
     }
 
-    openFormModal(calendar, event) {
-        if (this.ctx.mode == MODE.UPDATE) {
-            $("#adminChangeFormModal").fadeIn(200);
-            $("#deleteButton")
-                .off("click")
-                .click(() => calendar.deleteEvent(event));
-        } else if (this.ctx.mode == MODE.CREATE) {
-            $("#adminCreateFormModal").fadeIn(200);
-        }
+    clickSlot(hour, dayIndex) {
+        if (this.ctx.mode != MODE.VIEW) return;
+        this.ctx.mode = MODE.CREATE;
+        const start = hour.toString().padStart(2, "0") + ":00";
+        const end =
+            hour < 23
+                ? (hour + 1).toString().padStart(2, "0") + ":00"
+                : hour.toString().padStart(2, "0") + ":59";
+
+        const date = dateString(addDays(this.weekStart, dayIndex));
+        const event = new Event({
+            place: "",
+            start,
+            end,
+            date,
+            name: [],
+            color: "var(--green)"
+        });
+        this.openCreateFormModal(event);
+    }
+
+    // openFormModal(event) {
+    //     const addOnclickListener = this.ctx.principal.openFormModal(this, event);
+    //     document.querySelector('body').style.overflow = 'hidden';
+    //     if(addOnclickListener) {
+    //         $("#submitButton")
+    //         .off("submit")
+    //         .click((e) => {
+    //             e.preventDefault();
+    //             this.submitModal(event);
+    //         });
+    //     }
+    // }
+
+    openCreateFormModal(event) {
+        $("#calendar").addClass("opaque");
+        document.querySelector('body').style.overflow = 'hidden';
+        $("#adminCreateFormModal").fadeIn(200);
+        $("#submitButton")
+            .off("submit")
+            .click((e) => {
+                e.preventDefault();
+                this.submitModal(event, "#adminCreateFormModal");
+            });
 
         $("#eventPlace").val(event.place);
         $("#eventName").val(this.userName);          
@@ -30,15 +65,54 @@ export class Admin {
         $("#eventStart").val(event.start);
         $("#eventEnd").val(event.end);
         $("#eventPlace").focus();
-        $("#calendar").addClass("opaque");
-        return true;
+        // return true;
     }
 
-    submitModal() {
-        $(".flip-card-inner").addClass("flip");
-            setTimeout(function() {
-                $(".flip-card-inner").removeClass("flip");
-            },1000);
+    openChangeFormModal(event) {
+        $("#calendar").addClass("opaque");
+        document.querySelector('body').style.overflow = 'hidden';
+        $("#adminChangeFormModal").fadeIn(200);
+        $("#submitButton")
+            .off("submit")
+            .click((e) => {
+                e.preventDefault();
+                this.submitModal(event, "#adminChangeFormModal");
+            });
+        $("#deleteButton")
+            .off("click")
+            .click(() => this.deleteEvent(event));
+
+        $("#eventPlace").val(event.place);
+        $("#eventName").val(this.userName);          
+        $("#eventDate").val(event.date);
+        $("#eventStart").val(event.start);
+        $("#eventEnd").val(event.end);
+        $("#eventPlace").focus();
+    }
+
+    submitModal(event, modal) {
+        if (!calendar.isEventValid(event)) {
+            return;
+        }
+        this.updateEvent(event);
+        document.getElementById(modal).querySelector(".flip-card-inner").addClass("flip");
+        setTimeout(function() {
+            document.getElementById(modal).querySelector(".flip-card-inner").removeClass("flip");
+        },1000);        
+        let that = this;
+        setTimeout(function(){
+            that.closeFormModal(modal);
+        },1000);
+    }
+
+    closeFormModal(modal) {
+        $(modal).fadeOut(200);
+        $("#errors").text("");
+        $("#calendar").removeClass("opaque");
+        this.ctx.mode = MODE.VIEW;
+
+        document.querySelector('body').style.overflow = 'auto';
+        // $("#submitButton").unbind("click");
     }
 
     updateEvent(event) {
@@ -49,16 +123,18 @@ export class Admin {
         event.start = $("#eventStart").val();
         event.end = $("#eventEnd").val();
         event.date = $("#eventDate").val();
+        calendar.saveEvent(event);
+        calendar.showEvent(event);
     }
 
-    closeFormModal() {
-        $("#formModal").fadeOut(200);
-        $("#errors").text("");
-        $("#calendar").removeClass("opaque");
-        this.ctx.mode = MODE.VIEW;
-
-        document.querySelector('body').style.overflow = 'auto';
-        $("#submitButton").unbind("click");
+    deleteEvent(event) {
+        this.closeFormModal("#adminChangeFormModal");
+        $(`#${event.id}`).remove();
+        delete this.events[event.date][event.id];
+        if (Object.values(this.events[event.date]).length == 0) {
+            delete this.events[event.date];
+        }
+        this.saveEvents();
     }
 
     createNewEvent() {
@@ -72,6 +148,6 @@ export class Admin {
             color: "green",
         });
 
-        return event;
+        this.openCreateFormModal(event);
     }
 }

@@ -30,13 +30,13 @@ export class Calendar {
     setupControls() {
         $("#nextWeekBtn").click(() => this.changeWeek(1));
         $("#prevWeekBtn").click(() => this.changeWeek(-1));
-        $("#addButton").click(() => this.addNewEvent());
+        $("#addButton").click(() => this.ctx.principal.createNewEvent());
         $("#todayButton").click(() => this.showCurrentWeek());
         $("#trashButton").click(() => this.trash());
         $("#checkBox").click(() => this.userChange());
         $("#cancelButton").click((e) => {
             e.preventDefault();
-            this.closeFormModal();
+            this.closeFormModal(); //change to closeModal?
         })
     }
 
@@ -88,7 +88,7 @@ export class Calendar {
                 .attr("data-hour", hour)
                 .appendTo(slots)
                 .addClass("slot")
-                .click(() => cal.clickSlot(hour, dayIndex))
+                .click(() => cal.ctx.principal.clickSlot(hour, dayIndex))
                 .hover(
                     () => cal.hoverOver(hour),
                     () => cal.hoverOut()
@@ -162,113 +162,69 @@ export class Calendar {
         $(".time").removeClass("currentTime");
     }
 
-    clickSlot(hour, dayIndex) {
-        if (this.ctx.mode != MODE.VIEW) return;
-        this.ctx.mode = MODE.CREATE;
-        const start = hour.toString().padStart(2, "0") + ":00";
-        const end =
-            hour < 23
-                ? (hour + 1).toString().padStart(2, "0") + ":00"
-                : hour.toString().padStart(2, "0") + ":59";
+    // clickSlot(hour, dayIndex) {
+    //     if (this.ctx.mode != MODE.VIEW) return;
+    //     this.ctx.mode = MODE.CREATE;
+    //     const start = hour.toString().padStart(2, "0") + ":00";
+    //     const end =
+    //         hour < 23
+    //             ? (hour + 1).toString().padStart(2, "0") + ":00"
+    //             : hour.toString().padStart(2, "0") + ":59";
 
-        const date = dateString(addDays(this.weekStart, dayIndex));
-        const event = new Event({
-            place: "",
-            start,
-            end,
-            date,
-            name: [],
-            color: "var(--green)"
-        });
-        this.openFormModal(event);
-    }
+    //     const date = dateString(addDays(this.weekStart, dayIndex));
+    //     const event = new Event({
+    //         place: "",
+    //         start,
+    //         end,
+    //         date,
+    //         name: [],
+    //         color: "var(--green)"
+    //     });
+    //     this.openAdminCreateFormModal(event);
+    // }
 
-    openFormModal(event) {
-        const addOnclickListener = this.ctx.principal.openFormModal(this, event);
-        document.querySelector('body').style.overflow = 'hidden';
-        if(addOnclickListener) {
-            $("#submitButton")
-            .off("submit")
-            .click((e) => {
-                e.preventDefault();
-                this.submitModal(event);
-            });
-        }
-    }
+    // openFormModal(event) {
+    //     const addOnclickListener = this.ctx.principal.openFormModal(this, event);
+    //     document.querySelector('body').style.overflow = 'hidden';
+    //     if(addOnclickListener) {
+    //         $("#submitButton")
+    //         .off("submit")
+    //         .click((e) => {
+    //             e.preventDefault();
+    //             this.submitModal(event);
+    //         });
+    //     }
+    // }
 
-    submitModal(event) {
-        if (this.ctx.principal.validateEvent && !this.isEventValid(event)) {
-            return;
-        }
-        this.updateEvent(event);
-        this.ctx.principal.submitModal();
-        let that = this;
-        setTimeout(function(){
-            that.closeFormModal();
-        },1000);
-    }
+    // submitModal(event) {
+    //     if (this.ctx.principal.validateEvent && !this.isEventValid(event)) {
+    //         return;
+    //     }
+    //     this.updateEvent(event);
+    //     this.ctx.principal.submitModal();
+    //     let that = this;
+    //     setTimeout(function(){
+    //         that.closeFormModal();
+    //     },1000);
+    // }
 
-    closeFormModal() {
-        this.ctx.principal.closeFormModal();
-        document.querySelector('body').style.overflow = 'auto';
-        $("#submitButton").unbind("click");
-    }
+    // closeFormModal() {
+    //     this.ctx.principal.closeFormModal();
+    //     document.querySelector('body').style.overflow = 'auto';
+    //     $("#submitButton").unbind("click");
+    // }
 
-    addNewEvent() {
-        const event = this.ctx.principal.createNewEvent();
-        if(event) {
-            this.openFormModal(event);
-        }
-    }
+    // addNewEvent() {
+    //     const event = this.ctx.principal.createNewEvent();
+    // }
 
-    clickIn(event) {
-        if (this.ctx.mode != MODE.VIEW) return;
-        this.ctx.mode = MODE.UPDATE;
-        this.openEventModal(event);
-    }
+    // clickIn(event) {
+    //     if (this.ctx.mode != MODE.VIEW) return;
+    //     this.ctx.mode = MODE.UPDATE;
+    //     this.openEventModal(event);
+    // }
 
-    openEventModal(event) {
-        $("#eventModal").fadeIn(200);
-        $("#calendar").addClass("opaque");
-        document.querySelector('body').style.overflow = 'hidden';
-        $("#editButton")
-            .val("Éditer")
-            .show()
-            .off("click")
-            .click(() => {
-                this.closeEventModal(event);
-                this.openFormModal(event);
-            });
-
-        let lis = "";
-        event.name.forEach(addToList)
-        function addToList(value, index) {
-            lis += `<li class="member" member=${index + 1}>${value}</li>`
-        };
-
-        let txt = "";
-        txt = `<a class="place" href="http://maps.google.com/?q=${event.place}" target="_blank">
-            <i id="mapIcon" class="fas fa-map"></i>
-            ${event.place}
-            </a>
-            <ol class="list">${lis}</ol>`
-        $("#eventContent").html(txt);
-
-        
-        if(event.name.length <= 1) {
-            $("#eventModal").css("backgroundColor", "var(--green");
-        } else {
-            $("#eventModal").css("backgroundColor", "var(--blue");
-        }
-    }
-
-    closeEventModal() {
-        $("#eventModal").fadeOut(200);
-        $("#errors").text("");
-        $("#calendar").removeClass("opaque");
-        document.querySelector('body').style.overflow = 'auto';
-
-    }
+    
 
     saveEvent(event) {
         if (event.prevDate && event.date != event.prevDate) {
@@ -288,11 +244,11 @@ export class Calendar {
         localStorage.setItem("events", JSON.stringify(this.events));
     }
 
-    updateEvent(event) {
-        this.ctx.principal.updateEvent(event);
-        this.saveEvent(event);
-        this.showEvent(event);
-    }
+    // updateEvent(event) {
+    //     this.ctx.principal.updateEvent(event);
+    //     this.saveEvent(event);
+    //     this.showEvent(event);
+    // }
 
     deleteEvent(event) {
         this.closeFormModal();
@@ -308,7 +264,8 @@ export class Calendar {
         this.closeFormModal();
         event.name.pop(event);
         this.saveEvent(event);
-        this.showEvent(event);    }
+        this.showEvent(event);
+    }
 
     showEvent(event) {
         if (
@@ -325,7 +282,7 @@ export class Calendar {
             eventSlot = $("<div></div>")
                 .addClass("event")
                 .attr("id", event.id)
-                .click(() => this.clickIn(event));
+                .click(() => this.openEventModal(event));
         }
         const h = this.slotHeight;
 
@@ -377,6 +334,49 @@ export class Calendar {
             }
         }
 
+
+    }
+
+    openEventModal(event) {
+        $("#eventModal").fadeIn(200);
+        $("#calendar").addClass("opaque");
+        document.querySelector('body').style.overflow = 'hidden';
+        $("#editButton")
+            .val("Éditer")
+            .show()
+            .off("click")
+            .click(() => {
+                this.closeEventModal(event);
+                this.ctx.principal.openChangeFormModal(event);
+            });
+
+        let lis = "";
+        event.name.forEach(addToList)
+        function addToList(value, index) {
+            lis += `<li class="member" member=${index + 1}>${value}</li>`
+        };
+
+        let txt = "";
+        txt = `<a class="place" href="http://maps.google.com/?q=${event.place}" target="_blank">
+            <i id="mapIcon" class="fas fa-map"></i>
+            ${event.place}
+            </a>
+            <ol class="list">${lis}</ol>`
+        $("#eventContent").html(txt);
+
+        
+        if(event.name.length <= 1) {
+            $("#eventModal").css("backgroundColor", "var(--green");
+        } else {
+            $("#eventModal").css("backgroundColor", "var(--blue");
+        }
+    }
+
+    closeEventModal() {
+        $("#eventModal").fadeOut(200);
+        $("#errors").text("");
+        $("#calendar").removeClass("opaque");
+        document.querySelector('body').style.overflow = 'auto';
 
     }
 
