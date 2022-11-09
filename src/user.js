@@ -33,6 +33,13 @@ export class User {
         $("#deleteButton")
             .off("click")
             .click(() => this.deleteName(event));
+        $(".cancelButton")
+            .off("click")
+            .click((e) => {
+                e.preventDefault();
+                this.closeFormModal("#userChangeFormModal");
+            });
+
         $("#eventName").focus();
         $("#eventName").val(this.userName);
            

@@ -34,10 +34,6 @@ export class Calendar {
         $("#todayButton").click(() => this.showCurrentWeek());
         $("#trashButton").click(() => this.trash());
         $("#checkBox").click(() => this.userChange());
-        $("#cancelButton").click((e) => {
-            e.preventDefault();
-            this.closeFormModal(); //change to closeModal?
-        })
     }
 
     setupContext() {
@@ -338,6 +334,7 @@ export class Calendar {
     }
 
     openEventModal(event) {
+        const eventModal = document.getElementById("eventModal");
         $("#eventModal").fadeIn(200);
         $("#calendar").addClass("opaque");
         document.querySelector('body').style.overflow = 'hidden';
@@ -348,6 +345,12 @@ export class Calendar {
             .click(() => {
                 this.closeEventModal(event);
                 this.ctx.principal.openChangeFormModal(event);
+            });
+        $(".cancelButton")
+            .off("click")
+            .click((e) => {
+                e.preventDefault();
+                this.closeEventModal(event);
             });
 
         let lis = "";

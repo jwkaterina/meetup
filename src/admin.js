@@ -58,6 +58,12 @@ export class Admin {
                 e.preventDefault();
                 this.submitModal(event, "#adminCreateFormModal");
             });
+        $(".cancelButton")
+            .off("click")
+            .click((e) => {
+                e.preventDefault();
+                this.closeFormModal("#adminCreateFormModal");
+            });
 
         $("#eventPlace").val(event.place);
         $("#eventName").val(this.userName);          
@@ -81,6 +87,13 @@ export class Admin {
         $("#deleteButton")
             .off("click")
             .click(() => this.deleteEvent(event));
+        $(".cancelButton")
+            .off("click")
+            .click((e) => {
+                e.preventDefault();
+                this.closeFormModal("#adminChangeFormModal");
+            });
+
 
         $("#eventPlace").val(event.place);
         $("#eventName").val(this.userName);          
