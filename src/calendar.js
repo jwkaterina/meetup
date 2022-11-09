@@ -25,6 +25,7 @@ export class Calendar {
         this.setupContext();
         this.loadEvents();
         this.setupControls();
+        this.addSwipe();
     }
 
     setupControls() {
@@ -37,7 +38,27 @@ export class Calendar {
         $("#cancelButton").click((e) => {
             e.preventDefault();
             this.closeFormModal();
-        })
+        });
+    }
+
+    addSwipe() {
+        let touchstartX = 0;
+        let touchendX = 0;
+        let that = this;
+
+        function checkDirection() {
+        if (touchendX < touchstartX) {that.changeWeek(1)};
+        if (touchendX > touchstartX) {that.changeWeek(-1)};
+        }
+
+        document.getElementById("calendar").addEventListener('touchstart', e => {
+        touchstartX = e.changedTouches[0].screenX;
+        });
+
+        document.getElementById("calendar").addEventListener('touchend', e => {
+        touchendX = e.changedTouches[0].screenX;
+        checkDirection()
+        });
     }
 
     setupContext() {
@@ -376,8 +397,6 @@ export class Calendar {
                 eventSlot.text(event.name.length);
             }
         }
-
-
     }
 
     loadEvents() {
