@@ -28,7 +28,7 @@ export class Admin {
             start,
             end,
             date,
-            name: [],
+            names: [],
             color: "var(--green)"
         });
         this.openCreateFormModal(event);
@@ -136,7 +136,7 @@ export class Admin {
     updateEvent(event) {
         event.place = $("#eventPlace").val();
         this.newName = $("#eventMaintName").val();
-        event.name[0] = this.newName;
+        event.names[0] = this.newName;
         event.prevDate = event.date;
         event.start = $("#eventStart").val();
         event.end = $("#eventEnd").val();
@@ -162,7 +162,7 @@ export class Admin {
             start: "12:00",
             end: "13:00",
             date: dateString(this.calendar.weekStart),
-            name: [],
+            names: [],
             color: "green",
         });
 

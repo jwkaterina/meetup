@@ -4,7 +4,7 @@ export class Event {
     constructor(data) {
         this.id = data.id || generateId();
         this.place = data.place;
-        this.name = data.name;
+        this.names = data.names;
         this.start = data.start;
         this.end = data.end;
         this.date = data.date;

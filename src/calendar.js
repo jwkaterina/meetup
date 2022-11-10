@@ -190,7 +190,7 @@ export class Calendar {
         const h = this.slotHeight;
 
         let lis = "";
-        event.name.forEach(addToList)
+        event.names.forEach(addToList)
         function addToList(value, index) {
             lis += `<li class="member" member=${index + 1}>${value}</li>`
         };
@@ -205,7 +205,7 @@ export class Calendar {
             .css("bottom", (this.dayEnds - event.endHour + event.endMinutes / 60) * h + 5 + "px")
             .appendTo(`.day[data-dayIndex=${event.dayIndex}] .slots`);
 
-        if(event.name.length <= 1) {
+        if(event.names.length <= 1) {
             eventSlot.css("backgroundColor", "var(--green");
         } else {
             eventSlot.css("backgroundColor", "var(--blue");
@@ -222,10 +222,10 @@ export class Calendar {
 
         const media = window.matchMedia("(max-width: 800px)");
         if (media.matches) {
-            if(event.name.length == 0) {
+            if(event.names.length == 0) {
                 return
             } else {
-                eventSlot.text(event.name.length);
+                eventSlot.text(event.names.length);
             }
         }
 
@@ -251,7 +251,7 @@ export class Calendar {
             });
 
         let lis = "";
-        event.name.forEach(addToList)
+        event.names.forEach(addToList)
         function addToList(value, index) {
             lis += `<li class="member" member=${index + 1}>${value}</li>`
         };
@@ -265,7 +265,7 @@ export class Calendar {
         $("#eventContent").html(txt);
 
         
-        if(event.name.length <= 1) {
+        if(event.names.length <= 1) {
             $("#eventModal").css("backgroundColor", "var(--green");
         } else {
             $("#eventModal").css("backgroundColor", "var(--blue");

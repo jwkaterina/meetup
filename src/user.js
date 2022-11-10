@@ -73,14 +73,14 @@ export class User {
 
     updateEvent(event) {
         this.newName = $("#eventName").val();
-        event.name.push(this.newName);
+        event.names.push(this.newName);
         this.calendar.saveEvent(event);
         this.calendar.showEvent(event);
     }
 
     deleteName(event) {
         this.closeFormModal();
-        event.name.pop(event);
+        event.names.pop(event);
         this.calendar.saveEvent(event);
         this.calendar.showEvent(event);
     }
