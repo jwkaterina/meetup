@@ -9,19 +9,20 @@ export const MODE = {
 
 export class Ctx {
     constructor() {
+        
         this.mode = MODE.VIEW;
         this.principal = null;
         this.userName = "Kateryna Logoshko";
     }
 
-    switchToUserMode(weekStart) {
-        this.principal = new User(weekStart, this, this.userName);
+    switchToUserMode(calendar) {
+        this.principal = new User(calendar, this);
         $("#addButton").hide();            
         console.log("User Mode");
     }
 
-    switchToAdminMode(weekStart) {
-        this.principal = new Admin(weekStart, this, this.userName);
+    switchToAdminMode(calendar) {
+        this.principal = new Admin(calendar, this);
         $("#addButton").show();            
         console.log("Admin Mode");
     }

@@ -1,5 +1,5 @@
-import { Calendar } from "./calendar.js";
+import { App } from "./app.js";
 
 $(() => {
-    new Calendar().setup();
+    new App().setup();
 });

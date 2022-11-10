@@ -4,10 +4,9 @@ import { MODE } from "./ctx.js";
 
 
 export class Admin {
-    constructor(weekStart, ctx, userName) {
-        this.weekStart = weekStart;
+    constructor(calendar, ctx) {
+        this.calendar = calendar;
         this.ctx = ctx;
-        this.userName = userName;
     }
 
     get validateEvent() {
@@ -23,7 +22,7 @@ export class Admin {
                 ? (hour + 1).toString().padStart(2, "0") + ":00"
                 : hour.toString().padStart(2, "0") + ":59";
 
-        const date = dateString(addDays(this.weekStart, dayIndex));
+        const date = dateString(addDays(this.calendar.weekStart, dayIndex));
         const event = new Event({
             place: "",
             start,
@@ -51,22 +50,26 @@ export class Admin {
     openCreateFormModal(event) {
         $("#calendar").addClass("opaque");
         document.querySelector('body').style.overflow = 'hidden';
-        $("#adminCreateFormModal").fadeIn(200);
-        $("#submitButton")
+        $("#adminFormModal").fadeIn(200);
+        $(".modalTitle").text("Créer l'équipe?");
+        $(".submitButton")
+            .val("Creer")
             .off("submit")
             .click((e) => {
                 e.preventDefault();
-                this.submitModal(event, "#adminCreateFormModal");
+                this.submitModal(event);
             });
+        $(".deleteButton")
+            .hide();
         $(".cancelButton")
             .off("click")
             .click((e) => {
                 e.preventDefault();
-                this.closeFormModal("#adminCreateFormModal");
+                this.closeFormModal();
             });
 
         $("#eventPlace").val(event.place);
-        $("#eventName").val(this.userName);          
+        $("#eventName").val(this.ctx.userName);          
         $("#eventDate").val(event.date);
         $("#eventStart").val(event.start);
         $("#eventEnd").val(event.end);
@@ -77,49 +80,51 @@ export class Admin {
     openChangeFormModal(event) {
         $("#calendar").addClass("opaque");
         document.querySelector('body').style.overflow = 'hidden';
-        $("#adminChangeFormModal").fadeIn(200);
-        $("#submitButton")
+        $("#adminFormModal").fadeIn(200);
+        $(".modalTitle").text("Changer l'équipe?");
+        $(".submitButton")
+            .val("Changer")
             .off("submit")
             .click((e) => {
                 e.preventDefault();
-                this.submitModal(event, "#adminChangeFormModal");
+                this.submitModal(event);
             });
-        $("#deleteButton")
+        $(".deleteButton")
+            .show()
             .off("click")
             .click(() => this.deleteEvent(event));
         $(".cancelButton")
             .off("click")
             .click((e) => {
                 e.preventDefault();
-                this.closeFormModal("#adminChangeFormModal");
+                this.closeFormModal();
             });
 
-
         $("#eventPlace").val(event.place);
-        $("#eventName").val(this.userName);          
+        $("#eventName").val(this.ctx.userName);          
         $("#eventDate").val(event.date);
         $("#eventStart").val(event.start);
         $("#eventEnd").val(event.end);
         $("#eventPlace").focus();
     }
 
-    submitModal(event, modal) {
-        if (!calendar.isEventValid(event)) {
+    submitModal(event) {
+        if (!this.calendar.isEventValid(event)) {
             return;
         }
         this.updateEvent(event);
-        document.getElementById(modal).querySelector(".flip-card-inner").addClass("flip");
+        document.getElementById("adminFormModal").querySelector(".flip-card-inner").classList.add("flip");
         setTimeout(function() {
-            document.getElementById(modal).querySelector(".flip-card-inner").removeClass("flip");
+            document.getElementById("adminFormModal").querySelector(".flip-card-inner").classList.remove("flip");
         },1000);        
         let that = this;
         setTimeout(function(){
-            that.closeFormModal(modal);
+            that.closeFormModal();
         },1000);
     }
 
-    closeFormModal(modal) {
-        $(modal).fadeOut(200);
+    closeFormModal() {
+        $("#adminFormModal").fadeOut(200);
         $("#errors").text("");
         $("#calendar").removeClass("opaque");
         this.ctx.mode = MODE.VIEW;
@@ -130,24 +135,24 @@ export class Admin {
 
     updateEvent(event) {
         event.place = $("#eventPlace").val();
-        this.newName = $("#eventName").val();
+        this.newName = $("#eventMaintName").val();
         event.name[0] = this.newName;
         event.prevDate = event.date;
         event.start = $("#eventStart").val();
         event.end = $("#eventEnd").val();
         event.date = $("#eventDate").val();
-        calendar.saveEvent(event);
-        calendar.showEvent(event);
+        this.calendar.saveEvent(event);
+        this.calendar.showEvent(event);
     }
 
     deleteEvent(event) {
-        this.closeFormModal("#adminChangeFormModal");
+        this.closeFormModal("#adminFormModal");
         $(`#${event.id}`).remove();
-        delete this.events[event.date][event.id];
-        if (Object.values(this.events[event.date]).length == 0) {
-            delete this.events[event.date];
+        delete this.calendar.events[event.date][event.id];
+        if (Object.values(this.calendar.events[event.date]).length == 0) {
+            delete this.calendar.events[event.date];
         }
-        this.saveEvents();
+        this.calendar.saveEvents();
     }
 
     createNewEvent() {
@@ -156,7 +161,7 @@ export class Admin {
         const event = new Event({
             start: "12:00",
             end: "13:00",
-            date: dateString(this.weekStart),
+            date: dateString(this.calendar.weekStart),
             name: [],
             color: "green",
         });

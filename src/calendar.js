@@ -4,7 +4,7 @@ import { Ctx, MODE } from "./ctx.js";
 import './style.css';
 
 export class Calendar {
-    constructor() {
+    constructor(ctx) {
         this.events = {};
         this.weekOffset = 0;
         this.readyToTrash = false;
@@ -14,7 +14,7 @@ export class Calendar {
         this.weekStart = null;
         this.weekEnd = null;
         this.eventsLoaded = false;
-        this.ctx = null;
+        this.ctx = ctx;
     }
 
     setup() {
@@ -22,7 +22,6 @@ export class Calendar {
         this.calculateCurrentWeek();
         this.setupDays();
         this.showWeek();
-        this.setupContext();
         this.loadEvents();
         this.setupControls();
     }
@@ -33,12 +32,6 @@ export class Calendar {
         $("#addButton").click(() => this.ctx.principal.createNewEvent());
         $("#todayButton").click(() => this.showCurrentWeek());
         $("#trashButton").click(() => this.trash());
-        $("#checkBox").click(() => this.userChange());
-    }
-
-    setupContext() {
-        this.ctx = new Ctx();
-        this.ctx.switchToUserMode(this.weekStart);
     }
 
     setupTimes() {
@@ -158,69 +151,6 @@ export class Calendar {
         $(".time").removeClass("currentTime");
     }
 
-    // clickSlot(hour, dayIndex) {
-    //     if (this.ctx.mode != MODE.VIEW) return;
-    //     this.ctx.mode = MODE.CREATE;
-    //     const start = hour.toString().padStart(2, "0") + ":00";
-    //     const end =
-    //         hour < 23
-    //             ? (hour + 1).toString().padStart(2, "0") + ":00"
-    //             : hour.toString().padStart(2, "0") + ":59";
-
-    //     const date = dateString(addDays(this.weekStart, dayIndex));
-    //     const event = new Event({
-    //         place: "",
-    //         start,
-    //         end,
-    //         date,
-    //         name: [],
-    //         color: "var(--green)"
-    //     });
-    //     this.openAdminCreateFormModal(event);
-    // }
-
-    // openFormModal(event) {
-    //     const addOnclickListener = this.ctx.principal.openFormModal(this, event);
-    //     document.querySelector('body').style.overflow = 'hidden';
-    //     if(addOnclickListener) {
-    //         $("#submitButton")
-    //         .off("submit")
-    //         .click((e) => {
-    //             e.preventDefault();
-    //             this.submitModal(event);
-    //         });
-    //     }
-    // }
-
-    // submitModal(event) {
-    //     if (this.ctx.principal.validateEvent && !this.isEventValid(event)) {
-    //         return;
-    //     }
-    //     this.updateEvent(event);
-    //     this.ctx.principal.submitModal();
-    //     let that = this;
-    //     setTimeout(function(){
-    //         that.closeFormModal();
-    //     },1000);
-    // }
-
-    // closeFormModal() {
-    //     this.ctx.principal.closeFormModal();
-    //     document.querySelector('body').style.overflow = 'auto';
-    //     $("#submitButton").unbind("click");
-    // }
-
-    // addNewEvent() {
-    //     const event = this.ctx.principal.createNewEvent();
-    // }
-
-    // clickIn(event) {
-    //     if (this.ctx.mode != MODE.VIEW) return;
-    //     this.ctx.mode = MODE.UPDATE;
-    //     this.openEventModal(event);
-    // }
-
-    
 
     saveEvent(event) {
         if (event.prevDate && event.date != event.prevDate) {
@@ -238,29 +168,6 @@ export class Calendar {
 
     saveEvents() {
         localStorage.setItem("events", JSON.stringify(this.events));
-    }
-
-    // updateEvent(event) {
-    //     this.ctx.principal.updateEvent(event);
-    //     this.saveEvent(event);
-    //     this.showEvent(event);
-    // }
-
-    deleteEvent(event) {
-        this.closeFormModal();
-        $(`#${event.id}`).remove();
-        delete this.events[event.date][event.id];
-        if (Object.values(this.events[event.date]).length == 0) {
-            delete this.events[event.date];
-        }
-        this.saveEvents();
-    }
-
-    deleteName(event) {
-        this.closeFormModal();
-        event.name.pop(event);
-        this.saveEvent(event);
-        this.showEvent(event);
     }
 
     showEvent(event) {
@@ -282,12 +189,6 @@ export class Calendar {
         }
         const h = this.slotHeight;
 
-        // let txt = "";
-        // event.name.forEach(myFunction);            
-        // function myFunction(value, index) {
-        // txt += 1 + index + "." + value + "<br>"; 
-        // }
-
         let lis = "";
         event.name.forEach(addToList)
         function addToList(value, index) {
@@ -300,8 +201,6 @@ export class Calendar {
 
         eventSlot
             .html(txt)
-            // .css("top", (event.startHour + event.startMinutes / 60) * h + 1 + "px")
-            // .css("bottom", 24 * h - (event.endHour + event.endMinutes / 60) * h + 5 + "px")
             .css("top", (event.startHour + event.startMinutes / 60 - this.dayStarts) * h -+ 1 + "px")
             .css("bottom", (this.dayEnds - event.endHour + event.endMinutes / 60) * h + 5 + "px")
             .appendTo(`.day[data-dayIndex=${event.dayIndex}] .slots`);
@@ -339,8 +238,6 @@ export class Calendar {
         $("#calendar").addClass("opaque");
         document.querySelector('body').style.overflow = 'hidden';
         $("#editButton")
-            .val("Éditer")
-            .show()
             .off("click")
             .click(() => {
                 this.closeEventModal(event);
@@ -380,7 +277,6 @@ export class Calendar {
         $("#errors").text("");
         $("#calendar").removeClass("opaque");
         document.querySelector('body').style.overflow = 'auto';
-
     }
 
     loadEvents() {
@@ -412,13 +308,10 @@ export class Calendar {
     }
 
     isEventValid(event) {
-        console.log("validation");
         const newStart = $("#eventStart").val();
         const newEnd = $("#eventEnd").val();
         const newDate = $("#eventDate").val();
         if (this.events[newDate]) {
-            console.log(this.events[newDate]);
-            console.log(Object.values(this.events[newDate]));
             const e = Object.values(this.events[newDate]).find(
                 (evt) =>
                     evt.id != event.id && evt.end > newStart && evt.start < newEnd
@@ -428,8 +321,6 @@ export class Calendar {
                     `This collides with the event '${e.name}'
                 (${e.start} - ${e.end}).`
                 );
-                console.log(e);
-                console.log(event);
                 return false;
             }
         }
@@ -464,16 +355,6 @@ export class Calendar {
             setTimeout(() => {
                 this.readyToTrash = false;
             }, 60 * 1000);
-        }
-    }
-
-    userChange() {
-        const checkBox = document.getElementById("checkBox");
-    
-        if (checkBox.checked == true){
-            this.ctx.switchToAdminMode(this.weekStart);
-        } else {
-            this.ctx.switchToUserMode(this.weekStart);
         }
     }
 }

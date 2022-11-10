@@ -60,30 +60,31 @@
 
 
         <!-- Form Modals -->
-        <div id="adminCreateFormModal" class="modal form-modal">
+        <div id="adminFormModal" class="modal form-modal">
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
                         <a href="" class="cancelButton">
                             <div class="cross"></div>
                         </a>
-                        <h2 class="modalTitle">Créer l'équipe?</h2>
+                        <h2 class="modalTitle"></h2>
                         <div>
-                            <input required type="adress" id="eventPlace" name="place" class="shortInput"></input>
+                            <input required type="adress" id="eventPlace" class="shortInput" name="place"></input>
                         </div>
                         <div>
-                            <input required type="text" id="eventName" name="name" placeholder="Nom et Prenom" class="shortInput"></input>
+                            <input required type="text" id="eventMainName" class="shortInput" name="name" placeholder="Nom et Prenom"></input>
                         </div>
                         <div>
-                            <input required type="date" id="eventDate" name="date" class="shortInput"></input>
+                            <input required type="date" id="eventDate" class="shortInput" name="date"></input>
                         </div>
                         <div>
-                            <input required type="time" id="eventStart" name="time" class="shortInput"></input>
-                            <input required type="time" id="eventEnd" name="time" class="shortInput"></input>
+                            <input required type="time" id="eventStart" class="shortInput" name="time"></input>
+                            <input required type="time" id="eventEnd" class="shortInput" name="time"></input>
                         </div>
                 
                         <div class="eventControls">
-                            <input type="submit" value="Creer" class="button" id="submitButton">
+                            <input type="submit" class="button submitButton">
+                            <input type="button" value="Annuler" class="button deleteButton">
                         </div>
                         <div id="errors">    
                         </div>     
@@ -96,44 +97,7 @@
         </div>  
 
 
-        <div id="adminChangeFormModal" class="modal form-modal">
-            <div class="flip-card">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <a href="" class="cancelButton">
-                            <div class="cross"></div>
-                        </a>
-                        <h2 class="modalTitle">Changer l'équipe?</h2>
-                        <div>
-                            <input required type="adress" id="eventPlace" name="place" class="shortInput"></input>
-                        </div>
-                        <div>
-                            <input required type="text" id="eventName" name="name" placeholder="Nom et Prenom" class="shortInput"></input>
-                        </div>
-                        <div>
-                            <input required type="date" id="eventDate" name="date" class="shortInput"></input>
-                        </div>
-                        <div>
-                            <input required type="time" id="eventStart" name="time" class="shortInput"></input>
-                            <input required type="time" id="eventEnd" name="time" class="shortInput"></input>
-                        </div>
-                
-                        <div class="eventControls">
-                            <input type="submit" value="Changer" class="button" id="submitButton">
-                            <input type="button" value="Annuler" class="button" id="deleteButton">
-                        </div>
-                        <div id="errors">    
-                        </div>     
-                    </div>
-                <div class="flip-card-back">
-                    <h2 class="flipCardText">Ça y est! L'équipe est changée.</h2> 
-                </div>
-                </div>
-            </div>
-        </div>  
-
-
-        <div id="userChangeFormModal" class="modal form-modal">
+        <div id="userFormModal" class="modal form-modal">
             <div class="flip-card">
                 <div id="user-change-card" class="flip-card-inner">
                     <div class="flip-card-front">
@@ -142,11 +106,11 @@
                         </a>
                         <h2 class="modalTitle">Veux-tu prêcher avec cette équipe?</h2>
                         <div>
-                            <input required type="text" id="eventName" name="name" placeholder="Nom et Prenom" class="shortInput"></input>
+                            <input required type="text" id="eventName" class="shortInput" name="name" placeholder="Nom et Prenom"></input>
                         </div>            
                         <div class="eventControls">
-                            <input type="submit" value="S'inscrire" class="button" id="submitButton">
-                            <input type="button" value="Annuler" class="button" id="deleteButton">
+                            <input type="submit" value="S'inscrire" class="button submitButton">
+                            <input type="button" value="Annuler" class="button deleteButton">
                         </div>
                         <div id="errors">    
                         </div>     

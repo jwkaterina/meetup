@@ -5,11 +5,11 @@ import { MODE } from "./ctx.js";
 
 
 export class User {
-    constructor(weekStart, ctx, userName) {
-        this.weekStart = weekStart;
+    constructor(calendar, ctx) {
+        this.calendar = calendar;
         this.ctx = ctx;
         this.newName = "";
-        this.userName = userName;
+
     }
 
     get validateEvent() {
@@ -23,46 +23,46 @@ export class User {
     openChangeFormModal(event) {
         $("#calendar").addClass("opaque");
         document.querySelector('body').style.overflow = 'hidden';
-        $("#userChangeFormModal").fadeIn(200);
-        $("#submitButton")
+        $("#userFormModal").fadeIn(200);
+        $(".submitButton")
             .off("submit")
             .click((e) => {
                 e.preventDefault();
-                this.submitModal(event, "#userChangeFormModal");
+                this.submitModal(event);
             });
-        $("#deleteButton")
+        $(".deleteButton")
             .off("click")
             .click(() => this.deleteName(event));
         $(".cancelButton")
             .off("click")
             .click((e) => {
                 e.preventDefault();
-                this.closeFormModal("#userChangeFormModal");
+                this.closeFormModal();
             });
 
-        $("#eventName").focus();
-        $("#eventName").val(this.userName);
+        $(".eventName").focus();
+        $(".eventName").val(this.ctx.userName);
            
     }
     
 
-    submitModal(event, modal) {
-        if (!calendar.isEventValid(event)) {
+    submitModal(event) {
+        if (!this.calendar.isEventValid(event)) {
             return;
         }
         this.updateEvent(event);
-        document.getElementById(modal).querySelector(".flip-card-inner").addClass("flip");
+        document.getElementById("userFormModal").querySelector(".flip-card-inner").classList.add("flip");
         setTimeout(function() {
-            document.getElementById(modal).querySelector(".flip-card-inner").removeClass("flip");
+            document.getElementById("userFormModal").querySelector(".flip-card-inner").classList.remove("flip");
         },1000);        
         let that = this;
         setTimeout(function(){
-            that.closeFormModal(modal);
+            that.closeFormModal();
         },1000);
     }
 
-    closeFormModal(modal) {
-        $(modal).fadeOut(200);
+    closeFormModal() {
+        $("#userFormModal").fadeOut(200);
         $("#errors").text("");
         $("#calendar").removeClass("opaque");
         this.ctx.mode = MODE.VIEW;
@@ -74,15 +74,15 @@ export class User {
     updateEvent(event) {
         this.newName = $("#eventName").val();
         event.name.push(this.newName);
-        calendar.saveEvent(event);
-        calendar.showEvent(event);
+        this.calendar.saveEvent(event);
+        this.calendar.showEvent(event);
     }
 
     deleteName(event) {
-        this.closeFormModal("#userChangeFormModal");
+        this.closeFormModal();
         event.name.pop(event);
-        this.saveEvent(event);
-        this.showEvent(event);
+        this.calendar.saveEvent(event);
+        this.calendar.showEvent(event);
     }
 
     createNewEvent() {
