@@ -20,7 +20,10 @@ export class User {
         $("#calendar").addClass("opaque");
         document.querySelector('body').style.overflow = 'hidden';
         $("#userFormModal").fadeIn(200);
+        $(".modalTitle").text("Veux-tu prêcher avec cette équipe?");
+        $(".flipCardText").text("Bon predication!");
         $(".submitButton")
+            .val("S'inscrire")
             .off("click")
             .click((e) => {
                 e.preventDefault();
@@ -36,8 +39,8 @@ export class User {
                 this.closeFormModal();
             });
 
-        $(".eventName").focus();
-        $(".eventName").val(this.ctx.userName);
+        $("#eventName").focus();
+        $("#eventName").val(this.ctx.userName);
            
     }
     
@@ -46,7 +49,7 @@ export class User {
         if (!this.calendar.isEventValid(event)) {
             return;
         }
-        this.updateEvent(event);
+        this.updateEvent(event);     
         document.getElementById("userFormModal").querySelector(".flip-card-inner").classList.add("flip");
         setTimeout(function() {
             document.getElementById("userFormModal").querySelector(".flip-card-inner").classList.remove("flip");
@@ -63,7 +66,6 @@ export class User {
         $("#calendar").removeClass("opaque");
 
         document.querySelector('body').style.overflow = 'auto';
-        // $("#submitButton").unbind("click");
     }
 
     updateEvent(event) {
@@ -74,8 +76,15 @@ export class User {
     }
 
     deleteName(event) {
-        this.closeFormModal();
-        event.names.pop(event);
+        $(".flipCardText").text("Ta participation est annulé.");
+        document.getElementById("userFormModal").querySelector(".flip-card-inner").classList.add("flip");
+        setTimeout(function() {
+            document.getElementById("userFormModal").querySelector(".flip-card-inner").classList.remove("flip");
+        },1000);        
+        let that = this;
+        setTimeout(function(){
+            that.closeFormModal();
+        },1000);        event.names.pop(event);
         this.calendar.saveEvent(event);
         this.calendar.showEvent(event);
     }

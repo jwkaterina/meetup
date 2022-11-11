@@ -35,6 +35,7 @@ export class Admin {
         document.querySelector('body').style.overflow = 'hidden';
         $("#adminFormModal").fadeIn(200);
         $(".modalTitle").text("Créer l'équipe?");
+        $(".flipCardText").text("Ça y est! L'équipe est crée.");
         $(".submitButton")
             .val("Creer")
             .off("click")
@@ -64,6 +65,7 @@ export class Admin {
         document.querySelector('body').style.overflow = 'hidden';
         $("#adminFormModal").fadeIn(200);
         $(".modalTitle").text("Changer l'équipe?");
+        $(".flipCardText").text("Ça y est! L'équipe est changé.");
         $(".submitButton")
             .val("Changer")
             .off("click")
@@ -94,7 +96,7 @@ export class Admin {
         if (!this.calendar.isEventValid(event)) {
             return;
         }
-        this.updateEvent(event);
+        this.updateEvent(event);       
         document.getElementById("adminFormModal").querySelector(".flip-card-inner").classList.add("flip");
         setTimeout(function() {
             document.getElementById("adminFormModal").querySelector(".flip-card-inner").classList.remove("flip");
@@ -109,9 +111,7 @@ export class Admin {
         $("#adminFormModal").fadeOut(200);
         $("#errors").text("");
         $("#calendar").removeClass("opaque");
-
         document.querySelector('body').style.overflow = 'auto';
-        // $("#submitButton").unbind("click");
     }
 
     updateEvent(event) {
@@ -127,8 +127,15 @@ export class Admin {
     }
 
     deleteEvent(event) {
-        this.closeFormModal("#adminFormModal");
-        $(`#${event.id}`).remove();
+        $(".flipCardText").text("L'équipe est annulé.");
+        document.getElementById("adminFormModal").querySelector(".flip-card-inner").classList.add("flip");
+        setTimeout(function() {
+            document.getElementById("adminFormModal").querySelector(".flip-card-inner").classList.remove("flip");
+        },1000);        
+        let that = this;
+        setTimeout(function(){
+            that.closeFormModal();
+        },1000);        $(`#${event.id}`).remove();
         delete this.calendar.events[event.date][event.id];
         if (Object.values(this.calendar.events[event.date]).length == 0) {
             delete this.calendar.events[event.date];
