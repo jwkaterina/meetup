@@ -7,8 +7,50 @@ export class Admin {
         this.ctx = ctx;
     }
 
-    get validateEvent() {
-        return true;
+    openEventModal(event) {
+        $("#eventModal").fadeIn(200);
+        $("#calendar").addClass("opaque");
+        document.querySelector('body').style.overflow = 'hidden';
+        $("#editButton")
+            .off("click")
+            .click(() => {
+                this.closeEventModal(event);
+                this.openChangeFormModal(event);
+            });
+        $(".cancelButton")
+            .off("click")
+            .click((e) => {
+                e.preventDefault();
+                this.closeEventModal(event);
+            });
+
+        let lis = "";
+        event.names.forEach(addToList)
+        function addToList(value, index) {
+            lis += `<li class="member" member=${index + 1}>${value}</li>`
+        };
+
+        let txt = "";
+        txt = `<a class="place" href="http://maps.google.com/?q=${event.place}" target="_blank">
+            <i id="mapIcon" class="fas fa-map"></i>
+            ${event.place}
+            </a>
+            <ol class="list">${lis}</ol>`
+        $("#eventContent").html(txt);
+
+        
+        if(event.names.length <= 1) {
+            $("#eventModal").css("backgroundColor", "var(--green");
+        } else {
+            $("#eventModal").css("backgroundColor", "var(--blue");
+        }
+    }
+
+    closeEventModal() {
+        $("#eventModal").fadeOut(200);
+        $("#errors").text("");
+        $("#calendar").removeClass("opaque");
+        document.querySelector('body').style.overflow = 'auto';
     }
 
     clickSlot(hour, dayIndex) {
