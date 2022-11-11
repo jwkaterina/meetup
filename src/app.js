@@ -1,4 +1,4 @@
-import { Ctx, MODE } from "./ctx.js";
+import { Ctx } from "./ctx.js";
 import { Calendar } from "./calendar";
 
 export class App {

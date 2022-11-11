@@ -1,6 +1,5 @@
 import { dateString, getDayIndex, addDays } from "./helper.js";
 import { Event } from "./event.js";
-import { Ctx, MODE } from "./ctx.js";
 import './style.css';
 
 export class Calendar {
@@ -339,7 +338,6 @@ export class Calendar {
     }
 
     trash() {
-        if (this.ctx.mode != MODE.VIEW) return;
         if (this.readyToTrash) {
             this.readyToTrash = false;
             this.events = {};

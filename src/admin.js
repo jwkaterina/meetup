@@ -1,7 +1,5 @@
 import { Event } from "./event.js";
 import { dateString, addDays} from "./helper.js";
-import { MODE } from "./ctx.js";
-
 
 export class Admin {
     constructor(calendar, ctx) {
@@ -14,8 +12,6 @@ export class Admin {
     }
 
     clickSlot(hour, dayIndex) {
-        if (this.ctx.mode != MODE.VIEW) return;
-        this.ctx.mode = MODE.CREATE;
         const start = hour.toString().padStart(2, "0") + ":00";
         const end =
             hour < 23
@@ -34,19 +30,6 @@ export class Admin {
         this.openCreateFormModal(event);
     }
 
-    // openFormModal(event) {
-    //     const addOnclickListener = this.ctx.principal.openFormModal(this, event);
-    //     document.querySelector('body').style.overflow = 'hidden';
-    //     if(addOnclickListener) {
-    //         $("#submitButton")
-    //         .off("submit")
-    //         .click((e) => {
-    //             e.preventDefault();
-    //             this.submitModal(event);
-    //         });
-    //     }
-    // }
-
     openCreateFormModal(event) {
         $("#calendar").addClass("opaque");
         document.querySelector('body').style.overflow = 'hidden';
@@ -54,7 +37,7 @@ export class Admin {
         $(".modalTitle").text("Créer l'équipe?");
         $(".submitButton")
             .val("Creer")
-            .off("submit")
+            .off("click")
             .click((e) => {
                 e.preventDefault();
                 this.submitModal(event);
@@ -69,12 +52,11 @@ export class Admin {
             });
 
         $("#eventPlace").val(event.place);
-        $("#eventName").val(this.ctx.userName);          
+        $("#eventMainName").val(this.ctx.userName);          
         $("#eventDate").val(event.date);
         $("#eventStart").val(event.start);
         $("#eventEnd").val(event.end);
         $("#eventPlace").focus();
-        // return true;
     }
 
     openChangeFormModal(event) {
@@ -84,7 +66,7 @@ export class Admin {
         $(".modalTitle").text("Changer l'équipe?");
         $(".submitButton")
             .val("Changer")
-            .off("submit")
+            .off("click")
             .click((e) => {
                 e.preventDefault();
                 this.submitModal(event);
@@ -101,7 +83,7 @@ export class Admin {
             });
 
         $("#eventPlace").val(event.place);
-        $("#eventName").val(this.ctx.userName);          
+        $("#eventMainName").val(this.ctx.userName);          
         $("#eventDate").val(event.date);
         $("#eventStart").val(event.start);
         $("#eventEnd").val(event.end);
@@ -127,7 +109,6 @@ export class Admin {
         $("#adminFormModal").fadeOut(200);
         $("#errors").text("");
         $("#calendar").removeClass("opaque");
-        this.ctx.mode = MODE.VIEW;
 
         document.querySelector('body').style.overflow = 'auto';
         // $("#submitButton").unbind("click");
@@ -135,8 +116,8 @@ export class Admin {
 
     updateEvent(event) {
         event.place = $("#eventPlace").val();
-        this.newName = $("#eventMaintName").val();
-        event.names[0] = this.newName;
+        this.newMainName = $("#eventMainName").val();
+        event.names[0] = this.newMainName;
         event.prevDate = event.date;
         event.start = $("#eventStart").val();
         event.end = $("#eventEnd").val();
@@ -156,8 +137,6 @@ export class Admin {
     }
 
     createNewEvent() {
-        if (this.ctx.mode != MODE.VIEW) return null;
-        this.ctx.mode = MODE.CREATE;
         const event = new Event({
             start: "12:00",
             end: "13:00",

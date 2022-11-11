@@ -1,15 +1,11 @@
 import { Event } from "./event.js";
 import { dateString, addDays } from "./helper.js";
-import { MODE } from "./ctx.js";
-
 
 
 export class User {
     constructor(calendar, ctx) {
         this.calendar = calendar;
         this.ctx = ctx;
-        this.newName = "";
-
     }
 
     get validateEvent() {
@@ -25,7 +21,7 @@ export class User {
         document.querySelector('body').style.overflow = 'hidden';
         $("#userFormModal").fadeIn(200);
         $(".submitButton")
-            .off("submit")
+            .off("click")
             .click((e) => {
                 e.preventDefault();
                 this.submitModal(event);
@@ -65,7 +61,6 @@ export class User {
         $("#userFormModal").fadeOut(200);
         $("#errors").text("");
         $("#calendar").removeClass("opaque");
-        this.ctx.mode = MODE.VIEW;
 
         document.querySelector('body').style.overflow = 'auto';
         // $("#submitButton").unbind("click");
