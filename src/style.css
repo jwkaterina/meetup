@@ -161,6 +161,63 @@ input:checked + .slider:before {
     transform: translateX(22px);
 }
 
+/* Radio buttons */
+.radio-container {
+    display: block;
+    position: relative;
+    padding-left: 20px;
+    margin-right: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+  
+.radio-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+  
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 15px;
+    width: 15px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+  
+.radio-container:hover input ~ .checkmark {
+    background-color: var(--black);
+}
+  
+.radio-container input:checked ~ .checkmark {
+    background-color: var(--blue);
+}
+  
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+  
+.radio-container input:checked ~ .checkmark:after {
+    display: block;
+}
+  
+.radio-container .checkmark:after {
+    top: 5px;
+    left: 5px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: white;
+}
+
 
 /* calendar */
 
