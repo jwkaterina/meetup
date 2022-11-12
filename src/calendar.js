@@ -235,7 +235,7 @@ export class Calendar {
     //     $("#eventModal").fadeIn(200);
     //     $("#calendar").addClass("opaque");
     //     document.querySelector('body').style.overflow = 'hidden';
-    //     $("#editButton")
+    //     $(".editButton")
     //         .off("click")
     //         .click(() => {
     //             this.closeEventModal(event);

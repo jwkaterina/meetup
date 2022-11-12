@@ -8,7 +8,7 @@ export class User {
         this.ctx = ctx;
         this.eventModal = $("#eventModal");
 
-        $("#editButton").hide();
+        $(".editButton").hide();
 
         this.cancelButton = this.eventModal.find(".cancelButton");
         this.cancelButton.click((e) => {

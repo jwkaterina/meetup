@@ -484,13 +484,13 @@ input:checked + .slider:before {
     font-size: 1rem;
 }
 
-#editButton {
+.editButton {
     background-color: var(--white);
     color: var(--black);
     margin-left: 50px;
 }
 
-#editButton:hover {
+.editButton:hover {
     background-color: var(--yellow);
     color: var(--white);
 }
