@@ -1,16 +1,13 @@
 export class EventModal {
-    constructor(onClose) {
+    constructor(onCancel) {
         this.eventModal = $("#eventModal");
         this.cancelButton = this.eventModal.find(".cancelButton");
-        this.cancelButton.click((e) => {
-            e.preventDefault();
-            onClose();
-        });
         this.editButton = this.eventModal.find(".editButton");
         this.submitButton = this.eventModal.find(".submitButton");
         this.deleteButton = this.eventModal.find(".deleteButton");
-
         this.flipCard = this.eventModal.find(".flip-card-inner");
+
+        this.onCancel(onCancel);
     }
 
     hideEditButton() {
@@ -27,6 +24,10 @@ export class EventModal {
     }
     fadeOut() {
         this.eventModal.fadeOut(200);
+    }
+
+    onCancel(cb) {
+        this.onClick(this.cancelButton, cb);
     }
 
     onEdit(cb) {
