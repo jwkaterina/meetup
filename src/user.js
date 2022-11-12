@@ -10,7 +10,7 @@ export class User {
 
         $("#editButton").hide();
 
-        this.cancelButton = this.eventModal.first(".cancelButton");
+        this.cancelButton = this.eventModal.find(".cancelButton");
         this.cancelButton.click((e) => {
             e.preventDefault();
             this.closeEventModal(event);
@@ -52,7 +52,6 @@ export class User {
                     this.submitModal(event);
                 });
         }
-        // $("#editButton").hide();
 
         let lis = "";
         event.names.forEach(addToList)
