@@ -14,13 +14,14 @@ export class App {
     }
 
     setupControls() {
-        $("#checkBox").click(() => this.userChange());
+        $("#checkBox").click(() => this.modeChange());
+        $(".radio-container").change(() => this.ctx.userChange());
     }
 
-    userChange() {
+    modeChange() {
         const checkBox = document.getElementById("checkBox");
     
-        if (checkBox.checked == true){
+        if (checkBox.checked){
             this.ctx.switchToAdminMode(this.calendar);
         } else {
             this.ctx.switchToUserMode(this.calendar);
