@@ -321,6 +321,7 @@ input:checked + .slider:before {
     cursor: pointer;
     transition: all 0.5s linear ;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    background-color: var(--green);
 }
 
 .event:hover {
@@ -456,8 +457,22 @@ input:checked + .slider:before {
 
 /* event modal */
 
-#eventModal {
-    padding: 30px 50px;
+#eventModal .flip-card-front, #eventModal .flip-card-back {
+    background-color: var(--blue); 
+}
+
+#eventModal .submitButton, #eventModal .deleteButton {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+#eventModal .submitButton:hover, #eventModal .deleteButton:hover {
+    background-color: var(--yellow);
+    color: var(--white);
+}
+
+#eventModal .flipCardText {
+    color: var(--white);
 }
 
 #eventContent {
@@ -481,6 +496,10 @@ input:checked + .slider:before {
 }
 
 /* form modal */
+#adminFormModal .flip-card-front, #eventModal .flip-card-back {
+    background-color: var(--blue); 
+}
+
 #eventStart {
     margin-right: 8%;
     width: 45%;
@@ -525,7 +544,7 @@ input:checked + .slider:before {
 }
   
 .flip-card-front, .flip-card-back {
-    background-color: var(--white);
+    /* background-color: var(--white); */
     position: absolute;
     padding: 30px 50px;
     width: 100%;

@@ -204,11 +204,11 @@ export class Calendar {
             .css("bottom", (this.dayEnds - event.endHour + event.endMinutes / 60) * h + 5 + "px")
             .appendTo(`.day[data-dayIndex=${event.dayIndex}] .slots`);
 
-        if(event.names.length <= 1) {
-            eventSlot.css("backgroundColor", "var(--green");
-        } else {
-            eventSlot.css("backgroundColor", "var(--blue");
-        }
+        // if(event.names.length <= 1) {
+        //     eventSlot.css("backgroundColor", "var(--green");
+        // } else {
+        //     eventSlot.css("backgroundColor", "var(--blue");
+        // }
 
         // const duration = event.duration;
         // if (duration < 45) {

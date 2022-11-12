@@ -60,14 +60,27 @@
 
         <!-- Event Modal -->
         <div id="eventModal" class="modal">
-            <a href="" class="cancelButton">
-                <div class="cross"></div>
-            </a>
-            <div id="eventContent"></div>
-            <div class="eventControls">
-                <input type="button" value="Éditer" class="button" id="editButton">
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <a href="" class="cancelButton">
+                            <div class="cross"></div>
+                        </a>
+                        <div id="eventContent"></div>         
+                        <div class="eventControls">
+                            <input type="button" value="S'inscrire" class="button submitButton">
+                            <input type="button" value="Annuler" class="button deleteButton">
+                            <input type="button" value="Éditer" class="button" id="editButton">
+                        </div>
+                        <div id="errors">    
+                        </div>     
+                    </div>
+                <div class="flip-card-back">
+                    <h2 class="flipCardText">Bon predication!</h2> 
+                </div>
+                </div>
             </div>
-        </div>
+        </div>  
 
 
         <!-- Form Modals -->
@@ -108,7 +121,7 @@
         </div>  
 
 
-        <div id="userFormModal" class="modal form-modal">
+        <!-- <div id="userFormModal" class="modal form-modal">
             <div class="flip-card">
                 <div id="user-change-card" class="flip-card-inner">
                     <div class="flip-card-front">
@@ -131,7 +144,7 @@
                 </div>
                 </div>
             </div>
-        </div>  
+        </div>   -->
     </main>    
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

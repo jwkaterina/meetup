@@ -5,7 +5,7 @@ import { Admin } from "./admin.js";
 export class Ctx {
     constructor() {
         this.principal = null;
-        this.userName = "";
+        this.userName = "Kateryna Logoshko";
     }
 
     switchToUserMode(calendar) {
