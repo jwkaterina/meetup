@@ -6,6 +6,15 @@ export class User {
     constructor(calendar, ctx) {
         this.calendar = calendar;
         this.ctx = ctx;
+        this.eventModal = $("#eventModal");
+
+        $("#editButton").hide();
+
+        this.cancelButton = this.eventModal.first(".cancelButton");
+        this.cancelButton.click((e) => {
+            e.preventDefault();
+            this.closeEventModal(event);
+        });
     }
 
     userFound(event) {
@@ -19,7 +28,7 @@ export class User {
     }
 
     openEventModal(event) {
-        $("#eventModal").fadeIn(200);
+        this.eventModal.fadeIn(200);
         $("#calendar").addClass("opaque");
         document.querySelector('body').style.overflow = 'hidden';
         if (this.userFound(event)) {
@@ -43,13 +52,7 @@ export class User {
                     this.submitModal(event);
                 });
         }
-        $(".cancelButton")
-            .off("click")
-            .click((e) => {
-                e.preventDefault();
-                this.closeEventModal(event);
-            });
-        $("#editButton").hide();
+        // $("#editButton").hide();
 
         let lis = "";
         event.names.forEach(addToList)
@@ -74,7 +77,7 @@ export class User {
     }
 
     closeEventModal() {
-        $("#eventModal").fadeOut(200);
+        this.eventModal.fadeOut(200);
         $("#errors").text("");
         $("#calendar").removeClass("opaque");
         document.querySelector('body').style.overflow = 'auto';
