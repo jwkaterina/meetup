@@ -24,19 +24,7 @@ export class Admin {
                 this.closeEventModal(event);
             });
 
-        let lis = "";
-        event.names.forEach(addToList)
-        function addToList(value, index) {
-            lis += `<li class="member" member=${index + 1}>${value}</li>`
-        };
-
-        let txt = "";
-        txt = `<a class="place" href="http://maps.google.com/?q=${event.place}" target="_blank">
-            <i id="mapIcon" class="fas fa-map"></i>
-            ${event.place}
-            </a>
-            <ol class="list">${lis}</ol>`
-        $("#eventContent").html(txt);
+        this.addEventContent(event);
 
         
         if(event.names.length <= 1) {
@@ -46,9 +34,24 @@ export class Admin {
         }
     }
 
+    addEventContent(event) {
+        let lis = "";
+        event.names.forEach(addToList);
+        function addToList(value, index) {
+            lis += `<li class="member" member=${index + 1}>${value}</li>`;
+        };
+
+        let txt = "";
+        txt = `<a class="place" href="http://maps.google.com/?q=${event.place}" target="_blank">
+            <i id="mapIcon" class="fas fa-map"></i>
+            ${event.place}
+            </a>
+            <ol class="list">${lis}</ol>`;
+        $("#eventContent").html(txt);
+    }
+
     closeEventModal() {
         $("#eventModal").fadeOut(200);
-        $("#errors").text("");
         $("#calendar").removeClass("opaque");
         document.querySelector('body').style.overflow = 'auto';
     }
