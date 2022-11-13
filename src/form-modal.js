@@ -5,6 +5,8 @@ export class FormModal {
         this.submitButton = this.formModal.find(".submitButton");
         this.deleteButton = this.formModal.find(".deleteButton");
         this.flipCard = this.formModal.find(".flip-card-inner");
+        this.flipCardText = this.formModal.find(".flipCardText");
+        this.modalTitle = $("#modalTitle");
 
         this.onCancel(onCancel);
     }
@@ -16,18 +18,19 @@ export class FormModal {
         this.deleteButton.hide();
     }
     fadeIn() {
-        this.eventModal.fadeIn(200);
+        this.formModal.fadeIn(200);
     }
     fadeOut() {
-        this.eventModal.fadeOut(200);
+        this.formModal.fadeOut(200);
     }
 
     onCancel(cb) {
         this.onClick(this.cancelButton, cb);
     }
 
-    onSubmit(cb) {
+    onSubmit(cb, value) {
         this.onClick(this.submitButton, cb);
+        this.submitButton.val(value);
     }
 
     onDelete(cb) {
@@ -54,5 +57,13 @@ export class FormModal {
         setTimeout(function() {
             that.flipCard.removeClass("flip");
         },1000); 
+    }
+
+    writeOnFlip(text) {
+        this.flipCardText.text(text);
+    }
+
+    writeOnTitle(text) {
+        this.modalTitle.text(text);
     }
 }

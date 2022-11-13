@@ -6,6 +6,8 @@ export class EventModal {
         this.submitButton = this.eventModal.find(".submitButton");
         this.deleteButton = this.eventModal.find(".deleteButton");
         this.flipCard = this.eventModal.find(".flip-card-inner");
+        this.flipCardText = this.eventModal.find(".flipCardText");
+
 
         this.onCancel(onCancel);
     }
@@ -48,12 +50,12 @@ export class EventModal {
 
     onClick(element, callback) {
         element
-        .show()
-        .off("click")
-        .click((e) => {
-            e.preventDefault();
-            callback();
-        });
+            .show()
+            .off("click")
+            .click((e) => {
+                e.preventDefault();
+                callback();
+            });
     }
 
     animateFlip(){
@@ -62,5 +64,9 @@ export class EventModal {
         setTimeout(function() {
             that.flipCard.removeClass("flip");
         },1000); 
+    }
+
+    writeOnFlip(text) {
+        this.flipCardText.text(text);
     }
 }

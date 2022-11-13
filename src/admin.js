@@ -1,3 +1,5 @@
+import { EventModal } from "./event-modal.js";
+import { FormModal } from "./form-modal.js";
 import { Event } from "./event.js";
 import { dateString, addDays} from "./helper.js";
 
@@ -5,33 +7,59 @@ export class Admin {
     constructor(calendar, ctx) {
         this.calendar = calendar;
         this.ctx = ctx;
+        this.eventModal = new EventModal(() => {
+            this.closeEventModal();
+        });
+        this.formModal = new FormModal(() => {
+            this.closeFormModal();
+        });
+    }
+
+    userFound(event) {
+        const userName = this.ctx.userName;
+        if (event.names.find((user) => {return user == userName;})) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     openEventModal(event) {
-        $("#eventModal").fadeIn(200);
-        $("#calendar").addClass("opaque");
-        document.querySelector('body').style.overflow = 'hidden';
-        $(".editButton")
-            .off("click")
-            .click(() => {
-                this.closeEventModal(event);
-                this.openChangeFormModal(event);
+        const userName = this.ctx.userName;
+        const user = event.names.find((user) => {return user == userName;});
+
+        this.hideCalendar();
+        this.eventModal.fadeIn();
+        this.eventModal.onEdit(() => {
+            this.closeEventModal(event);
+            this.openChangeFormModal(event);
+        })
+        if(!this.userFound(event)) {
+            console.log("not found");
+            this.eventModal.hideDeleteButton();
+            this.eventModal.onSubmit(() => {
+                this.addName(event);
             });
-        $(".cancelButton")
-            .off("click")
-            .click((e) => {
-                e.preventDefault();
-                this.closeEventModal(event);
+            return
+        }
+        if (user == event.names[0]) {
+            console.log("you are admon here");
+            return
+        } else {
+            console.log("found");
+            this.eventModal.hideSubmitButton();
+            this.eventModal.onDelete(() => {
+                this.deleteName(event);
             });
+        }
 
         this.addEventContent(event);
 
-        
-        if(event.names.length <= 1) {
-            $("#eventModal").css("backgroundColor", "var(--green");
-        } else {
-            $("#eventModal").css("backgroundColor", "var(--blue");
-        }
+        // if(event.names.length <= 1) {
+        //     $("#eventModal").css("backgroundColor", "var(--green");
+        // } else {
+        //     $("#eventModal").css("backgroundColor", "var(--blue");
+        // }
     }
 
     addEventContent(event) {
@@ -51,9 +79,35 @@ export class Admin {
     }
 
     closeEventModal() {
-        $("#eventModal").fadeOut(200);
-        $("#calendar").removeClass("opaque");
-        document.querySelector('body').style.overflow = 'auto';
+        this.eventModal.close();
+        this.showCalendar();
+    }
+
+    addName(event) {
+        this.eventModal.writeOnFlip("Bon predication!");
+        this.eventModal.animateFlip();       
+        let that = this;
+        setTimeout(function(){
+            that.closeEventModal();
+        },1000);
+        event.names.push(this.ctx.userName);
+        this.calendar.saveEvent(event);
+        this.calendar.showEvent(event);
+    }
+
+    deleteName(event) {
+        this.eventModal.writeOnFlip("Ta participation est annulé.");
+        this.eventModal.animateFlip();     
+        let that = this;
+        setTimeout(function(){
+            that.closeEventModal();
+        },1000);
+        const userName = this.ctx.userName;
+        const user = event.names.find((user) => {return user == userName;});
+        const index = event.names.indexOf(user);
+        event.names.splice(index, 1);
+        this.calendar.saveEvent(event);
+        this.calendar.showEvent(event);
     }
 
     clickSlot(hour, dayIndex) {
@@ -76,26 +130,14 @@ export class Admin {
     }
 
     openCreateFormModal(event) {
-        $("#calendar").addClass("opaque");
-        document.querySelector('body').style.overflow = 'hidden';
-        $("#formModal").fadeIn(200);
-        $(".modalTitle").text("Créer l'équipe?");
-        $(".flipCardText").text("Ça y est! L'équipe est crée.");
-        $(".submitButton")
-            .val("Creer")
-            .off("click")
-            .click((e) => {
-                e.preventDefault();
-                this.submitModal(event);
-            });
-        $(".deleteButton")
-            .hide();
-        $(".cancelButton")
-            .off("click")
-            .click((e) => {
-                e.preventDefault();
-                this.closeFormModal();
-            });
+        this.hideCalendar();
+        this.formModal.fadeIn();
+        this.formModal.writeOnTitle("Créer l'équipe?");
+        this.formModal.writeOnFlip("Ça y est! L'équipe est crée.");
+        this.formModal.onSubmit((() => {
+            this.submitModal(event);
+        }), "Creer");
+        this.formModal.hideDeleteButton();
 
         $("#eventPlace").val(event.place);
         $("#eventMainName").val(this.ctx.userName);          
@@ -106,28 +148,16 @@ export class Admin {
     }
 
     openChangeFormModal(event) {
-        $("#calendar").addClass("opaque");
-        document.querySelector('body').style.overflow = 'hidden';
-        $("#formModal").fadeIn(200);
-        $(".modalTitle").text("Changer l'équipe?");
-        $(".flipCardText").text("Ça y est! L'équipe est changé.");
-        $(".submitButton")
-            .val("Changer")
-            .off("click")
-            .click((e) => {
-                e.preventDefault();
-                this.submitModal(event);
-            });
-        $(".deleteButton")
-            .show()
-            .off("click")
-            .click(() => this.deleteEvent(event));
-        $(".cancelButton")
-            .off("click")
-            .click((e) => {
-                e.preventDefault();
-                this.closeFormModal();
-            });
+        this.hideCalendar();
+        this.formModal.fadeIn();
+        this.formModal.writeOnTitle("Changer l'équipe?");
+        this.formModal.writeOnFlip("Ça y est! L'équipe est changé.");
+        this.formModal.onSubmit((() => {
+            this.submitModal(event);
+        }), "Changer");
+        this.formModal.onDelete(() => {
+            this.deleteEvent(event)
+        });
 
         $("#eventPlace").val(event.place);
         $("#eventMainName").val(this.ctx.userName);          
@@ -142,10 +172,7 @@ export class Admin {
             return;
         }
         this.updateEvent(event);       
-        document.getElementById("formModal").querySelector(".flip-card-inner").classList.add("flip");
-        setTimeout(function() {
-            document.getElementById("formModal").querySelector(".flip-card-inner").classList.remove("flip");
-        },1000);        
+        this.formModal.animateFlip();       
         let that = this;
         setTimeout(function(){
             that.closeFormModal();
@@ -153,10 +180,9 @@ export class Admin {
     }
 
     closeFormModal() {
-        $("#formModal").fadeOut(200);
+        this.formModal.close();
+        this.showCalendar();
         $("#errors").text("");
-        $("#calendar").removeClass("opaque");
-        document.querySelector('body').style.overflow = 'auto';
     }
 
     updateEvent(event) {
@@ -172,11 +198,8 @@ export class Admin {
     }
 
     deleteEvent(event) {
-        $(".flipCardText").text("L'équipe est annulé.");
-        document.getElementById("formModal").querySelector(".flip-card-inner").classList.add("flip");
-        setTimeout(function() {
-            document.getElementById("formModal").querySelector(".flip-card-inner").classList.remove("flip");
-        },1000);        
+        this.formModal.writeOnFlip("L'équipe est annulé.");
+        this.formModal.animateFlip();       
         let that = this;
         setTimeout(function(){
             that.closeFormModal();
@@ -198,5 +221,15 @@ export class Admin {
         });
 
         this.openCreateFormModal(event);
+    }
+
+    hideCalendar() {
+        $("#calendar").addClass("opaque");
+        document.querySelector('body').style.overflow = 'hidden';
+    }
+
+    showCalendar() {
+        $("#calendar").removeClass("opaque");
+        document.querySelector('body').style.overflow = 'auto'; 
     }
 }

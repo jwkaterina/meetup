@@ -23,9 +23,8 @@ export class User {
     }
 
     openEventModal(event) {
+        this.hideCalendar();
         this.eventModal.fadeIn();
-        $("#calendar").addClass("opaque");
-        document.querySelector('body').style.overflow = 'hidden';
         if (this.userFound(event)) {
             this.eventModal.hideSubmitButton();
             this.eventModal.onDelete(() => {
@@ -39,7 +38,6 @@ export class User {
         }
 
         this.addEventContent(event);
-
         
         // if(event.names.length <= 1) {
         //     $("#eventModal").css("backgroundColor", "var(--green");
@@ -66,8 +64,7 @@ export class User {
 
     closeEventModal() {
         this.eventModal.close();
-        $("#calendar").removeClass("opaque");
-        document.querySelector('body').style.overflow = 'auto'; 
+        this.showCalendar();
     }
 
     clickSlot(hour, dayIndex) {
@@ -75,8 +72,7 @@ export class User {
     }
 
     addName(event) {
-        // this.newName = $("#eventName").val();
-        $(".flipCardText").text("Bon predication!");
+        this.eventModal.writeOnFlip("Bon predication!");
         this.eventModal.animateFlip();       
         let that = this;
         setTimeout(function(){
@@ -88,7 +84,7 @@ export class User {
     }
 
     deleteName(event) {
-        $(".flipCardText").text("Ta participation est annulé.");
+        this.eventModal.writeOnFlip("Ta participation est annulé.");
         this.eventModal.animateFlip();     
         let that = this;
         setTimeout(function(){
@@ -104,6 +100,16 @@ export class User {
 
     createNewEvent() {
       return
+    }
+
+    hideCalendar() {
+        $("#calendar").addClass("opaque");
+        document.querySelector('body').style.overflow = 'hidden';
+    }
+
+    showCalendar() {
+        $("#calendar").removeClass("opaque");
+        document.querySelector('body').style.overflow = 'auto'; 
     }
 
 }
