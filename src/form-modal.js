@@ -37,8 +37,15 @@ export class FormModal {
         this.onClick(this.deleteButton, cb);
     }
 
+    open() {
+        this.fadeIn();
+        this.hideCalendar();
+    }
+
     close() {
         this.fadeOut();
+        this.showCalendar();
+        $("#errors").text("");
     }
 
     onClick(element, callback) {
@@ -65,5 +72,15 @@ export class FormModal {
 
     writeOnTitle(text) {
         this.modalTitle.text(text);
+    }
+
+    showCalendar() {
+        $("#calendar").removeClass("opaque");
+        document.querySelector('body').style.overflow = 'auto'; 
+    }
+
+    hideCalendar() {
+        $("#calendar").addClass("opaque");
+        document.querySelector('body').style.overflow = 'hidden';
     }
 }

@@ -44,8 +44,14 @@ export class EventModal {
         this.onClick(this.deleteButton, cb);
     }
 
+    open() {
+        this.fadeIn();
+        this.hideCalendar();
+    }
+
     close() {
         this.fadeOut();
+        this.showCalendar();
     }
 
     onClick(element, callback) {
@@ -68,5 +74,15 @@ export class EventModal {
 
     writeOnFlip(text) {
         this.flipCardText.text(text);
+    }
+
+    showCalendar() {
+        $("#calendar").removeClass("opaque");
+        document.querySelector('body').style.overflow = 'auto'; 
+    }
+
+    hideCalendar() {
+        $("#calendar").addClass("opaque");
+        document.querySelector('body').style.overflow = 'hidden';
     }
 }

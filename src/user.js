@@ -8,7 +8,7 @@ export class User {
         this.calendar = calendar;
         this.ctx = ctx;
         this.eventModal = new EventModal(() => {
-            this.closeEventModal();
+            this.eventModal.close();
         });
         this.eventModal.hideEditButton();
     }
@@ -23,8 +23,8 @@ export class User {
     }
 
     openEventModal(event) {
-        this.hideCalendar();
-        this.eventModal.fadeIn();
+        this.eventModal.open();
+        this.addEventContent(event);
         if (this.userFound(event)) {
             this.eventModal.hideSubmitButton();
             this.eventModal.onDelete(() => {
@@ -36,8 +36,6 @@ export class User {
                 this.addName(event);
             });
         }
-
-        this.addEventContent(event);
         
         // if(event.names.length <= 1) {
         //     $("#eventModal").css("backgroundColor", "var(--green");
@@ -62,11 +60,6 @@ export class User {
         $("#eventContent").html(txt);
     }
 
-    closeEventModal() {
-        this.eventModal.close();
-        this.showCalendar();
-    }
-
     clickSlot(hour, dayIndex) {
      return
     }
@@ -76,7 +69,7 @@ export class User {
         this.eventModal.animateFlip();       
         let that = this;
         setTimeout(function(){
-            that.closeEventModal();
+            that.eventModal.close();
         },1000);
         event.names.push(this.ctx.userName);
         this.calendar.saveEvent(event);
@@ -88,7 +81,7 @@ export class User {
         this.eventModal.animateFlip();     
         let that = this;
         setTimeout(function(){
-            that.closeEventModal();
+            that.eventModal.close();
         },1000);
         const userName = this.ctx.userName;
         const user = event.names.find((user) => {return user == userName;});
@@ -101,16 +94,5 @@ export class User {
     createNewEvent() {
       return
     }
-
-    hideCalendar() {
-        $("#calendar").addClass("opaque");
-        document.querySelector('body').style.overflow = 'hidden';
-    }
-
-    showCalendar() {
-        $("#calendar").removeClass("opaque");
-        document.querySelector('body').style.overflow = 'auto'; 
-    }
-
 }
 

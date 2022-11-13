@@ -8,10 +8,10 @@ export class Admin {
         this.calendar = calendar;
         this.ctx = ctx;
         this.eventModal = new EventModal(() => {
-            this.closeEventModal();
+            this.eventModal.close();
         });
         this.formModal = new FormModal(() => {
-            this.closeFormModal();
+            this.formModal.close();
         });
     }
 
@@ -28,10 +28,10 @@ export class Admin {
         const userName = this.ctx.userName;
         const user = event.names.find((user) => {return user == userName;});
 
-        this.hideCalendar();
-        this.eventModal.fadeIn();
+        this.eventModal.open();
+        this.addEventContent(event);
         this.eventModal.onEdit(() => {
-            this.closeEventModal(event);
+            this.eventModal.close();
             this.openChangeFormModal(event);
         })
         if(!this.userFound(event)) {
@@ -43,7 +43,9 @@ export class Admin {
             return
         }
         if (user == event.names[0]) {
-            console.log("you are admon here");
+            this.eventModal.hideDeleteButton();
+            this.eventModal.hideSubmitButton();
+            console.log("you are admin here");
             return
         } else {
             console.log("found");
@@ -52,8 +54,6 @@ export class Admin {
                 this.deleteName(event);
             });
         }
-
-        this.addEventContent(event);
 
         // if(event.names.length <= 1) {
         //     $("#eventModal").css("backgroundColor", "var(--green");
@@ -78,17 +78,12 @@ export class Admin {
         $("#eventContent").html(txt);
     }
 
-    closeEventModal() {
-        this.eventModal.close();
-        this.showCalendar();
-    }
-
     addName(event) {
         this.eventModal.writeOnFlip("Bon predication!");
         this.eventModal.animateFlip();       
         let that = this;
         setTimeout(function(){
-            that.closeEventModal();
+            that.eventModal.close();
         },1000);
         event.names.push(this.ctx.userName);
         this.calendar.saveEvent(event);
@@ -100,7 +95,7 @@ export class Admin {
         this.eventModal.animateFlip();     
         let that = this;
         setTimeout(function(){
-            that.closeEventModal();
+            that.eventModal.close();
         },1000);
         const userName = this.ctx.userName;
         const user = event.names.find((user) => {return user == userName;});
@@ -130,8 +125,7 @@ export class Admin {
     }
 
     openCreateFormModal(event) {
-        this.hideCalendar();
-        this.formModal.fadeIn();
+        this.formModal.open();
         this.formModal.writeOnTitle("Créer l'équipe?");
         this.formModal.writeOnFlip("Ça y est! L'équipe est crée.");
         this.formModal.onSubmit((() => {
@@ -148,8 +142,7 @@ export class Admin {
     }
 
     openChangeFormModal(event) {
-        this.hideCalendar();
-        this.formModal.fadeIn();
+        this.formModal.open();
         this.formModal.writeOnTitle("Changer l'équipe?");
         this.formModal.writeOnFlip("Ça y est! L'équipe est changé.");
         this.formModal.onSubmit((() => {
@@ -175,14 +168,8 @@ export class Admin {
         this.formModal.animateFlip();       
         let that = this;
         setTimeout(function(){
-            that.closeFormModal();
+            that.formModal.close();
         },1000);
-    }
-
-    closeFormModal() {
-        this.formModal.close();
-        this.showCalendar();
-        $("#errors").text("");
     }
 
     updateEvent(event) {
@@ -202,7 +189,7 @@ export class Admin {
         this.formModal.animateFlip();       
         let that = this;
         setTimeout(function(){
-            that.closeFormModal();
+            that.formModal.close();
         },1000);        $(`#${event.id}`).remove();
         delete this.calendar.events[event.date][event.id];
         if (Object.values(this.calendar.events[event.date]).length == 0) {
@@ -221,15 +208,5 @@ export class Admin {
         });
 
         this.openCreateFormModal(event);
-    }
-
-    hideCalendar() {
-        $("#calendar").addClass("opaque");
-        document.querySelector('body').style.overflow = 'hidden';
-    }
-
-    showCalendar() {
-        $("#calendar").removeClass("opaque");
-        document.querySelector('body').style.overflow = 'auto'; 
     }
 }

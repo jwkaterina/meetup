@@ -628,7 +628,7 @@ input:checked + .slider:before {
         height: 50vh;
     }
 
-    .modalTitle {
+    #modalTitle {
         margin: 1vh 0 1vh 0;
         padding: 1vh 0;
         height: 8vh;
