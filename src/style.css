@@ -376,33 +376,6 @@ input:checked + .slider:before {
     color: var(--yellow);
 }
 
-#modalTitle {
-    margin: 10px 0 10px 0;
-    padding: 30px 0;
-    height: 100px;
-    color: var(--black);
-    text-align: center;
-}
-
-.shortInput {
-    border: 1px solid var(--gray-light);
-    border-radius: 2px;
-    background-color: var(--white);
-    padding: 10px 20px;
-    color: var(--gray-light);
-    margin-bottom: 20px;
-    width: 100%;
-}
-
-.shortInput:focus {
-    border-color: var(--blue);
-    color: var(--black)
-}
-
-.shortInput::placeholder {
-    color: var(--gray-light);
-}
-
 .button {
     padding: 10px 20px;
     background-color: var(--blue);
@@ -496,8 +469,40 @@ input:checked + .slider:before {
 }
 
 /* form modal */
-#formModal .flip-card-front, #eventModal .flip-card-back {
-    background-color: var(--blue); 
+#formModal .flip-card-front, #formModal .flip-card-back {
+    background-color: var(--white); 
+}
+
+#formModal .flipCardText {
+    color: var(--black);
+}
+
+
+#modalTitle {
+    margin: 10px 0 10px 0;
+    padding: 30px 0;
+    height: 100px;
+    color: var(--black);
+    text-align: center;
+}
+
+.shortInput {
+    border: 1px solid var(--gray-light);
+    border-radius: 2px;
+    background-color: var(--white);
+    padding: 10px 20px;
+    color: var(--gray-light);
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.shortInput:focus {
+    border-color: var(--blue);
+    color: var(--black)
+}
+
+.shortInput::placeholder {
+    color: var(--gray-light);
 }
 
 #eventStart {
@@ -507,16 +512,6 @@ input:checked + .slider:before {
 
 #eventEnd {
     width: 45%;
-}
-
-#deleteButton {
-    background-color: var(--yellow);
-    color: var(--black);
-}
-
-#deleteButton:hover {
-    background-color: var(--gray-darker);
-    color: var(--white);
 }
 
 /* flip-card */

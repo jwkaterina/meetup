@@ -129,7 +129,7 @@ export class Admin {
         this.formModal.writeOnTitle("Créer l'équipe?");
         this.formModal.writeOnFlip("Ça y est! L'équipe est crée.");
         this.formModal.onSubmit((() => {
-            this.submitModal(event);
+            this.submitEvent(event);
         }), "Creer");
         this.formModal.hideDeleteButton();
 
@@ -146,7 +146,7 @@ export class Admin {
         this.formModal.writeOnTitle("Changer l'équipe?");
         this.formModal.writeOnFlip("Ça y est! L'équipe est changé.");
         this.formModal.onSubmit((() => {
-            this.submitModal(event);
+            this.submitEvent(event);
         }), "Changer");
         this.formModal.onDelete(() => {
             this.deleteEvent(event)
@@ -160,7 +160,7 @@ export class Admin {
         $("#eventPlace").focus();
     }
 
-    submitModal(event) {
+    submitEvent(event) {
         if (!this.calendar.isEventValid(event)) {
             return;
         }
