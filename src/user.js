@@ -15,7 +15,6 @@ export class User {
 
     userFound(event) {
         const userName = this.ctx.userName;
-        // console.log(event.names.find((user) => {return user == userName;}));
         if (event.names.find((user) => {return user == userName;})) {
             return true;
         } else {
@@ -32,12 +31,10 @@ export class User {
             this.eventModal.onDelete(() => {
                 this.deleteName(event);
             });
-            console.log("found")
         } else {
-            console.log("not found")
             this.eventModal.hideDeleteButton();
             this.eventModal.onSubmit(() => {
-                this.submitModal(event);
+                this.addName(event);
             });
         }
 
@@ -77,21 +74,14 @@ export class User {
      return
     }
 
-    submitModal(event) {
-        if (!this.calendar.isEventValid(event)) {
-            return;
-        }
-        this.updateEvent(event);     
+    addName(event) {
+        // this.newName = $("#eventName").val();
         $(".flipCardText").text("Bon predication!");
         this.eventModal.animateFlip();       
         let that = this;
         setTimeout(function(){
             that.closeEventModal();
         },1000);
-    }
-
-    updateEvent(event) {
-        // this.newName = $("#eventName").val();
         event.names.push(this.ctx.userName);
         this.calendar.saveEvent(event);
         this.calendar.showEvent(event);
@@ -108,7 +98,6 @@ export class User {
         const user = event.names.find((user) => {return user == userName;});
         const index = event.names.indexOf(user);
         event.names.splice(index, 1);
-        // console.log(user, index);
         this.calendar.saveEvent(event);
         this.calendar.showEvent(event);
     }
