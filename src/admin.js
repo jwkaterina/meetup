@@ -78,7 +78,7 @@ export class Admin {
     openCreateFormModal(event) {
         $("#calendar").addClass("opaque");
         document.querySelector('body').style.overflow = 'hidden';
-        $("#adminFormModal").fadeIn(200);
+        $("#formModal").fadeIn(200);
         $(".modalTitle").text("Créer l'équipe?");
         $(".flipCardText").text("Ça y est! L'équipe est crée.");
         $(".submitButton")
@@ -108,7 +108,7 @@ export class Admin {
     openChangeFormModal(event) {
         $("#calendar").addClass("opaque");
         document.querySelector('body').style.overflow = 'hidden';
-        $("#adminFormModal").fadeIn(200);
+        $("#formModal").fadeIn(200);
         $(".modalTitle").text("Changer l'équipe?");
         $(".flipCardText").text("Ça y est! L'équipe est changé.");
         $(".submitButton")
@@ -142,9 +142,9 @@ export class Admin {
             return;
         }
         this.updateEvent(event);       
-        document.getElementById("adminFormModal").querySelector(".flip-card-inner").classList.add("flip");
+        document.getElementById("formModal").querySelector(".flip-card-inner").classList.add("flip");
         setTimeout(function() {
-            document.getElementById("adminFormModal").querySelector(".flip-card-inner").classList.remove("flip");
+            document.getElementById("formModal").querySelector(".flip-card-inner").classList.remove("flip");
         },1000);        
         let that = this;
         setTimeout(function(){
@@ -153,7 +153,7 @@ export class Admin {
     }
 
     closeFormModal() {
-        $("#adminFormModal").fadeOut(200);
+        $("#formModal").fadeOut(200);
         $("#errors").text("");
         $("#calendar").removeClass("opaque");
         document.querySelector('body').style.overflow = 'auto';
@@ -173,9 +173,9 @@ export class Admin {
 
     deleteEvent(event) {
         $(".flipCardText").text("L'équipe est annulé.");
-        document.getElementById("adminFormModal").querySelector(".flip-card-inner").classList.add("flip");
+        document.getElementById("formModal").querySelector(".flip-card-inner").classList.add("flip");
         setTimeout(function() {
-            document.getElementById("adminFormModal").querySelector(".flip-card-inner").classList.remove("flip");
+            document.getElementById("formModal").querySelector(".flip-card-inner").classList.remove("flip");
         },1000);        
         let that = this;
         setTimeout(function(){

@@ -496,7 +496,7 @@ input:checked + .slider:before {
 }
 
 /* form modal */
-#adminFormModal .flip-card-front, #eventModal .flip-card-back {
+#formModal .flip-card-front, #eventModal .flip-card-back {
     background-color: var(--blue); 
 }
 
