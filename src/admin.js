@@ -13,6 +13,9 @@ export class Admin {
         this.formModal = new FormModal(() => {
             this.formModal.close();
         });
+        window.addEventListener("resize", (e) => {
+            this.formModal.resize();
+          });
     }
 
     userFound(event) {
@@ -35,7 +38,6 @@ export class Admin {
             this.openChangeFormModal(event);
         })
         if(!this.userFound(event)) {
-            console.log("not found");
             this.eventModal.hideDeleteButton();
             this.eventModal.onSubmit(() => {
                 this.addName(event);
@@ -45,10 +47,8 @@ export class Admin {
         if (user == event.names[0]) {
             this.eventModal.hideDeleteButton();
             this.eventModal.hideSubmitButton();
-            console.log("you are admin here");
             return
         } else {
-            console.log("found");
             this.eventModal.hideSubmitButton();
             this.eventModal.onDelete(() => {
                 this.deleteName(event);

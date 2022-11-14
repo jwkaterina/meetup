@@ -340,9 +340,9 @@ input:checked + .slider:before {
     margin-top: 0.7rem;
 }
 
-.place:hover {
+/* .place:hover {
     color: var(--black);
-}
+} */
 
 #mapIcon {
     padding: 10px;
@@ -378,7 +378,6 @@ input:checked + .slider:before {
 
 .button {
     padding: 10px 20px;
-    background-color: var(--blue);
     color: white;
     cursor: pointer;
     margin-top: 10px;
@@ -390,12 +389,6 @@ input:checked + .slider:before {
 
 .button:last-child {
     margin-right: 0;
-}
-
-.button:hover,
-.button:focus {
-    background-color: var(--gray-base);
-    color: var(--white);
 }
 
 .cancelButton {
@@ -434,12 +427,12 @@ input:checked + .slider:before {
     background-color: var(--blue); 
 }
 
-#eventModal .submitButton, #eventModal .deleteButton {
+#eventModal .button {
     background-color: var(--white);
     color: var(--black);
 }
 
-#eventModal .submitButton:hover, #eventModal .deleteButton:hover {
+#eventModal .button:hover {
     background-color: var(--yellow);
     color: var(--white);
 }
@@ -449,28 +442,35 @@ input:checked + .slider:before {
 }
 
 #eventContent {
-    margin: 70px;
-    /* height: 100px; */
+    margin: 50px;
+    height: 250px;
     color: var(--white);
     text-align: center;
     line-height: 2rem;
     font-size: 1rem;
 }
 
-.editButton {
-    background-color: var(--white);
+#eventContent .place {
     color: var(--black);
-    margin-left: 50px;
 }
-
-.editButton:hover {
-    background-color: var(--yellow);
+#eventContent .place:hover {
     color: var(--white);
 }
+
 
 /* form modal */
 #formModal .flip-card-front, #formModal .flip-card-back {
     background-color: var(--white); 
+}
+
+#formModal .button {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+#formModal .button:hover {
+    background-color: var(--yellow);
+    color: var(--white);
 }
 
 #formModal .flipCardText {
@@ -533,13 +533,11 @@ input:checked + .slider:before {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
   
-/* .flip-card:hover .flip-card-inner  */
 .flip {
     transform: rotateY(180deg);
 }
   
 .flip-card-front, .flip-card-back {
-    /* background-color: var(--white); */
     position: absolute;
     padding: 30px 50px;
     width: 100%;
@@ -615,7 +613,6 @@ input:checked + .slider:before {
     }
 
     .modal {
-        padding: 10px 20px;
         left: 5vw;
         top: 25vh;
         transform: translate(0, 0);
@@ -623,14 +620,22 @@ input:checked + .slider:before {
         height: 50vh;
     }
 
+    #eventContent {
+        margin: 10vw;
+        height: 25vh;
+        color: var(--white);
+        text-align: center;
+        line-height: 2rem;
+        font-size: 1rem;
+    }
+
     #modalTitle {
         margin: 1vh 0 1vh 0;
         padding: 1vh 0;
-        height: 8vh;
+        height: 6vh;
         color: var(--black);
         text-align: center;
     }
-
     
     .flip-card {
         width: 90vw;
@@ -644,6 +649,14 @@ input:checked + .slider:before {
 
     .flip-card-back {
         transform: rotateX(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+        padding: 30px;
+    }
+      
+    .flip-card-back {
+        padding-top: 170px;
     }
 
 }
