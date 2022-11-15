@@ -167,68 +167,6 @@ export class Calendar {
         localStorage.setItem("events", JSON.stringify(this.events));
     }
 
-    showEvent(event) {
-        if (
-            event.date < dateString(this.ctx.weekStart) ||
-            event.date > dateString(this.ctx.weekEnd)
-        ) {
-            $(`#${event.id}`).remove();
-            return;
-        }
-        let eventSlot;
-        if ($(`#${event.id}`).length) {
-            eventSlot = $(`#${event.id}`);
-        } else {
-            eventSlot = $("<div></div>")
-                .addClass("event")
-                .attr("id", event.id)
-                .click(() => this.ctx.principal.openEventModal(event));
-        }
-        const h = this.settings.slotHeight;
-
-        let lis = "";
-        event.names.forEach(addToList)
-        function addToList(value, index) {
-            lis += `<li class="member" member=${index + 1}>${value}</li>`
-        };
-
-        let txt = "";
-        txt = `<a class="place" target="_blank">${event.place}</a>
-            <ol class="list">${lis}</ol>`
-
-        eventSlot
-            .html(txt)
-            .css("top", (event.startHour + event.startMinutes / 60 - this.settings.dayStarts) * h -+ 1 + "px")
-            .css("bottom", (this.settings.dayEnds - event.endHour + event.endMinutes / 60) * h + 5 + "px")
-            .appendTo(`.day[data-dayIndex=${event.dayIndex}] .slots`);
-
-        // if(event.names.length <= 1) {
-        //     eventSlot.css("backgroundColor", "var(--green");
-        // } else {
-        //     eventSlot.css("backgroundColor", "var(--blue");
-        // }
-
-        // const duration = event.duration;
-        // if (duration < 45) {
-        //     eventSlot.removeClass("shortEvent").addClass("veryShortEvent");
-        // } else if (duration < 59) {
-        //     eventSlot.removeClass("veryShortEvent").addClass("shortEvent");
-        // } else {
-        //     eventSlot.removeClass("shortEvent").removeClass("veryShortEvent");
-        // }
-
-        const media = window.matchMedia("(max-width: 800px)");
-        if (media.matches) {
-            if(event.names.length == 0) {
-                return
-            } else {
-                eventSlot.text(event.names.length);
-            }
-        }
-
-
-    }
-
     loadEvents() {
         $(".event").remove();
         if (!this.eventsLoaded) {

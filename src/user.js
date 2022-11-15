@@ -1,7 +1,5 @@
-import { EventModal } from "./event-modal.js";
-import { Context } from "./ctx.js";
-import { Event } from "./event.js";
-import { dateString, addDays } from "./helper.js";
+import { Context } from "./ctx";
+import { EventModal } from "./event-modal";
 
 
 export class User {
@@ -74,7 +72,7 @@ export class User {
         },1000);
         event.names.push(this.ctx.userName);
         this.calendar.saveEvent(event);
-        this.calendar.showEvent(event);
+        event.show();
     }
 
     deleteName(event) {
@@ -89,7 +87,7 @@ export class User {
         const index = event.names.indexOf(user);
         event.names.splice(index, 1);
         this.calendar.saveEvent(event);
-        this.calendar.showEvent(event);
+        event.show();
     }
 
     createNewEvent() {

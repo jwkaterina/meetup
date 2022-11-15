@@ -1,4 +1,4 @@
-import { getDayIndex, generateId } from "./helper";
+import { dateString, getDayIndex, generateId } from "./helper";
 import { Settings } from "./settings";
 import { Context } from "./ctx";
 
@@ -13,7 +13,6 @@ export class Event {
         this.prevDate = this.date;
         this.color = data.color;
         this.settings = Settings.getInstance();
-        this.ctx = Context.getInstance();
     }
 
     get dayIndex() {
@@ -45,9 +44,10 @@ export class Event {
     }
 
     show() {
+        const ctx = Context.getInstance();
         if (
-            this.date < dateString(this.ctx.weekStart) ||
-            this.date > dateString(this.ctx.weekEnd)
+            this.date < dateString(ctx.weekStart) ||
+            this.date > dateString(ctx.weekEnd)
         ) {
             $(`#${this.id}`).remove();
             return;
@@ -59,7 +59,7 @@ export class Event {
             eventSlot = $("<div></div>")
                 .addClass("event")
                 .attr("id", this.id)
-                .click(() => this.ctx.principal.openEventModal(this));
+                .click(() => ctx.principal.openEventModal(this));
         }
         const h = this.settings.slotHeight;
 

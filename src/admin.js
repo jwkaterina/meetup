@@ -1,8 +1,8 @@
-import { EventModal } from "./event-modal.js";
-import { FormModal } from "./form-modal.js";
-import { Context } from "./ctx.js";
-import { Event } from "./event.js";
-import { dateString, addDays} from "./helper.js";
+import { Context } from "./ctx";
+import { Event } from "./event";
+import { FormModal } from "./form-modal";
+import { EventModal } from "./event-modal";
+import { dateString, addDays} from "./helper";
 
 export class Admin {
     constructor(calendar) {
@@ -88,7 +88,7 @@ export class Admin {
         },1000);
         event.names.push(this.ctx.userName);
         this.calendar.saveEvent(event);
-        this.calendar.showEvent(event);
+        event.show();
     }
 
     deleteName(event) {
@@ -103,7 +103,7 @@ export class Admin {
         const index = event.names.indexOf(user);
         event.names.splice(index, 1);
         this.calendar.saveEvent(event);
-        this.calendar.showEvent(event);
+        event.show();
     }
 
     clickSlot(hour, dayIndex) {
@@ -113,7 +113,7 @@ export class Admin {
                 ? (hour + 1).toString().padStart(2, "0") + ":00"
                 : hour.toString().padStart(2, "0") + ":59";
 
-        const date = dateString(addDays(this.calendar.weekStart, dayIndex));
+        const date = dateString(addDays(this.ctx.weekStart, dayIndex));
         const event = new Event({
             place: "",
             start,
@@ -182,7 +182,7 @@ export class Admin {
         event.end = $("#eventEnd").val();
         event.date = $("#eventDate").val();
         this.calendar.saveEvent(event);
-        this.calendar.showEvent(event);
+        event.show();
     }
 
     deleteEvent(event) {
@@ -203,7 +203,7 @@ export class Admin {
         const event = new Event({
             start: "12:00",
             end: "13:00",
-            date: dateString(this.calendar.weekStart),
+            date: dateString(this.ctx.weekStart),
             names: [],
             color: "green",
         });
