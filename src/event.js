@@ -1,4 +1,5 @@
 import { dateString, getDayIndex, generateId } from "./helper";
+import { PrincipalCommon } from "./principal";
 import { Settings } from "./settings";
 import { Context } from "./ctx";
 
@@ -13,6 +14,7 @@ export class Event {
         this.prevDate = this.date;
         this.color = data.color;
         this.settings = Settings.getInstance();
+        this.common = new PrincipalCommon();
     }
 
     get dayIndex() {
@@ -84,6 +86,11 @@ export class Event {
         // } else {
         //     eventSlot.css("backgroundColor", "var(--blue");
         // }
+        if(!this.common.userFound(this)) {
+            eventSlot.css("backgroundColor", "var(--green");
+        } else {
+            eventSlot.css("backgroundColor", "var(--blue");
+        }
 
         // const duration = event.duration;
         // if (duration < 45) {

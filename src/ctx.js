@@ -22,7 +22,7 @@ class Ctx {
         console.log("Admin Mode");
     }
 
-    userChange() {
+    userChange(calendar) {
         const radioA = document.getElementById("userA");
         const radioB = document.getElementById("userB");
         const radioC = document.getElementById("userC");
@@ -35,6 +35,7 @@ class Ctx {
             this.userName = "Liubov Zasadna";
         } 
         console.log(this.userName)
+        calendar.loadEvents();
     }
 }
 

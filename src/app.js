@@ -17,7 +17,7 @@ export class App {
 
     setupControls() {
         $("#checkBox").click(() => this.modeChange());
-        $(".radio-container").change(() => this.ctx.userChange());
+        $(".radio-container").change(() => this.ctx.userChange(this.calendar));
     }
 
     modeChange() {

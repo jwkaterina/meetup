@@ -3,11 +3,13 @@ import { Event } from "./event";
 import { FormModal } from "./form-modal";
 import { EventModal } from "./event-modal";
 import { dateString, addDays} from "./helper";
+import { PrincipalCommon } from "./principal";
 
 export class Admin {
     constructor(calendar) {
         this.calendar = calendar;
         this.ctx = Context.getInstance();
+        this.common = new PrincipalCommon();
         this.eventModal = new EventModal(() => {
             this.eventModal.close();
         });
@@ -17,15 +19,6 @@ export class Admin {
         // window.addEventListener("resize", (e) => {
         //     this.formModal.resize();
         //   });
-    }
-
-    userFound(event) {
-        const userName = this.ctx.userName;
-        if (event.names.find((user) => {return user == userName;})) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     openEventModal(event) {
@@ -38,7 +31,7 @@ export class Admin {
             this.eventModal.close();
             this.openChangeFormModal(event);
         })
-        if(!this.userFound(event)) {
+        if(!this.common.userFound(event)) {
             this.eventModal.hideDeleteButton();
             this.eventModal.onSubmit(() => {
                 this.addName(event);
@@ -203,7 +196,7 @@ export class Admin {
         const event = new Event({
             start: "12:00",
             end: "13:00",
-            date: dateString(this.ctx.weekStart),
+            date: dateString(this.ct.weekStart),
             names: [],
             color: "green",
         });

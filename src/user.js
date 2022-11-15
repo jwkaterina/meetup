@@ -1,30 +1,23 @@
 import { Context } from "./ctx";
 import { EventModal } from "./event-modal";
+import { PrincipalCommon } from "./principal";
 
 
 export class User {
     constructor(calendar) {
         this.calendar = calendar;
         this.ctx = Context.getInstance();
+        this.common = new PrincipalCommon();
         this.eventModal = new EventModal(() => {
             this.eventModal.close();
         });
         this.eventModal.hideEditButton();
     }
 
-    userFound(event) {
-        const userName = this.ctx.userName;
-        if (event.names.find((user) => {return user == userName;})) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     openEventModal(event) {
         this.eventModal.open();
         this.addEventContent(event);
-        if (this.userFound(event)) {
+        if (this.common.userFound(event)) {
             this.eventModal.hideSubmitButton();
             this.eventModal.onDelete(() => {
                 this.deleteName(event);
