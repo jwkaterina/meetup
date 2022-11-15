@@ -78,7 +78,7 @@ textarea {
 }
 
 .header i:hover {
-    color: var(--black);
+    color: var(--blue);
 }
 
 /* controls */
@@ -325,7 +325,7 @@ input:checked + .slider:before {
 }
 
 .event:hover {
-    background-color: var(--gray-darker) !important;
+    background-color: var(--blue) !important;
 }
 
 .place {
@@ -478,13 +478,13 @@ input:checked + .slider:before {
 }
 
 
-#modalTitle {
+/* #modalTitle {
     margin: 10px 0 10px 0;
     padding: 30px 0;
     height: 100px;
     color: var(--black);
     text-align: center;
-}
+} */
 
 .shortInput {
     border: 1px solid var(--gray-light);
@@ -612,7 +612,7 @@ input:checked + .slider:before {
         height: 65px;
     }
 
-    .modal {
+    #eventModal {
         left: 5vw;
         top: 25vh;
         transform: translate(0, 0);
@@ -628,19 +628,44 @@ input:checked + .slider:before {
         line-height: 2rem;
         font-size: 1rem;
     }
+    
+    #eventModal .flip-card {
+        width: 90vw;
+        height: 50vh;
+        perspective: 1000px;
+    }
 
-    #modalTitle {
+    #formModal {
+        left: 5vw;
+        top: 5vh;
+        transform: translate(0, 0);
+        width: 90vw;
+        height: 80vh;
+        overflow: auto;
+    }
+
+    #formModal .flip-card {
+        width: 90vw;
+        height: 80vh;
+        perspective: 1000px;
+    }
+
+    /* #modalTitle {
         margin: 1vh 0 1vh 0;
         padding: 1vh 0;
         height: 6vh;
         color: var(--black);
         text-align: center;
+    } */
+
+    .shortInput {
+        padding: 1vh 2vh;
+        margin: 4vh 0 0 0;
     }
-    
-    .flip-card {
-        width: 90vw;
-        height: 50vh;
-        perspective: 1000px;
+
+    .button {
+        padding: 1vh 2vh;
+        margin-top: 4vh;
     }
 
     .flip {
@@ -659,14 +684,23 @@ input:checked + .slider:before {
         padding-top: 170px;
     }
 
+    /* #eventModal {
+        height: 50vh !important;
+        top: 25vh;
+    }
+
+    #eventModal .flipCard {
+        height: 50vh !important;
+    }
+
     #formModal {
-        height: 80vh !important;
+        height: 80vh;
         top: 5vh;
     }
 
     #formModal .flipCard {
         height: 80vh;
-    }
+    } */
 
 
     /* @media (max-height: 500px) {

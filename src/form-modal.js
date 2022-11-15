@@ -84,10 +84,11 @@ export class FormModal {
         document.querySelector('body').style.overflow = 'hidden';
     }
 
-    // resize() {
-    //     this.formModal
-    //         .css("height", "80vh")
-    //         .css("top", "5vh");
-    //     this.flipCard.css("height", "80vh");
-    // }
+//     resize() {
+//         this.formModal
+//             .css("height", "500px")
+//             .css("top", "10px")
+//             .css("overflow", "auto");
+//         this.flipCard.css("height", "500px");
+//     }
 }
