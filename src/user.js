@@ -1,12 +1,13 @@
 import { EventModal } from "./event-modal.js";
+import { Context } from "./ctx.js";
 import { Event } from "./event.js";
 import { dateString, addDays } from "./helper.js";
 
 
 export class User {
-    constructor(calendar, ctx) {
+    constructor(calendar) {
         this.calendar = calendar;
-        this.ctx = ctx;
+        this.ctx = Context.getInstance();
         this.eventModal = new EventModal(() => {
             this.eventModal.close();
         });

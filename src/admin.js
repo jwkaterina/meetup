@@ -1,21 +1,22 @@
 import { EventModal } from "./event-modal.js";
 import { FormModal } from "./form-modal.js";
+import { Context } from "./ctx.js";
 import { Event } from "./event.js";
 import { dateString, addDays} from "./helper.js";
 
 export class Admin {
-    constructor(calendar, ctx) {
+    constructor(calendar) {
         this.calendar = calendar;
-        this.ctx = ctx;
+        this.ctx = Context.getInstance();
         this.eventModal = new EventModal(() => {
             this.eventModal.close();
         });
         this.formModal = new FormModal(() => {
             this.formModal.close();
         });
-        window.addEventListener("resize", (e) => {
-            this.formModal.resize();
-          });
+        // window.addEventListener("resize", (e) => {
+        //     this.formModal.resize();
+        //   });
     }
 
     userFound(event) {

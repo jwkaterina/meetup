@@ -1,4 +1,6 @@
-import { getDayIndex, generateId } from "./helper.js";
+import { getDayIndex, generateId } from "./helper";
+import { Settings } from "./settings";
+import { Context } from "./ctx";
 
 export class Event {
     constructor(data) {
@@ -10,6 +12,8 @@ export class Event {
         this.date = data.date;
         this.prevDate = this.date;
         this.color = data.color;
+        this.settings = Settings.getInstance();
+        this.ctx = Context.getInstance();
     }
 
     get dayIndex() {
@@ -38,5 +42,67 @@ export class Event {
 
     get endMinutes() {
         return parseInt(this.end.substring(3, 5));
+    }
+
+    show() {
+        if (
+            this.date < dateString(this.ctx.weekStart) ||
+            this.date > dateString(this.ctx.weekEnd)
+        ) {
+            $(`#${this.id}`).remove();
+            return;
+        }
+        let eventSlot;
+        if ($(`#${this.id}`).length) {
+            eventSlot = $(`#${this.id}`);
+        } else {
+            eventSlot = $("<div></div>")
+                .addClass("event")
+                .attr("id", this.id)
+                .click(() => this.ctx.principal.openEventModal(this));
+        }
+        const h = this.settings.slotHeight;
+
+        let lis = "";
+        this.names.forEach(addToList)
+        function addToList(value, index) {
+            lis += `<li class="member" member=${index + 1}>${value}</li>`
+        };
+
+        let txt = "";
+        txt = `<a class="place" target="_blank">${this.place}</a>
+            <ol class="list">${lis}</ol>`
+
+        eventSlot
+            .html(txt)
+            .css("top", (this.startHour + this.startMinutes / 60 - this.settings.dayStarts) * h -+ 1 + "px")
+            .css("bottom", (this.settings.dayEnds - this.endHour + this.endMinutes / 60) * h + 5 + "px")
+            .appendTo(`.day[data-dayIndex=${this.dayIndex}] .slots`);
+
+        // if(event.names.length <= 1) {
+        //     eventSlot.css("backgroundColor", "var(--green");
+        // } else {
+        //     eventSlot.css("backgroundColor", "var(--blue");
+        // }
+
+        // const duration = event.duration;
+        // if (duration < 45) {
+        //     eventSlot.removeClass("shortEvent").addClass("veryShortEvent");
+        // } else if (duration < 59) {
+        //     eventSlot.removeClass("veryShortEvent").addClass("shortEvent");
+        // } else {
+        //     eventSlot.removeClass("shortEvent").removeClass("veryShortEvent");
+        // }
+
+        const media = window.matchMedia("(max-width: 800px)");
+        if (media.matches) {
+            if(this.names.length == 0) {
+                return
+            } else {
+                eventSlot.text(this.names.length);
+            }
+        }
+
+
     }
 }

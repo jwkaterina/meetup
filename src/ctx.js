@@ -2,20 +2,22 @@ import { User } from "./user.js";
 import { Admin } from "./admin.js";
 
 
-export class Ctx {
+class Ctx {
     constructor() {
         this.principal = null;
         this.userName = "Kateryna Logoshko";
+        this.weekStart = null;
+        this.weekEnd = null;
     }
 
     switchToUserMode(calendar) {
-        this.principal = new User(calendar, this);
+        this.principal = new User(calendar);
         $("#addButton").hide();            
         console.log("User Mode");
     }
 
     switchToAdminMode(calendar) {
-        this.principal = new Admin(calendar, this);
+        this.principal = new Admin(calendar);
         $("#addButton").show();            
         console.log("Admin Mode");
     }
@@ -34,4 +36,22 @@ export class Ctx {
         } 
         console.log(this.userName)
     }
-}   
+}
+
+export const Context = (function() {
+    let instance;
+  
+    function createInstance() {
+      const object = new Ctx();
+      return object;
+    }
+  
+    return {
+      getInstance: function() {
+        if(!instance){
+          instance = createInstance();
+        }
+        return instance;
+      }
+    }
+  })();

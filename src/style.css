@@ -659,4 +659,26 @@ input:checked + .slider:before {
         padding-top: 170px;
     }
 
+    #formModal {
+        height: 80vh !important;
+        top: 5vh;
+    }
+
+    #formModal .flipCard {
+        height: 80vh;
+    }
+
+
+    /* @media (max-height: 500px) {
+        #formModal {
+            height: 80vh;
+            top: 5vh;
+        }
+    
+        #formModal .flipCard {
+            height: 80vh;
+        }
+    } */
 }
+
+

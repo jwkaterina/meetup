@@ -1,19 +1,17 @@
-import { dateString, getDayIndex, addDays } from "./helper.js";
-import { Event } from "./event.js";
+import { dateString, getDayIndex, addDays } from "./helper";
+import { Settings } from "./settings";
+import { Context } from "./ctx";
+import { Event } from "./event";
 import './style.css';
 
 export class Calendar {
-    constructor(ctx) {
+    constructor() {
         this.events = {};
         this.weekOffset = 0;
         this.readyToTrash = false;
-        this.slotHeight = 50;
-        this.dayStarts = 6;
-        this.dayEnds = 21;
-        this.weekStart = null;
-        this.weekEnd = null;
+        this.settings = Settings.getInstance();
         this.eventsLoaded = false;
-        this.ctx = ctx;
+        this.ctx = Context.getInstance();
     }
 
     setup() {
@@ -36,7 +34,7 @@ export class Calendar {
     setupTimes() {
         const header = $("<div></div>").addClass("columnHeader");
         const slots = $("<div></div>").addClass("slots");
-        for (let hour = this.dayStarts; hour < this.dayEnds; hour++) {
+        for (let hour = this.settings.dayStarts; hour < this.settings.dayEnds; hour++) {
             $("<div></div>")
                 .attr("data-hour", hour)
                 .addClass("time")
@@ -44,7 +42,7 @@ export class Calendar {
                 .appendTo(slots);
         }
         $(".dayTime").append(header).append(slots);
-        $(`.time[data-hour=${this.dayStarts}]`).css("visibility", "hidden");
+        $(`.time[data-hour=${this.settings.dayStarts}]`).css("visibility", "hidden");
     }
 
 
@@ -71,7 +69,7 @@ export class Calendar {
         $(".day").each(function () {
         const dayIndex = parseInt($(this).attr("data-dayIndex"));
         const slots = $("<div></div>").addClass("slots");
-        for (let hour = cal.dayStarts; hour < cal.dayEnds; hour++) {
+        for (let hour = cal.settings.dayStarts; hour < cal.settings.dayEnds; hour++) {
             $("<div></div>")
                 .attr("data-hour", hour)
                 .appendTo(slots)
@@ -88,14 +86,14 @@ export class Calendar {
 
     calculateCurrentWeek() {
         const now = new Date();
-        this.weekStart = addDays(now, -getDayIndex(now));
-        this.weekEnd = addDays(this.weekStart, 6);
+        this.ctx.weekStart = addDays(now, -getDayIndex(now));
+        this.ctx.weekEnd = addDays(this.ctx.weekStart, 6);
     }
 
     changeWeek(number) {
         this.weekOffset += number;
-        this.weekStart = addDays(this.weekStart, 7 * number);
-        this.weekEnd = addDays(this.weekEnd, 7 * number);
+        this.ctx.weekStart = addDays(this.ctx.weekStart, 7 * number);
+        this.ctx.weekEnd = addDays(this.ctx.weekEnd, 7 * number);
         this.showWeek();
         this.loadEvents();
     }
@@ -106,11 +104,11 @@ export class Calendar {
         };
 
         $("#currentMonth").text(
-            this.weekStart.toLocaleDateString('fr-FR', options)
+            this.ctx.weekStart.toLocaleDateString('fr-FR', options)
         );
 
         for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
-            const date = addDays(this.weekStart, dayIndex);
+            const date = addDays(this.ctx.weekStart, dayIndex);
             const display = date.toLocaleDateString('fr-FR', {
                 day: "numeric",
             });
@@ -171,8 +169,8 @@ export class Calendar {
 
     showEvent(event) {
         if (
-            event.date < dateString(this.weekStart) ||
-            event.date > dateString(this.weekEnd)
+            event.date < dateString(this.ctx.weekStart) ||
+            event.date > dateString(this.ctx.weekEnd)
         ) {
             $(`#${event.id}`).remove();
             return;
@@ -186,7 +184,7 @@ export class Calendar {
                 .attr("id", event.id)
                 .click(() => this.ctx.principal.openEventModal(event));
         }
-        const h = this.slotHeight;
+        const h = this.settings.slotHeight;
 
         let lis = "";
         event.names.forEach(addToList)
@@ -200,8 +198,8 @@ export class Calendar {
 
         eventSlot
             .html(txt)
-            .css("top", (event.startHour + event.startMinutes / 60 - this.dayStarts) * h -+ 1 + "px")
-            .css("bottom", (this.dayEnds - event.endHour + event.endMinutes / 60) * h + 5 + "px")
+            .css("top", (event.startHour + event.startMinutes / 60 - this.settings.dayStarts) * h -+ 1 + "px")
+            .css("bottom", (this.settings.dayEnds - event.endHour + event.endMinutes / 60) * h + 5 + "px")
             .appendTo(`.day[data-dayIndex=${event.dayIndex}] .slots`);
 
         // if(event.names.length <= 1) {
@@ -247,10 +245,10 @@ export class Calendar {
         }
         if (this.events) {
             for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
-                const date = dateString(addDays(this.weekStart, dayIndex));
+                const date = dateString(addDays(this.ctx.weekStart, dayIndex));
                 if (this.events[date]) {
                     for (const event of Object.values(this.events[date])) {
-                        this.showEvent(event);
+                        event.show();
                     }
                 }
             }

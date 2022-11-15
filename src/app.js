@@ -1,10 +1,12 @@
-import { Ctx } from "./ctx.js";
+import { Context } from "./ctx";
+import { Settings } from "./settings";
 import { Calendar } from "./calendar";
 
 export class App {
     constructor() {
-        this.ctx = new Ctx();
-        this.calendar = new Calendar(this.ctx);
+        Settings.initInstance(6, 21, 50);
+        this.ctx = Context.getInstance();
+        this.calendar = new Calendar();
     }
 
     setup() {
