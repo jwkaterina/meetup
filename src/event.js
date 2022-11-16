@@ -65,7 +65,7 @@ export class Event {
         }
         const h = this.settings.slotHeight;
 
-        if(!this.common.userFound(this)) {
+        if(!this.common.nameFound(this, ctx.userName)) {
             this.color = "var(--green)";
         } else {
             this.color = "var(--blue)";

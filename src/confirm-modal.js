@@ -1,40 +1,28 @@
-export class FormModal {
+export class ConfirmModal {
     constructor(onCancel) {
-        this.formModal = $("#formModal");
-        this.cancelButton = this.formModal.find(".cancelButton");
-        this.submitButton = this.formModal.find(".submitButton");
-        this.deleteButton = this.formModal.find(".deleteButton");
-        this.flipCard = this.formModal.find(".flip-card-inner");
-        this.flipCardText = this.formModal.find(".flipCardText");
-        // this.modalTitle = $("#modalTitle");
+        this.confirmModal = $("#confirmModal");
+        this.yesButton = this.confirmModal.find(".yesButton");
+        this.noButton = this.confirmModal.find(".noButton");
+        this.flipCard = this.confirmModal.find(".flip-card-inner");
+        this.flipCardText = this.confirmModal.find(".flipCardText");
+        this.modalTitle = $("#modalTitle");
 
         this.onCancel(onCancel);
     }
 
-    hideSubmitButton() {
-        this.submitButton.hide();
-    }
-    hideDeleteButton() {
-        this.deleteButton.hide();
-    }
     fadeIn() {
-        this.formModal.fadeIn(200);
+        this.confirmModal.fadeIn(200);
     }
     fadeOut() {
-        this.formModal.fadeOut(200);
+        this.confirmModal.fadeOut(200);
     }
 
     onCancel(cb) {
-        this.onClick(this.cancelButton, cb);
-    }
-
-    onSubmit(cb, value) {
-        this.onClick(this.submitButton, cb);
-        this.submitButton.val(value);
+        this.onClick(this.noButton, cb);
     }
 
     onDelete(cb) {
-        this.onClick(this.deleteButton, cb);
+        this.onClick(this.yesButton, cb);
     }
 
     open() {
@@ -45,7 +33,6 @@ export class FormModal {
     close() {
         this.fadeOut();
         this.showCalendar();
-        $("#errors").text("");
     }
 
     onClick(element, callback) {

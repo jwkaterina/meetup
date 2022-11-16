@@ -1,6 +1,7 @@
 import { Context } from "./ctx";
 import { Event } from "./event";
 import { FormModal } from "./form-modal";
+import { ConfirmModal } from "./confirm-modal";
 import { EventModal } from "./event-modal";
 import { dateString, addDays} from "./helper";
 import { PrincipalCommon } from "./principal";
@@ -15,6 +16,9 @@ export class Admin {
         });
         this.formModal = new FormModal(() => {
             this.formModal.close();
+        });
+        this.confirmModal = new ConfirmModal(() => {
+            this.confirmModal.close();
         });
         // window.addEventListener("resize", (e) => {
         //     this.formModal.resize();
@@ -69,7 +73,7 @@ export class Admin {
 
     openCreateFormModal(event) {
         this.formModal.open();
-        this.formModal.writeOnTitle("Créer l'équipe?");
+        // this.formModal.writeOnTitle("Créer l'équipe?");
         this.formModal.writeOnFlip("Ça y est! L'équipe est crée.");
         this.formModal.onSubmit((() => {
             this.submitEvent(event);
@@ -86,13 +90,14 @@ export class Admin {
 
     openChangeFormModal(event) {
         this.formModal.open();
-        this.formModal.writeOnTitle("Changer l'équipe?");
+        // this.formModal.writeOnTitle("Changer l'équipe?");
         this.formModal.writeOnFlip("Ça y est! L'équipe est changé.");
         this.formModal.onSubmit((() => {
             this.submitEvent(event);
         }), "Changer");
         this.formModal.onDelete(() => {
-            this.deleteEvent(event)
+            this.formModal.close();
+            this.openConfirmModal(event);
         });
 
         $("#eventPlace").val(event.place);
@@ -101,6 +106,15 @@ export class Admin {
         $("#eventStart").val(event.start);
         $("#eventEnd").val(event.end);
         $("#eventPlace").focus();
+    }
+
+    openConfirmModal(event) {
+        this.confirmModal.open();
+        // this.confirmModal.writeOnTitle("Veux tu effacer l'équipe?");
+        // this.confirmModal.writeOnFlip("Ça y est! L'équipe est effacée.");
+        this.confirmModal.onDelete(() => {
+            this.deleteEvent(event);
+        });
     }
 
     submitEvent(event) {
@@ -132,12 +146,13 @@ export class Admin {
     }
 
     deleteEvent(event) {
-        this.formModal.writeOnFlip("L'équipe est annulé.");
-        this.formModal.animateFlip();       
+        // this.confirmModal.writeOnFlip("L'équipe est effacée.");
+        this.confirmModal.animateFlip();       
         let that = this;
         setTimeout(function(){
-            that.formModal.close();
-        },1000);        $(`#${event.id}`).remove();
+            that.confirmModal.close();
+        },1000);
+        $(`#${event.id}`).remove();
         delete this.calendar.events[event.date][event.id];
         if (Object.values(this.calendar.events[event.date]).length == 0) {
             delete this.calendar.events[event.date];
