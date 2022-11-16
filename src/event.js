@@ -65,6 +65,12 @@ export class Event {
         }
         const h = this.settings.slotHeight;
 
+        if(!this.common.userFound(this)) {
+            this.color = "var(--green)";
+        } else {
+            this.color = "var(--blue)";
+        } 
+
         let lis = "";
         this.names.forEach(addToList)
         function addToList(value, index) {
@@ -79,18 +85,9 @@ export class Event {
             .html(txt)
             .css("top", (this.startHour + this.startMinutes / 60 - this.settings.dayStarts) * h -+ 1 + "px")
             .css("bottom", (this.settings.dayEnds - this.endHour + this.endMinutes / 60) * h + 5 + "px")
+            .css("backgroundColor", this.color)
             .appendTo(`.day[data-dayIndex=${this.dayIndex}] .slots`);
-
-        // if(event.names.length <= 1) {
-        //     eventSlot.css("backgroundColor", "var(--green");
-        // } else {
-        //     eventSlot.css("backgroundColor", "var(--blue");
-        // }
-        if(!this.common.userFound(this)) {
-            eventSlot.css("backgroundColor", "var(--green");
-        } else {
-            eventSlot.css("backgroundColor", "var(--blue");
-        }
+     
 
         // const duration = event.duration;
         // if (duration < 45) {
@@ -109,7 +106,5 @@ export class Event {
                 eventSlot.text(this.names.length);
             }
         }
-
-
     }
 }

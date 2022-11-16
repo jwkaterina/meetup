@@ -26,7 +26,7 @@ export class Admin {
         const user = event.names.find((user) => {return user == userName;});
 
         this.eventModal.open();
-        this.addEventContent(event);
+        this.common.addEventContent(event);
         this.eventModal.onEdit(() => {
             this.eventModal.close();
             this.openChangeFormModal(event);
@@ -48,28 +48,6 @@ export class Admin {
                 this.deleteName(event);
             });
         }
-
-        // if(event.names.length <= 1) {
-        //     $("#eventModal").css("backgroundColor", "var(--green");
-        // } else {
-        //     $("#eventModal").css("backgroundColor", "var(--blue");
-        // }
-    }
-
-    addEventContent(event) {
-        let lis = "";
-        event.names.forEach(addToList);
-        function addToList(value, index) {
-            lis += `<li class="member" member=${index + 1}>${value}</li>`;
-        };
-
-        let txt = "";
-        txt = `<a class="place" href="http://maps.google.com/?q=${event.place}" target="_blank">
-            <i id="mapIcon" class="fas fa-map"></i>
-            ${event.place}
-            </a>
-            <ol class="list">${lis}</ol>`;
-        $("#eventContent").html(txt);
     }
 
     addName(event) {

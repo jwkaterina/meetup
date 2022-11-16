@@ -16,7 +16,7 @@ export class User {
 
     openEventModal(event) {
         this.eventModal.open();
-        this.addEventContent(event);
+        this.common.addEventContent(event);
         if (this.common.userFound(event)) {
             this.eventModal.hideSubmitButton();
             this.eventModal.onDelete(() => {
@@ -28,28 +28,6 @@ export class User {
                 this.addName(event);
             });
         }
-        
-        // if(event.names.length <= 1) {
-        //     $("#eventModal").css("backgroundColor", "var(--green");
-        // } else {
-        //     $("#eventModal").css("backgroundColor", "var(--blue");
-        // }
-    }
-
-    addEventContent(event) {
-        let lis = "";
-        event.names.forEach(addToList);
-        function addToList(value, index) {
-            lis += `<li class="member" member=${index + 1}>${value}</li>`;
-        };
-
-        let txt = "";
-        txt = `<a class="place" href="http://maps.google.com/?q=${event.place}" target="_blank">
-            <i id="mapIcon" class="fas fa-map"></i>
-            ${event.place}
-            </a>
-            <ol class="list">${lis}</ol>`;
-        $("#eventContent").html(txt);
     }
 
     clickSlot(hour, dayIndex) {

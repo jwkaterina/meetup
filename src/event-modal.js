@@ -8,7 +8,6 @@ export class EventModal {
         this.flipCard = this.eventModal.find(".flip-card-inner");
         this.flipCardText = this.eventModal.find(".flipCardText");
 
-
         this.onCancel(onCancel);
     }
 

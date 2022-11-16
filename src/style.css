@@ -321,11 +321,11 @@ input:checked + .slider:before {
     cursor: pointer;
     transition: all 0.5s linear ;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
-    background-color: var(--green);
+    /* background-color: var(--green); */
 }
 
 .event:hover {
-    background-color: var(--blue) !important;
+    background-color: var(--gray-darker) !important;
 }
 
 .place {
@@ -423,9 +423,9 @@ input:checked + .slider:before {
 
 /* event modal */
 
-#eventModal .flip-card-front, #eventModal .flip-card-back {
+/* #eventModal .flip-card-front, #eventModal .flip-card-back {
     background-color: var(--blue); 
-}
+} */
 
 #eventModal .button {
     background-color: var(--white);
