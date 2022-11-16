@@ -17,7 +17,7 @@ export class User {
     openEventModal(event) {
         this.eventModal.open();
         this.common.addEventContent(event);
-        if (this.common.userFound(event)) {
+        if (this.common.nameFound(event, this.ctx.userName)) {
             this.eventModal.hideSubmitButton();
             this.eventModal.onDelete(() => {
                 this.common.deleteName(event, this.calendar, this.eventModal);

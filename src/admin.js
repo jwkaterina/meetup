@@ -22,8 +22,6 @@ export class Admin {
     }
 
     openEventModal(event) {
-        const userName = this.ctx.userName;
-        const user = event.names.find((user) => {return user == userName;});
 
         this.eventModal.open();
         this.common.addEventContent(event);
@@ -31,14 +29,14 @@ export class Admin {
             this.eventModal.close();
             this.openChangeFormModal(event);
         })
-        if(!this.common.userFound(event)) {
+        if(!this.common.nameFound(event, this.ctx.userName)) {
             this.eventModal.hideDeleteButton();
             this.eventModal.onSubmit(() => {
                 this.common.addName(event, this.calendar, this.eventModal);
             });
             return
         }
-        if (user == event.names[0]) {
+        if (this.ctx.userName == event.names[0]) {
             this.eventModal.hideDeleteButton();
             this.eventModal.hideSubmitButton();
             return
@@ -120,6 +118,10 @@ export class Admin {
     updateEvent(event) {
         event.place = $("#eventPlace").val();
         this.newMainName = $("#eventMainName").val();
+        if(this.common.nameFound(event, this.newMainName) && event.names[0] !== this.newMainName) {
+            const index = event.names.indexOf(this.newMainName);
+            event.names.splice(index, 1);
+        }
         event.names[0] = this.newMainName;
         event.prevDate = event.date;
         event.start = $("#eventStart").val();
