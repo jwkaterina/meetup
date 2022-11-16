@@ -20,45 +20,18 @@ export class User {
         if (this.common.userFound(event)) {
             this.eventModal.hideSubmitButton();
             this.eventModal.onDelete(() => {
-                this.deleteName(event);
+                this.common.deleteName(event, this.calendar, this.eventModal);
             });
         } else {
             this.eventModal.hideDeleteButton();
             this.eventModal.onSubmit(() => {
-                this.addName(event);
+                this.common.addName(event, this.calendar, this.eventModal);
             });
         }
     }
 
     clickSlot(hour, dayIndex) {
      return
-    }
-
-    addName(event) {
-        this.eventModal.writeOnFlip("Bon predication!");
-        this.eventModal.animateFlip();       
-        let that = this;
-        setTimeout(function(){
-            that.eventModal.close();
-        },1000);
-        event.names.push(this.ctx.userName);
-        this.calendar.saveEvent(event);
-        event.show();
-    }
-
-    deleteName(event) {
-        this.eventModal.writeOnFlip("Ta participation est annulé.");
-        this.eventModal.animateFlip();     
-        let that = this;
-        setTimeout(function(){
-            that.eventModal.close();
-        },1000);
-        const userName = this.ctx.userName;
-        const user = event.names.find((user) => {return user == userName;});
-        const index = event.names.indexOf(user);
-        event.names.splice(index, 1);
-        this.calendar.saveEvent(event);
-        event.show();
     }
 
     createNewEvent() {

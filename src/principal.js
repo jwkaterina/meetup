@@ -30,4 +30,27 @@ export class PrincipalCommon {
         $("#eventModal").find(".flip-card-front").css("background-color", event.color);
         $("#eventModal").find(".flip-card-back").css("background-color", event.color);
     }
+
+    addName(event, calendar, eventModal) {
+        eventModal.writeOnFlip("Bon predication!");
+        eventModal.animateFlip();       
+        setTimeout(function(){
+            eventModal.close();
+        },1000);
+        event.names.push(Context.getInstance().userName);
+        calendar.saveEvent(event);
+        event.show();
+    }
+
+    deleteName(event, calendar, eventModal) {
+        eventModal.writeOnFlip("Ta participation est annulé.");
+        eventModal.animateFlip();     
+        setTimeout(function(){
+            eventModal.close();
+        },1000);
+        const index = event.names.indexOf(Context.getInstance().userName);
+        event.names.splice(index, 1);
+        calendar.saveEvent(event);
+        event.show();
+    }
 }
