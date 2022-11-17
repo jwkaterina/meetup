@@ -11,6 +11,19 @@ export class PrincipalCommon {
         }
     }
 
+    // validation() {
+    //     const inputs = Array.from(document.getElementsByClassName('shortInput'));
+    //     const fields = inputs.map(value);
+    //     console.log(fields);
+    // nameFound(inputs) {
+    //     if (inputs.find((value) => {return  == name;})) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+    // }
+
     addEventContent(event) {
         let lis = "";
         event.names.forEach(addToList);

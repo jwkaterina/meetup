@@ -4,8 +4,8 @@ export class ConfirmModal {
         this.yesButton = this.confirmModal.find(".yesButton");
         this.noButton = this.confirmModal.find(".noButton");
         this.flipCard = this.confirmModal.find(".flip-card-inner");
-        this.flipCardText = this.confirmModal.find(".flipCardText");
-        this.modalTitle = $("#modalTitle");
+        // this.flipCardText = this.confirmModal.find(".flipCardText");
+        // this.modalTitle = $("#modalTitle");
 
         this.onCancel(onCancel);
     }
@@ -53,9 +53,9 @@ export class ConfirmModal {
         },1000); 
     }
 
-    writeOnFlip(text) {
-        this.flipCardText.text(text);
-    }
+    // writeOnFlip(text) {
+    //     this.flipCardText.text(text);
+    // }
 
     // writeOnTitle(text) {
     //     this.modalTitle.text(text);

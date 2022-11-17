@@ -6,7 +6,6 @@ export class FormModal {
         this.deleteButton = this.formModal.find(".deleteButton");
         this.flipCard = this.formModal.find(".flip-card-inner");
         this.flipCardText = this.formModal.find(".flipCardText");
-        // this.modalTitle = $("#modalTitle");
 
         this.onCancel(onCancel);
     }
@@ -70,10 +69,6 @@ export class FormModal {
         this.flipCardText.text(text);
     }
 
-    // writeOnTitle(text) {
-    //     this.modalTitle.text(text);
-    // }
-
     showCalendar() {
         $("#calendar").removeClass("opaque");
         document.querySelector('body').style.overflow = 'auto'; 
@@ -91,4 +86,27 @@ export class FormModal {
 //             .css("overflow", "auto");
 //         this.flipCard.css("height", "500px");
 //     }
+
+
+    // validateForm() {
+    //     const inputs = Array.from(document.getElementsByClassName('shortInput'));
+
+    //     inputs.forEach(checkFields);
+    //     function checkFields()
+
+    //     const emptyField = function(inputs) {
+    //         if (inputs.values.find((value) => {return value == ""})) {
+    //             return field;
+    //         } else {
+    //             return false;
+    //         }
+    //     }
+
+    //     if (emptyField) {
+    //         const alert = field.nextElementSibling;
+    //         alert.classList.add("show-message");
+    //     } else {
+    //         // submit
+    //     }
+    // }
 }

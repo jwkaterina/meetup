@@ -73,9 +73,9 @@
                             <input type="button" value="Éditer" class="button editButton">
                         </div>   
                     </div>
-                <div class="flip-card-back">
-                    <h2 class="flipCardText">Bon predication!</h2> 
-                </div>
+                    <div class="flip-card-back">
+                        <h2 class="flipCardText">Bon predication!</h2> 
+                    </div>
                 </div>
             </div>
         </div>  
@@ -90,33 +90,53 @@
                             <div class="cross"></div>
                         </a>
                         <!-- <h2 id="modalTitle"></h2> -->
-                        <div>
+                        <div id="place" class="input-group">
                             <input required type="adress" id="eventPlace" class="shortInput" name="place"></input>
+                            <div class="alert">
+                                <div class="arrow"></div>
+                                <p>Ce champ est requis.</p>
+                            </div>
                         </div>
-                        <div>
+                        <div id="name" class="input-group">
                             <input required type="text" id="eventMainName" class="shortInput" name="name" placeholder="Nom et Prenom"></input>
+                            <div class="alert">
+                                <div class="arrow"></div>
+                                <p>Ce champ est requis.</p>
+                            </div>
                         </div>
-                        <div>
+                        <div id="date" class="input-group">
                             <input required type="date" id="eventDate" class="shortInput" name="date"></input>
+                            <div class="alert">
+                                <div class="arrow"></div>
+                                <p>Ce champ est requis.</p>
+                            </div>
                         </div>
-                        <div>
+                        <div id="start" class="input-group">
                             <input required type="time" id="eventStart" class="shortInput" name="time"></input>
-                            <input required type="time" id="eventEnd" class="shortInput" name="time"></input>
+                            <div class="alert">
+                                <div class="arrow"></div>
+                                <p>Ce champ est requis.</p>
+                            </div>
                         </div>
-                
+                        <div id="end" class="input-group">
+                            <input required type="time" id="eventEnd" class="shortInput" name="time"></input>
+                            <div class="alert">
+                                <div class="arrow"></div>
+                                <p>Ce champ est requis.</p>
+                            </div>
+                        </div>
                         <div class="eventControls">
                             <input type="button" value="Creer" class="button submitButton">
                             <input type="button" value="Effacer" class="button deleteButton">
                         </div>
-                        <div id="errors">    
-                        </div>     
+                        <div id="errors"></div>     
                     </div>
-                <div class="flip-card-back">
-                    <h2 class="flipCardText">Ça y est! L'équipe est crée.</h2> 
+                    <div class="flip-card-back">
+                        <h2 class="flipCardText">Ça y est! L'équipe est crée.</h2> 
+                    </div>
                 </div>
-                </div>
-            </div>
-        </div>  
+            </div>  
+        </div>
 
 
         <!-- Confirmation Modal -->
@@ -130,17 +150,15 @@
                             <input type="button" value="Non" class="button noButton">
                         </div>
                     </div>     
-                </div>
-                <div class="flip-card-back">
-                    <h2 class="flipCardText">Ça y est! L'équipe est effacée.</h2> 
-                </div>
+                    <div class="flip-card-back">
+                        <h2 class="flipCardText">Ça y est! L'équipe est effacée.</h2> 
+                    </div>
                 </div>
             </div>
-        </div>  
+        </div>
     </main>    
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="main.bundle.js" type="module"></script>
-
 </body>
 </html>

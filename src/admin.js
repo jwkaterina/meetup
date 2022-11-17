@@ -73,7 +73,6 @@ export class Admin {
 
     openCreateFormModal(event) {
         this.formModal.open();
-        // this.formModal.writeOnTitle("Créer l'équipe?");
         this.formModal.writeOnFlip("Ça y est! L'équipe est crée.");
         this.formModal.onSubmit((() => {
             this.submitEvent(event);
@@ -90,7 +89,6 @@ export class Admin {
 
     openChangeFormModal(event) {
         this.formModal.open();
-        // this.formModal.writeOnTitle("Changer l'équipe?");
         this.formModal.writeOnFlip("Ça y est! L'équipe est changé.");
         this.formModal.onSubmit((() => {
             this.submitEvent(event);
@@ -111,13 +109,15 @@ export class Admin {
     openConfirmModal(event) {
         this.confirmModal.open();
         // this.confirmModal.writeOnTitle("Veux tu effacer l'équipe?");
-        // this.confirmModal.writeOnFlip("Ça y est! L'équipe est effacée.");
         this.confirmModal.onDelete(() => {
             this.deleteEvent(event);
         });
     }
 
     submitEvent(event) {
+        // const inputs = Array.from(document.getElementsByClassName('shortInput'));
+        // const fields = inputs.map(keys);
+        // console.log(fields);
         if (!this.calendar.isEventValid(event)) {
             return;
         }
@@ -147,7 +147,7 @@ export class Admin {
 
     deleteEvent(event) {
         // this.confirmModal.writeOnFlip("L'équipe est effacée.");
-        this.confirmModal.animateFlip();       
+        this.confirmModal.animateFlip();     
         let that = this;
         setTimeout(function(){
             that.confirmModal.close();

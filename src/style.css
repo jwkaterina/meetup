@@ -321,7 +321,6 @@ input:checked + .slider:before {
     cursor: pointer;
     transition: all 0.5s linear ;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
-    /* background-color: var(--green); */
 }
 
 .event:hover {
@@ -459,6 +458,41 @@ input:checked + .slider:before {
 
 
 /* form modal */
+
+
+/* #formModal .flip-card-front {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    grid-gap: 1rem;
+    margin: 2rem 3rem;
+}
+
+#formModal a {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+}
+
+#place {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+}
+
+#name {
+    grid-column: 1 / span 2;
+    grid-row: 3;
+}
+#date {
+    grid-column: 1 / span 2;
+    grid-row: 4;
+} */
+/* #eventPlace {
+    grid-column: 2 / span 1;
+}
+#eventPlace {
+    grid-column: 2 / span 1;
+} */
+
 #formModal .flip-card-front, #formModal .flip-card-back {
     background-color: var(--white); 
 }
@@ -496,16 +530,55 @@ input:checked + .slider:before {
     color: var(--gray-light);
 }
 
-#eventStart {
+#start {
     margin-right: 8%;
     width: 45%;
+    display: inline-block;
 }
 
-#eventEnd {
+#end {
     width: 45%;
+    display: inline-block;
 }
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+/* Alert */
+
+.alert {
+    background-color: var(--yellow);
+    position: absolute;
+    left: 0;
+    bottom: 5px;
+    height: 20px;
+    width: 70%;
+    visibility: hidden;
+  }
+  
+  .show-message {
+    visibility: visible;
+  }
+  
+  .alert .arrow {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    border: 5px solid;
+    border-color: transparent transparent var(--yellow) var(--yellow);
+  }
+  
+  .alert p {
+    color: var(--black);
+    padding: 0.1rem;
+    text-align: left;
+    font-size: 0.8rem;
+  }
 
 /* confirm modal */
+
 #confirmModal .flip-card-front, #confirmModal .flip-card-back {
     background-color: var(--white); 
 }
@@ -651,7 +724,6 @@ input:checked + .slider:before {
     #eventModal .flip-card {
         width: 90vw;
         height: 50vh;
-        perspective: 1000px;
     }
 
     #formModal {
@@ -660,22 +732,20 @@ input:checked + .slider:before {
         transform: translate(0, 0);
         width: 90vw;
         height: 80vh;
-        overflow: auto;
     }
 
     #formModal .flip-card {
         width: 90vw;
         height: 80vh;
-        perspective: 1000px;
     }
 
-    /* #modalTitle {
+    #modalTitle {
         margin: 1vh 0 1vh 0;
         padding: 1vh 0;
         height: 6vh;
         color: var(--black);
         text-align: center;
-    } */
+    }
 
     .shortInput {
         padding: 1vh 2vh;
@@ -702,36 +772,6 @@ input:checked + .slider:before {
     .flip-card-back {
         padding-top: 170px;
     }
-
-    /* #eventModal {
-        height: 50vh !important;
-        top: 25vh;
-    }
-
-    #eventModal .flipCard {
-        height: 50vh !important;
-    }
-
-    #formModal {
-        height: 80vh;
-        top: 5vh;
-    }
-
-    #formModal .flipCard {
-        height: 80vh;
-    } */
-
-
-    /* @media (max-height: 500px) {
-        #formModal {
-            height: 80vh;
-            top: 5vh;
-        }
-    
-        #formModal .flipCard {
-            height: 80vh;
-        }
-    } */
 }
 
 
