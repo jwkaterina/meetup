@@ -21,7 +21,7 @@ export class ConfirmModal {
         this.onClick(this.noButton, cb);
     }
 
-    onDelete(cb) {
+    onConfirm(cb) {
         this.onClick(this.yesButton, cb);
     }
 

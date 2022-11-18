@@ -109,24 +109,22 @@ export class Admin {
     openConfirmModal(event) {
         this.confirmModal.open();
         // this.confirmModal.writeOnTitle("Veux tu effacer l'équipe?");
-        this.confirmModal.onDelete(() => {
+        this.confirmModal.onConfirm(() => {
             this.deleteEvent(event);
         });
     }
 
     submitEvent(event) {
-        // const inputs = Array.from(document.getElementsByClassName('shortInput'));
-        // const fields = inputs.map(keys);
-        // console.log(fields);
-        if (!this.calendar.isEventValid(event)) {
+        if(this.formModal.formIsValid() && this.calendar.isEventValid(event)) {
+            this.updateEvent(event);       
+            this.formModal.animateFlip();       
+            let that = this;
+            setTimeout(function(){
+                that.formModal.close();
+            },1000);
+        } else {
             return;
         }
-        this.updateEvent(event);       
-        this.formModal.animateFlip();       
-        let that = this;
-        setTimeout(function(){
-            that.formModal.close();
-        },1000);
     }
 
     updateEvent(event) {

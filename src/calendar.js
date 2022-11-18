@@ -206,8 +206,7 @@ export class Calendar {
             );
             if (e) {
                 $("#errors").text(
-                    `This collides with the event '${e.name}'
-                (${e.start} - ${e.end}).`
+                    `This collides with the event (${e.start} - ${e.end}).`
                 );
                 return false;
             }

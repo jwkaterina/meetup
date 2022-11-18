@@ -1,3 +1,5 @@
+import { input } from "aws-amplify";
+
 export class FormModal {
     constructor(onCancel) {
         this.formModal = $("#formModal");
@@ -49,12 +51,12 @@ export class FormModal {
 
     onClick(element, callback) {
         element
-        .show()
-        .off("click")
-        .click((e) => {
-            e.preventDefault();
-            callback();
-        });
+            .show()
+            .off("click")
+            .click((e) => {
+                e.preventDefault();
+                callback();
+            });
     }
 
     animateFlip(){
@@ -88,25 +90,23 @@ export class FormModal {
 //     }
 
 
-    // validateForm() {
-    //     const inputs = Array.from(document.getElementsByClassName('shortInput'));
+    formIsValid() {
+        const inputs = Array.from(document.getElementsByClassName('shortInput'));
 
-    //     inputs.forEach(checkFields);
-    //     function checkFields()
+        if (inputs.find((input) => {return input.value == "";})) {
+            inputs.forEach((input) => {
+                if (input.value == "") {
+                    const alert = input.nextElementSibling;
+                    alert.classList.add("show-message");
+                }
+            });
+            return false;
+        } 
 
-    //     const emptyField = function(inputs) {
-    //         if (inputs.values.find((value) => {return value == ""})) {
-    //             return field;
-    //         } else {
-    //             return false;
-    //         }
-    //     }
-
-    //     if (emptyField) {
-    //         const alert = field.nextElementSibling;
-    //         alert.classList.add("show-message");
-    //     } else {
-    //         // submit
-    //     }
-    // }
+        inputs.forEach((input) => {
+            const alert = input.nextElementSibling;
+            alert.classList.remove("show-message");
+        });
+        return true;
+    }
 }

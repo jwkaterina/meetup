@@ -544,7 +544,11 @@ input:checked + .slider:before {
 .input-group {
     position: relative;
     margin-bottom: 20px;
-  }
+}
+
+#place {
+    margin-top: 30px;
+}
 
 /* Alert */
 
