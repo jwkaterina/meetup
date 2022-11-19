@@ -1,5 +1,5 @@
 import { Context } from "./ctx";
-import { Event } from "./event";
+import { Event } from "./components/event";
 
 export class PrincipalCommon {
 
@@ -10,19 +10,6 @@ export class PrincipalCommon {
             return false;
         }
     }
-
-    // validation() {
-    //     const inputs = Array.from(document.getElementsByClassName('shortInput'));
-    //     const fields = inputs.map(value);
-    //     console.log(fields);
-    // nameFound(inputs) {
-    //     if (inputs.find((value) => {return  == name;})) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-    // }
 
     addEventContent(event) {
         let lis = "";

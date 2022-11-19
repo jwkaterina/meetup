@@ -1,0 +1,57 @@
+/* #eventModal .flip-card-front, #eventModal .flip-card-back {
+    background-color: var(--blue); 
+} */
+
+#eventModal .button {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+#eventModal .button:hover {
+    background-color: var(--yellow);
+    color: var(--white);
+}
+
+#eventModal .flipCardText {
+    color: var(--white);
+}
+
+#eventContent {
+    margin: 50px;
+    height: 250px;
+    color: var(--white);
+    text-align: center;
+    line-height: 2rem;
+    font-size: 1rem;
+}
+
+#eventContent .place {
+    color: var(--black);
+}
+#eventContent .place:hover {
+    color: var(--white);
+}
+
+@media (max-width: 800px) {
+    #eventModal {
+        left: 5vw;
+        top: 25vh;
+        transform: translate(0, 0);
+        width: 90vw;
+        height: 50vh;
+    }
+
+    #eventContent {
+        margin: 10vw;
+        height: 25vh;
+        color: var(--white);
+        text-align: center;
+        line-height: 2rem;
+        font-size: 1rem;
+    }
+    
+    #eventModal .flip-card {
+        width: 90vw;
+        height: 50vh;
+    }
+}

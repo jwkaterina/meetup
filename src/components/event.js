@@ -1,7 +1,8 @@
-import { dateString, getDayIndex, generateId } from "./helper";
-import { PrincipalCommon } from "./principal";
-import { Settings } from "./settings";
-import { Context } from "./ctx";
+import './event.css';
+import { dateString, getDayIndex, generateId } from "../helper";
+import { PrincipalCommon } from "../principal";
+import { Settings } from "../settings";
+import { Context } from "../ctx";
 
 export class Event {
     constructor(data) {

@@ -1,3 +1,6 @@
+import './confirm-modal.css';
+import './modals-common.css';
+
 export class ConfirmModal {
     constructor(onCancel) {
         this.confirmModal = $("#confirmModal");

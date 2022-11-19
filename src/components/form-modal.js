@@ -1,3 +1,5 @@
+import './form-modal.css';
+import './modals-common.css';
 import { input } from "aws-amplify";
 
 export class FormModal {

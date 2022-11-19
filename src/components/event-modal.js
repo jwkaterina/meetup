@@ -1,3 +1,7 @@
+import './event-modal.css';
+import './modals-common.css';
+
+
 export class EventModal {
     constructor(onCancel) {
         this.eventModal = $("#eventModal");

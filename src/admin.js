@@ -1,8 +1,8 @@
 import { Context } from "./ctx";
-import { Event } from "./event";
-import { FormModal } from "./form-modal";
-import { ConfirmModal } from "./confirm-modal";
-import { EventModal } from "./event-modal";
+import { Event } from "./components/event";
+import { FormModal } from "./components/form-modal";
+import { ConfirmModal } from "./components/confirm-modal";
+import { EventModal } from "./components/event-modal";
 import { dateString, addDays} from "./helper";
 import { PrincipalCommon } from "./principal";
 

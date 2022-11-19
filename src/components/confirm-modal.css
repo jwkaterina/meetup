@@ -1,0 +1,35 @@
+#confirmModal .flip-card-front, #confirmModal .flip-card-back {
+    background-color: var(--white); 
+}
+
+#modalTitle {
+    margin: 10px 0 10px 0;
+    padding: 30px 0;
+    height: 100px;
+    color: var(--black);
+    text-align: center;
+}
+
+#confirmModal .button {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+#confirmModal .button:hover {
+    background-color: var(--yellow);
+    color: var(--white);
+}
+
+#confirmModal .flipCardText {
+    color: var(--black);
+}
+
+@media (max-width: 800px) {
+    #modalTitle {
+        margin: 1vh 0 1vh 0;
+        padding: 1vh 0;
+        height: 6vh;
+        color: var(--black);
+        text-align: center;
+    }
+}

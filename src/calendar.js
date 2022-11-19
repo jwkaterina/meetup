@@ -1,8 +1,7 @@
 import { dateString, getDayIndex, addDays } from "./helper";
 import { Settings } from "./settings";
 import { Context } from "./ctx";
-import { Event } from "./event";
-import './style.css';
+import { Event } from "./components/event";
 
 export class Calendar {
     constructor() {

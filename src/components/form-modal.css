@@ -1,0 +1,144 @@
+/* #formModal .flip-card-front {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    grid-gap: 1rem;
+    margin: 2rem 3rem;
+}
+
+#formModal a {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+}
+
+#place {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+}
+
+#name {
+    grid-column: 1 / span 2;
+    grid-row: 3;
+}
+#date {
+    grid-column: 1 / span 2;
+    grid-row: 4;
+} */
+/* #eventPlace {
+    grid-column: 2 / span 1;
+}
+#eventPlace {
+    grid-column: 2 / span 1;
+} */
+
+#formModal .flip-card-front, #formModal .flip-card-back {
+    background-color: var(--white); 
+}
+
+#formModal .button {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+#formModal .button:hover {
+    background-color: var(--yellow);
+    color: var(--white);
+}
+
+#formModal .flipCardText {
+    color: var(--black);
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.shortInput {
+    border: 1px solid var(--gray-light);
+    border-radius: 2px;
+    background-color: var(--white);
+    padding: 10px 20px;
+    color: var(--gray-light);
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.shortInput:focus {
+    border-color: var(--blue);
+    color: var(--black)
+}
+
+.shortInput::placeholder {
+    color: var(--gray-light);
+}
+
+#place {
+    margin-top: 30px;
+}
+
+#start {
+    margin-right: 8%;
+    width: 45%;
+    display: inline-block;
+}
+
+#end {
+    width: 45%;
+    display: inline-block;
+}
+
+#errors {
+    color: var(--red);
+}
+
+/* Alert */
+
+.alert {
+    background-color: var(--yellow);
+    position: absolute;
+    left: 0;
+    bottom: 5px;
+    height: 20px;
+    width: 70%;
+    visibility: hidden;
+  }
+  
+  .show-message {
+    visibility: visible;
+  }
+  
+  .alert .arrow {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    border: 5px solid;
+    border-color: transparent transparent var(--yellow) var(--yellow);
+  }
+  
+  .alert p {
+    color: var(--black);
+    padding: 0.1rem;
+    text-align: left;
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 800px) {
+    #formModal {
+        left: 5vw;
+        top: 5vh;
+        transform: translate(0, 0);
+        width: 90vw;
+        height: 80vh;
+    }
+
+    #formModal .flip-card {
+        width: 90vw;
+        height: 80vh;
+    }
+
+    .shortInput {
+        padding: 1vh 2vh;
+        margin: 4vh 0 0 0;
+    }
+  }

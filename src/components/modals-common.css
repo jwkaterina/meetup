@@ -1,0 +1,118 @@
+.modal {
+    display: none;
+    border-radius: 5px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    z-index: 10;
+    width: 500px;
+    height: 500px;
+}
+
+.button {
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 3%;
+    border-radius: 2px;
+    width: 40%;
+    transition: all 0.3s linear;
+}
+
+.button:last-child {
+    margin-right: 0;
+}
+
+.cancelButton {
+    height: 30px;
+    width: 30px;
+    position: sticky;
+    top: 0;
+    display: block;
+    float: right;
+  }
+  
+.cancelButton .cross {
+    position: absolute;
+    left: 15px;
+    height: 30px;
+    width: 1px;
+    background-color: black;
+    transform: rotate(45deg);
+}
+
+.cancelButton .cross::before {
+    content: '';
+    height: 30px;
+    width: 1px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: black;
+    display: block;
+    transform: rotate(90deg);
+}
+
+/* flip-card */
+
+.flip-card {
+    background-color: transparent;
+    width: 500px;
+    height: 500px;
+    perspective: 1000px;
+}
+  
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+  
+.flip {
+    transform: rotateY(180deg);
+}
+  
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    padding: 30px 50px;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+  
+.flip-card-back {
+    padding-top: 200px;
+    transform: rotateY(180deg);
+}
+
+@media (max-width: 800px) {
+    /* Modals */
+
+    .button {
+        padding: 1vh 2vh;
+        margin-top: 4vh;
+    }
+
+    .flip {
+        transform: rotateX(180deg);
+    }
+
+    .flip-card-back {
+        transform: rotateX(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+        padding: 30px;
+    }
+      
+    .flip-card-back {
+        padding-top: 170px;
+    }
+}
