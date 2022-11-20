@@ -13,8 +13,10 @@ export class EventModal {
 
         // see: https://www.w3schools.com/js/js_function_bind.asp
         const close = this.close.bind(this);
-        this.onClick(this.cancelButton, close);
-    }
+        this.cancelButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            close();
+        });    }
 
     hideEditButton() {
         this.editButton.style.display = "none";
@@ -28,16 +30,14 @@ export class EventModal {
         this.deleteButton.style.display = "none";
     }
 
-    onEdit(cb) {
-        this.onClick(this.editButton, cb);
-    }
-
     onSubmit(cb) {
-        this.onClick(this.submitButton, cb);
+        this.oneTimeListener(this.submitButton, "click", cb);
     }
-
+    onEdit(cb) {
+        this.oneTimeListener(this.editButton, "click", cb);
+    }
     onDelete(cb) {
-        this.onClick(this.deleteButton, cb);
+        this.oneTimeListener(this.deleteButton, "click", cb);
     }
 
     showModal() {
@@ -68,13 +68,11 @@ export class EventModal {
         document.querySelector('body').style.overflow = 'hidden';
     }
 
-    onClick(element, callback) {
+    oneTimeListener(element, type, callback) {
         element.style.display = "";
-        element.removeEventListener("click", (e) => {
-            e.preventDefault();
-            callback();
-        });
-        element.addEventListener("click", (e) => {
+
+        element.addEventListener(type, function listener(e) {
+            e.target.removeEventListener(type, listener);
             e.preventDefault();
             callback();
         });

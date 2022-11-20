@@ -1,6 +1,5 @@
 import './form-modal.css';
 import './modals-common.css';
-import { input } from "aws-amplify";
 
 export class FormModal {
     constructor() {
@@ -30,28 +29,12 @@ export class FormModal {
     }
 
     onSubmit(cb, value) {
-        // if(this.submitCallback){
-        //     this.submitButton.removeEventListener("click", this.submitCallback);
-        // }
-        // this.submitButton.value = value;
-        // this.submitButton.style.display = "";
-        // this.submitCallback = (e) => {
-        //     e.preventDefault();
-        //     cb();
-        // }
-        // this.submitButton.addEventListener("click", this.submitCallback);
+        this.submitButton.value = value;
+        this.oneTimeListener(this.submitButton, "click", cb);
     }
 
     onDelete(cb) {
-        if(this.deleteCallback){
-            this.deleteButton.removeEventListener("click", this.deleteCallback);
-        }
-        this.deleteButton.style.display = "";
-        this.deleteCallback = (e) => {
-            e.preventDefault();
-            cb();
-        }
-        this.deleteButton.addEventListener("click", this.deleteCallback);
+        this.oneTimeListener(this.deleteButton, "click", cb);
     }
 
     showModal() {
@@ -82,16 +65,15 @@ export class FormModal {
         document.querySelector('body').style.overflow = 'hidden';
     }
 
-    onClick(element, callback) {
-        element.removeEventListener("click", this.myFunction);
-        element.style.display = "";
-        element.addEventListener("click", this.myFunction);
-    }
 
-    myFunction(e) {
-        e.preventDefault();
-        console.log("myFunction works");
-        callback();
+    oneTimeListener(element, type, callback) {
+        element.style.display = "";
+
+        element.addEventListener(type, function listener(e) {
+            e.target.removeEventListener(type, listener);
+            e.preventDefault();
+            callback();
+        });
     }
 
 

@@ -12,11 +12,13 @@ export class ConfirmModal {
 
         // see: https://www.w3schools.com/js/js_function_bind.asp
         const close = this.close.bind(this);
-        this.onClick(this.noButton, close);
-    }
+        this.noButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            close();
+        });    }
 
     onConfirm(cb) {
-        this.onClick(this.yesButton, cb);
+        this.oneTimeListener(this.yesButton, "click", cb);
     }
 
     showModal() {
@@ -47,13 +49,11 @@ export class ConfirmModal {
         document.querySelector('body').style.overflow = 'hidden';
     }
 
-    onClick(element, callback) {
+    oneTimeListener(element, type, callback) {
         element.style.display = "";
-        element.removeEventListener("click", (e) => {
-            e.preventDefault();
-            callback();
-        });
-        element.addEventListener("click", (e) => {
+        
+        element.addEventListener(type, function listener(e) {
+            e.target.removeEventListener(type, listener);
             e.preventDefault();
             callback();
         });
