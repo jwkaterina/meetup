@@ -2,83 +2,76 @@ import './confirm-modal.css';
 import './modals-common.css';
 
 export class ConfirmModal {
-    constructor(onCancel) {
-        this.confirmModal = $("#confirmModal");
-        this.yesButton = this.confirmModal.find(".yesButton");
-        this.noButton = this.confirmModal.find(".noButton");
-        this.flipCard = this.confirmModal.find(".flip-card-inner");
-        // this.flipCardText = this.confirmModal.find(".flipCardText");
-        // this.modalTitle = $("#modalTitle");
+    constructor() {
+        this.confirmModal = document.getElementById("confirmModal");
+        this.yesButton = this.confirmModal.querySelector(".yesButton");
+        this.noButton = this.confirmModal.querySelector(".noButton");
+        this.flipCard = this.confirmModal.querySelector(".flip-card-inner");
+        // this.flipCardText = this.confirmModal.querySelector(".flipCardText");
+        // this.modalTitle = document.getElementById("modalTitle");
 
-        this.onCancel(onCancel);
-    }
-
-    fadeIn() {
-        this.confirmModal.fadeIn(200);
-    }
-    fadeOut() {
-        this.confirmModal.fadeOut(200);
-    }
-
-    onCancel(cb) {
-        this.onClick(this.noButton, cb);
+        // see: https://www.w3schools.com/js/js_function_bind.asp
+        const close = this.close.bind(this);
+        this.onClick(this.noButton, close);
     }
 
     onConfirm(cb) {
         this.onClick(this.yesButton, cb);
     }
 
+    showModal() {
+        this.confirmModal.style.display = "block";
+    }
+
+    hideModal() {
+        this.confirmModal.style.display = "none";
+    }
+    
     open() {
-        this.fadeIn();
+        this.showModal();
         this.hideCalendar();
     }
 
     close() {
-        this.fadeOut();
+        this.hideModal();
         this.showCalendar();
     }
 
+    showCalendar() {
+        document.getElementById("calendar").classList.remove("opaque");
+        document.querySelector('body').style.overflow = 'auto'; 
+    }
+
+    hideCalendar() {
+        document.getElementById("calendar").classList.add("opaque");
+        document.querySelector('body').style.overflow = 'hidden';
+    }
+
     onClick(element, callback) {
-        element
-        .show()
-        .off("click")
-        .click((e) => {
+        element.style.display = "";
+        element.removeEventListener("click", (e) => {
+            e.preventDefault();
+            callback();
+        });
+        element.addEventListener("click", (e) => {
             e.preventDefault();
             callback();
         });
     }
 
     animateFlip(){
-        this.flipCard.addClass("flip");
+        this.flipCard.classList.add("flip");
         const that = this;
         setTimeout(function() {
-            that.flipCard.removeClass("flip");
+            that.flipCard.classList.remove("flip");
         },1000); 
     }
 
     // writeOnFlip(text) {
-    //     this.flipCardText.text(text);
+    //     this.flipCardText.textContent = text;
     // }
 
     // writeOnTitle(text) {
-    //     this.modalTitle.text(text);
+    //     this.modalTitle.textContent = text;
     // }
-
-    showCalendar() {
-        $("#calendar").removeClass("opaque");
-        document.querySelector('body').style.overflow = 'auto'; 
-    }
-
-    hideCalendar() {
-        $("#calendar").addClass("opaque");
-        document.querySelector('body').style.overflow = 'hidden';
-    }
-
-//     resize() {
-//         this.formModal
-//             .css("height", "500px")
-//             .css("top", "10px")
-//             .css("overflow", "auto");
-//         this.flipCard.css("height", "500px");
-//     }
 }

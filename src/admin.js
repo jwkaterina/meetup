@@ -11,15 +11,9 @@ export class Admin {
         this.calendar = calendar;
         this.ctx = Context.getInstance();
         this.common = new PrincipalCommon();
-        this.eventModal = new EventModal(() => {
-            this.eventModal.close();
-        });
-        this.formModal = new FormModal(() => {
-            this.formModal.close();
-        });
-        this.confirmModal = new ConfirmModal(() => {
-            this.confirmModal.close();
-        });
+        this.eventModal = new EventModal();
+        this.formModal = new FormModal();
+        this.confirmModal = new ConfirmModal();
         // window.addEventListener("resize", (e) => {
         //     this.formModal.resize();
         //   });

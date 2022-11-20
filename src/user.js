@@ -8,9 +8,7 @@ export class User {
         this.calendar = calendar;
         this.ctx = Context.getInstance();
         this.common = new PrincipalCommon();
-        this.eventModal = new EventModal(() => {
-            this.eventModal.close();
-        });
+        this.eventModal = new EventModal();
         this.eventModal.hideEditButton();
     }
 

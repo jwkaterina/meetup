@@ -1,38 +1,31 @@
 import './event-modal.css';
 import './modals-common.css';
 
-
 export class EventModal {
-    constructor(onCancel) {
-        this.eventModal = $("#eventModal");
-        this.cancelButton = this.eventModal.find(".cancelButton");
-        this.editButton = this.eventModal.find(".editButton");
-        this.submitButton = this.eventModal.find(".submitButton");
-        this.deleteButton = this.eventModal.find(".deleteButton");
-        this.flipCard = this.eventModal.find(".flip-card-inner");
-        this.flipCardText = this.eventModal.find(".flipCardText");
+    constructor() {
+        this.eventModal = document.getElementById("eventModal");
+        this.editButton = this.eventModal.querySelector(".editButton");
+        this.submitButton = this.eventModal.querySelector(".submitButton");
+        this.deleteButton = this.eventModal.querySelector(".deleteButton");
+        this.cancelButton = this.eventModal.querySelector(".cancelButton");
+        this.flipCard = this.eventModal.querySelector(".flip-card-inner");
+        this.flipCardText = this.eventModal.querySelector(".flipCardText");
 
-        this.onCancel(onCancel);
+        // see: https://www.w3schools.com/js/js_function_bind.asp
+        const close = this.close.bind(this);
+        this.onClick(this.cancelButton, close);
     }
 
     hideEditButton() {
-        this.editButton.hide();
-    }
-    hideSubmitButton() {
-        this.submitButton.hide();
-    }
-    hideDeleteButton() {
-        this.deleteButton.hide();
-    }
-    fadeIn() {
-        this.eventModal.fadeIn(200);
-    }
-    fadeOut() {
-        this.eventModal.fadeOut(200);
+        this.editButton.style.display = "none";
     }
 
-    onCancel(cb) {
-        this.onClick(this.cancelButton, cb);
+    hideSubmitButton() {
+        this.submitButton.style.display = "none";
+    }
+
+    hideDeleteButton() {
+        this.deleteButton.style.display = "none";
     }
 
     onEdit(cb) {
@@ -47,45 +40,55 @@ export class EventModal {
         this.onClick(this.deleteButton, cb);
     }
 
+    showModal() {
+        this.eventModal.style.display = "block";
+    }
+
+    hideModal() {
+        this.eventModal.style.display = "none";
+    }
+    
     open() {
-        this.fadeIn();
+        this.showModal();
         this.hideCalendar();
     }
 
     close() {
-        this.fadeOut();
+        this.hideModal();
         this.showCalendar();
     }
 
-    onClick(element, callback) {
-        element
-            .show()
-            .off("click")
-            .click((e) => {
-                e.preventDefault();
-                callback();
-            });
-    }
-
-    animateFlip(){
-        this.flipCard.addClass("flip");
-        const that = this;
-        setTimeout(function() {
-            that.flipCard.removeClass("flip");
-        },1000); 
-    }
-
-    writeOnFlip(text) {
-        this.flipCardText.text(text);
-    }
-
     showCalendar() {
-        $("#calendar").removeClass("opaque");
+        document.getElementById("calendar").classList.remove("opaque");
         document.querySelector('body').style.overflow = 'auto'; 
     }
 
     hideCalendar() {
-        $("#calendar").addClass("opaque");
+        document.getElementById("calendar").classList.add("opaque");
         document.querySelector('body').style.overflow = 'hidden';
+    }
+
+    onClick(element, callback) {
+        element.style.display = "";
+        element.removeEventListener("click", (e) => {
+            e.preventDefault();
+            callback();
+        });
+        element.addEventListener("click", (e) => {
+            e.preventDefault();
+            callback();
+        });
+    }
+
+    animateFlip(){
+        this.flipCard.classList.add("flip");
+        const that = this;
+        setTimeout(function() {
+            that.flipCard.classList.remove("flip");
+        },1000); 
+    }
+
+    writeOnFlip(text) {
+        this.flipCardText.textContent = text;
     }
 }

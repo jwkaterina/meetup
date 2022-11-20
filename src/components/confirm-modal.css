@@ -1,3 +1,7 @@
+#confirmModal {
+    display: none;
+}
+
 #confirmModal .flip-card-front, #confirmModal .flip-card-back {
     background-color: var(--white); 
 }

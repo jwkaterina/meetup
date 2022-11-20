@@ -195,6 +195,7 @@ export class Calendar {
     }
 
     isEventValid(event) {
+        console.log("validation");
         const newStart = $("#eventStart").val();
         const newEnd = $("#eventEnd").val();
         const newDate = $("#eventDate").val();
