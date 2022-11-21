@@ -12,13 +12,13 @@ class Ctx {
 
     switchToUserMode(calendar) {
         this.principal = new User(calendar);
-        $("#addButton").hide();            
+        document.getElementById("addButton").style.display = "none";            
         console.log("User Mode");
     }
 
     switchToAdminMode(calendar) {
         this.principal = new Admin(calendar);
-        $("#addButton").show();            
+        document.getElementById("addButton").style.display = "";            
         console.log("Admin Mode");
     }
 

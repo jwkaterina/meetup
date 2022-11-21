@@ -24,9 +24,10 @@ export class PrincipalCommon {
             ${event.place}
             </a>
             <ol class="list">${lis}</ol>`;
-        $("#eventContent").html(txt);
-        $("#eventModal").find(".flip-card-front").css("background-color", event.color);
-        $("#eventModal").find(".flip-card-back").css("background-color", event.color);
+        document.getElementById("eventContent").innerHTML = txt;
+        const eventModal = document.getElementById("eventModal");
+        eventModal.querySelector(".flip-card-front").style.background = event.color;
+        eventModal.querySelector(".flip-card-back").style.background = event.color;
     }
 
     addName(event, calendar, eventModal) {
