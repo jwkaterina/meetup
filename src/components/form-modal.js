@@ -31,8 +31,11 @@ export class FormModal {
         this.deleteButton.style.display = "none";
     }
 
-    onSubmit(cb, value) {
+    submitValue (value) {
         this.submitButton.value = value;
+    }
+
+    onSubmit(cb) {
         this.oneTimeListener(this.submitButton, "click", cb);
     }
 

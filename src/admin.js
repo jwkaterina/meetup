@@ -68,9 +68,10 @@ export class Admin {
     openCreateFormModal(event) {
         this.formModal.open();
         this.formModal.writeOnFlip("Ça y est! L'équipe est crée.");
-        this.formModal.onSubmit((() => {
+        this.formModal.submitValue("Creer");
+        this.formModal.onSubmit(() => {
             this.submitEvent(event);
-        }), "Creer");
+        });
         this.formModal.hideDeleteButton();
 
         this.formModal.place.value = event.place;
@@ -84,9 +85,10 @@ export class Admin {
     openChangeFormModal(event) {
         this.formModal.open();
         this.formModal.writeOnFlip("Ça y est! L'équipe est changé.");
-        this.formModal.onSubmit((() => {
+        this.formModal.submitValue("Changer");
+        this.formModal.onSubmit(() => {
             this.submitEvent(event);
-        }), "Changer");
+        });
         this.formModal.onDelete(() => {
             this.formModal.close();
             this.openConfirmModal(event);
@@ -117,6 +119,9 @@ export class Admin {
                 that.formModal.close();
             },1000);
         } else {
+            this.formModal.onSubmit((() => {
+                this.submitEvent(event);
+            }), "Changer");
             return;
         }
     }
@@ -127,7 +132,6 @@ export class Admin {
         event.start = this.formModal.start.value;
         event.end = this.formModal.end.value;
         event.date = this.formModal.date.value;
-        
         this.newMainName = this.formModal.name.value;
         if(this.common.nameFound(event, this.newMainName) && event.names[0] !== this.newMainName) {
             const index = event.names.indexOf(this.newMainName);
