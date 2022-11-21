@@ -52,17 +52,20 @@ export class Event {
             this.date < dateString(ctx.weekStart) ||
             this.date > dateString(ctx.weekEnd)
         ) {
-            $(`#${this.id}`).remove();
+            document.getElementById(`${this.id}`).remove();
             return;
         }
         let eventSlot;
-        if ($(`#${this.id}`).length) {
-            eventSlot = $(`#${this.id}`);
+        if (document.getElementById(`${this.id}`)) {
+            eventSlot = document.getElementById(`${this.id}`);
         } else {
-            eventSlot = $("<div></div>")
-                .addClass("event")
-                .attr("id", this.id)
-                .click(() => ctx.principal.openEventModal(this));
+            eventSlot = document.createElement("div");
+            eventSlot.className ="event";
+            eventSlot.setAttribute("id", this.id);
+            const that = this;
+            eventSlot.addEventListener("click", function() {
+                ctx.principal.openEventModal(that)
+            });
         }
         const h = this.settings.slotHeight;
 
@@ -73,7 +76,7 @@ export class Event {
         } 
 
         let lis = "";
-        this.names.forEach(addToList)
+        this.names.forEach(addToList);
         function addToList(value, index) {
             lis += `<li class="member" member=${index + 1}>${value}</li>`
         };
@@ -82,13 +85,13 @@ export class Event {
         txt = `<a class="place" target="_blank">${this.place}</a>
             <ol class="list">${lis}</ol>`
 
-        eventSlot
-            .html(txt)
-            .css("top", (this.startHour + this.startMinutes / 60 - this.settings.dayStarts) * h -+ 1 + "px")
-            .css("bottom", (this.settings.dayEnds - this.endHour + this.endMinutes / 60) * h + 5 + "px")
-            .css("backgroundColor", this.color)
-            .appendTo(`.day[data-dayIndex=${this.dayIndex}] .slots`);
-     
+        eventSlot.innerHTML = txt;
+        eventSlot.style.top = (this.startHour + this.startMinutes / 60 - this.settings.dayStarts) * h -+ 1 + "px";
+        eventSlot.style.bottom = (this.settings.dayEnds - this.endHour + this.endMinutes / 60) * h + 5 + "px";
+        eventSlot.style.background = this.color;
+        const day = document.querySelector(`[data-dayIndex="${this.dayIndex}"]`);
+        const slots = day.querySelector(".slots");
+        slots.appendChild(eventSlot);
 
         // const duration = event.duration;
         // if (duration < 45) {
@@ -104,7 +107,7 @@ export class Event {
             if(this.names.length == 0) {
                 return
             } else {
-                eventSlot.text(this.names.length);
+                eventSlot.innerHTML = this.names.length;
             }
         }
     }

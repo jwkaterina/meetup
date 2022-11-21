@@ -160,9 +160,10 @@ export class Admin {
 
     createNewEvent() {
         const event = new Event({
+            place: "",
             start: "12:00",
             end: "13:00",
-            date: dateString(this.ct.weekStart),
+            date: dateString(this.ctx.weekStart),
             names: [],
             color: "green",
         });
