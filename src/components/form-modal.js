@@ -4,10 +4,13 @@ import './modals-common.css';
 export class FormModal {
     constructor() {
         this.formModal = document.getElementById("formModal");
+        this.place = document.getElementById("eventPlace");
+        this.name = document.getElementById("eventMainName");
+        this.date = document.getElementById("eventDate");
+        this.start = document.getElementById("eventStart");
+        this.end = document.getElementById("eventEnd");
         this.submitButton = this.formModal.querySelector(".submitButton");
-        this.submitCallback = null;
         this.deleteButton = this.formModal.querySelector(".deleteButton");
-        this.deleteCallback = null;
         this.cancelButton = this.formModal.querySelector(".cancelButton");
         this.flipCard = this.formModal.querySelector(".flip-card-inner");
         this.flipCardText = this.formModal.querySelector(".flipCardText");

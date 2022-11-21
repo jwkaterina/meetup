@@ -73,12 +73,12 @@ export class Admin {
         }), "Creer");
         this.formModal.hideDeleteButton();
 
-        $("#eventPlace").val(event.place);
-        $("#eventMainName").val(this.ctx.userName);          
-        $("#eventDate").val(event.date);
-        $("#eventStart").val(event.start);
-        $("#eventEnd").val(event.end);
-        $("#eventPlace").focus();
+        this.formModal.place.value = event.place;
+        this.formModal.name.value = this.ctx.userName;
+        this.formModal.date.value = event.date;
+        this.formModal.start.value = event.start;
+        this.formModal.end.value = event.end;
+        this.formModal.place.focus();
     }
 
     openChangeFormModal(event) {
@@ -92,12 +92,12 @@ export class Admin {
             this.openConfirmModal(event);
         });
 
-        $("#eventPlace").val(event.place);
-        $("#eventMainName").val(this.ctx.userName);          
-        $("#eventDate").val(event.date);
-        $("#eventStart").val(event.start);
-        $("#eventEnd").val(event.end);
-        $("#eventPlace").focus();
+        this.formModal.place.value = event.place;
+        this.formModal.name.value = this.ctx.userName;
+        this.formModal.date.value = event.date;
+        this.formModal.start.value = event.start;
+        this.formModal.end.value = event.end;
+        // this.formModal.place.focus();
     }
 
     openConfirmModal(event) {
@@ -122,17 +122,19 @@ export class Admin {
     }
 
     updateEvent(event) {
-        event.place = $("#eventPlace").val();
-        this.newMainName = $("#eventMainName").val();
+        event.place = this.formModal.place.value;
+        event.prevDate = event.date;
+        event.start = this.formModal.start.value;
+        event.end = this.formModal.end.value;
+        event.date = this.formModal.date.value;
+        
+        this.newMainName = this.formModal.name.value;
         if(this.common.nameFound(event, this.newMainName) && event.names[0] !== this.newMainName) {
             const index = event.names.indexOf(this.newMainName);
             event.names.splice(index, 1);
         }
         event.names[0] = this.newMainName;
-        event.prevDate = event.date;
-        event.start = $("#eventStart").val();
-        event.end = $("#eventEnd").val();
-        event.date = $("#eventDate").val();
+
         this.calendar.saveEvent(event);
         event.show();
     }
@@ -144,7 +146,7 @@ export class Admin {
         setTimeout(function(){
             that.confirmModal.close();
         },1000);
-        $(`#${event.id}`).remove();
+        document.getElementById(event.id).remove();
         delete this.calendar.events[event.date][event.id];
         if (Object.values(this.calendar.events[event.date]).length == 0) {
             delete this.calendar.events[event.date];
