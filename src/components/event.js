@@ -89,7 +89,7 @@ export class Event {
         eventSlot.style.top = (this.startHour + this.startMinutes / 60 - this.settings.dayStarts) * h -+ 1 + "px";
         eventSlot.style.bottom = (this.settings.dayEnds - this.endHour + this.endMinutes / 60) * h + 5 + "px";
         eventSlot.style.background = this.color;
-        const day = document.querySelector(`[data-dayIndex="${this.dayIndex}"]`);
+        const day = document.querySelector(`.day[data-dayIndex="${this.dayIndex}"]`);
         const slots = day.querySelector(".slots");
         slots.appendChild(eventSlot);
 

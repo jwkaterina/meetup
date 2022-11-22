@@ -23,25 +23,39 @@ export class Calendar {
     }
 
     setupControls() {
-        $("#nextWeekBtn").click(() => this.changeWeek(1));
-        $("#prevWeekBtn").click(() => this.changeWeek(-1));
-        $("#addButton").click(() => this.ctx.principal.createNewEvent());
-        $("#todayButton").click(() => this.showCurrentWeek());
-        $("#trashButton").click(() => this.trash());
+        const that = this;
+        document.getElementById("nextWeekBtn").addEventListener("click", function() {
+            that.changeWeek(1)
+        });
+        document.getElementById("prevWeekBtn").addEventListener("click", function() {
+            that.changeWeek(-1)
+        });
+        document.getElementById("addButton").addEventListener("click", function() {
+            that.ctx.principal.createNewEvent()
+        });
+        document.getElementById("todayButton").addEventListener("click", function() {
+            that.showCurrentWeek()
+        });
+        document.getElementById("trashButton").addEventListener("click", function() {
+            that.trash()
+        });
     }
 
     setupTimes() {
-        const header = $("<div></div>").addClass("columnHeader");
-        const slots = $("<div></div>").addClass("slots");
+        const header = document.createElement("div");
+        header.className = "columnHeader";
+        const slots = document.createElement("div");
+        slots.className = "slots";
         for (let hour = this.settings.dayStarts; hour < this.settings.dayEnds; hour++) {
-            $("<div></div>")
-                .attr("data-hour", hour)
-                .addClass("time")
-                .text(`${hour}:00`)
-                .appendTo(slots);
+            const timeSlot = document.createElement("div");
+            timeSlot.setAttribute("data-hour", hour);
+            timeSlot.className = "time";
+            timeSlot.innerHTML = `${hour}:00`;
+            slots.appendChild(timeSlot);
         }
-        $(".dayTime").append(header).append(slots);
-        $(`.time[data-hour=${this.settings.dayStarts}]`).css("visibility", "hidden");
+        document.querySelector(".dayTime").appendChild(header);
+        document.querySelector(".dayTime").appendChild(slots);
+        document.querySelector(`.time[data-hour="${this.settings.dayStarts}"]`).style.visibility = "hidden";
     }
 
 
@@ -49,38 +63,40 @@ export class Calendar {
         const media = window.matchMedia("(max-width: 800px)");
         const cal = this;
 
-        if (media.matches) {
-            $(".day").each(function () {
-            const shortName = $(this).attr("data-shortName");
-            const header = $("<div></div>").addClass("columnHeader").text(shortName);
-            $("<div></div>").addClass("dayDisplay").appendTo(header);
-            $(this).append(header)
-        });
-        } else {
-            $(".day").each(function () {
-                const fullName = $(this).attr("data-Name");
-                const header = $("<div></div>").addClass("columnHeader").text(fullName);
-                $("<div></div>").addClass("dayDisplay").appendTo(header);
-                $(this).append(header)
-            });
-        }
+            const days = document.querySelectorAll(".day");
+            days.forEach(function (day) {
+            const shortName = day.getAttribute("data-shortName");
+            const fullName = day.getAttribute("data-name");
+            const header = document.createElement("div");
+            header.className = "columnHeader";
+            if (media.matches) {
+                header.innerHTML = `${shortName}`;
+            } else {
+                header.innerHTML = `${fullName}`;
+            }
+            const dayDisplay = document.createElement("div")
+            dayDisplay.className = "dayDisplay";
+            header.appendChild(dayDisplay);
+            day.appendChild(header);
 
-        $(".day").each(function () {
-        const dayIndex = parseInt($(this).attr("data-dayIndex"));
-        const slots = $("<div></div>").addClass("slots");
-        for (let hour = cal.settings.dayStarts; hour < cal.settings.dayEnds; hour++) {
-            $("<div></div>")
-                .attr("data-hour", hour)
-                .appendTo(slots)
-                .addClass("slot")
-                .click(() => cal.ctx.principal.clickSlot(hour, dayIndex))
-                .hover(
-                    () => cal.hoverOver(hour),
-                    () => cal.hoverOut()
-                );
-        }
-        $(this).append(slots);
-    });
+            const dayIndex = parseInt(day.getAttribute("data-dayIndex"));
+            const slots = document.createElement("div");
+            slots.className = "slots";
+            for (let hour = cal.settings.dayStarts; hour < cal.settings.dayEnds; hour++) {
+                const slot = document.createElement("div");
+                slot.setAttribute("data-hour", hour);
+                slot.className = "slot";
+                slots.appendChild(slot);
+                slot.addEventListener("click", function() {
+                    cal.ctx.principal.clickSlot(hour, dayIndex)
+                })
+                slot.addEventListener("hover", function() {
+                    cal.hoverOver(hour);
+                    cal.hoverOut();
+                })
+            }
+            day.appendChild(slots);
+        });
     }
 
     calculateCurrentWeek() {
@@ -98,20 +114,12 @@ export class Calendar {
     }
 
     showWeek() {
-        const options = {
-            month: "long",
-        };
-
-        $("#currentMonth").text(
-            this.ctx.weekStart.toLocaleDateString('fr-FR', options)
-        );
+         document.getElementById("currentMonth").innerHTML = this.ctx.weekStart.toLocaleDateString('fr-FR', {month: "long"});
 
         for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
             const date = addDays(this.ctx.weekStart, dayIndex);
-            const display = date.toLocaleDateString('fr-FR', {
-                day: "numeric",
-            });
-            $(`.day[data-dayIndex=${dayIndex}] .dayDisplay`).text(display);
+            const display = date.toLocaleDateString('fr-FR', {day: "numeric"});
+            document.querySelector(`.day[data-dayIndex="${dayIndex}"] .dayDisplay`).innerHTML = display;
         }
         if (this.weekOffset == 0) {
             this.showCurrentDay();
@@ -132,19 +140,22 @@ export class Calendar {
     showCurrentDay() {
         const now = new Date();
         const dayIndex = getDayIndex(now);
-        $(`.day[data-dayIndex=${dayIndex}]`).addClass("currentDay");
+        document.querySelector(`.day[data-dayIndex="${dayIndex}"]`).classList.add("currentDay");
     }
 
     hideCurrentDay() {
-        $(".day").removeClass("currentDay");
+        const days = document.querySelectorAll(".day");
+        days.forEach(function(day) {
+            day.classList.remove("currentDay");
+        });
     }
 
     hoverOver(hour) {
-        $(`.time[data-hour=${hour}]`).addClass("currentTime");
+        document.querySelector(`.time[data-hour="${hour}"]`).classList.add("currentTime");
     }
 
     hoverOut() {
-        $(".time").removeClass("currentTime");
+        document.querySelector(".time").classList.remove("currentTime");
     }
 
 
@@ -167,7 +178,10 @@ export class Calendar {
     }
 
     loadEvents() {
-        $(".event").remove();
+        const events = document.querySelectorAll(".event");
+        events.forEach(function(event) {
+            event.remove();
+        });
         if (!this.eventsLoaded) {
             this.events = JSON.parse(localStorage.getItem("events"));
             if (this.events) {
@@ -195,19 +209,16 @@ export class Calendar {
     }
 
     isEventValid(event) {
-        // console.log("validation");
-        const newStart = $("#eventStart").val();
-        const newEnd = $("#eventEnd").val();
-        const newDate = $("#eventDate").val();
+        const newStart = document.getElementById("eventStart").value;
+        const newEnd = document.getElementById("eventEnd").value;
+        const newDate = document.getElementById("eventDate").value;
         if (this.events[newDate]) {
             const e = Object.values(this.events[newDate]).find(
                 (evt) =>
                     evt.id != event.id && evt.end > newStart && evt.start < newEnd
             );
             if (e) {
-                $("#errors").text(
-                    `This collides with the event (${e.start} - ${e.end}).`
-                );
+                document.getElementById("errors").innerHTML = `Cela se heurte à l'équipe(${e.start} - ${e.end}).`;
                 return false;
             }
         }
@@ -216,10 +227,7 @@ export class Calendar {
                 new Date(`${newDate}T${newStart}`).getTime()) /
             (1000 * 60);
         if (duration < 0) {
-            $("#errors").text("The start cannot be after the end.");
-            return false;
-        } else if (duration < 30) {
-            $("#errors").text("Events should be at least 30 minutes.");
+            document.getElementById("errors").innerHTML = "Le début ne peut pas être après la fin.";
             return false;
         }
         return true;
@@ -230,13 +238,16 @@ export class Calendar {
             this.readyToTrash = false;
             this.events = {};
             this.saveEvents();
-            $(".event").remove();
+            const events = document.querySelectorAll(".event");
+            events.forEach(function(event) {
+                event.remove();
+            });
         } else {
             this.readyToTrash = true;
             window.alert(
-                "This will delete all the events in your calendar. " +
-                    "This cannot be undone. If you are sure, click " +
-                    "the trash can again in the next minute."
+                "Cela supprimera tous les équipes de votre calendrier. " +
+                    "Ça ne peut pas être annulé. Si vous êtes sûr, cliquez" + 
+                    "à nouveau sur la corbeille dans la minute suivante."
             );
             setTimeout(() => {
                 this.readyToTrash = false;
