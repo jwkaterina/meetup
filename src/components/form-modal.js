@@ -57,6 +57,7 @@ export class FormModal {
     }
 
     close() {
+        this.hideErrors();
         this.hideModal();
         this.showCalendar();
     }
@@ -71,6 +72,12 @@ export class FormModal {
         document.querySelector('body').style.overflow = 'hidden';
     }
 
+    hideErrors() {
+        document.getElementById("errors").innerHTML = "";      
+        document.querySelectorAll(".alert").forEach(function(alert) {
+            alert.classList.remove("show-message");
+        })
+    }
 
     oneTimeListener(element, type, callback) {
         element.style.display = "";

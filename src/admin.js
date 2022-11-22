@@ -111,17 +111,17 @@ export class Admin {
     }
 
     submitEvent(event) {
-        if(this.formModal.formIsValid() && this.calendar.isEventValid(event)) {
-            this.updateEvent(event);       
+        if(this.calendar.isEventValid(event) && this.formModal.formIsValid()) {
+            this.updateEvent(event);
             this.formModal.animateFlip();       
             let that = this;
             setTimeout(function(){
                 that.formModal.close();
             },1000);
         } else {
-            this.formModal.onSubmit((() => {
+            this.formModal.onSubmit(() => {
                 this.submitEvent(event);
-            }), "Changer");
+            });
             return;
         }
     }

@@ -222,6 +222,7 @@ export class Calendar {
                 return false;
             }
         }
+        
         const duration =
             (new Date(`${newDate}T${newEnd}`).getTime() -
                 new Date(`${newDate}T${newStart}`).getTime()) /
