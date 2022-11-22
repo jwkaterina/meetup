@@ -20,6 +20,7 @@ export class Calendar {
         this.showWeek();
         this.loadEvents();
         this.setupControls();
+        this.addSwipe();
     }
 
     setupControls() {
@@ -38,6 +39,26 @@ export class Calendar {
         });
         document.getElementById("trashButton").addEventListener("click", function() {
             that.trash()
+        });
+    }
+
+    addSwipe() {
+        let touchstartX = 0;
+        let touchendX = 0;
+        let that = this;
+
+        function checkDirection() {
+        if (touchendX < touchstartX) {that.changeWeek(1)};
+        if (touchendX > touchstartX) {that.changeWeek(-1)};
+        }
+
+        document.getElementById("calendar").addEventListener('touchstart', e => {
+        touchstartX = e.changedTouches[0].screenX;
+        });
+
+        document.getElementById("calendar").addEventListener('touchend', e => {
+        touchendX = e.changedTouches[0].screenX;
+        checkDirection()
         });
     }
 
@@ -177,6 +198,7 @@ export class Calendar {
         localStorage.setItem("events", JSON.stringify(this.events));
     }
 
+
     loadEvents() {
         const events = document.querySelectorAll(".event");
         events.forEach(function(event) {
@@ -222,7 +244,7 @@ export class Calendar {
                 return false;
             }
         }
-        
+
         const duration =
             (new Date(`${newDate}T${newEnd}`).getTime() -
                 new Date(`${newDate}T${newStart}`).getTime()) /
