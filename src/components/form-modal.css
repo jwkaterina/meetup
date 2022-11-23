@@ -54,7 +54,18 @@
     margin-bottom: 20px;
 }
 
+input {
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+    border: none;
+}
+
 .shortInput {
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+    border: none;
     border: 1px solid var(--gray-light);
     border-radius: 2px;
     background-color: var(--white);

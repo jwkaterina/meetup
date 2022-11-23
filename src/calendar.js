@@ -111,10 +111,12 @@ export class Calendar {
                 slot.addEventListener("click", function() {
                     cal.ctx.principal.clickSlot(hour, dayIndex)
                 })
-                slot.addEventListener("hover", function() {
-                    cal.hoverOver(hour);
-                    cal.hoverOut();
-                })
+                // slot.addEventListener("mouseover", function() {
+                //     cal.hoverOver(hour);
+                // })
+                // slot.addEventListener("mouseout", function() {
+                //     cal.hoverOut();
+                // })
             }
             day.appendChild(slots);
         });
@@ -171,13 +173,16 @@ export class Calendar {
         });
     }
 
-    hoverOver(hour) {
-        document.querySelector(`.time[data-hour="${hour}"]`).classList.add("currentTime");
-    }
+    // hoverOver(hour) {
+    //     document.querySelector(`.time[data-hour="${hour}"]`).classList.add("currentTime");
+    // }
 
-    hoverOut() {
-        document.querySelector(".time").classList.remove("currentTime");
-    }
+    // hoverOut() {
+    //     const times = document.querySelectorAll(".time");
+    //     times.forEach(function(time) {
+    //         time.classList.remove("currentTime");
+    //     });
+    // }
 
 
     saveEvent(event) {

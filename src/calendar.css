@@ -27,14 +27,6 @@ body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-input,
-textarea {
-    font-family: inherit;
-    font-size: inherit;
-    outline: none;
-    border: none;
-}
-
 /* header */
 
 .header {
@@ -290,16 +282,22 @@ input:checked + .slider:before {
     height: var(--slotHeight);
 }
 
-.slot {
-    border-top: 1px solid var(--gray-lightest);
-    background-color: var(--white);
-    transition: all 0.5s linear ;
-}
-
 .time {
     position: relative;
     top: -8px;
     font-size: 14px;
+    transition: all 0.5s linear ;
+}
+
+/* .time.currentTime {
+    background-color: var(--gray-light);
+    color: var(--black);
+} */
+
+.slot {
+    border-top: 1px solid var(--gray-lightest);
+    background-color: var(--white);
+    transition: all 0.5s linear ;
 }
 
 .slot:hover {
@@ -329,28 +327,13 @@ input:checked + .slider:before {
 
     .weekControls {
         display: none;
+        /* left: 20px; */
     }
 
-    #trashButton {
-        display: none;
-    }
-
-    .dayTime {
-        min-width: 30px;
-    }
-    
-    .day {
-        min-width: 30px;
-    }
-
-    .weekControls {
-        left: 20px;
-    }
-    
-    #prevWeekBtn  {
+    /* #prevWeekBtn  {
         margin-right: 20px;
-    }
-    
+    } */
+
     .generalControls {
         right: 20px;
     }
@@ -366,6 +349,18 @@ input:checked + .slider:before {
         line-height: 65px;
         width: 65px;
         height: 65px;
+    }
+
+    #trashButton {
+        display: none;
+    }
+
+    .dayTime {
+        min-width: 30px;
+    }
+    
+    .day {
+        min-width: 30px;
     }
 }
 
