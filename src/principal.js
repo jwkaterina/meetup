@@ -1,14 +1,31 @@
 import { Context } from "./ctx";
 import { Event } from "./components/event";
+import { EventModal } from "./components/event-modal";
+
 
 export class PrincipalCommon {
+    constructor(calendar) {
+        this.calendar = calendar;
+        this.ctx = Context.getInstance();
+        this.eventModal = new EventModal();
 
-    nameFound(event, name) {
-        if (event.names.find((user) => {return user == name;})) {
-            return true;
-        } else {
-            return false;
-        }
+
+        this.eventModal.submitButton.addEventListener("click", () => {
+            this.addName(this.eventModal);
+            this.ctx.currentEvent = null;
+            console.log(this.ctx.currentEvent);
+        });
+        this.eventModal.deleteButton.addEventListener("click", () => {
+            this.deleteName(this.eventModal);
+            this.ctx.currentEvent = null;
+            console.log(this.ctx.currentEvent);
+        });
+        this.eventModal.cancelButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            this.eventModal.close();
+            this.ctx.currentEvent = null;
+            console.log(this.ctx.currentEvent);
+        });
     }
 
     addEventContent(event) {
@@ -30,26 +47,30 @@ export class PrincipalCommon {
         eventModal.querySelector(".flip-card-back").style.background = event.color;
     }
 
-    addName(event, calendar, eventModal) {
-        eventModal.writeOnFlip("Bon predication!");
-        eventModal.animateFlip();       
-        setTimeout(function(){
-            eventModal.close();
+    addName() {
+        const event = this.ctx.currentEvent;
+        this.eventModal.writeOnFlip("Bon predication!");
+        this.eventModal.animateFlip();
+        const that = this;
+        setTimeout(() => {
+            that.eventModal.close();
         },1000);
-        event.names.push(Context.getInstance().userName);
-        calendar.saveEvent(event);
+        event.names.push(this.ctx.userName);
+        this.calendar.saveEvent(event);
         event.show();
     }
 
-    deleteName(event, calendar, eventModal) {
-        eventModal.writeOnFlip("Ta participation est annulé.");
-        eventModal.animateFlip();     
-        setTimeout(function(){
-            eventModal.close();
+    deleteName() {
+        const event = this.ctx.currentEvent;
+        this.eventModal.writeOnFlip("Ta participation est annulé.");
+        this.eventModal.animateFlip();
+        const that = this;
+        setTimeout(() => {
+            that.eventModal.close();
         },1000);
-        const index = event.names.indexOf(Context.getInstance().userName);
+        const index = event.names.indexOf(this.ctx.userName);
         event.names.splice(index, 1);
-        calendar.saveEvent(event);
+        this.calendar.saveEvent(event);
         event.show();
     }
 }

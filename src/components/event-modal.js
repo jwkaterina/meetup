@@ -10,13 +10,7 @@ export class EventModal {
         this.cancelButton = this.eventModal.querySelector(".cancelButton");
         this.flipCard = this.eventModal.querySelector(".flip-card-inner");
         this.flipCardText = this.eventModal.querySelector(".flipCardText");
-
-        // see: https://www.w3schools.com/js/js_function_bind.asp
-        const close = this.close.bind(this);
-        this.cancelButton.addEventListener("click", (e) => {
-            e.preventDefault();
-            close();
-        });    }
+    }
 
     hideEditButton() {
         this.editButton.style.display = "none";
@@ -29,15 +23,16 @@ export class EventModal {
     hideDeleteButton() {
         this.deleteButton.style.display = "none";
     }
+    showEditButton() {
+        this.editButton.style.display = "";
+    }
 
-    onSubmit(cb) {
-        this.oneTimeListener(this.submitButton, "click", cb);
+    showSubmitButton() {
+        this.submitButton.style.display = "";
     }
-    onEdit(cb) {
-        this.oneTimeListener(this.editButton, "click", cb);
-    }
-    onDelete(cb) {
-        this.oneTimeListener(this.deleteButton, "click", cb);
+
+    showDeleteButton() {
+        this.deleteButton.style.display = "";
     }
 
     showModal() {
@@ -68,21 +63,10 @@ export class EventModal {
         document.querySelector('body').style.overflow = 'hidden';
     }
 
-    oneTimeListener(element, type, callback) {
-        element.style.display = "";
-
-        element.addEventListener(type, function listener(e) {
-            e.target.removeEventListener(type, listener);
-            e.preventDefault();
-            callback();
-        });
-    }
-
     animateFlip(){
         this.flipCard.classList.add("flip");
-        const that = this;
-        setTimeout(function() {
-            that.flipCard.classList.remove("flip");
+        setTimeout(() => {
+            this.flipCard.classList.remove("flip");
         },1000); 
     }
 

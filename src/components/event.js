@@ -1,6 +1,6 @@
 import './event.css';
-import { dateString, getDayIndex, generateId } from "../helper";
-import { PrincipalCommon } from "../principal";
+import { dateString, getDayIndex, generateId, nameFound } from "../helper";
+// import { PrincipalCommon } from "../principal";
 import { Settings } from "../settings";
 import { Context } from "../ctx";
 
@@ -15,7 +15,7 @@ export class Event {
         this.prevDate = this.date;
         this.color = data.color;
         this.settings = Settings.getInstance();
-        this.common = new PrincipalCommon();
+        // this.common = new PrincipalCommon();
     }
 
     get dayIndex() {
@@ -69,7 +69,7 @@ export class Event {
         }
         const h = this.settings.slotHeight;
 
-        if(!this.common.nameFound(this, ctx.userName)) {
+        if(!nameFound(this, ctx.userName)) {
             this.color = "var(--green)";
         } else {
             this.color = "var(--blue)";

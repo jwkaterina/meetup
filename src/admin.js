@@ -2,47 +2,67 @@ import { Context } from "./ctx";
 import { Event } from "./components/event";
 import { FormModal } from "./components/form-modal";
 import { ConfirmModal } from "./components/confirm-modal";
-import { EventModal } from "./components/event-modal";
-import { dateString, addDays} from "./helper";
-import { PrincipalCommon } from "./principal";
+import { dateString, addDays, nameFound } from "./helper";
 
 export class Admin {
-    constructor(calendar) {
+    constructor(calendar, principalCommon) {
         this.calendar = calendar;
         this.ctx = Context.getInstance();
-        this.common = new PrincipalCommon();
-        this.eventModal = new EventModal();
+        this.common = principalCommon;
         this.formModal = new FormModal();
         this.confirmModal = new ConfirmModal();
         // window.addEventListener("resize", (e) => {
         //     this.formModal.resize();
         //   });
+
+        this.common.eventModal.editButton.addEventListener("click", () => {
+            this.openChangeFormModal();
+            this.common.eventModal.close();
+        });
+
+        this.formModal.submitButton.addEventListener("click", () => {
+            this.submitEvent();
+        });
+        this.formModal.deleteButton.addEventListener("click", () => {
+            this.openConfirmModal();
+            this.formModal.close();
+        });
+        this.formModal.cancelButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            this.formModal.close();
+            this.ctx.currentEvent = null;
+            console.log(this.ctx.currentEvent);
+        });
+        this.confirmModal.yesButton.addEventListener("click", () => {
+            this.deleteEvent();
+            this.ctx.currentEvent = null;
+            console.log(this.ctx.currentEvent);
+        });
+        this.confirmModal.noButton.addEventListener("click", () => {
+            this.confirmModal.close();
+            this.ctx.currentEvent = null;
+            console.log(this.ctx.currentEvent);
+        });
     }
 
     openEventModal(event) {
-
-        this.eventModal.open();
+        this.ctx.currentEvent = event;
+        console.log(this.ctx.currentEvent.id);
+        this.common.eventModal.open();
         this.common.addEventContent(event);
-        this.eventModal.onEdit(() => {
-            this.eventModal.close();
-            this.openChangeFormModal(event);
-        })
-        if(!this.common.nameFound(event, this.ctx.userName)) {
-            this.eventModal.hideDeleteButton();
-            this.eventModal.onSubmit(() => {
-                this.common.addName(event, this.calendar, this.eventModal);
-            });
+        this.common.eventModal.showEditButton();
+        if(!nameFound(event, this.ctx.userName)) {
+            this.common.eventModal.hideDeleteButton();
+            this.common.eventModal.showSubmitButton();
             return
         }
         if (this.ctx.userName == event.names[0]) {
-            this.eventModal.hideDeleteButton();
-            this.eventModal.hideSubmitButton();
+            this.common.eventModal.hideDeleteButton();
+            this.common.eventModal.hideSubmitButton();
             return
         } else {
-            this.eventModal.hideSubmitButton();
-            this.eventModal.onDelete(() => {
-                this.common.deleteName(event, this.calendar, this.eventModal);
-            });
+            this.common.eventModal.hideSubmitButton();
+            this.common.eventModal.showDeleteButton();
         }
     }
 
@@ -62,16 +82,15 @@ export class Admin {
             names: [],
             color: "var(--green)"
         });
+        this.ctx.currentEvent = event;
         this.openCreateFormModal(event);
     }
 
     openCreateFormModal(event) {
+        console.log(this.ctx.currentEvent.id);
         this.formModal.open();
         this.formModal.writeOnFlip("Ça y est! L'équipe est crée.");
-        this.formModal.submitValue("Creer");
-        this.formModal.onSubmit(() => {
-            this.submitEvent(event);
-        });
+        this.formModal.showSubmitButton("Creer");
         this.formModal.hideDeleteButton();
 
         this.formModal.place.value = event.place;
@@ -82,17 +101,14 @@ export class Admin {
         this.formModal.place.focus();
     }
 
-    openChangeFormModal(event) {
+    openChangeFormModal() {
+        // this.ctx.currentEvent = event;
+        const event = this.ctx.currentEvent;
+        console.log(event.id);
         this.formModal.open();
         this.formModal.writeOnFlip("Ça y est! L'équipe est changé.");
-        this.formModal.submitValue("Changer");
-        this.formModal.onSubmit(() => {
-            this.submitEvent(event);
-        });
-        this.formModal.onDelete(() => {
-            this.formModal.close();
-            this.openConfirmModal(event);
-        });
+        this.formModal.showSubmitButton("Changer");
+        this.formModal.showDeleteButton();
 
         this.formModal.place.value = event.place;
         this.formModal.name.value = this.ctx.userName;
@@ -102,26 +118,24 @@ export class Admin {
         // this.formModal.place.focus();
     }
 
-    openConfirmModal(event) {
+    openConfirmModal() {
+        console.log(this.ctx.currentEvent.id);
         this.confirmModal.open();
         // this.confirmModal.writeOnTitle("Veux tu effacer l'équipe?");
-        this.confirmModal.onConfirm(() => {
-            this.deleteEvent(event);
-        });
     }
 
-    submitEvent(event) {
+    submitEvent() {
+        console.log("submit");
+        const event = this.ctx.currentEvent;
         if(this.calendar.isEventValid(event) && this.formModal.formIsValid()) {
             this.updateEvent(event);
             this.formModal.animateFlip();       
-            let that = this;
-            setTimeout(function(){
-                that.formModal.close();
+            setTimeout(() => {
+                this.formModal.close();
             },1000);
+            this.ctx.currentEvent = null;
+            console.log(this.ctx.currentEvent);
         } else {
-            this.formModal.onSubmit(() => {
-                this.submitEvent(event);
-            });
             return;
         }
     }
@@ -133,7 +147,7 @@ export class Admin {
         event.end = this.formModal.end.value;
         event.date = this.formModal.date.value;
         this.newMainName = this.formModal.name.value;
-        if(this.common.nameFound(event, this.newMainName) && event.names[0] !== this.newMainName) {
+        if(nameFound(event, this.newMainName) && event.names[0] !== this.newMainName) {
             const index = event.names.indexOf(this.newMainName);
             event.names.splice(index, 1);
         }
@@ -143,17 +157,17 @@ export class Admin {
         event.show();
     }
 
-    deleteEvent(event) {
+    deleteEvent() {
         // this.confirmModal.writeOnFlip("L'équipe est effacée.");
         this.confirmModal.animateFlip();     
         let that = this;
         setTimeout(function(){
             that.confirmModal.close();
         },1000);
-        document.getElementById(event.id).remove();
-        delete this.calendar.events[event.date][event.id];
-        if (Object.values(this.calendar.events[event.date]).length == 0) {
-            delete this.calendar.events[event.date];
+        document.getElementById(this.ctx.currentEvent.id).remove();
+        delete this.calendar.events[this.ctx.currentEvent.date][this.ctx.currentEvent.id];
+        if (Object.values(this.calendar.events[this.ctx.currentEvent.date]).length == 0) {
+            delete this.calendar.events[this.ctx.currentEvent.date];
         }
         this.calendar.saveEvents();
     }

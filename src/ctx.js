@@ -5,19 +5,20 @@ import { Admin } from "./admin.js";
 class Ctx {
     constructor() {
         this.principal = null;
+        this.currentEvent = null;
         this.userName = "Kateryna Logoshko";
         this.weekStart = null;
         this.weekEnd = null;
     }
 
-    switchToUserMode(calendar) {
-        this.principal = new User(calendar);
+    switchToUserMode(calendar, principalCommon) {
+        this.principal = new User(calendar, principalCommon);
         document.getElementById("addButton").style.display = "none";            
         console.log("User Mode");
     }
 
-    switchToAdminMode(calendar) {
-        this.principal = new Admin(calendar);
+    switchToAdminMode(calendar, principalCommon) {
+        this.principal = new Admin(calendar, principalCommon);
         document.getElementById("addButton").style.display = "";            
         console.log("Admin Mode");
     }

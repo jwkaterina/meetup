@@ -14,13 +14,6 @@ export class FormModal {
         this.cancelButton = this.formModal.querySelector(".cancelButton");
         this.flipCard = this.formModal.querySelector(".flip-card-inner");
         this.flipCardText = this.formModal.querySelector(".flipCardText");
-
-        // see: https://www.w3schools.com/js/js_function_bind.asp
-        const close = this.close.bind(this);
-        this.cancelButton.addEventListener("click", (e) => {
-            e.preventDefault();
-            close();
-        });
     }
 
     hideSubmitButton() {
@@ -30,18 +23,15 @@ export class FormModal {
     hideDeleteButton() {
         this.deleteButton.style.display = "none";
     }
-
-    submitValue (value) {
+    showSubmitButton(value) {
+        this.submitButton.style.display = "";
         this.submitButton.value = value;
     }
 
-    onSubmit(cb) {
-        this.oneTimeListener(this.submitButton, "click", cb);
+    showDeleteButton() {
+        this.deleteButton.style.display = "";
     }
 
-    onDelete(cb) {
-        this.oneTimeListener(this.deleteButton, "click", cb);
-    }
 
     showModal() {
         this.formModal.style.display = "block";
@@ -79,22 +69,11 @@ export class FormModal {
         })
     }
 
-    oneTimeListener(element, type, callback) {
-        element.style.display = "";
-
-        element.addEventListener(type, function listener(e) {
-            e.target.removeEventListener(type, listener);
-            e.preventDefault();
-            callback();
-        });
-    }
-
 
     animateFlip(){
         this.flipCard.classList.add("flip");
-        const that = this;
-        setTimeout(function() {
-            that.flipCard.classList.remove("flip");
+        setTimeout(() => {
+            this.flipCard.classList.remove("flip");
         },1000); 
     }
 

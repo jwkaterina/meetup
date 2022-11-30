@@ -9,16 +9,6 @@ export class ConfirmModal {
         this.flipCard = this.confirmModal.querySelector(".flip-card-inner");
         // this.flipCardText = this.confirmModal.querySelector(".flipCardText");
         // this.modalTitle = document.getElementById("modalTitle");
-
-        // see: https://www.w3schools.com/js/js_function_bind.asp
-        const close = this.close.bind(this);
-        this.noButton.addEventListener("click", (e) => {
-            e.preventDefault();
-            close();
-        });    }
-
-    onConfirm(cb) {
-        this.oneTimeListener(this.yesButton, "click", cb);
     }
 
     showModal() {
@@ -49,21 +39,10 @@ export class ConfirmModal {
         document.querySelector('body').style.overflow = 'hidden';
     }
 
-    oneTimeListener(element, type, callback) {
-        element.style.display = "";
-        
-        element.addEventListener(type, function listener(e) {
-            e.target.removeEventListener(type, listener);
-            e.preventDefault();
-            callback();
-        });
-    }
-
     animateFlip(){
         this.flipCard.classList.add("flip");
-        const that = this;
-        setTimeout(function() {
-            that.flipCard.classList.remove("flip");
+        setTimeout(() => {
+            this.flipCard.classList.remove("flip");
         },1000); 
     }
 

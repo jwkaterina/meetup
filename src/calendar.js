@@ -24,21 +24,22 @@ export class Calendar {
     }
 
     setupControls() {
-        const that = this;
-        document.getElementById("nextWeekBtn").addEventListener("click", function() {
-            that.changeWeek(1)
+        //See: https://pancy.medium.com/context-smuggle-with-injection-6f38e0ae478e#19e5
+        //     https://dev.to/mathlete/anonymous-functions-vs-named-functions-vs-arrow-functions-57pm
+        document.getElementById("nextWeekBtn").addEventListener("click", () => {
+            this.changeWeek(1)
         });
-        document.getElementById("prevWeekBtn").addEventListener("click", function() {
-            that.changeWeek(-1)
+        document.getElementById("prevWeekBtn").addEventListener("click", () => {
+            this.changeWeek(-1)
         });
-        document.getElementById("addButton").addEventListener("click", function() {
-            that.ctx.principal.createNewEvent()
+        document.getElementById("addButton").addEventListener("click", () => {
+            this.ctx.principal.createNewEvent()
         });
-        document.getElementById("todayButton").addEventListener("click", function() {
-            that.showCurrentWeek()
+        document.getElementById("todayButton").addEventListener("click", () => {
+            this.showCurrentWeek()
         });
-        document.getElementById("trashButton").addEventListener("click", function() {
-            that.trash()
+        document.getElementById("trashButton").addEventListener("click", () => {
+            this.trash()
         });
     }
 
@@ -109,7 +110,7 @@ export class Calendar {
                 slot.className = "slot";
                 slots.appendChild(slot);
                 slot.addEventListener("click", function() {
-                    cal.ctx.principal.clickSlot(hour, dayIndex)
+                    cal.ctx.principal.clickSlot(hour, dayIndex);
                 })
                 // slot.addEventListener("mouseover", function() {
                 //     cal.hoverOver(hour);

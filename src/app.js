@@ -1,6 +1,7 @@
 import { Context } from "./ctx";
 import { Settings } from "./settings";
 import { Calendar } from "./calendar";
+import { PrincipalCommon } from "./principal";
 import './calendar.css';
 
 export class App {
@@ -11,11 +12,12 @@ export class App {
         Settings.initInstance(dayStarts, dayEnds, slotHeight);
         this.ctx = Context.getInstance();
         this.calendar = new Calendar();
+        this.principalCommon = new PrincipalCommon(this.calendar);
     }
 
     setup() {
         this.calendar.setup();
-        this.ctx.switchToUserMode(this.calendar);
+        this.ctx.switchToUserMode(this.calendar, this.principalCommon);
         this.setupControls();
     }
 
@@ -28,9 +30,9 @@ export class App {
         const checkBox = document.getElementById("checkBox");
     
         if (checkBox.checked){
-            this.ctx.switchToAdminMode(this.calendar);
+            this.ctx.switchToAdminMode(this.calendar, this.principalCommon);
         } else {
-            this.ctx.switchToUserMode(this.calendar);
+            this.ctx.switchToUserMode(this.calendar, this.principalCommon);
         }
     }
 }
