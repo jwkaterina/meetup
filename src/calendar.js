@@ -49,16 +49,18 @@ export class Calendar {
         let that = this;
 
         function checkDirection() {
-        if (touchendX < touchstartX) {that.changeWeek(1)};
-        if (touchendX > touchstartX) {that.changeWeek(-1)};
+        if (touchstartX - touchendX > 80) {that.changeWeek(1)};
+        if (touchendX -touchstartX > 80) {that.changeWeek(-1)};
         }
 
         document.getElementById("calendar").addEventListener('touchstart', e => {
         touchstartX = e.changedTouches[0].screenX;
+        // console.log(touchstartX);
         });
 
         document.getElementById("calendar").addEventListener('touchend', e => {
         touchendX = e.changedTouches[0].screenX;
+        console.log(touchstartX - touchendX);
         checkDirection()
         });
     }
