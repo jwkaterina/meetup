@@ -17,7 +17,7 @@ export class Admin {
 
         this.common.eventModal.editButton.addEventListener("click", () => {
             this.openChangeFormModal();
-            this.common.eventModal.close();
+            this.common.eventModal.hideModal();
         });
 
         this.formModal.submitButton.addEventListener("click", () => {
@@ -25,7 +25,7 @@ export class Admin {
         });
         this.formModal.deleteButton.addEventListener("click", () => {
             this.openConfirmModal();
-            this.formModal.close();
+            this.formModal.hideModal();
         });
         this.formModal.cancelButton.addEventListener("click", (e) => {
             e.preventDefault();
