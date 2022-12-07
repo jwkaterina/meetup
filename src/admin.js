@@ -125,7 +125,7 @@ export class Admin {
     }
 
     submitEvent() {
-        // console.log("submit");
+        console.log("submit");
         const event = this.ctx.currentEvent;
         if(this.calendar.isEventValid(event) && this.formModal.formIsValid()) {
             this.updateEvent(event);

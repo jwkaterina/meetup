@@ -7,7 +7,7 @@ class Set {
     }
 }
 
-export const Settings = (function() {
+export const Settings = (() => {
     let instance;
   
     return {
