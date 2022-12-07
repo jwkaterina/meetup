@@ -40,7 +40,7 @@ class Ctx {
     }
 }
 
-export const Context = (function() {
+export const Context = (() => {
     let instance;
   
     function createInstance() {

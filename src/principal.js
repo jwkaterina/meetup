@@ -30,10 +30,9 @@ export class PrincipalCommon {
 
     addEventContent(event) {
         let lis = "";
-        event.names.forEach(addToList);
-        function addToList(value, index) {
+        event.names.forEach((value, index) => {
             lis += `<li class="member" member=${index + 1}>${value}</li>`;
-        };
+        });
 
         let txt = "";
         txt = `<a class="place" href="http://maps.google.com/?q=${event.place}" target="_blank">

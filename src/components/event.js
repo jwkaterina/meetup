@@ -62,9 +62,8 @@ export class Event {
             eventSlot = document.createElement("div");
             eventSlot.className ="event";
             eventSlot.setAttribute("id", this.id);
-            const that = this;
-            eventSlot.addEventListener("click", function() {
-                ctx.principal.openEventModal(that)
+            eventSlot.addEventListener("click", () => {
+                ctx.principal.openEventModal(this)
             });
         }
         const h = this.settings.slotHeight;
@@ -76,10 +75,9 @@ export class Event {
         } 
 
         let lis = "";
-        this.names.forEach(addToList);
-        function addToList(value, index) {
+        this.names.forEach((value, index) => {
             lis += `<li class="member" member=${index + 1}>${value}</li>`
-        };
+        });
 
         let txt = "";
         txt = `<a class="place" target="_blank">${this.place}</a>

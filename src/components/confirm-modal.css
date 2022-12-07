@@ -29,6 +29,19 @@
 }
 
 @media (max-width: 800px) {
+    #confirmModal {
+        left: 5vw;
+        top: 25vh;
+        transform: translate(0, 0);
+        width: 90vw;
+        height: 50vh;
+    }
+
+    #confirmModal .flip-card {
+        width: 90vw;
+        height: 50vh;
+    }
+
     #modalTitle {
         margin: 1vh 0 1vh 0;
         padding: 1vh 0;

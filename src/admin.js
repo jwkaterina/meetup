@@ -87,7 +87,7 @@ export class Admin {
     }
 
     openCreateFormModal(event) {
-        console.log(this.ctx.currentEvent.id);
+        console.log(event.id);
         this.formModal.open();
         this.formModal.writeOnFlip("Ça y est! L'équipe est crée.");
         this.formModal.showSubmitButton("Creer");
@@ -125,7 +125,7 @@ export class Admin {
     }
 
     submitEvent() {
-        console.log("submit");
+        // console.log("submit");
         const event = this.ctx.currentEvent;
         if(this.calendar.isEventValid(event) && this.formModal.formIsValid()) {
             this.updateEvent(event);
@@ -160,9 +160,8 @@ export class Admin {
     deleteEvent() {
         // this.confirmModal.writeOnFlip("L'équipe est effacée.");
         this.confirmModal.animateFlip();     
-        let that = this;
-        setTimeout(function(){
-            that.confirmModal.close();
+        setTimeout(() => {
+            this.confirmModal.close();
         },1000);
         document.getElementById(this.ctx.currentEvent.id).remove();
         delete this.calendar.events[this.ctx.currentEvent.date][this.ctx.currentEvent.id];
@@ -181,7 +180,7 @@ export class Admin {
             names: [],
             color: "green",
         });
-
+        this.ctx.currentEvent = event;
         this.openCreateFormModal(event);
     }
 }

@@ -64,7 +64,7 @@ export class FormModal {
 
     hideErrors() {
         document.getElementById("errors").innerHTML = "";      
-        document.querySelectorAll(".alert").forEach(function(alert) {
+        document.querySelectorAll(".alert").forEach((alert) => {
             alert.classList.remove("show-message");
         })
     }

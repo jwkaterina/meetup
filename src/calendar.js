@@ -25,7 +25,7 @@ export class Calendar {
 
     setupControls() {
         //See: https://pancy.medium.com/context-smuggle-with-injection-6f38e0ae478e#19e5
-        //     https://dev.to/mathlete/anonymous-functions-vs-named-functions-vs-arrow-functions-57pm
+        //     
         document.getElementById("nextWeekBtn").addEventListener("click", () => {
             this.changeWeek(1)
         });
@@ -86,7 +86,7 @@ export class Calendar {
         const cal = this;
 
             const days = document.querySelectorAll(".day");
-            days.forEach(function (day) {
+            days.forEach((day) => {
             const shortName = day.getAttribute("data-shortName");
             const fullName = day.getAttribute("data-name");
             const header = document.createElement("div");
@@ -109,13 +109,13 @@ export class Calendar {
                 slot.setAttribute("data-hour", hour);
                 slot.className = "slot";
                 slots.appendChild(slot);
-                slot.addEventListener("click", function() {
+                slot.addEventListener("click", () => {
                     cal.ctx.principal.clickSlot(hour, dayIndex);
                 })
-                // slot.addEventListener("mouseover", function() {
+                // slot.addEventListener("mouseover", () => {
                 //     cal.hoverOver(hour);
                 // })
-                // slot.addEventListener("mouseout", function() {
+                // slot.addEventListener("mouseout", () => {
                 //     cal.hoverOut();
                 // })
             }
@@ -169,7 +169,7 @@ export class Calendar {
 
     hideCurrentDay() {
         const days = document.querySelectorAll(".day");
-        days.forEach(function(day) {
+        days.forEach((day) => {
             day.classList.remove("currentDay");
         });
     }
@@ -180,7 +180,7 @@ export class Calendar {
 
     // hoverOut() {
     //     const times = document.querySelectorAll(".time");
-    //     times.forEach(function(time) {
+    //     times.forEach((time) => {
     //         time.classList.remove("currentTime");
     //     });
     // }
@@ -207,7 +207,7 @@ export class Calendar {
 
     loadEvents() {
         const events = document.querySelectorAll(".event");
-        events.forEach(function(event) {
+        events.forEach((event) => {
             event.remove();
         });
         if (!this.eventsLoaded) {
@@ -268,7 +268,7 @@ export class Calendar {
             this.events = {};
             this.saveEvents();
             const events = document.querySelectorAll(".event");
-            events.forEach(function(event) {
+            events.forEach((event) => {
                 event.remove();
             });
         } else {
