@@ -15,7 +15,7 @@
     --gray-lightest: #F2F6F8;
 
     --slotHeight: 50px;
-    --slotHeightMobile: 50px;
+    --slotHeightMobile: 35px;
 }
 
 * {
@@ -312,7 +312,7 @@ input:checked + .slider:before {
     }
     
     .header {
-        height: 60px;
+        /* height: 60px; */
         justify-content: flex-start;
     }
 
@@ -343,9 +343,9 @@ input:checked + .slider:before {
         right: 20px;
     }
 
-    .columnHeader {
+    /* .columnHeader {
         top: 60px;
-    }
+    } */
 
     .slot,
     .time {

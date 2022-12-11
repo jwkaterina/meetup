@@ -1,5 +1,5 @@
 import { dateString, getDayIndex, addDays } from "./helper";
-import { Settings } from "./settings";
+// import { Settings } from "./settings";
 import { Context } from "./ctx";
 import { Event } from "./components/event";
 
@@ -8,7 +8,7 @@ export class Calendar {
         this.events = {};
         this.weekOffset = 0;
         this.readyToTrash = false;
-        this.settings = Settings.getInstance();
+        // this.settings = Settings.getInstance();
         this.eventsLoaded = false;
         this.ctx = Context.getInstance();
     }
@@ -21,8 +21,6 @@ export class Calendar {
         this.loadEvents();
         this.setupControls();
         this.addSwipe();
-        document.getElementById("calendar").scrollTo(0, 100);
-
     }
 
     setupControls() {
@@ -43,10 +41,10 @@ export class Calendar {
         document.getElementById("trashButton").addEventListener("click", () => {
             this.trash()
         });
-    }
-
-    sctoll() {
-        document.getElementById("calendar").scrollTo(0, 100);
+        window.addEventListener("load", () => {
+            scrollBy(0, 375);
+            console.log("scroll");
+        });
     }
 
     addSwipe() {
@@ -76,7 +74,8 @@ export class Calendar {
         header.className = "columnHeader";
         const slots = document.createElement("div");
         slots.className = "slots";
-        for (let hour = this.settings.dayStarts; hour < this.settings.dayEnds; hour++) {
+        // for (let hour = this.settings.dayStarts; hour < this.settings.dayEnds; hour++) {
+        for (let hour = 0; hour < 24; hour++) {
             const timeSlot = document.createElement("div");
             timeSlot.setAttribute("data-hour", hour);
             timeSlot.className = "time";
@@ -85,7 +84,8 @@ export class Calendar {
         }
         document.querySelector(".dayTime").appendChild(header);
         document.querySelector(".dayTime").appendChild(slots);
-        document.querySelector(`.time[data-hour="${this.settings.dayStarts}"]`).style.visibility = "hidden";
+        // document.querySelector(`.time[data-hour="${this.settings.dayStarts}"]`).style.visibility = "hidden";
+        document.querySelector(`.time[data-hour="0"]`).style.visibility = "hidden";
     }
 
 
@@ -112,7 +112,8 @@ export class Calendar {
             const dayIndex = parseInt(day.getAttribute("data-dayIndex"));
             const slots = document.createElement("div");
             slots.className = "slots";
-            for (let hour = cal.settings.dayStarts; hour < cal.settings.dayEnds; hour++) {
+            // for (let hour = cal.settings.dayStarts; hour < cal.settings.dayEnds; hour++) {
+            for (let hour = 0; hour < 24; hour++) {
                 const slot = document.createElement("div");
                 slot.setAttribute("data-hour", hour);
                 slot.className = "slot";

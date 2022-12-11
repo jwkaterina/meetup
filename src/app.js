@@ -1,5 +1,5 @@
 import { Context } from "./ctx";
-import { Settings } from "./settings";
+// import { Settings } from "./settings";
 import { Calendar } from "./calendar";
 import { PrincipalCommon } from "./principal";
 import './calendar.css';
@@ -10,7 +10,7 @@ export class App {
         const dayEnds = 24;
         const slotHeight = 50;
         const slotHeightMobile = 50;
-        Settings.initInstance(dayStarts, dayEnds, slotHeight, slotHeightMobile);
+        // Settings.initInstance(dayStarts, dayEnds, slotHeight, slotHeightMobile);
         this.ctx = Context.getInstance();
         this.calendar = new Calendar();
         this.principalCommon = new PrincipalCommon(this.calendar);

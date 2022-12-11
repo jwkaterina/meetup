@@ -1,7 +1,7 @@
 import './event.css';
 import { dateString, getDayIndex, generateId, nameFound } from "../helper";
 // import { PrincipalCommon } from "../principal";
-import { Settings } from "../settings";
+// import { Settings } from "../settings";
 import { Context } from "../ctx";
 
 export class Event {
@@ -14,7 +14,9 @@ export class Event {
         this.date = data.date;
         this.prevDate = this.date;
         this.color = data.color;
-        this.settings = Settings.getInstance();
+        this.slotHeight = 50;
+        this.slotHeightMobile = 35;
+        // this.settings = Settings.getInstance();
         // this.common = new PrincipalCommon();
     }
 
@@ -87,15 +89,17 @@ export class Event {
 
         let h;
         if (media.matches) {
-            h = this.settings.slotHeightMobile;
+            h = this.slotHeightMobile;
             console.log(h);
         } else {
-            h = this.settings.slotHeight;
-            // console.log(h);
+            h = this.slotHeight;
+            console.log(h);
         }
         // const h = document.querySelector(".slot").offsetWidth
-        eventSlot.style.top = (this.startHour + this.startMinutes / 60 - this.settings.dayStarts) * h -+ 1 + "px";
-        eventSlot.style.bottom = (this.settings.dayEnds - this.endHour + this.endMinutes / 60) * h + 5 + "px";
+        // eventSlot.style.top = (this.startHour + this.startMinutes / 60 - this.settings.dayStarts) * h -+ 1 + "px";
+        // eventSlot.style.bottom = (this.settings.dayEnds - this.endHour + this.endMinutes / 60) * h + 5 + "px";
+        eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h -+ 1 + "px";
+        eventSlot.style.bottom = (24 - this.endHour + this.endMinutes / 60) * h + 5 + "px";
 
         if(!nameFound(this, ctx.userName)) {
             this.color = "var(--green)";
