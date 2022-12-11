@@ -54,12 +54,13 @@ export class EventModal {
     }
 
     showCalendar() {
-        document.getElementById("calendar").classList.remove("opaque");
+        document.querySelector('body').classList.remove("opaque");
         document.querySelector('body').style.overflow = 'auto'; 
     }
 
     hideCalendar() {
-        document.getElementById("calendar").classList.add("opaque");
+        scroll(0, 0);
+        document.querySelector('body').classList.add("opaque");
         document.querySelector('body').style.overflow = 'hidden';
     }
 
