@@ -21,6 +21,8 @@ export class Calendar {
         this.loadEvents();
         this.setupControls();
         this.addSwipe();
+        document.getElementById("calendar").scrollTo(0, 100);
+
     }
 
     setupControls() {
@@ -41,6 +43,10 @@ export class Calendar {
         document.getElementById("trashButton").addEventListener("click", () => {
             this.trash()
         });
+    }
+
+    sctoll() {
+        document.getElementById("calendar").scrollTo(0, 100);
     }
 
     addSwipe() {
@@ -123,6 +129,17 @@ export class Calendar {
             }
             day.appendChild(slots);
         });
+
+        // const width = document.querySelector(".day").offsetWidth;
+        // const slots = document.querySelectorAll(".slot");
+        // slots.forEach((slot) => {
+        //     slot.style.height = `${width}px`;
+        // })
+
+        // const times = document.querySelectorAll(".time");
+        // times.forEach((time) => {
+        //     time.style.height = `${width}px`;
+        // })
     }
 
     calculateCurrentWeek() {

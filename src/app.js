@@ -6,10 +6,11 @@ import './calendar.css';
 
 export class App {
     constructor() {
-        const dayStarts = 6;
-        const dayEnds = 21;
+        const dayStarts = 1;
+        const dayEnds = 24;
         const slotHeight = 50;
-        Settings.initInstance(dayStarts, dayEnds, slotHeight);
+        const slotHeightMobile = 50;
+        Settings.initInstance(dayStarts, dayEnds, slotHeight, slotHeightMobile);
         this.ctx = Context.getInstance();
         this.calendar = new Calendar();
         this.principalCommon = new PrincipalCommon(this.calendar);
@@ -22,8 +23,8 @@ export class App {
     }
 
     setupControls() {
-        $("#checkBox").click(() => this.modeChange());
-        $(".radio-container").change(() => this.ctx.userChange(this.calendar));
+        document.getElementById("checkBox").addEventListener("click", () => this.modeChange());
+        document.querySelector(".radio-container").addEventListener("change", () => this.ctx.userChange(this.calendar));
     }
 
     modeChange() {

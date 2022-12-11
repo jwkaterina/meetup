@@ -48,6 +48,8 @@ export class Event {
 
     show() {
         const ctx = Context.getInstance();
+        const media = window.matchMedia("(max-width: 800px)");
+
         if (
             this.date < dateString(ctx.weekStart) ||
             this.date > dateString(ctx.weekEnd)
@@ -66,27 +68,42 @@ export class Event {
                 ctx.principal.openEventModal(this)
             });
         }
-        const h = this.settings.slotHeight;
+
+        let lis = "";
+        this.names.forEach((value, index) => {
+            lis += `<li class="member" member=${index + 1}>${value}</li>`
+        });
+        let txt = "";
+        txt = `<a class="place" target="_blank">${this.place}</a>
+            <ol class="list">${lis}</ol>`
+        eventSlot.innerHTML = txt;
+        if (media.matches) {
+            if(this.names.length == 0) {
+                return
+            } else {
+                eventSlot.innerHTML = this.names.length;
+            }
+        }
+
+        let h;
+        if (media.matches) {
+            h = this.settings.slotHeightMobile;
+            console.log(h);
+        } else {
+            h = this.settings.slotHeight;
+            // console.log(h);
+        }
+        // const h = document.querySelector(".slot").offsetWidth
+        eventSlot.style.top = (this.startHour + this.startMinutes / 60 - this.settings.dayStarts) * h -+ 1 + "px";
+        eventSlot.style.bottom = (this.settings.dayEnds - this.endHour + this.endMinutes / 60) * h + 5 + "px";
 
         if(!nameFound(this, ctx.userName)) {
             this.color = "var(--green)";
         } else {
             this.color = "var(--blue)";
         } 
-
-        let lis = "";
-        this.names.forEach((value, index) => {
-            lis += `<li class="member" member=${index + 1}>${value}</li>`
-        });
-
-        let txt = "";
-        txt = `<a class="place" target="_blank">${this.place}</a>
-            <ol class="list">${lis}</ol>`
-
-        eventSlot.innerHTML = txt;
-        eventSlot.style.top = (this.startHour + this.startMinutes / 60 - this.settings.dayStarts) * h -+ 1 + "px";
-        eventSlot.style.bottom = (this.settings.dayEnds - this.endHour + this.endMinutes / 60) * h + 5 + "px";
         eventSlot.style.background = this.color;
+
         const day = document.querySelector(`.day[data-dayIndex="${this.dayIndex}"]`);
         const slots = day.querySelector(".slots");
         slots.appendChild(eventSlot);
@@ -99,14 +116,5 @@ export class Event {
         // } else {
         //     eventSlot.removeClass("shortEvent").removeClass("veryShortEvent");
         // }
-
-        const media = window.matchMedia("(max-width: 800px)");
-        if (media.matches) {
-            if(this.names.length == 0) {
-                return
-            } else {
-                eventSlot.innerHTML = this.names.length;
-            }
-        }
     }
 }

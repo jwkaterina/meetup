@@ -70,7 +70,7 @@ export class FormModal {
     }
 
 
-    animateFlip(){
+    animateFlip() {
         this.flipCard.classList.add("flip");
         setTimeout(() => {
             this.flipCard.classList.remove("flip");
@@ -80,6 +80,15 @@ export class FormModal {
     writeOnFlip(text) {
         this.flipCardText.textContent = text;
     }
+
+    // resize() {
+    //     document.getElementById("formModal").style.top = "5vh";
+    //     document.getElementById("formModal").style.height = "90vh";
+    //     document.getElementById("formModal").querySelector(".flip-card").style.height = "90vh";
+    //     document.getElementById("formModal").style.overflow = 'auto'; 
+    //     document.querySelector('body').style.overflow = 'auto'; 
+    //     console.log("resized");
+    // }
 
     formIsValid() {
         const inputs = Array.from(document.querySelectorAll(".shortInput"));

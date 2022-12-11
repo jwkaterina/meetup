@@ -11,9 +11,9 @@ export class Admin {
         this.common = principalCommon;
         this.formModal = new FormModal();
         this.confirmModal = new ConfirmModal();
-        // window.addEventListener("resize", (e) => {
-        //     this.formModal.resize();
-        //   });
+        window.addEventListener("resize", (e) => {
+            this.formModal.resize();
+          });
 
         this.common.eventModal.editButton.addEventListener("click", () => {
             this.openChangeFormModal();
