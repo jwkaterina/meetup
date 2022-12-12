@@ -83,7 +83,11 @@ export class Event {
             if(this.names.length == 0) {
                 return
             } else {
-                eventSlot.innerHTML = this.names.length;
+                const circle = document.createElement("div");
+                circle.className = "circle";
+                circle.innerHTML = this.names.length;
+                eventSlot.innerHTML = "";
+                eventSlot.appendChild(circle);
             }
         }
 
