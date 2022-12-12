@@ -90,10 +90,10 @@ export class Event {
         let h;
         if (media.matches) {
             h = this.slotHeightMobile;
-            console.log(h);
+            // console.log(h);
         } else {
             h = this.slotHeight;
-            console.log(h);
+            // console.log(h);
         }
         // const h = document.querySelector(".slot").offsetWidth
         // eventSlot.style.top = (this.startHour + this.startMinutes / 60 - this.settings.dayStarts) * h -+ 1 + "px";

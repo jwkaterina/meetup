@@ -30,13 +30,14 @@ export class ConfirmModal {
     }
 
     showCalendar() {
-        document.querySelector('body').classList.remove("opaque");
-        document.querySelector('body').style.overflow = 'auto'; 
+        document.body.classList.remove("opaque");
+        document.body.style.overflow = 'auto'; 
     }
 
     hideCalendar() {
-        document.querySelector('body').classList.add("opaque");
-        document.querySelector('body').style.overflow = 'hidden';
+        scroll(0, 0);
+        document.body.classList.add("opaque");
+        document.body.style.overflow = 'hidden';
     }
 
     animateFlip(){

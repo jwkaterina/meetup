@@ -13,18 +13,18 @@ export class PrincipalCommon {
         this.eventModal.submitButton.addEventListener("click", () => {
             this.addName(this.eventModal);
             this.ctx.currentEvent = null;
-            console.log(this.ctx.currentEvent);
+            // console.log(this.ctx.currentEvent);
         });
         this.eventModal.deleteButton.addEventListener("click", () => {
             this.deleteName(this.eventModal);
             this.ctx.currentEvent = null;
-            console.log(this.ctx.currentEvent);
+            // console.log(this.ctx.currentEvent);
         });
         this.eventModal.cancelButton.addEventListener("click", (e) => {
             e.preventDefault();
             this.eventModal.close();
             this.ctx.currentEvent = null;
-            console.log(this.ctx.currentEvent);
+            // console.log(this.ctx.currentEvent);
         });
     }
 

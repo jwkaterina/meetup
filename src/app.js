@@ -3,13 +3,14 @@ import { Context } from "./ctx";
 import { Calendar } from "./calendar";
 import { PrincipalCommon } from "./principal";
 import './calendar.css';
+import { radio } from "aws-amplify";
 
 export class App {
     constructor() {
-        const dayStarts = 1;
-        const dayEnds = 24;
-        const slotHeight = 50;
-        const slotHeightMobile = 50;
+        // const dayStarts = 1;
+        // const dayEnds = 24;
+        // const slotHeight = 50;
+        // const slotHeightMobile = 50;
         // Settings.initInstance(dayStarts, dayEnds, slotHeight, slotHeightMobile);
         this.ctx = Context.getInstance();
         this.calendar = new Calendar();
@@ -24,7 +25,10 @@ export class App {
 
     setupControls() {
         document.getElementById("checkBox").addEventListener("click", () => this.modeChange());
-        document.querySelector(".radio-container").addEventListener("change", () => this.ctx.userChange(this.calendar));
+        const radios = document.querySelectorAll(".radio-container");
+        radios.forEach((radio) => {
+            radio.addEventListener("change", () => this.ctx.userChange(this.calendar));
+        });
     }
 
     modeChange() {

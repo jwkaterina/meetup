@@ -42,8 +42,8 @@ export class Calendar {
             this.trash()
         });
         window.addEventListener("load", () => {
-            scrollBy(0, 375);
-            console.log("scroll");
+            scrollTo(0, 375);
+            // console.log("scroll");
         });
     }
 

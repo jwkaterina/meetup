@@ -12,7 +12,7 @@ export class User {
 
     openEventModal(event) {
         this.ctx.currentEvent = event;
-        console.log(this.ctx.currentEvent.id);
+        // console.log(this.ctx.currentEvent.id);
         this.common.eventModal.open();
         this.common.addEventContent(event);
         if (nameFound(event, this.ctx.userName)) {
