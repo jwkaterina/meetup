@@ -90,16 +90,19 @@ export class Event {
         let h;
         if (media.matches) {
             h = this.slotHeightMobile;
+            eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
+            eventSlot.style.bottom = (24 - this.endHour + this.endMinutes / 60) * h + 2 + "px";
             // console.log(h);
         } else {
             h = this.slotHeight;
+            eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
+            eventSlot.style.bottom = (24 - this.endHour + this.endMinutes / 60) * h + 5 + "px";
             // console.log(h);
         }
         // const h = document.querySelector(".slot").offsetWidth
         // eventSlot.style.top = (this.startHour + this.startMinutes / 60 - this.settings.dayStarts) * h -+ 1 + "px";
         // eventSlot.style.bottom = (this.settings.dayEnds - this.endHour + this.endMinutes / 60) * h + 5 + "px";
-        eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h -+ 1 + "px";
-        eventSlot.style.bottom = (24 - this.endHour + this.endMinutes / 60) * h + 5 + "px";
+    
 
         if(!nameFound(this, ctx.userName)) {
             this.color = "var(--green)";
@@ -111,14 +114,5 @@ export class Event {
         const day = document.querySelector(`.day[data-dayIndex="${this.dayIndex}"]`);
         const slots = day.querySelector(".slots");
         slots.appendChild(eventSlot);
-
-        // const duration = event.duration;
-        // if (duration < 45) {
-        //     eventSlot.removeClass("shortEvent").addClass("veryShortEvent");
-        // } else if (duration < 59) {
-        //     eventSlot.removeClass("veryShortEvent").addClass("shortEvent");
-        // } else {
-        //     eventSlot.removeClass("shortEvent").removeClass("veryShortEvent");
-        // }
     }
 }
