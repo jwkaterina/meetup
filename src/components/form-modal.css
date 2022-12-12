@@ -1,14 +1,21 @@
-/* #formModal .flip-card-front {
+#formModal .flip-card-front {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(6, 1fr);
-    grid-gap: 1rem;
-    margin: 2rem 3rem;
+}
+
+#formModal .flip-card-front, #formModal .flip-card-back {
+    background-color: var(--white); 
+}
+
+#formModal .flipCardText {
+    color: var(--black);
 }
 
 #formModal a {
     grid-column: 1 / span 2;
     grid-row: 1;
+    justify-self: end;
 }
 
 #place {
@@ -23,16 +30,22 @@
 #date {
     grid-column: 1 / span 2;
     grid-row: 4;
-} */
-/* #eventPlace {
-    grid-column: 2 / span 1;
 }
-#eventPlace {
+#start {
+    grid-column: 1 / span 1;
+    grid-row: 5;
+    width: 90%;
+}
+#end {
     grid-column: 2 / span 1;
-} */
+    grid-row: 5;
+    width: 90%;
+    justify-self: end;
+}
 
-#formModal .flip-card-front, #formModal .flip-card-back {
-    background-color: var(--white); 
+#formModal .eventControls {
+    grid-column: 1 / span 2;
+    grid-row: 6;
 }
 
 #formModal .button {
@@ -45,13 +58,8 @@
     color: var(--white);
 }
 
-#formModal .flipCardText {
-    color: var(--black);
-}
-
 .input-group {
     position: relative;
-    margin-bottom: 20px;
 }
 
 input {
@@ -71,7 +79,6 @@ input {
     background-color: var(--white);
     padding: 10px 20px;
     color: var(--gray-light);
-    margin-bottom: 20px;
     width: 100%;
 }
 
@@ -84,21 +91,6 @@ input {
     color: var(--gray-light);
 }
 
-#place {
-    margin-top: 30px;
-}
-
-#start {
-    margin-right: 8%;
-    width: 45%;
-    display: inline-block;
-}
-
-#end {
-    width: 45%;
-    display: inline-block;
-}
-
 #errors {
     color: var(--red);
 }
@@ -107,9 +99,9 @@ input {
 
 .alert {
     background-color: var(--yellow);
-    position: absolute;
-    left: 0;
-    bottom: 5px;
+    position: relative;
+    /* left: 0;
+    bottom: 5px; */
     height: 20px;
     width: 70%;
     visibility: hidden;
@@ -135,21 +127,21 @@ input {
   }
 
   @media (max-width: 800px) {
-    #formModal {
-        left: 5vw;
-        top: 25vh;
-        transform: translate(0, 0);
-        width: 90vw;
-        height: 50vh;
-    }
-
     #formModal .flip-card {
         width: 90vw;
         height: 50vh;
     }
 
     .shortInput {
-        padding: 1vh 2vh;
-        margin: 1vh 0 0 0;
+        padding: 0.5vh 1vh;
+    }
+
+    .alert {
+        height: 2vh;
+        width: 70%;
+    }
+
+    .alert p {
+        font-size: 0.7rem;
     }
   }

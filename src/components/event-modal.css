@@ -2,6 +2,45 @@
     background-color: var(--blue); 
 } */
 
+#eventModal .flipCardText {
+    color: var(--white);
+}
+
+#eventModal .flip-card-front {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+}
+
+#eventModal a {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+    justify-self: end;
+}
+
+#eventContent {
+    grid-column: 1 / span 2;
+    grid-row: 2 / span 4;
+    padding: 0 50px;
+    color: var(--white);
+    text-align: center;
+    line-height: 2rem;
+    font-size: 1rem;
+}
+
+#eventContent .place {
+    color: var(--black);
+}
+
+#eventContent .place:hover {
+    color: var(--white);
+}
+
+#eventModal .eventControls {
+    grid-column: 1 / span 2;
+    grid-row: 6;
+}
+
 #eventModal .button {
     background-color: var(--white);
     color: var(--black);
@@ -12,38 +51,10 @@
     color: var(--white);
 }
 
-#eventModal .flipCardText {
-    color: var(--white);
-}
-
-#eventContent {
-    margin: 50px;
-    height: 250px;
-    color: var(--white);
-    text-align: center;
-    line-height: 2rem;
-    font-size: 1rem;
-}
-
-#eventContent .place {
-    color: var(--black);
-}
-#eventContent .place:hover {
-    color: var(--white);
-}
-
 @media (max-width: 800px) {
-    #eventModal {
-        left: 5vw;
-        top: 25vh;
-        transform: translate(0, 0);
-        width: 90vw;
-        height: 50vh;
-    }
-
     #eventContent {
-        margin: 10vw;
-        height: 25vh;
+        /* margin: 10vw;
+        height: 25vh; */
         color: var(--white);
         text-align: center;
         line-height: 2rem;

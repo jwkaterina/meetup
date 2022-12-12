@@ -6,12 +6,28 @@
     background-color: var(--white); 
 }
 
+#confirmModal .flipCardText {
+    color: var(--black);
+}
+
+#confirmModal .flip-card-front {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
 #modalTitle {
-    margin: 10px 0 10px 0;
-    padding: 30px 0;
-    height: 100px;
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
     color: var(--black);
     text-align: center;
+}
+
+#confirmModal .eventControls {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: center;
 }
 
 #confirmModal .button {
@@ -24,27 +40,13 @@
     color: var(--white);
 }
 
-#confirmModal .flipCardText {
-    color: var(--black);
-}
-
 @media (max-width: 800px) {
-    #confirmModal {
-        left: 5vw;
-        top: 25vh;
-        transform: translate(0, 0);
-        width: 90vw;
-        height: 50vh;
-    }
-
     #confirmModal .flip-card {
         width: 90vw;
         height: 50vh;
     }
 
     #modalTitle {
-        margin: 1vh 0 1vh 0;
-        padding: 1vh 0;
         height: 6vh;
         color: var(--black);
         text-align: center;
