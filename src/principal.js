@@ -9,7 +9,10 @@ export class PrincipalCommon {
         this.ctx = Context.getInstance();
         this.eventModal = new EventModal();
 
+        this.loadEventListeners();
+    }
 
+    loadEventListeners() {
         this.eventModal.submitButton.addEventListener("click", () => {
             this.addName(this.eventModal);
             this.ctx.currentEvent = null;
