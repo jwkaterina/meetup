@@ -27,17 +27,20 @@
     grid-column: 1 / span 2;
     grid-row: 3;
 }
+
 #date {
     grid-column: 1 / span 2;
     grid-row: 4;
 }
+
 #start {
-    grid-column: 1 / span 1;
+    grid-column: 1;
     grid-row: 5;
     width: 90%;
 }
+
 #end {
-    grid-column: 2 / span 1;
+    grid-column: 2;
     grid-row: 5;
     width: 90%;
     justify-self: end;
@@ -70,10 +73,6 @@ input {
 }
 
 .shortInput {
-    font-family: inherit;
-    font-size: inherit;
-    outline: none;
-    border: none;
     border: 1px solid var(--gray-light);
     border-radius: 2px;
     background-color: var(--white);
@@ -91,42 +90,54 @@ input {
     color: var(--gray-light);
 }
 
-#errors {
-    color: var(--red);
-}
-
 /* Alert */
 
 .alert {
     background-color: var(--yellow);
     position: relative;
-    /* left: 0;
-    bottom: 5px; */
-    height: 20px;
     width: 70%;
     visibility: hidden;
-  }
+    color: var(--black);
+    text-align: left;
+}
+
+#start .alert, #end .alert {
+    width: 100%;
+}
   
-  .show-message {
-    visibility: visible;
-  }
+.show-message {
+    visibility: visible !important;
+}
   
-  .alert .arrow {
+.alert .arrow {
     position: absolute;
     top: -10px;
     left: 10px;
     border: 5px solid;
     border-color: transparent transparent var(--yellow) var(--yellow);
-  }
-  
-  .alert p {
-    color: var(--black);
-    padding: 0.1rem;
-    text-align: left;
-    font-size: 0.8rem;
-  }
+}
 
-  @media (max-width: 800px) {
+/* Errors */
+#errors {
+    /* font-family: inherit; */
+    width: 100%;
+    background-color: var(--yellow);
+    grid-column: 1 / span 2;
+    grid-row: 6;
+    align-self: end;
+    text-align: center;
+    visibility: hidden;
+    
+}
+
+.alert, #errors {
+    font-size: 0.8rem;
+    font-weight: 200;
+    padding: 0.1rem;
+    height: 20px;
+}
+
+@media (max-width: 800px) {
     #formModal .flip-card {
         width: 90vw;
         height: 50vh;
@@ -136,12 +147,13 @@ input {
         padding: 0.5vh 1vh;
     }
 
-    .alert {
-        height: 2vh;
-        width: 70%;
-    }
-
-    .alert p {
+    .alert, #errors {
+        height: 1rem;
         font-size: 0.7rem;
     }
-  }
+
+    #formModal .button:hover {
+        background-color: var(--blue);
+        color: var(--white);
+    }
+}

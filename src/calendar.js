@@ -64,7 +64,7 @@ export class Calendar {
 
         document.getElementById("calendar").addEventListener('touchend', e => {
         touchendX = e.changedTouches[0].screenX;
-        console.log(touchstartX - touchendX);
+        // console.log(touchstartX - touchendX);
         checkDirection()
         });
     }
@@ -266,7 +266,8 @@ export class Calendar {
                     evt.id != event.id && evt.end > newStart && evt.start < newEnd
             );
             if (e) {
-                document.getElementById("errors").innerHTML = `Cela se heurte à l'équipe(${e.start} - ${e.end}).`;
+                document.getElementById("errors").classList.add("show-message");
+                document.getElementById("errors").querySelector("p").innerHTML = `Cela se heurte à l'équipe (${e.start} - ${e.end}).`;
                 return false;
             }
         }
@@ -276,7 +277,8 @@ export class Calendar {
                 new Date(`${newDate}T${newStart}`).getTime()) /
             (1000 * 60);
         if (duration < 0) {
-            document.getElementById("errors").innerHTML = "Le début ne peut pas être après la fin.";
+            document.getElementById("errors").classList.add("show-message");
+            document.getElementById("errors").querySelector("p").innerHTML = "Le début ne peut pas être après la fin.";
             return false;
         }
         return true;

@@ -52,7 +52,7 @@ export class FormModal {
         this.showCalendar();
     }
 
-    showCalendar() {
+      showCalendar() {
         document.body.classList.remove("opaque");
         document.body.style.overflow = 'auto'; 
     }
@@ -64,7 +64,8 @@ export class FormModal {
     }
 
     hideErrors() {
-        document.getElementById("errors").innerHTML = "";      
+        document.getElementById("errors").querySelector("p").innerHTML = "";    
+        document.getElementById("errors").classList.remove("show-message");
         document.querySelectorAll(".alert").forEach((alert) => {
             alert.classList.remove("show-message");
         })
@@ -81,15 +82,6 @@ export class FormModal {
     writeOnFlip(text) {
         this.flipCardText.textContent = text;
     }
-
-    // resize() {
-    //     document.getElementById("formModal").style.top = "5vh";
-    //     document.getElementById("formModal").style.height = "90vh";
-    //     document.getElementById("formModal").querySelector(".flip-card").style.height = "90vh";
-    //     document.getElementById("formModal").style.overflow = 'auto'; 
-    //     document.querySelector('body').style.overflow = 'auto'; 
-    //     console.log("resized");
-    // }
 
     formIsValid() {
         const inputs = Array.from(document.querySelectorAll(".shortInput"));

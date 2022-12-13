@@ -95,7 +95,7 @@ export class Event {
         if (media.matches) {
             h = this.slotHeightMobile;
             eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
-            eventSlot.style.bottom = (24 - this.endHour + this.endMinutes / 60) * h + 2 + "px";
+            eventSlot.style.bottom = (24 - this.endHour + this.endMinutes / 60) * h + 3 + "px";
             // console.log(h);
         } else {
             h = this.slotHeight;

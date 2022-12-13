@@ -128,7 +128,7 @@ export class Admin {
     submitEvent() {
         // console.log("submit");
         const event = this.ctx.currentEvent;
-        if(this.calendar.isEventValid(event) && this.formModal.formIsValid()) {
+        if(this.formModal.formIsValid() && this.calendar.isEventValid(event)) {
             this.updateEvent(event);
             this.formModal.animateFlip();       
             setTimeout(() => {
