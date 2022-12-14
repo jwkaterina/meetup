@@ -45,13 +45,6 @@ body {
     background-color: var(--gray);
 }
 
-
-.header img {
-    width: 90px;
-    height: 90px;
-    margin-right: 20px;
-}
-
 .header img {
     width: 50px;
     height: 50px;

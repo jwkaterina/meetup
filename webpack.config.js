@@ -34,7 +34,7 @@ module.exports = {
   },
   plugins: [
     new CopyWebpackPlugin({
-      patterns: ['index.html', './src/Watchtower.svg']
+      patterns: ['index.html', {from: 'src/icons', to: 'icons'}, {from: 'src/fonts', to: 'fonts'}]
     }),
     new webpack.HotModuleReplacementPlugin()
   ]
