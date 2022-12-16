@@ -1,5 +1,5 @@
 import './event.css';
-import { dateString, getDayIndex, generateId, nameFound } from "../helper";
+import { dateString, getDayIndex, generateId } from "../helper";
 // import { PrincipalCommon } from "../principal";
 // import { Settings } from "../settings";
 import { Context } from "../ctx";
@@ -108,10 +108,10 @@ export class Event {
         // eventSlot.style.bottom = (this.settings.dayEnds - this.endHour + this.endMinutes / 60) * h + 5 + "px";
     
 
-        if(!nameFound(this, ctx.userName)) {
-            this.color = "var(--green)";
-        } else {
+        if(this.names.includes(ctx.userName)) {
             this.color = "var(--blue)";
+        } else {
+            this.color = "var(--green)";
         } 
         eventSlot.style.background = this.color;
 

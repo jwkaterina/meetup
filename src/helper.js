@@ -24,11 +24,3 @@ export function generateId(length = 20) {
     }
     return id;
 }
-
-export function nameFound(event, name) {
-    if (event.names.find((user) => {return user == name;})) {
-        return true;
-    } else {
-        return false;
-    }
-}

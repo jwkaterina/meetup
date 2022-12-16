@@ -1,6 +1,4 @@
 import { Context } from "./ctx";
-import { nameFound } from "./helper";
-
 
 export class User {
     constructor(calendar, principalCommon) {
@@ -15,7 +13,7 @@ export class User {
         // console.log(this.ctx.currentEvent.id);
         this.common.eventModal.open();
         this.common.addEventContent(event);
-        if (nameFound(event, this.ctx.userName)) {
+        if (event.names.includes(this.ctx.userName)) {
             this.common.eventModal.hideSubmitButton();
             this.common.eventModal.showDeleteButton();
         } else {

@@ -2,7 +2,7 @@ import { Context } from "./ctx";
 import { Event } from "./components/event";
 import { FormModal } from "./components/form-modal";
 import { ConfirmModal } from "./components/confirm-modal";
-import { dateString, addDays, nameFound } from "./helper";
+import { dateString, addDays } from "./helper";
 
 export class Admin {
     constructor(calendar, principalCommon) {
@@ -52,7 +52,7 @@ export class Admin {
         this.common.eventModal.open();
         this.common.addEventContent(event);
         this.common.eventModal.showEditButton();
-        if(!nameFound(event, this.ctx.userName)) {
+        if(!event.names.includes(this.ctx.userName)) {
             this.common.eventModal.hideDeleteButton();
             this.common.eventModal.showSubmitButton();
             return
@@ -148,7 +148,7 @@ export class Admin {
         event.end = this.formModal.end.value;
         event.date = this.formModal.date.value;
         this.newMainName = this.formModal.name.value;
-        if(nameFound(event, this.newMainName) && event.names[0] !== this.newMainName) {
+        if(event.names.includes(this.newMainName) && event.names[0] !== this.newMainName) {
             const index = event.names.indexOf(this.newMainName);
             event.names.splice(index, 1);
         }
