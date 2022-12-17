@@ -6,8 +6,12 @@
     "aws-amplify": "latest"
   },
   "devDependencies": {
+    "@babel/core": "^7.20.5",
+    "@babel/preset-env": "^7.20.2",
+    "babel-jest": "^29.3.1",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.1",
+    "jest": "^29.3.1",
     "style-loader": "^3.3.1",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0",
@@ -15,6 +19,7 @@
   },
   "scripts": {
     "start": "webpack && webpack-dev-server --mode development",
-    "build": "webpack"
+    "build": "webpack",
+    "test": "jest"
   }
 }
