@@ -32,7 +32,7 @@ jobs:
         run: echo $GITHUB_OUTPUT
       - name: Run Unit Tests
         id: test
-        run: npm run test:cov | tee $GITHUB_OUTPUT
+        run: npm run test:cov >> $GITHUB_OUTPUT
         continue-on-error: true
       - uses: actions/github-script@v6
         env:
