@@ -30,9 +30,10 @@ jobs:
         run: npm run build
       - name: Run Unit Tests
         id: test
-        run: npm run test:cov
+        run: echo "result=$(npm run test:cov)\n" >> $GITHUB_OUTPUT
+        continue-on-error: true
       - name: Echo stdout
-        run: echo "${{join(steps.test.outputs.*, '\n')}}"
+        run: echo "${{steps.test.outputs.result}}"
       - uses: actions/github-script@v6
         env:
           TEST_RESULT: ${{join(steps.test.outputs.*, '\n')}}
