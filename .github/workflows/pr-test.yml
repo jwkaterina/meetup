@@ -35,10 +35,6 @@ jobs:
       - name: Run Unit Tests
         id: apply
         run: npm run test:cov
-      - name: Echo stdout
-        run: echo "${{steps.apply.outputs.stdout}}"
-      - uses: actions/github-script@v6
+      - uses: romeovs/lcov-reporter-action@v0.2.16
         with:
-          script: |
-            const apply = `${{ steps.apply.outputs.stdout }}`;
-            return apply
+          lcov-file: ./coverage/lcov.info
