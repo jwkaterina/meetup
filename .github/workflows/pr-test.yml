@@ -33,12 +33,7 @@ jobs:
         run: npm run test:cov
       - uses: actions/github-script@v6
         env:
-          TEST_RESULT: "${{ steps.test.outputs.stdout }}"
+          TEST_RESULT: "${{ steps.test.outcome }}"
         with:
           script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: process.env.TEST_RESULT
-            })
+            return `${process.env.TEST_RESULT}`
