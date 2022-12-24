@@ -7,7 +7,6 @@ on:
       - .github/workflows/pr-test.yml
   workflow_dispatch:
 permissions:
-  id-token: write
   pull-requests: write
 jobs:
   unit-test:
