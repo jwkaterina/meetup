@@ -33,7 +33,7 @@ jobs:
         run: npm run test:cov >> $GITHUB_OUTPUT
         continue-on-error: true
       - name: Echo stdout
-        run: echo steps.test.outputs.stdout
+        run: echo "${{ steps.test.outputs.stdout }}"
       - uses: actions/github-script@v6
         env:
           TEST_RESULT: ${{join(steps.test.outputs.*, '\n')}}
