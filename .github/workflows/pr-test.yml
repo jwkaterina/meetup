@@ -32,10 +32,10 @@ jobs:
         run: npm run build
       - name: Run Unit Tests
         id: test
-        run: npm run test:cov
+        run: npm run test:cov >> $GITHUB_OUTPUT
       - uses: actions/github-script@v6
         env:
-          TEST_RESULT: "${{ steps.test.outputs.stdout }}"
+          TEST_RESULT: ${{join(steps.test.outputs.*, '\n')}}
         with:
           script: |
             return `${process.env.TEST_RESULT}`
