@@ -28,6 +28,8 @@ jobs:
         run: npm ci
       - name: Build Project
         run: npm run build
+      - name: Echo GITHUB_OUTPUT
+        run: echo $GITHUB_OUTPUT
       - name: Run Unit Tests
         id: test
         run: npm run test:cov | tee $GITHUB_OUTPUT
