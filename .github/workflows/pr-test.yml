@@ -33,7 +33,7 @@ jobs:
         run: npm run test:cov
       - uses: actions/github-script@v6
         env:
-          TEST_RESULT: "${{ steps.test.outcome }}"
+          TEST_RESULT: "${{ steps.test.outputs.stdout }}"
         with:
           script: |
             return `${process.env.TEST_RESULT}`
