@@ -5,7 +5,6 @@ on:
       - src/**
       - package-lock.json
       - .github/workflows/pr-test.yml
-  workflow_dispatch:
 jobs:
   unit-test:
     runs-on: ubuntu-latest
@@ -16,8 +15,8 @@ jobs:
       - uses: actions/setup-node@v3
         with: 
           node-version: 16
-      - uses: actions/cache@v3
-        name: Cache Node.js modules
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
         with:
           path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
           key: ${{ runner.OS }}-node-16-${{ hashFiles('**/package-lock.json') }}
@@ -31,7 +30,8 @@ jobs:
       - name: Run Unit Tests
         id: apply
         run: npm run test:cov
-      - uses: romeovs/lcov-reporter-action@v0.2.16
+      - name: Post Test Coverage Results to PR
+        uses: romeovs/lcov-reporter-action@v0.2.16
         with:
           lcov-file: ./coverage/lcov.info
           github-token: ${{ secrets.GITHUB_TOKEN }}
