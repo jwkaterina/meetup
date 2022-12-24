@@ -20,6 +20,7 @@
   "scripts": {
     "start": "webpack && webpack-dev-server --mode development",
     "build": "webpack",
-    "test": "jest"
+    "test": "jest",
+    "test:cov": "jest --coverage"
   }
 }

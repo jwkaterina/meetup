@@ -1,0 +1,46 @@
+name: 'Test PRs'
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with: node-version: '16'
+      - uses: actions/cache@v3
+        name: Cache Node.js modules
+        with:
+          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+          key: ${{ runner.OS }}-node-16-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{runner.OS}}-node-16
+            ${{runner.OS}}-
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build Project
+        run: npm run build
+      - name: Run Unit Tests
+        run: npm run test:cov
+  amplify-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with: node-version: '16'
+      - uses: actions/cache@v3
+        name: Cache Node.js modules
+        with:
+          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+          key: ${{ runner.OS }}-node-16-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{runner.OS}}-node-16
+            ${{runner.OS}}-
+      - name: Install Dependencies
+        run: npm ci
+      - name: Install Amplify CLI
+        run: npm install -g @aws-amplify/cli
+      - name: Test Amplify CLI
+        run: amplify -h
