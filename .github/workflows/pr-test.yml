@@ -28,12 +28,12 @@ jobs:
         run: npm ci
       - name: Build Project
         run: npm run build
-      - name: Echo GITHUB_OUTPUT
-        run: echo $GITHUB_OUTPUT
       - name: Run Unit Tests
         id: test
         run: npm run test:cov >> $GITHUB_OUTPUT
         continue-on-error: true
+      - name: Echo stdout
+        run: echo steps.test.outputs.stdout
       - uses: actions/github-script@v6
         env:
           TEST_RESULT: ${{join(steps.test.outputs.*, '\n')}}
