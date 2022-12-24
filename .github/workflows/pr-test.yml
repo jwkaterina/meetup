@@ -6,8 +6,6 @@ on:
       - package-lock.json
       - .github/workflows/pr-test.yml
   workflow_dispatch:
-permissions:
-  pull-requests: write
 jobs:
   unit-test:
     runs-on: ubuntu-latest
