@@ -3,9 +3,9 @@ on:
   pull_request:
     paths:
       - src/**
-      - test/**
       - package-lock.json
       - .github/workflows/pr-test.yml
+  workflow_dispatch:
 jobs:
   unit-test:
     runs-on: ubuntu-latest
