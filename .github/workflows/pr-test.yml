@@ -33,14 +33,12 @@ jobs:
       - name: Build Project
         run: npm run build
       - name: Run Unit Tests
-        id: test
-        run: echo "result=$(npm run test:cov)\n" >> $GITHUB_OUTPUT
-        continue-on-error: true
+        id: apply
+        run: npm run test:cov
       - name: Echo stdout
-        run: echo "${{steps.test.outputs.result}}"
+        run: echo "${{steps.apply.outputs.stdout}}"
       - uses: actions/github-script@v6
-        env:
-          TEST_RESULT: ${{join(steps.test.outputs.*, '\n')}}
         with:
           script: |
-            return `${process.env.TEST_RESULT}`
+            const apply = `${{ steps.apply.outputs.stdout }}`;
+            return apply
