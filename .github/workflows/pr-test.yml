@@ -9,8 +9,6 @@ on:
 jobs:
   unit-test:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps:
       - uses: actions/checkout@v3
         with:
@@ -32,7 +30,7 @@ jobs:
         run: npm run build
       - name: Run Unit Tests
         id: test
-        run: npm run test:cov >> $GITHUB_OUTPUT
+        run: npm run test:cov | tee $GITHUB_OUTPUT
       - uses: actions/github-script@v6
         env:
           TEST_RESULT: ${{join(steps.test.outputs.*, '\n')}}
