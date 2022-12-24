@@ -32,7 +32,7 @@ jobs:
         id: test
         run: npm run test:cov
       - name: Echo stdout
-        run: echo "${{ steps.test.outputs.stdout }}"
+        run: echo "${{join(steps.test.outputs.*, '\n')}}"
       - uses: actions/github-script@v6
         env:
           TEST_RESULT: ${{join(steps.test.outputs.*, '\n')}}
