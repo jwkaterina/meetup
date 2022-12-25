@@ -31,7 +31,7 @@ jobs:
         id: apply
         run: npm run test:cov
       - name: Post Test Coverage Results to PR
-        uses: romeovs/lcov-reporter-action@v0.2.16
+        uses: romeovs/lcov-reporter-action@v0.3.1
         with:
           lcov-file: ./coverage/lcov.info
           github-token: ${{ secrets.GITHUB_TOKEN }}
