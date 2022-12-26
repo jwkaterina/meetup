@@ -4,8 +4,9 @@ import { EventModal } from "./components/event-modal";
 
 
 export class PrincipalCommon {
-    constructor(calendar) {
+    constructor(calendar, userName) {
         this.calendar = calendar;
+        this.userName = userName;
         this.ctx = Context.getInstance();
         this.eventModal = new EventModal();
 
@@ -31,6 +32,12 @@ export class PrincipalCommon {
         });
     }
 
+    //Used for testing only
+    //Must be removed before release in production!
+    newName(name) {
+        this.userName = name;
+    }
+
     addEventContent(event) {
         let lis = "";
         event.names.forEach((value, index) => {
@@ -43,10 +50,9 @@ export class PrincipalCommon {
             ${event.place}
             </a>
             <ol class="list">${lis}</ol>`;
-        document.getElementById("eventContent").innerHTML = txt;
-        const eventModal = document.getElementById("eventModal");
-        eventModal.querySelector(".flip-card-front").style.background = event.color;
-        eventModal.querySelector(".flip-card-back").style.background = event.color;
+        
+        this.eventModal.setContent(txt);
+        this.eventModal.setCardColor(event.color);
     }
 
     addName() {
@@ -57,20 +63,23 @@ export class PrincipalCommon {
         setTimeout(() => {
             that.eventModal.close();
         },1000);
-        event.names.push(this.ctx.userName);
+        event.names.push(this.userName);
         this.calendar.saveEvent(event);
         event.show();
     }
 
     deleteName() {
         const event = this.ctx.currentEvent;
+        if (!event.names.includes(this.userName)) {
+            return;
+        }
         this.eventModal.writeOnFlip("Ta participation est annulé.");
         this.eventModal.animateFlip();
         const that = this;
         setTimeout(() => {
             that.eventModal.close();
         },1000);
-        const index = event.names.indexOf(this.ctx.userName);
+        const index = event.names.indexOf(this.userName);
         event.names.splice(index, 1);
         this.calendar.saveEvent(event);
         event.show();

@@ -46,18 +46,22 @@ export class Admin {
         });
     }
 
+    get userName() {
+        return this.common.userName;
+    }
+
     openEventModal(event) {
         this.ctx.currentEvent = event;
         // console.log(this.ctx.currentEvent.id);
         this.common.eventModal.open();
         this.common.addEventContent(event);
         this.common.eventModal.showEditButton();
-        if(!event.names.includes(this.ctx.userName)) {
+        if(!event.names.includes(this.common.userName)) {
             this.common.eventModal.hideDeleteButton();
             this.common.eventModal.showSubmitButton();
             return
         }
-        if (this.ctx.userName == event.names[0]) {
+        if (this.common.userName == event.names[0]) {
             this.common.eventModal.hideDeleteButton();
             this.common.eventModal.hideSubmitButton();
             return
@@ -95,7 +99,7 @@ export class Admin {
         this.formModal.hideDeleteButton();
 
         this.formModal.place.value = event.place;
-        this.formModal.name.value = this.ctx.userName;
+        this.formModal.name.value = this.common.userName;
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;
@@ -112,7 +116,7 @@ export class Admin {
         this.formModal.showDeleteButton();
 
         this.formModal.place.value = event.place;
-        this.formModal.name.value = this.ctx.userName;
+        this.formModal.name.value = this.common.userName;
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;

@@ -108,7 +108,7 @@ export class Event {
         // eventSlot.style.bottom = (this.settings.dayEnds - this.endHour + this.endMinutes / 60) * h + 5 + "px";
     
 
-        if(this.names.includes(ctx.userName)) {
+        if(this.names.includes(ctx.principal.userName)) {
             this.color = "var(--blue)";
         } else {
             this.color = "var(--green)";
