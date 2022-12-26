@@ -3,13 +3,16 @@ import './modals-common.css';
 
 export class EventModal {
     constructor() {
-        this.eventModal = document.getElementById("eventModal");
-        this.editButton = this.eventModal.querySelector(".editButton");
-        this.submitButton = this.eventModal.querySelector(".submitButton");
-        this.deleteButton = this.eventModal.querySelector(".deleteButton");
-        this.cancelButton = this.eventModal.querySelector(".cancelButton");
-        this.flipCard = this.eventModal.querySelector(".flip-card-inner");
-        this.flipCardText = this.eventModal.querySelector(".flipCardText");
+        this.container = document.getElementById("eventModal");
+        this.editButton = this.container.querySelector(".editButton");
+        this.submitButton = this.container.querySelector(".submitButton");
+        this.deleteButton = this.container.querySelector(".deleteButton");
+        this.cancelButton = this.container.querySelector(".cancelButton");
+        this.flipCard = this.container.querySelector(".flip-card-inner");
+        this.flipCardText = this.container.querySelector(".flipCardText");
+        this.flipCardBack = this.container.querySelector(".flip-card-back");
+        this.flipCardFront = this.container.querySelector(".flip-card-front");
+        this.content = this.container.querySelector("#eventContent");
     }
 
     hideEditButton() {
@@ -36,11 +39,11 @@ export class EventModal {
     }
 
     showModal() {
-        this.eventModal.style.display = "block";
+        this.container.style.display = "block";
     }
 
     hideModal() {
-        this.eventModal.style.display = "none";
+        this.container.style.display = "none";
     }
     
     open() {
@@ -73,5 +76,14 @@ export class EventModal {
 
     writeOnFlip(text) {
         this.flipCardText.textContent = text;
+    }
+    
+    setCardColor(color) {
+        this.flipCardBack.style.background = color;
+        this.flipCardFront.style.background = color;
+    }
+
+    setContent(txt) {
+        this.content.innerHTML = txt;
     }
 }
