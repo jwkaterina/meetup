@@ -75,7 +75,7 @@ jobs:
         run: |
           REACTCONFIG="{\"SourceDir\":\"src\",\"DistributionDir\":\"dist\",\"BuildCommand\":\"npm run-script build\",\"StartCommand\":\"npm run-script start\"\}"
           AWSCLOUDFORMATIONCONFIG="{\"configLevel\":\"project\",\"useProfile\":true,\"profileName\":\"default\",}"
-          export AMPLIFY="{\"projectName\":\"meetup\",\"appId\":\"${{ secrets.AMPLIFY_APP_ID }}\",\"envName\":\"dev\",\"defaultEditor\":\"code\"}"
+          export AMPLIFY="{\"projectName\":\"meetup\",\"appId\":\"${{ secrets.AMPLIFY_APP_ID }}\",\"envName\":\"staging\",\"defaultEditor\":\"code\"}"
           export FRONTEND="{\"frontend\":\"javascript\",\"framework\":\"none\",\"config\":$REACTCONFIG}"
           export PROVIDERS="{\"awscloudformation\":$AWSCLOUDFORMATIONCONFIG}"
           amplify pull --amplify $AMPLIFY --frontend $FRONTEND --providers $PROVIDERS --yes
