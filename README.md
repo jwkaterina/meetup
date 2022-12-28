@@ -1,3 +1,6 @@
+# Project Development
+## Git
+Use [Semantic Commit Messages](https://nitayneeman.com/posts/understanding-semantic-commit-messages-using-git-and-angular/)
 ## Testing
 Put all your tests under `./test` folder.
 ### VSCode
