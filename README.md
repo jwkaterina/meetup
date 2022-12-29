@@ -1,3 +1,5 @@
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jwkaterina_meetup&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jwkaterina_meetup)
+
 # Project Development
 ## Git
 Use [Semantic Commit Messages](https://nitayneeman.com/posts/understanding-semantic-commit-messages-using-git-and-angular/)
