@@ -1,4 +1,4 @@
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=jwkaterina_meetup&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=jwkaterina_meetup)[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=jwkaterina_meetup&metric=bugs)](https://sonarcloud.io/summary/new_code?id=jwkaterina_meetup)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=jwkaterina_meetup&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=jwkaterina_meetup) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=jwkaterina_meetup&metric=bugs)](https://sonarcloud.io/summary/new_code?id=jwkaterina_meetup)
 
 # Project Development
 ## Git
