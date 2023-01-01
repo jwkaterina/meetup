@@ -94,10 +94,7 @@ jobs:
           export AMPLIFY="{\"projectName\":\"meetup\",\"appId\":\"${{ secrets.AMPLIFY_APP_ID_STAGING }}\",\"envName\":\"staging\",\"defaultEditor\":\"code\"}"
           export FRONTEND="{\"frontend\":\"javascript\",\"framework\":\"none\",\"config\":$REACTCONFIG}"
           export PROVIDERS="{\"awscloudformation\":$AWSCLOUDFORMATIONCONFIG}"
-          export CATEGORIES="{\"auth\":$AUTHCONFIG\}"
-
-          AMPLIFY_GOOGLE_CLIENT_ID=${{ secrets.AMPLIFY_GOOGLE_CLIENT_ID }}
-          AMPLIFY_GOOGLE_CLIENT_SECRET=${{ secrets.AMPLIFY_GOOGLE_CLIENT_SECRET }}
+          export CATEGORIES="{\"auth\":{\"meetup9cdb3583\":$AUTHCONFIG}}"
           
           amplify pull --amplify $AMPLIFY --frontend $FRONTEND --providers $PROVIDERS --categories $CATEGORIES --yes
       - name: Show Amplify Backend Diff
