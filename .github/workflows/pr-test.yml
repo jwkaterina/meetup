@@ -89,7 +89,7 @@ jobs:
           AWSCLOUDFORMATIONCONFIG="{\"configLevel\":\"project\",\"useProfile\":true,\"profileName\":\"default\",}"
           AUTHCONFIG="{\
           \"googleAppIdUserPool\":\"${{ secrets.AMPLIFY_GOOGLE_CLIENT_ID }}\",\
-          \"googleAppSecretUserPool\":\"secrets.AMPLIFY_GOOGLE_CLIENT_SECRET\"\
+          \"googleAppSecretUserPool\":\"${{ secrets.AMPLIFY_GOOGLE_CLIENT_SECRET }}\"\
           }"
           export AMPLIFY="{\"projectName\":\"meetup\",\"appId\":\"${{ secrets.AMPLIFY_APP_ID_STAGING }}\",\"envName\":\"staging\",\"defaultEditor\":\"code\"}"
           export FRONTEND="{\"frontend\":\"javascript\",\"framework\":\"none\",\"config\":$REACTCONFIG}"
