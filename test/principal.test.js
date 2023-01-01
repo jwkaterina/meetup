@@ -1,7 +1,7 @@
-import { Event } from "../src/components/event";
+import Event from "../src/components/event";
 import { Context } from "../src/ctx";
-import { Calendar }  from "../src/calendar";
-import { PrincipalCommon } from "../src/principal";
+import Calendar  from "../src/calendar";
+import PrincipalCommon from "../src/principal";
 
 jest.mock("../src/calendar");
 

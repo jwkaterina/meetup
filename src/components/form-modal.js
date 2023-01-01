@@ -1,7 +1,7 @@
 import './form-modal.css';
 import './modals-common.css';
 
-export class FormModal {
+export default class FormModal {
     constructor() {
         this.formModal = document.getElementById("formModal");
         this.place = document.getElementById("eventPlace");

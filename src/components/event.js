@@ -4,7 +4,7 @@ import { dateString, getDayIndex, generateId } from "../helper";
 // import { Settings } from "../settings";
 import { Context } from "../ctx";
 
-export class Event {
+export default class Event {
     constructor(data) {
         this.id = data.id || generateId();
         this.place = data.place;

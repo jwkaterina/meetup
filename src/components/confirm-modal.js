@@ -1,7 +1,7 @@
 import './confirm-modal.css';
 import './modals-common.css';
 
-export class ConfirmModal {
+export default class ConfirmModal {
     constructor() {
         this.confirmModal = document.getElementById("confirmModal");
         this.yesButton = this.confirmModal.querySelector(".yesButton");
