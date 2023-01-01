@@ -90,6 +90,10 @@ jobs:
           export AMPLIFY="{\"projectName\":\"meetup\",\"appId\":\"${{ secrets.AMPLIFY_APP_ID_STAGING }}\",\"envName\":\"staging\",\"defaultEditor\":\"code\"}"
           export FRONTEND="{\"frontend\":\"javascript\",\"framework\":\"none\",\"config\":$REACTCONFIG}"
           export PROVIDERS="{\"awscloudformation\":$AWSCLOUDFORMATIONCONFIG}"
+
+          export AMPLIFY_GOOGLE_CLIENT_ID=${{ secrets.AMPLIFY_GOOGLE_CLIENT_ID }}
+          export AMPLIFY_GOOGLE_CLIENT_SECRET=${{ secrets.AMPLIFY_GOOGLE_CLIENT_SECRET }}
+          
           amplify pull --amplify $AMPLIFY --frontend $FRONTEND --providers $PROVIDERS --yes
       - name: Show Amplify Backend Diff
         run: amplify status -v
