@@ -1,10 +1,10 @@
 import { Context } from "./ctx";
-import { Event } from "./components/event";
-import { FormModal } from "./components/form-modal";
-import { ConfirmModal } from "./components/confirm-modal";
+import Event from "./components/event";
+import FormModal from "./components/form-modal";
+import ConfirmModal from "./components/confirm-modal";
 import { dateString, addDays } from "./helper";
 
-export class Admin {
+export default class Admin {
     constructor(calendar, principalCommon) {
         this.calendar = calendar;
         this.ctx = Context.getInstance();

@@ -1,9 +1,9 @@
 import { dateString, getDayIndex, addDays } from "./helper";
 import { Context } from "./ctx";
-import { Event } from "./components/event";
+import Event from "./components/event";
 import "./calendar.css";
 
-export class Calendar {
+export default class Calendar {
     constructor() {
         this.events = {};
         this.weekOffset = 0;

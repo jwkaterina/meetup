@@ -1,8 +1,8 @@
 import { Context } from "./ctx";
-import { Calendar } from "./calendar";
-import { PrincipalCommon } from "./principal";
+import Calendar from "./calendar";
+import PrincipalCommon from "./principal";
 
-export class App {
+export default class App {
     constructor() {
         this.ctx = Context.getInstance();
         this.calendar = new Calendar();
@@ -10,8 +10,8 @@ export class App {
     }
 
     setup() {
-        this.calendar.setup();
         this.ctx.switchToUserMode(this.calendar, this.principalCommon);
+        this.calendar.setup();
         this.setupControls();
     }
 

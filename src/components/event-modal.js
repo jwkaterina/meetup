@@ -1,7 +1,7 @@
 import './event-modal.css';
 import './modals-common.css';
 
-export class EventModal {
+export default class EventModal {
     constructor() {
         this.container = document.getElementById("eventModal");
         this.editButton = this.container.querySelector(".editButton");

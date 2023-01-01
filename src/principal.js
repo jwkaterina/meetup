@@ -1,9 +1,8 @@
 import { Context } from "./ctx";
-import { Event } from "./components/event";
-import { EventModal } from "./components/event-modal";
+import EventModal from "./components/event-modal";
 
 
-export class PrincipalCommon {
+export default class PrincipalCommon {
     constructor(calendar, userName) {
         this.calendar = calendar;
         this.userName = userName;

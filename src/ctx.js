@@ -1,5 +1,5 @@
-import { User } from "./user.js";
-import { Admin } from "./admin.js";
+import User from "./user.js";
+import Admin from "./admin.js";
 
 
 class Ctx {
