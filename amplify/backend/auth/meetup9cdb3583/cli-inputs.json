@@ -45,8 +45,11 @@
       "Google"
     ],
     "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"family_name\":\"family_name\",\"given_name\":\"given_name\",\"username\":\"sub\"}}]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://main.d1utqi43njowhy.amplifyapp.com/\",\"http://localhost:3000/\"],\"LogoutURLs\":[\"https://main.d1utqi43njowhy.amplifyapp.com/\",\"http://localhost:3000/\"]}",
-    "userPoolGroupList": [],
+    "userPoolGroupList": [
+      "admin",
+      "editor",
+      "user"
+    ],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
     "useEnabledMfas": true,
@@ -71,6 +74,7 @@
     "parentStack": {
       "Ref": "AWS::StackId"
     },
-    "permissions": []
+    "permissions": [],
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://main.d1utqi43njowhy.amplifyapp.com/\",\"http://localhost:3000/\"],\"LogoutURLs\":[\"https://main.d1utqi43njowhy.amplifyapp.com/\",\"http://localhost:3000/\"]}"
   }
 }

@@ -30,7 +30,8 @@ module.exports = {
       overlay: true
     },
     hot: true,
-    watchFiles: ['src/*', 'index.html']
+    watchFiles: ['src/*', 'index.html'],
+    port: 3000
   },
   plugins: [
     new CopyWebpackPlugin({
