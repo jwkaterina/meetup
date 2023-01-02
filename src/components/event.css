@@ -40,8 +40,8 @@
 @media (max-width: 800px) {
     .circle {
         border-radius: 50%;
-        width: 10px;
-        height: 10px;
+        width: 15px;
+        line-height: 15px;
         padding: 4px;
         background: white;
         border: 2px solid white;
@@ -49,7 +49,6 @@
         text-align: center;
         font-size: 12px;
         font-weight: bold;
-        line-height: 10px;
         display: inline-block;
         box-sizing: content-box;
       }
