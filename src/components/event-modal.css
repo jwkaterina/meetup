@@ -1,7 +1,3 @@
-/* #eventModal .flip-card-front, #eventModal .flip-card-back {
-    background-color: var(--blue); 
-} */
-
 #eventModal .flipCardText {
     color: var(--white);
 }
@@ -19,6 +15,7 @@
 }
 
 #eventContent {
+    overflow: scroll;
     grid-column: 1 / span 2;
     grid-row: 2 / span 4;
     padding: 0 50px;
@@ -26,6 +23,7 @@
     text-align: center;
     line-height: 2rem;
     font-size: 1rem;
+    margin-bottom: 20px;
 }
 
 #eventContent .place {
@@ -53,8 +51,6 @@
 
 @media (max-width: 800px) {
     #eventContent {
-        /* margin: 10vw;
-        height: 25vh; */
         color: var(--white);
         text-align: center;
         line-height: 2rem;
