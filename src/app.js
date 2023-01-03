@@ -1,35 +1,13 @@
-import { Context } from "./ctx";
 import Calendar from "./calendar";
-import PrincipalCommon from "./principal";
+import { Amplify } from 'aws-amplify';
+import awsconfig from './aws-exports';
+import Auth from "./auth";
 
 export default class App {
     constructor() {
-        this.ctx = Context.getInstance();
+        Amplify.configure(awsconfig);
         this.calendar = new Calendar();
-        this.principalCommon = new PrincipalCommon(this.calendar, "Kateryna Logoshko");
-    }
-
-    setup() {
-        this.ctx.switchToUserMode(this.calendar, this.principalCommon);
-        this.calendar.setup();
-        this.setupControls();
-    }
-
-    setupControls() {
-        document.getElementById("checkBox").addEventListener("click", () => this.modeChange());
-        const radios = document.querySelectorAll(".radio-container");
-        radios.forEach((radio) => {
-            radio.addEventListener("change", () => this.ctx.userChange(this.calendar, this.principalCommon));
-        });
-    }
-
-    modeChange() {
-        const checkBox = document.getElementById("checkBox");
-    
-        if (checkBox.checked){
-            this.ctx.switchToAdminMode(this.calendar, this.principalCommon);
-        } else {
-            this.ctx.switchToUserMode(this.calendar, this.principalCommon);
-        }
+        this.auth = new Auth(this.calendar);
+        this.auth.checkUser();
     }
 }
