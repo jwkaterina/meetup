@@ -22,6 +22,7 @@ class Ctx {
         console.log("Admin Mode");
     }
 
+    //TODO: remove before production
     userChange(calendar, principalCommon) {
         const radioA = document.getElementById("userA");
         const radioB = document.getElementById("userB");

@@ -1,0 +1,76 @@
+{
+    "username": "google_105045525067602259238",
+    "signInUserSession": {
+        "idToken": {
+            "payload": {
+                "at_hash": "U9zk8TiNGyoVJyCRQ1toUA",
+                "sub": "6807bee0-d200-4c53-8e00-4cf0a1742387",
+                "cognito:groups": [
+                    "admin",
+                    "us-east-1_mRgkMEvC4_Google"
+                ],
+                "email_verified": false,
+                "cognito:preferred_role": "arn:aws:iam::123456789012:role/us-east-1_mRgkMEvC4-editorGroupRole",
+                "iss": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_mRgkMEvC4",
+                "cognito:username": "google_105045525067602259238",
+                "given_name": "John",
+                "nonce": "BdR6JJX8rkvEol3IV_mas4DE0lP_2Sq0kdv0ZNkqWkS7dftUsQh0v-nWi6LIA5Ky6j4yIXh-C7uqPteQOeqo76kHmjGZRUsii--vDMWe7jV-cqsdaC0KJEOddbDYDbZ1eBxkTTuZ9rOf3odTtjxH7_F4--MA-AVHKmFZbqJsuO4",
+                "origin_jti": "feeb5976-7545-459b-8d01-3b11ce9b6c3f",
+                "cognito:roles": [
+                    "arn:aws:iam::123456789012:role/us-east-1_mRgkMEvC4-editorGroupRole"
+                ],
+                "aud": "7n5uqlke9jf1td2haol67ht3km",
+                "identities": [
+                    {
+                        "userId": "105045525067602259238",
+                        "providerName": "Google",
+                        "providerType": "Google",
+                        "issuer": null,
+                        "primary": "true",
+                        "dateCreated": "1672609119975"
+                    }
+                ],
+                "token_use": "id",
+                "auth_time": 1672686038,
+                "exp": 1672689638,
+                "iat": 1672686038,
+                "family_name": "Doe",
+                "jti": "e87f7841-e486-40e2-b1ca-601764451ff6",
+                "email": "john.doe@mi6.com"
+            }
+        },
+        "accessToken": {
+            "payload": {
+                "sub": "6807bee0-d200-4c53-8e00-4cf0a1742387",
+                "cognito:groups": [
+                    "admin",
+                    "us-east-1_mRgkMEvC4_Google"
+                ],
+                "iss": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_mRgkMEvC4",
+                "version": 2,
+                "client_id": "7n5uqlke9jf1td2haol67ht3km",
+                "origin_jti": "feeb5976-7545-459b-8d01-3b11ce9b6c3f",
+                "token_use": "access",
+                "scope": "aws.cognito.signin.user.admin phone openid profile email",
+                "auth_time": 1672686038,
+                "exp": 1672689638,
+                "iat": 1672686038,
+                "jti": "7e3b2303-382e-40c4-a131-ee557a326f09",
+                "username": "google_105045525067602259238"
+            }
+        },
+        "clockDrift": 0
+    },
+    "authenticationFlowType": "USER_SRP_AUTH",
+    "keyPrefix": "CognitoIdentityServiceProvider.7n5uqlke9jf1td2haol67ht3km",
+    "userDataKey": "CognitoIdentityServiceProvider.7n5uqlke9jf1td2haol67ht3km.google_105045525067602259238.userData",
+    "attributes": {
+        "sub": "6807bee0-d200-4c53-8e00-4cf0a1742387",
+        "identities": "[{\"userId\":\"105045525067602259238\",\"providerName\":\"Google\",\"providerType\":\"Google\",\"issuer\":null,\"primary\":true,\"dateCreated\":1672609119975}]",
+        "email_verified": false,
+        "given_name": "John",
+        "family_name": "Doe",
+        "email": "john.doe@mi6.com"
+    },
+    "preferredMFA": "NOMFA"
+}
