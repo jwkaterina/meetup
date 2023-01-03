@@ -105,7 +105,7 @@ export default class Auth {
         const givenName = user.attributes.given_name;
         const familyName = user.attributes.family_name;
         return {
-            userName: `${this.givenName} ${this.familyName}`,
+            userName: `${givenName} ${familyName}`,
             firstName: givenName,
             lastName: familyName
         };
