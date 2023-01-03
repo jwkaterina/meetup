@@ -1,4 +1,4 @@
-import { AuthModeStrategyType, Hub } from "aws-amplify";
+import { Hub } from "aws-amplify";
 import { Context } from "../src/ctx";
 import Auth from "../src/auth";
 import Calendar  from "../src/calendar";
@@ -55,7 +55,7 @@ describe('Auth', () => {
         .mockImplementation(() => {});
 
         //invoke
-        const auth = new Auth(new Calendar());
+        new Auth(new Calendar());
 
         //check
         expect(mockedHubListen).toBeCalledWith("auth", expect.anything());
