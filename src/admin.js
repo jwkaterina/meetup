@@ -32,17 +32,14 @@ export default class Admin {
             e.preventDefault();
             this.formModal.close();
             this.ctx.currentEvent = null;
-            // console.log(this.ctx.currentEvent);
         });
         this.confirmModal.yesButton.addEventListener("click", () => {
             this.deleteEvent();
             this.ctx.currentEvent = null;
-            // console.log(this.ctx.currentEvent);
         });
         this.confirmModal.noButton.addEventListener("click", () => {
             this.confirmModal.close();
             this.ctx.currentEvent = null;
-            // console.log(this.ctx.currentEvent);
         });
     }
 
@@ -52,7 +49,6 @@ export default class Admin {
 
     openEventModal(event) {
         this.ctx.currentEvent = event;
-        // console.log(this.ctx.currentEvent.id);
         this.common.eventModal.open();
         this.common.addEventContent(event);
         this.common.eventModal.showEditButton();
@@ -92,10 +88,9 @@ export default class Admin {
     }
 
     openCreateFormModal(event) {
-        // console.log(event.id);
         this.formModal.open();
-        this.formModal.writeOnFlip("Ça y est! L'équipe est crée.");
-        this.formModal.showSubmitButton("Creer");
+        this.formModal.writeOnFlip("Ça y est! Le groupe est créé.");
+        this.formModal.showSubmitButton("Créer");
         this.formModal.hideDeleteButton();
 
         this.formModal.place.value = event.place;
@@ -107,11 +102,9 @@ export default class Admin {
     }
 
     openChangeFormModal() {
-        // this.ctx.currentEvent = event;
         const event = this.ctx.currentEvent;
-        // console.log(event.id);
         this.formModal.open();
-        this.formModal.writeOnFlip("Ça y est! L'équipe est changé.");
+        this.formModal.writeOnFlip("Ça y est! Le groupe est changé.");
         this.formModal.showSubmitButton("Changer");
         this.formModal.showDeleteButton();
 
@@ -120,17 +113,13 @@ export default class Admin {
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;
-        // this.formModal.place.focus();
     }
 
     openConfirmModal() {
-        // console.log(this.ctx.currentEvent.id);
         this.confirmModal.open();
-        // this.confirmModal.writeOnTitle("Veux tu effacer l'équipe?");
     }
 
     submitEvent() {
-        // console.log("submit");
         const event = this.ctx.currentEvent;
         if(this.formModal.formIsValid() && this.calendar.isEventValid(event)) {
             this.updateEvent(event);
@@ -139,7 +128,6 @@ export default class Admin {
                 this.formModal.close();
             },1000);
             this.ctx.currentEvent = null;
-            // console.log(this.ctx.currentEvent);
         } else {
             return;
         }
@@ -163,7 +151,6 @@ export default class Admin {
     }
 
     deleteEvent() {
-        // this.confirmModal.writeOnFlip("L'équipe est effacée.");
         this.confirmModal.animateFlip();     
         setTimeout(() => {
             this.confirmModal.close();

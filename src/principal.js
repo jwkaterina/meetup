@@ -16,18 +16,15 @@ export default class PrincipalCommon {
         this.eventModal.submitButton.addEventListener("click", () => {
             this.addName(this.eventModal);
             this.ctx.currentEvent = null;
-            // console.log(this.ctx.currentEvent);
         });
         this.eventModal.deleteButton.addEventListener("click", () => {
             this.deleteName(this.eventModal);
             this.ctx.currentEvent = null;
-            // console.log(this.ctx.currentEvent);
         });
         this.eventModal.cancelButton.addEventListener("click", (e) => {
             e.preventDefault();
             this.eventModal.close();
             this.ctx.currentEvent = null;
-            // console.log(this.ctx.currentEvent);
         });
     }
 
@@ -56,7 +53,7 @@ export default class PrincipalCommon {
 
     addName() {
         const event = this.ctx.currentEvent;
-        this.eventModal.writeOnFlip("Bon predication!");
+        this.eventModal.writeOnFlip("Bonne prédication!");
         this.eventModal.animateFlip();
         const that = this;
         setTimeout(() => {
@@ -72,7 +69,7 @@ export default class PrincipalCommon {
         if (!event.names.includes(this.userName)) {
             return;
         }
-        this.eventModal.writeOnFlip("Ta participation est annulé.");
+        this.eventModal.writeOnFlip("Ta participation est annulée.");
         this.eventModal.animateFlip();
         const that = this;
         setTimeout(() => {

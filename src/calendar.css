@@ -302,11 +302,6 @@ input:checked + .slider:before {
     transition: all 0.5s linear ;
 }
 
-/* .time.currentTime {
-    background-color: var(--gray-light);
-    color: var(--black);
-} */
-
 .slot {
     border-top: 1px solid var(--gray-lightest);
     background-color: var(--white);
@@ -324,7 +319,6 @@ input:checked + .slider:before {
     }
     
     .header {
-        /* height: 60px; */
         justify-content: flex-start;
     }
 
@@ -347,17 +341,9 @@ input:checked + .slider:before {
         /* left: 20px; */
     }
 
-    /* #prevWeekBtn  {
-        margin-right: 20px;
-    } */
-
     .generalControls {
         right: 20px;
     }
-
-    /* .columnHeader {
-        top: 60px;
-    } */
 
     .slot,
     .time {
@@ -392,6 +378,7 @@ input:checked + .slider:before {
         color: var(--gray-darker);
         text-align: center;
         font-size: 16px;
+        margin-left: 20px;
         display: inline-block;
     }
 
