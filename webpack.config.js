@@ -7,8 +7,10 @@ module.exports = {
   entry: './src/main.js',
   output: {
     filename: '[name].bundle.js',
+    sourceMapFilename: '[name].js.map',
     path: path.resolve(__dirname, 'dist')
   },
+  devtool: 'source-map',
   module: {
     rules: [
       { 
@@ -20,7 +22,7 @@ module.exports = {
         use: ['style-loader', 'css-loader']
       },
       { 
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        test: /\.(png|svg|jpg|jpeg|gif|map)$/i,
         type: 'asset/resource'
       },
     ]
