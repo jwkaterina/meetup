@@ -7,8 +7,6 @@ export default class ConfirmModal {
         this.yesButton = this.confirmModal.querySelector(".yesButton");
         this.noButton = this.confirmModal.querySelector(".noButton");
         this.flipCard = this.confirmModal.querySelector(".flip-card-inner");
-        // this.flipCardText = this.confirmModal.querySelector(".flipCardText");
-        // this.modalTitle = document.getElementById("modalTitle");
     }
 
     showModal() {
@@ -46,12 +44,4 @@ export default class ConfirmModal {
             this.flipCard.classList.remove("flip");
         },1000); 
     }
-
-    // writeOnFlip(text) {
-    //     this.flipCardText.textContent = text;
-    // }
-
-    // writeOnTitle(text) {
-    //     this.modalTitle.textContent = text;
-    // }
 }

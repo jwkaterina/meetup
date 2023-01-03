@@ -8,7 +8,6 @@ export default class Calendar {
         this.events = {};
         this.weekOffset = 0;
         this.readyToTrash = false;
-        // this.settings = Settings.getInstance();
         this.eventsLoaded = false;
         this.ctx = Context.getInstance();
     }
@@ -43,7 +42,6 @@ export default class Calendar {
         });
         window.addEventListener("load", () => {
             scrollTo(0, 375);
-            // console.log("scroll");
         });
     }
 
@@ -59,12 +57,10 @@ export default class Calendar {
 
         document.getElementById("calendar").addEventListener('touchstart', e => {
         touchstartX = e.changedTouches[0].screenX;
-        // console.log(touchstartX);
         });
 
         document.getElementById("calendar").addEventListener('touchend', e => {
         touchendX = e.changedTouches[0].screenX;
-        // console.log(touchstartX - touchendX);
         checkDirection()
         });
     }
@@ -74,7 +70,6 @@ export default class Calendar {
         header.className = "columnHeader";
         const slots = document.createElement("div");
         slots.className = "slots";
-        // for (let hour = this.settings.dayStarts; hour < this.settings.dayEnds; hour++) {
         for (let hour = 0; hour < 24; hour++) {
             const timeSlot = document.createElement("div");
             timeSlot.setAttribute("data-hour", hour);
@@ -84,7 +79,6 @@ export default class Calendar {
         }
         document.querySelector(".dayTime").appendChild(header);
         document.querySelector(".dayTime").appendChild(slots);
-        // document.querySelector(`.time[data-hour="${this.settings.dayStarts}"]`).style.visibility = "hidden";
         document.querySelector(`.time[data-hour="0"]`).style.visibility = "hidden";
     }
 
@@ -112,7 +106,6 @@ export default class Calendar {
             const dayIndex = parseInt(day.getAttribute("data-dayIndex"));
             const slots = document.createElement("div");
             slots.className = "slots";
-            // for (let hour = cal.settings.dayStarts; hour < cal.settings.dayEnds; hour++) {
             for (let hour = 0; hour < 24; hour++) {
                 const slot = document.createElement("div");
                 slot.setAttribute("data-hour", hour);
@@ -121,26 +114,9 @@ export default class Calendar {
                 slot.addEventListener("click", () => {
                     cal.ctx.principal.clickSlot(hour, dayIndex);
                 })
-                // slot.addEventListener("mouseover", () => {
-                //     cal.hoverOver(hour);
-                // })
-                // slot.addEventListener("mouseout", () => {
-                //     cal.hoverOut();
-                // })
             }
             day.appendChild(slots);
         });
-
-        // const width = document.querySelector(".day").offsetWidth;
-        // const slots = document.querySelectorAll(".slot");
-        // slots.forEach((slot) => {
-        //     slot.style.height = `${width}px`;
-        // })
-
-        // const times = document.querySelectorAll(".time");
-        // times.forEach((time) => {
-        //     time.style.height = `${width}px`;
-        // })
     }
 
     calculateCurrentWeek() {
@@ -193,18 +169,6 @@ export default class Calendar {
             day.classList.remove("currentDay");
         });
     }
-
-    // hoverOver(hour) {
-    //     document.querySelector(`.time[data-hour="${hour}"]`).classList.add("currentTime");
-    // }
-
-    // hoverOut() {
-    //     const times = document.querySelectorAll(".time");
-    //     times.forEach((time) => {
-    //         time.classList.remove("currentTime");
-    //     });
-    // }
-
 
     saveEvent(event) {
         if (event.prevDate && event.date != event.prevDate) {

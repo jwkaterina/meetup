@@ -1,7 +1,5 @@
 import './event.css';
 import { dateString, getDayIndex, generateId } from "../helper";
-// import { PrincipalCommon } from "../principal";
-// import { Settings } from "../settings";
 import { Context } from "../ctx";
 
 export default class Event {
@@ -16,8 +14,6 @@ export default class Event {
         this.color = data.color;
         this.slotHeight = 50;
         this.slotHeightMobile = 35;
-        // this.settings = Settings.getInstance();
-        // this.common = new PrincipalCommon();
     }
 
     get dayIndex() {
@@ -61,8 +57,10 @@ export default class Event {
         }
 
         let eventSlot;
+        let numberCircle;
         if (document.getElementById(`${this.id}`)) {
             eventSlot = document.getElementById(`${this.id}`);
+            numberCircle = eventSlot.querySelector(".circle");
         } else {
             eventSlot = document.createElement("div");
             eventSlot.className ="event";
@@ -70,6 +68,12 @@ export default class Event {
             eventSlot.addEventListener("click", () => {
                 ctx.principal.openEventModal(this)
             });
+
+            numberCircle = document.createElement("div");
+            numberCircle.className = "circle";
+            numberCircle.style.display = "none";
+            eventSlot.appendChild(numberCircle);
+            
         }
 
         if (media.matches) {
@@ -80,10 +84,8 @@ export default class Event {
             if(this.names.length == 0) {
                 return
             } else {
-                const circle = document.createElement("div");
-                circle.className = "circle";
-                circle.innerHTML = this.names.length;
-                eventSlot.appendChild(circle);
+                numberCircle.style.display = "inline-block";
+                numberCircle.innerHTML = this.names.length;
             }
         } else {
             const h = this.slotHeight;
