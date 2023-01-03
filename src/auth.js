@@ -61,7 +61,7 @@ export default class Auth {
             return;
         }
 
-        const userName = this.parseUserName(user);
+        const {userName, firstName, lastName} = this.parseUserName(user);
         this.principal = new PrincipalCommon(this.calendar, userName);
         
         if (groups.includes('admin') || groups.includes('editor')) {
@@ -72,7 +72,25 @@ export default class Auth {
             this.checkBox.checked = false;
         }
         this.calendar.setup();
+        this.displayName(firstName, lastName);
+        
         console.log(`user ${userName} signed in`);
+    }
+
+    displayName(firstName, lastName) {
+        this.loginBtn.style.display = "none";
+
+        const initials = firstName.substring(0, 1).toUpperCase() + lastName.substring(0, 1).toUpperCase();
+
+        const media = window.matchMedia("(max-width: 800px)");
+
+        if (media.matches) {
+            document.getElementById("log-circle").style.display = "block";
+            document.getElementById("log-circle").innerHTML = initials;
+        } else {
+            document.getElementById("log-name").style.display = "block";
+            document.getElementById("log-name").innerHTML = "Salut, \n" + firstName ;
+        }
     }
 
     parseUserGroups(user) {
@@ -86,7 +104,11 @@ export default class Auth {
     parseUserName(user) {
         const givenName = user.attributes.given_name;
         const familyName = user.attributes.family_name;
-        return `${givenName} ${familyName}`;
+        return {
+            userName: `${this.givenName} ${this.familyName}`,
+            firstName: givenName,
+            lastName: familyName
+        };
     }
 
     setupControls() {
