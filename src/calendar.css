@@ -94,10 +94,28 @@ body {
     margin-left: 15px;
 }
 
+#trashButton {
+    display: none;
+}
+
+#log-name {
+    margin: 0px 5px;
+    color: var(--white);
+    line-height: 18px;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+    font-style: italic;
+    margin-left: 15px;
+    display: none;
+}
+
 /* Toggle Switch */
 .switch {
     position: relative;
     display: inline-block;
+    display: none;
     margin-left: 20px;
     width: 52px;
     height: 30px;
@@ -150,6 +168,7 @@ input:checked + .slider:before {
 /* Radio buttons */
 .radio-container {
     display: block;
+    display: none;
     position: relative;
     padding-left: 20px;
     margin-right: 12px;
@@ -361,6 +380,19 @@ input:checked + .slider:before {
 
     #trashButton {
         display: none;
+    }
+
+    #log-circle {
+        display: none;
+        border-radius: 50%;
+        width: 30px;
+        line-height: 30px;
+        background: white;
+        border: 1px solid white;
+        color: var(--gray-darker);
+        text-align: center;
+        font-size: 16px;
+        display: inline-block;
     }
 
     .dayTime {
