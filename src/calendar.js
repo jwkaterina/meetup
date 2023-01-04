@@ -17,7 +17,6 @@ export default class Calendar {
         this.calculateCurrentWeek();
         this.setupDays();
         this.showWeek();
-        this.loadEvents();
         this.setupControls();
         this.addSwipe();
     }
