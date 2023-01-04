@@ -154,12 +154,8 @@ describe('Auth', () => {
         auth.listenerCancelToken();
     });
 
-    it('should ignore uninvited user', async () => {
+    it('should ignore uninvited user', () => {
         //init
-        const mockedGetUser = jest
-        .spyOn(Auth.prototype, 'getUser')
-        .mockResolvedValue(uninvited);
-
         const mockedSwitchToUserMode = jest.fn();
         const mockedSwitchToAdminMode = jest.fn();
         Context.getInstance.mockImplementation(() => {
@@ -171,10 +167,9 @@ describe('Auth', () => {
 
         //invoke
         const auth = new Auth(new Calendar());
-        await auth.checkUser();
+        auth.processUser(uninvited); //not using auth.checkUser() cause it catches Errors
 
         //check
-        expect(mockedGetUser).toBeCalled();
         expect(PrincipalCommon).toBeCalledTimes(0);
         expect(mockedSwitchToUserMode).toBeCalledTimes(0);
         expect(mockedSwitchToAdminMode).toBeCalledTimes(0);

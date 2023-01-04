@@ -98,7 +98,8 @@ export default class Auth {
     }
 
     hasApproved(groups) {
-        return groups.includes('admin') || groups.includes('editor') || groups.includes('user');
+        return !groups ? false : 
+        groups.includes('admin') || groups.includes('editor') || groups.includes('user');
     }
 
     parseUserName(user) {
