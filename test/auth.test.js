@@ -14,8 +14,8 @@ jest.mock("../src/principal");
  
 describe('Auth', () => {
 
-    const mockedSetupCalendar = jest
-    .spyOn(Calendar.prototype, 'setup')
+    const mockedLoadCalendarEvents = jest
+    .spyOn(Calendar.prototype, 'loadEvents')
     .mockImplementation(() => {});
 
     const mockedPrincipalConstructor = jest.fn();
@@ -90,7 +90,7 @@ describe('Auth', () => {
         expect(PrincipalCommon).toBeCalledWith(expect.anything(), "John Doe");
         expect(mockedSwitchToUserMode).toBeCalledTimes(1);
         expect(mockedSwitchToAdminMode).toBeCalledTimes(0);
-        expect(mockedSetupCalendar).toBeCalledTimes(1);
+        expect(mockedLoadCalendarEvents).toBeCalledTimes(1);
 
         //clean up
         auth.listenerCancelToken();
@@ -120,7 +120,7 @@ describe('Auth', () => {
         expect(PrincipalCommon).toBeCalledWith(expect.anything(), "John Doe");
         expect(mockedSwitchToUserMode).toBeCalledTimes(0);
         expect(mockedSwitchToAdminMode).toBeCalledTimes(1);
-        expect(mockedSetupCalendar).toBeCalledTimes(1);
+        expect(mockedLoadCalendarEvents).toBeCalledTimes(1);
 
         //clean up
         auth.listenerCancelToken();
@@ -150,7 +150,7 @@ describe('Auth', () => {
         expect(PrincipalCommon).toBeCalledWith(expect.anything(), "John Doe");
         expect(mockedSwitchToUserMode).toBeCalledTimes(0);
         expect(mockedSwitchToAdminMode).toBeCalledTimes(1);
-        expect(mockedSetupCalendar).toBeCalledTimes(1);
+        expect(mockedLoadCalendarEvents).toBeCalledTimes(1);
 
         //clean up
         auth.listenerCancelToken();
@@ -175,7 +175,7 @@ describe('Auth', () => {
         expect(PrincipalCommon).toBeCalledTimes(0);
         expect(mockedSwitchToUserMode).toBeCalledTimes(0);
         expect(mockedSwitchToAdminMode).toBeCalledTimes(0);
-        expect(mockedSetupCalendar).toBeCalledTimes(0);
+        expect(mockedLoadCalendarEvents).toBeCalledTimes(0);
 
         //clean up
         auth.listenerCancelToken();

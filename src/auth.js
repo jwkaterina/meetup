@@ -59,7 +59,7 @@ export default class Auth {
             this.ctx.switchToUserMode(this.calendar, this.principal);
             this.checkBox.checked = false;
         }
-        this.calendar.setup();
+        this.calendar.loadEvents();
         this.displayName(firstName, lastName);
         
         console.log(`user ${userName} signed in`);

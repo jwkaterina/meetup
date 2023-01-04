@@ -8,6 +8,7 @@ export default class App {
         this.configureAmplify();
         Amplify.configure(awsconfig);
         this.calendar = new Calendar();
+        this.calendar.setup();
         this.auth = new Auth(this.calendar);
         this.auth.checkUser();
     }
