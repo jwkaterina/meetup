@@ -49,8 +49,8 @@ export default class Auth {
             return;
         }
 
-        const {userName, firstName, lastName} = this.parseUserName(user);
-        this.principal = new PrincipalCommon(this.calendar, userName);
+        const parsedUser = this.parseUser(user);
+        this.principal = new PrincipalCommon(this.calendar, parsedUser);
         
         if (groups.includes('admin') || groups.includes('editor')) {
             this.ctx.switchToAdminMode(this.calendar, this.principal);
@@ -60,9 +60,9 @@ export default class Auth {
             this.checkBox.checked = false;
         }
         this.calendar.loadEvents();
-        this.displayName(firstName, lastName);
+        this.displayName(parsedUser.firstName, parsedUser.lastName);
         
-        console.log(`user ${userName} signed in`);
+        console.log(`user ${parsedUser.userName} signed in`);
     }
 
     displayName(firstName, lastName) {
@@ -90,10 +90,11 @@ export default class Auth {
         groups.includes('admin') || groups.includes('editor') || groups.includes('user');
     }
 
-    parseUserName(user) {
+    parseUser(user) {
         const givenName = user.attributes.given_name;
         const familyName = user.attributes.family_name;
         return {
+            id: user.attributes.sub,
             userName: `${givenName} ${familyName}`,
             firstName: givenName,
             lastName: familyName

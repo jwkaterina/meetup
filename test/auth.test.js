@@ -87,7 +87,12 @@ describe('Auth', () => {
 
         //check
         expect(mockedGetUser).toBeCalled();
-        expect(PrincipalCommon).toBeCalledWith(expect.anything(), "John Doe");
+        expect(PrincipalCommon).toBeCalledWith(expect.anything(), expect.objectContaining({
+            id : '6807bee0-d200-4c53-8e00-4cf0a1742387',
+            firstName: 'John',
+            lastName: 'Doe',
+            userName: 'John Doe'
+        }));
         expect(mockedSwitchToUserMode).toBeCalledTimes(1);
         expect(mockedSwitchToAdminMode).toBeCalledTimes(0);
         expect(mockedLoadCalendarEvents).toBeCalledTimes(1);
@@ -117,7 +122,12 @@ describe('Auth', () => {
 
         //check
         expect(mockedGetUser).toBeCalled();
-        expect(PrincipalCommon).toBeCalledWith(expect.anything(), "John Doe");
+        expect(PrincipalCommon).toBeCalledWith(expect.anything(), expect.objectContaining({
+            id : '6807bee0-d200-4c53-8e00-4cf0a1742387',
+            firstName: 'John',
+            lastName: 'Doe',
+            userName: 'John Doe'
+        }));
         expect(mockedSwitchToUserMode).toBeCalledTimes(0);
         expect(mockedSwitchToAdminMode).toBeCalledTimes(1);
         expect(mockedLoadCalendarEvents).toBeCalledTimes(1);
@@ -147,7 +157,12 @@ describe('Auth', () => {
 
         //check
         expect(mockedGetUser).toBeCalled();
-        expect(PrincipalCommon).toBeCalledWith(expect.anything(), "John Doe");
+        expect(PrincipalCommon).toBeCalledWith(expect.anything(), expect.objectContaining({
+            id : '6807bee0-d200-4c53-8e00-4cf0a1742387',
+            firstName: 'John',
+            lastName: 'Doe',
+            userName: 'John Doe'
+        }));
         expect(mockedSwitchToUserMode).toBeCalledTimes(0);
         expect(mockedSwitchToAdminMode).toBeCalledTimes(1);
         expect(mockedLoadCalendarEvents).toBeCalledTimes(1);

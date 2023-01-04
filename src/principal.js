@@ -3,9 +3,9 @@ import EventModal from "./components/event-modal";
 
 
 export default class PrincipalCommon {
-    constructor(calendar, userName) {
+    constructor(calendar, user) {
         this.calendar = calendar;
-        this.userName = userName;
+        this.user = user;
         this.ctx = Context.getInstance();
         this.eventModal = new EventModal();
 
@@ -29,9 +29,9 @@ export default class PrincipalCommon {
     }
 
     //Used for testing only
-    //Must be removed before release in production!
+    //TODO: remove before production!
     newName(name) {
-        this.userName = name;
+        this.user.userName = name;
     }
 
     addEventContent(event) {
@@ -59,14 +59,14 @@ export default class PrincipalCommon {
         setTimeout(() => {
             that.eventModal.close();
         },1000);
-        event.names.push(this.userName);
+        event.names.push(this.user.userName);
         this.calendar.saveEvent(event);
         event.show();
     }
 
     deleteName() {
         const event = this.ctx.currentEvent;
-        if (!event.names.includes(this.userName)) {
+        if (!event.names.includes(this.user.userName)) {
             return;
         }
         this.eventModal.writeOnFlip("Ta participation est annulée.");
@@ -75,7 +75,7 @@ export default class PrincipalCommon {
         setTimeout(() => {
             that.eventModal.close();
         },1000);
-        const index = event.names.indexOf(this.userName);
+        const index = event.names.indexOf(this.user.userName);
         event.names.splice(index, 1);
         this.calendar.saveEvent(event);
         event.show();
