@@ -21,7 +21,12 @@ describe('PrincipalCommon', function () {
     .spyOn(Event.prototype, 'show')
     .mockImplementation(() => {});
 
-    const userName = "Regina Phalange";
+    const user = {
+        id: '6807bee0-d200-4c53-8e00-4cf0a1742387',
+        firsName: 'Regina',
+        lastName: 'Phalange',
+        userName: 'Regina Phalange'
+    };
 
     let event = null;
 
@@ -61,7 +66,7 @@ describe('PrincipalCommon', function () {
 
     it('should populate eventModal with content from event object', () => {
         //init
-        const principal = new PrincipalCommon(new Calendar(), userName);
+        const principal = new PrincipalCommon(new Calendar(), user);
 
         //invoke
         principal.addEventContent(event);
@@ -81,7 +86,7 @@ describe('PrincipalCommon', function () {
 
     it('should add name to current event', () => {
         //init
-        const principal = new PrincipalCommon(new Calendar(), userName);
+        const principal = new PrincipalCommon(new Calendar(), user);
         const ctx = Context.getInstance();
         ctx.currentEvent = event;
 
@@ -89,20 +94,20 @@ describe('PrincipalCommon', function () {
         principal.addName();
 
         //check
-        expect(event.names).toEqual(["John Doe", "Jason Born", userName]);
+        expect(event.names).toEqual(["John Doe", "Jason Born", user.userName]);
         expect(mockedSaveEvent).toHaveBeenCalledTimes(1);
         expect(mockedShowEvent).toHaveBeenCalledTimes(1);
     });
 
     it('should delete name from current event', () => {
         //init
-        const principal = new PrincipalCommon(new Calendar(), userName);
+        const principal = new PrincipalCommon(new Calendar(), user);
         const event = new Event({
             place: "",
             start: "12:00",
             end: "13:00",
             date: "2022-01-01",
-            names: ["John Doe", userName],
+            names: ["John Doe", user.userName],
             color: "green",
         });
         const ctx = Context.getInstance();
@@ -122,7 +127,7 @@ describe('PrincipalCommon', function () {
         const ctx = Context.getInstance();
         ctx.currentEvent = event;
 
-        const principal = new PrincipalCommon(new Calendar(), userName);
+        const principal = new PrincipalCommon(new Calendar(), user);
 
         //invoke
         principal.deleteName();

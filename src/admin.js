@@ -44,7 +44,7 @@ export default class Admin {
     }
 
     get userName() {
-        return this.common.userName;
+        return this.common.user.userName;
     }
 
     openEventModal(event) {
@@ -52,12 +52,12 @@ export default class Admin {
         this.common.eventModal.open();
         this.common.addEventContent(event);
         this.common.eventModal.showEditButton();
-        if(!event.names.includes(this.common.userName)) {
+        if(!event.names.includes(this.common.user.userName)) {
             this.common.eventModal.hideDeleteButton();
             this.common.eventModal.showSubmitButton();
             return
         }
-        if (this.common.userName == event.names[0]) {
+        if (this.common.user.userName == event.names[0]) {
             this.common.eventModal.hideDeleteButton();
             this.common.eventModal.hideSubmitButton();
             return
@@ -94,7 +94,7 @@ export default class Admin {
         this.formModal.hideDeleteButton();
 
         this.formModal.place.value = event.place;
-        this.formModal.name.value = this.common.userName;
+        this.formModal.name.value = this.common.user.userName;
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;
@@ -109,7 +109,7 @@ export default class Admin {
         this.formModal.showDeleteButton();
 
         this.formModal.place.value = event.place;
-        this.formModal.name.value = this.common.userName;
+        this.formModal.name.value = this.common.user.userName;
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;
