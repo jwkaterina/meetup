@@ -14,7 +14,6 @@ export default class User {
 
     openEventModal(event) {
         this.ctx.currentEvent = event;
-        // console.log(this.ctx.currentEvent.id);
         this.common.eventModal.open();
         this.common.addEventContent(event);
         if (event.names.includes(this.common.userName)) {

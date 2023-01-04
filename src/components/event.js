@@ -71,7 +71,6 @@ export default class Event {
 
             numberCircle = document.createElement("div");
             numberCircle.className = "circle";
-            numberCircle.style.display = "none";
             eventSlot.appendChild(numberCircle);
             
         }
@@ -81,9 +80,7 @@ export default class Event {
             eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
             eventSlot.style.bottom = (24 - this.endHour + this.endMinutes / 60) * h + 3 + "px";
 
-            if(this.names.length == 0) {
-                return
-            } else {
+            if(this.names.length > 0) {
                 numberCircle.style.display = "inline-block";
                 numberCircle.innerHTML = this.names.length;
             }
@@ -91,6 +88,8 @@ export default class Event {
             const h = this.slotHeight;
             eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
             eventSlot.style.bottom = (24 - this.endHour + this.endMinutes / 60) * h + 5 + "px";
+
+            numberCircle.style.display = "none";
 
             let lis = "";
             this.names.forEach((value, index) => {
