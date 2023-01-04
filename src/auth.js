@@ -5,7 +5,6 @@ import PrincipalCommon from "./principal"
 export default class Auth {
     constructor(calendar) {
         this.calendar = calendar;
-        this.userProcessed = false;
         this.principal = null;
         this.ctx = Context.getInstance();
 
@@ -19,15 +18,9 @@ export default class Auth {
 
     setupAuthListener() {
         const listener = async (data) => {
-            switch (data.payload.event) {
-                case 'signIn':
-                    this.checkUser();
-                    break;
-                case 'signOut':
-                    console.log('user signed out');
-                    this.userProcessed = false;
-                    //TODO: Clean the app
-                    break;
+            if(data.payload.event == 'signOut') {
+                console.log('user signed out');
+                //TODO: Clean the app
             }
         };
 
@@ -50,11 +43,6 @@ export default class Auth {
     }
 
     processUser(user) {
-        if(this.userProcessed) {
-            return;
-        }
-        this.userProcessed = true;
-
         const groups = this.parseUserGroups(user);
         if (!this.hasApproved(groups)) {
             console.log('uninvited user signed in');
