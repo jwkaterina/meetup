@@ -36,7 +36,7 @@ export default class PrincipalCommon {
 
     addEventContent(event) {
         let lis = "";
-        event.names.forEach((value, index) => {
+        event.members.forEach((value, index) => {
             lis += `<li class="member" member=${index + 1}>${value}</li>`;
         });
 
@@ -59,14 +59,14 @@ export default class PrincipalCommon {
         setTimeout(() => {
             that.eventModal.close();
         },1000);
-        event.names.push(this.user.userName);
+        event.members.push(this.user.userName);
         this.calendar.saveEvent(event);
         event.show();
     }
 
     deleteName() {
         const event = this.ctx.currentEvent;
-        if (!event.names.includes(this.user.userName)) {
+        if (!event.members.includes(this.user.userName)) {
             return;
         }
         this.eventModal.writeOnFlip("Ta participation est annulée.");
@@ -75,8 +75,8 @@ export default class PrincipalCommon {
         setTimeout(() => {
             that.eventModal.close();
         },1000);
-        const index = event.names.indexOf(this.user.userName);
-        event.names.splice(index, 1);
+        const index = event.members.indexOf(this.user.userName);
+        event.members.splice(index, 1);
         this.calendar.saveEvent(event);
         event.show();
     }

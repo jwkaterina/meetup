@@ -16,7 +16,7 @@ export default class User {
         this.ctx.currentEvent = event;
         this.common.eventModal.open();
         this.common.addEventContent(event);
-        if (event.names.includes(this.common.user.userName)) {
+        if (event.members.includes(this.common.user.userName)) {
             this.common.eventModal.hideSubmitButton();
             this.common.eventModal.showDeleteButton();
         } else {

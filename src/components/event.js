@@ -6,7 +6,7 @@ export default class Event {
     constructor(data) {
         this.id = data.id || generateId();
         this.place = data.place;
-        this.names = data.names;
+        this.members = data.members;
         this.start = data.start;
         this.end = data.end;
         this.date = data.date;
@@ -80,9 +80,9 @@ export default class Event {
             eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
             eventSlot.style.bottom = (24 - this.endHour + this.endMinutes / 60) * h + 3 + "px";
 
-            if(this.names.length > 0) {
+            if(this.members.length > 0) {
                 numberCircle.style.display = "inline-block";
-                numberCircle.innerHTML = this.names.length;
+                numberCircle.innerHTML = this.members.length;
             }
         } else {
             const h = this.slotHeight;
@@ -92,7 +92,7 @@ export default class Event {
             numberCircle.style.display = "none";
 
             let lis = "";
-            this.names.forEach((value, index) => {
+            this.members.forEach((value, index) => {
                 lis += `<li class="member" member=${index + 1}>${value}</li>`
             });
             let txt = "";
@@ -101,7 +101,7 @@ export default class Event {
             eventSlot.innerHTML = txt;
         }
 
-        if(this.names.includes(ctx.principal.userName)) {
+        if(this.members.includes(ctx.principal.userName)) {
             this.color = "var(--blue)";
         } else {
             this.color = "var(--green)";

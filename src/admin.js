@@ -52,12 +52,12 @@ export default class Admin {
         this.common.eventModal.open();
         this.common.addEventContent(event);
         this.common.eventModal.showEditButton();
-        if(!event.names.includes(this.common.user.userName)) {
+        if(!event.members.includes(this.common.user.userName)) {
             this.common.eventModal.hideDeleteButton();
             this.common.eventModal.showSubmitButton();
             return
         }
-        if (this.common.user.userName == event.names[0]) {
+        if (this.common.user.userName == event.members[0]) {
             this.common.eventModal.hideDeleteButton();
             this.common.eventModal.hideSubmitButton();
             return
@@ -80,7 +80,7 @@ export default class Admin {
             start,
             end,
             date,
-            names: [],
+            members: [],
             color: "var(--green)"
         });
         this.ctx.currentEvent = event;
@@ -140,11 +140,11 @@ export default class Admin {
         event.end = this.formModal.end.value;
         event.date = this.formModal.date.value;
         this.newMainName = this.formModal.name.value;
-        if(event.names.includes(this.newMainName) && event.names[0] !== this.newMainName) {
-            const index = event.names.indexOf(this.newMainName);
-            event.names.splice(index, 1);
+        if(event.members.includes(this.newMainName) && event.members[0] !== this.newMainName) {
+            const index = event.members.indexOf(this.newMainName);
+            event.members.splice(index, 1);
         }
-        event.names[0] = this.newMainName;
+        event.members[0] = this.newMainName;
 
         this.calendar.saveEvent(event);
         event.show();
@@ -169,7 +169,7 @@ export default class Admin {
             start: "12:00",
             end: "13:00",
             date: dateString(this.ctx.weekStart),
-            names: [],
+            members: [],
             color: "green",
         });
         this.ctx.currentEvent = event;

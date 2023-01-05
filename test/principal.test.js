@@ -36,7 +36,7 @@ describe('PrincipalCommon', function () {
             start: "12:00",
             end: "13:00",
             date: "2022-01-01",
-            names: ["John Doe", "Jason Born"],
+            members: ["John Doe", "Jason Born"],
             color: "green",
         });
 
@@ -72,15 +72,15 @@ describe('PrincipalCommon', function () {
         principal.addEventContent(event);
 
         //check
-        const members = document.querySelectorAll(".member")
-        expect(members.length).toBe(2);
+        const names = document.querySelectorAll(".member")
+        expect(names.length).toBe(2);
         
         
-        const names = [];
-        for (const member of members) {
-            names.push(member.innerHTML);
+        const members = [];
+        for (const member of names) {
+            members.push(member.innerHTML);
         }
-        const intresection = event.names.filter(value => names.includes(value));
+        const intresection = event.members.filter(value => members.includes(value));
         expect(intresection.length).toBe(2);
     });
 
@@ -94,7 +94,7 @@ describe('PrincipalCommon', function () {
         principal.addName();
 
         //check
-        expect(event.names).toEqual(["John Doe", "Jason Born", user.userName]);
+        expect(event.members).toEqual(["John Doe", "Jason Born", user.userName]);
         expect(mockedSaveEvent).toHaveBeenCalledTimes(1);
         expect(mockedShowEvent).toHaveBeenCalledTimes(1);
     });
@@ -107,7 +107,7 @@ describe('PrincipalCommon', function () {
             start: "12:00",
             end: "13:00",
             date: "2022-01-01",
-            names: ["John Doe", user.userName],
+            members: ["John Doe", user.userName],
             color: "green",
         });
         const ctx = Context.getInstance();
@@ -117,7 +117,7 @@ describe('PrincipalCommon', function () {
         principal.deleteName();
 
         //check
-        expect(event.names).toEqual(["John Doe"]);
+        expect(event.members).toEqual(["John Doe"]);
         expect(mockedSaveEvent).toHaveBeenCalledTimes(1);
         expect(mockedShowEvent).toHaveBeenCalledTimes(1);
     });
@@ -133,7 +133,7 @@ describe('PrincipalCommon', function () {
         principal.deleteName();
 
         //check
-        expect(event.names).toEqual(["John Doe", "Jason Born"])
+        expect(event.members).toEqual(["John Doe", "Jason Born"])
         expect(mockedSaveEvent).toHaveBeenCalledTimes(0);
         expect(mockedShowEvent).toHaveBeenCalledTimes(0);
     });
