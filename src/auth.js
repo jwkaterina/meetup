@@ -77,7 +77,7 @@ export default class Auth {
             document.getElementById("log-circle").innerHTML = initials;
         } else {
             document.getElementById("log-name").style.display = "block";
-            document.getElementById("log-name").innerHTML = "Salut, \n" + firstName ;
+            document.getElementById("log-name").innerHTML = `Salut, <br> ${firstName}` ;
         }
     }
 
