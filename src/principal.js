@@ -66,8 +66,11 @@ export default class PrincipalCommon {
     }
 
     deleteName() {
+
         const event = this.ctx.currentEvent;
-        if (!event.members.includes(this.user.userName)) {
+        const ids = event.members.map((member) => member.id);
+
+        if (!ids.includes(this.user.id)) {
             return;
         }
         this.eventModal.writeOnFlip("Ta participation est annulée.");

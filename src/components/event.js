@@ -102,7 +102,8 @@ export default class Event {
             eventSlot.innerHTML = txt;
         }
 
-        if(this.members.includes(ctx.principal.userName)) {
+        const ids = this.members.map((member) => member.id);
+        if(ids.includes(ctx.principal.common.user.id)) {
             this.color = "var(--blue)";
         } else {
             this.color = "var(--green)";

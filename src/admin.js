@@ -48,16 +48,18 @@ export default class Admin {
     }
 
     openEventModal(event) {
+        const ids = event.members.map((member) => member.id);
+
         this.ctx.currentEvent = event;
         this.common.eventModal.open();
         this.common.addEventContent(event);
         this.common.eventModal.showEditButton();
-        if(!event.members.includes(this.common.user.userName)) {
+        if(!ids.includes(this.common.user.id)) {
             this.common.eventModal.hideDeleteButton();
             this.common.eventModal.showSubmitButton();
             return
         }
-        if (this.common.user.userName == event.members[0]) {
+        if (this.common.user.id == event.members[0].id) {
             this.common.eventModal.hideDeleteButton();
             this.common.eventModal.hideSubmitButton();
             return
@@ -141,22 +143,17 @@ export default class Admin {
         event.end = this.formModal.end.value;
         event.date = this.formModal.date.value;
 
-        // console.log(this.formModal.name.options);
         const selectedIndex = this.formModal.name.selectedIndex;
-        // console.log(index);
-        // console.log(this.formModal.name.options[selectedIndex].id);
-        // console.log(this.formModal.name.options[selectedIndex].value);
         this.newMainName = this.formModal.name.options[selectedIndex].value;
         this.newMainId = this.formModal.name.options[selectedIndex].id;
+        this.newMain = {userName: this.newMainName, id: this.newMainId};
 
-        this.newMainName = this.formModal.name.value;
-        if(event.members.includes(this.newMainName) && event.members[0] !== this.newMainName) {
-            const index = event.members.indexOf(this.newMainName);
+        const ids = event.members.map((member) => member.id);        
+        if(ids.includes(this.newMainId) && event.members[0].id !== this.newMainId) {
+            const index = ids.indexOf(this.newMainId);
             event.members.splice(index, 1);
         }
-        event.members[0] = {userName: this.newMainName, id: this.newMainId};
-        console.log(event.members);
-
+        event.members[0] = this.newMain;
         this.calendar.saveEvent(event);
         event.show();
     }
