@@ -36,13 +36,13 @@ export default class PrincipalCommon {
 
     addEventContent(event) {
         let lis = "";
-        event.members.forEach((value, index) => {
-            lis += `<li class="member" member=${index + 1}>${value}</li>`;
+        event.members.forEach((member, index) => {
+            lis += `<li class="member" member=${index + 1}>${member.userName}</li>`;
         });
 
         let txt = "";
         txt = `<a class="place" href="http://maps.google.com/?q=${event.place}" target="_blank">
-            <i id="mapIcon" class="fas fa-map"></i>
+            <i id="mapIcon" class="fa-solid fa-map-location-dot"></i>
             ${event.place}
             </a>
             <ol class="list">${lis}</ol>`;
@@ -59,7 +59,8 @@ export default class PrincipalCommon {
         setTimeout(() => {
             that.eventModal.close();
         },1000);
-        event.members.push(this.user.userName);
+        event.members.push({userName: this.user.userName, id: this.user.id});
+        console.log(event.members);
         this.calendar.saveEvent(event);
         event.show();
     }

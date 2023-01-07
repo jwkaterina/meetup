@@ -71,6 +71,7 @@ export default class Event {
 
             numberCircle = document.createElement("div");
             numberCircle.className = "circle";
+            numberCircle.style.display = "none";
             eventSlot.appendChild(numberCircle);
             
         }
@@ -89,15 +90,15 @@ export default class Event {
             eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
             eventSlot.style.bottom = (24 - this.endHour + this.endMinutes / 60) * h + 5 + "px";
 
-            numberCircle.style.display = "none";
-
             let lis = "";
-            this.members.forEach((value, index) => {
-                lis += `<li class="member" member=${index + 1}>${value}</li>`
+            this.members.forEach((member, index) => {
+                lis += `<li class="member" member=${index + 1}>${member.userName}</li>`
             });
             let txt = "";
-            txt = `<a class="place" target="_blank">${this.place}</a>
-                <ol class="list">${lis}</ol>`
+            txt = `<a class="place" target="_blank">
+            <i class="fa-sharp fa-solid fa-location-dot"></i>
+            ${this.place}</a>
+                <ul class="list">${lis}</ul>`
             eventSlot.innerHTML = txt;
         }
 

@@ -1,5 +1,6 @@
 import './form-modal.css';
 import './modals-common.css';
+import { editors } from "../editors_list";
 
 export default class FormModal {
     constructor() {
@@ -23,6 +24,7 @@ export default class FormModal {
     hideDeleteButton() {
         this.deleteButton.style.display = "none";
     }
+
     showSubmitButton(value) {
         this.submitButton.style.display = "";
         this.submitButton.value = value;
@@ -32,6 +34,13 @@ export default class FormModal {
         this.deleteButton.style.display = "";
     }
 
+    showOptions(main) {
+        let options = `<option id="${main.id}" value="${main.userName}">${main.userName}</option>`;
+        editors.forEach((editor) => {
+            options += `<option id="${editor.id}" value="${editor.userName}">${editor.userName}</option>`
+        });
+        this.name.innerHTML = options;
+    }
 
     showModal() {
         this.formModal.style.display = "block";

@@ -94,7 +94,7 @@ export default class Admin {
         this.formModal.hideDeleteButton();
 
         this.formModal.place.value = event.place;
-        this.formModal.name.value = this.common.user.userName;
+        this.formModal.showOptions(this.common.user);
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;
@@ -109,7 +109,8 @@ export default class Admin {
         this.formModal.showDeleteButton();
 
         this.formModal.place.value = event.place;
-        this.formModal.name.value = this.common.user.userName;
+        this.formModal.showOptions(event.members[0]);
+        console.log(event.members[0].userName);
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;
@@ -139,12 +140,22 @@ export default class Admin {
         event.start = this.formModal.start.value;
         event.end = this.formModal.end.value;
         event.date = this.formModal.date.value;
+
+        // console.log(this.formModal.name.options);
+        const selectedIndex = this.formModal.name.selectedIndex;
+        // console.log(index);
+        // console.log(this.formModal.name.options[selectedIndex].id);
+        // console.log(this.formModal.name.options[selectedIndex].value);
+        this.newMainName = this.formModal.name.options[selectedIndex].value;
+        this.newMainId = this.formModal.name.options[selectedIndex].id;
+
         this.newMainName = this.formModal.name.value;
         if(event.members.includes(this.newMainName) && event.members[0] !== this.newMainName) {
             const index = event.members.indexOf(this.newMainName);
             event.members.splice(index, 1);
         }
-        event.members[0] = this.newMainName;
+        event.members[0] = {userName: this.newMainName, id: this.newMainId};
+        console.log(event.members);
 
         this.calendar.saveEvent(event);
         event.show();
