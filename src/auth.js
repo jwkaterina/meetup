@@ -73,10 +73,10 @@ export default class Auth {
         const media = window.matchMedia("(max-width: 800px)");
 
         if (media.matches) {
-            document.getElementById("log-circle").style.display = "block";
+            document.getElementById("log-circle").style.display = "inline-block";
             document.getElementById("log-circle").innerHTML = initials;
         } else {
-            document.getElementById("log-name").style.display = "block";
+            document.getElementById("log-name").style.display = "inline-block";
             document.getElementById("log-name").innerHTML = `Salut, <br> ${firstName}` ;
         }
     }

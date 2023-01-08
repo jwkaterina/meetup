@@ -13,10 +13,12 @@ export default class User {
     }
 
     openEventModal(event) {
+        const ids = event.members.map((member) => member.id);
+
         this.ctx.currentEvent = event;
         this.common.eventModal.open();
         this.common.addEventContent(event);
-        if (event.names.includes(this.common.user.userName)) {
+        if (ids.includes(this.common.user.id)) {
             this.common.eventModal.hideSubmitButton();
             this.common.eventModal.showDeleteButton();
         } else {

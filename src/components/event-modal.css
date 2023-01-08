@@ -26,8 +26,14 @@
     margin-bottom: 20px;
 }
 
+#mapIcon {
+    margin-right: 15px;
+    font-size: 20px;
+}
+
 #eventContent .place {
     color: var(--black);
+    font-style: italic;
 }
 
 #eventContent .place:hover {

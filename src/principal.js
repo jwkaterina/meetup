@@ -36,13 +36,13 @@ export default class PrincipalCommon {
 
     addEventContent(event) {
         let lis = "";
-        event.names.forEach((value, index) => {
-            lis += `<li class="member" member=${index + 1}>${value}</li>`;
+        event.members.forEach((member, index) => {
+            lis += `<li class="member" member=${index + 1}>${member.userName}</li>`;
         });
 
         let txt = "";
         txt = `<a class="place" href="http://maps.google.com/?q=${event.place}" target="_blank">
-            <i id="mapIcon" class="fas fa-map"></i>
+            <i id="mapIcon" class="fa-solid fa-map-location-dot"></i>
             ${event.place}
             </a>
             <ol class="list">${lis}</ol>`;
@@ -55,28 +55,29 @@ export default class PrincipalCommon {
         const event = this.ctx.currentEvent;
         this.eventModal.writeOnFlip("Bonne prédication!");
         this.eventModal.animateFlip();
-        const that = this;
         setTimeout(() => {
-            that.eventModal.close();
+            this.eventModal.close();
         },1000);
-        event.names.push(this.user.userName);
+        event.members.push({userName: this.user.userName, id: this.user.id});
         this.calendar.saveEvent(event);
         event.show();
     }
 
     deleteName() {
+
         const event = this.ctx.currentEvent;
-        if (!event.names.includes(this.user.userName)) {
+        const ids = event.members.map((member) => member.id);
+
+        if (!ids.includes(this.user.id)) {
             return;
         }
         this.eventModal.writeOnFlip("Ta participation est annulée.");
         this.eventModal.animateFlip();
-        const that = this;
         setTimeout(() => {
-            that.eventModal.close();
+            this.eventModal.close();
         },1000);
-        const index = event.names.indexOf(this.user.userName);
-        event.names.splice(index, 1);
+        const index = ids.indexOf(this.user.id);
+        event.members.splice(index, 1);
         this.calendar.saveEvent(event);
         event.show();
     }

@@ -1,11 +1,13 @@
 .event {
+    display: flex;
+    flex-direction: column;
     position: absolute;
     text-align: center;
     left: 0px;
     width: calc(100% - 5px);
     line-height: 1rem;
     font-size: 0.8rem;
-    padding: 0.5rem 2rem;
+    padding: 0.5rem 1rem;
     color: var(--white);
     overflow: hidden;
     cursor: pointer;
@@ -17,24 +19,16 @@
     background-color: var(--gray-darker) !important;
 }
 
-.place {
-    /* text-decoration: none; */
-    transition: all 80ms linear;
+.event .place {
+    text-decoration: underline;
     color: var(--white);
     font-size: 0.9rem;
     font-style: italic;
 }
 
-.list {
+.event .list {
+    overflow: hidden;
     margin-top: 0.7rem;
-}
-
-/* .place:hover {
-    color: var(--black);
-} */
-
-#mapIcon {
-    padding: 10px;
 }
 
 @media (max-width: 800px) {

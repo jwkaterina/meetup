@@ -6,7 +6,7 @@ export default class Event {
     constructor(data) {
         this.id = data.id || generateId();
         this.place = data.place;
-        this.names = data.names;
+        this.members = data.members;
         this.start = data.start;
         this.end = data.end;
         this.date = data.date;
@@ -71,6 +71,7 @@ export default class Event {
 
             numberCircle = document.createElement("div");
             numberCircle.className = "circle";
+            numberCircle.style.display = "none";
             eventSlot.appendChild(numberCircle);
             
         }
@@ -80,28 +81,29 @@ export default class Event {
             eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
             eventSlot.style.bottom = (24 - this.endHour + this.endMinutes / 60) * h + 3 + "px";
 
-            if(this.names.length > 0) {
+            if(this.members.length > 0) {
                 numberCircle.style.display = "inline-block";
-                numberCircle.innerHTML = this.names.length;
+                numberCircle.innerHTML = this.members.length;
             }
         } else {
             const h = this.slotHeight;
             eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
             eventSlot.style.bottom = (24 - this.endHour + this.endMinutes / 60) * h + 5 + "px";
 
-            numberCircle.style.display = "none";
-
             let lis = "";
-            this.names.forEach((value, index) => {
-                lis += `<li class="member" member=${index + 1}>${value}</li>`
+            this.members.forEach((member, index) => {
+                lis += `<li class="member" member=${index + 1}>${member.userName}</li>`
             });
             let txt = "";
-            txt = `<a class="place" target="_blank">${this.place}</a>
-                <ol class="list">${lis}</ol>`
+            txt = `<a class="place" target="_blank">
+            <i class="fa-sharp fa-solid fa-location-dot"></i>
+            ${this.place}</a>
+                <ul class="list">${lis}</ul>`
             eventSlot.innerHTML = txt;
         }
 
-        if(this.names.includes(ctx.principal.userName)) {
+        const ids = this.members.map((member) => member.id);
+        if(ids.includes(ctx.principal.common.user.id)) {
             this.color = "var(--blue)";
         } else {
             this.color = "var(--green)";

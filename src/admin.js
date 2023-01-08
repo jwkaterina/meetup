@@ -48,16 +48,18 @@ export default class Admin {
     }
 
     openEventModal(event) {
+        const ids = event.members.map((member) => member.id);
+
         this.ctx.currentEvent = event;
         this.common.eventModal.open();
         this.common.addEventContent(event);
         this.common.eventModal.showEditButton();
-        if(!event.names.includes(this.common.user.userName)) {
+        if(!ids.includes(this.common.user.id)) {
             this.common.eventModal.hideDeleteButton();
             this.common.eventModal.showSubmitButton();
             return
         }
-        if (this.common.user.userName == event.names[0]) {
+        if (this.common.user.id == event.members[0].id) {
             this.common.eventModal.hideDeleteButton();
             this.common.eventModal.hideSubmitButton();
             return
@@ -80,7 +82,7 @@ export default class Admin {
             start,
             end,
             date,
-            names: [],
+            members: [],
             color: "var(--green)"
         });
         this.ctx.currentEvent = event;
@@ -94,7 +96,7 @@ export default class Admin {
         this.formModal.hideDeleteButton();
 
         this.formModal.place.value = event.place;
-        this.formModal.name.value = this.common.user.userName;
+        this.formModal.showOptions(this.common.user);
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;
@@ -109,7 +111,7 @@ export default class Admin {
         this.formModal.showDeleteButton();
 
         this.formModal.place.value = event.place;
-        this.formModal.name.value = this.common.user.userName;
+        this.formModal.showOptions(event.members[0]);
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;
@@ -139,13 +141,18 @@ export default class Admin {
         event.start = this.formModal.start.value;
         event.end = this.formModal.end.value;
         event.date = this.formModal.date.value;
-        this.newMainName = this.formModal.name.value;
-        if(event.names.includes(this.newMainName) && event.names[0] !== this.newMainName) {
-            const index = event.names.indexOf(this.newMainName);
-            event.names.splice(index, 1);
-        }
-        event.names[0] = this.newMainName;
 
+        const selectedIndex = this.formModal.name.selectedIndex;
+        this.newMainName = this.formModal.name.options[selectedIndex].value;
+        this.newMainId = this.formModal.name.options[selectedIndex].id;
+        this.newMain = {userName: this.newMainName, id: this.newMainId};
+
+        const ids = event.members.map((member) => member.id);        
+        if(ids.includes(this.newMainId) && event.members[0].id !== this.newMainId) {
+            const index = ids.indexOf(this.newMainId);
+            event.members.splice(index, 1);
+        }
+        event.members[0] = this.newMain;
         this.calendar.saveEvent(event);
         event.show();
     }
@@ -169,7 +176,7 @@ export default class Admin {
             start: "12:00",
             end: "13:00",
             date: dateString(this.ctx.weekStart),
-            names: [],
+            members: [],
             color: "green",
         });
         this.ctx.currentEvent = event;
