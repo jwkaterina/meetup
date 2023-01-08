@@ -55,12 +55,10 @@ export default class PrincipalCommon {
         const event = this.ctx.currentEvent;
         this.eventModal.writeOnFlip("Bonne prédication!");
         this.eventModal.animateFlip();
-        const that = this;
         setTimeout(() => {
-            that.eventModal.close();
+            this.eventModal.close();
         },1000);
         event.members.push({userName: this.user.userName, id: this.user.id});
-        console.log(event.members);
         this.calendar.saveEvent(event);
         event.show();
     }
@@ -75,11 +73,10 @@ export default class PrincipalCommon {
         }
         this.eventModal.writeOnFlip("Ta participation est annulée.");
         this.eventModal.animateFlip();
-        const that = this;
         setTimeout(() => {
-            that.eventModal.close();
+            this.eventModal.close();
         },1000);
-        const index = event.members.indexOf(this.user.userName);
+        const index = ids.indexOf(this.user.id);
         event.members.splice(index, 1);
         this.calendar.saveEvent(event);
         event.show();

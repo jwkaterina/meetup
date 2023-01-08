@@ -63,7 +63,6 @@ export default class Auth {
         this.displayName(parsedUser.firstName, parsedUser.lastName);
         
         console.log(`user ${parsedUser.userName} signed in`);
-        console.log(`user ${parsedUser.id} signed in`);
     }
 
     displayName(firstName, lastName) {

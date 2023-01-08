@@ -36,7 +36,7 @@ describe('PrincipalCommon', function () {
             start: "12:00",
             end: "13:00",
             date: "2022-01-01",
-            members: ["John Doe", "Jason Born"],
+            members: [{userName: "John Doe", id: "1"}, {userName: "Jason Born", id: "2"}],
             color: "green",
         });
 
@@ -77,10 +77,10 @@ describe('PrincipalCommon', function () {
         
         
         const members = [];
-        for (const member of names) {
-            members.push(member.innerHTML);
+        for (const name of names) {
+            members.push(name.innerHTML);
         }
-        const intresection = event.members.filter(value => members.includes(value));
+        const intresection = event.members.map((member) => member.userName).filter(value => members.includes(value));
         expect(intresection.length).toBe(2);
     });
 
@@ -94,7 +94,7 @@ describe('PrincipalCommon', function () {
         principal.addName();
 
         //check
-        expect(event.members).toEqual(["John Doe", "Jason Born", user.userName]);
+        expect(event.members).toEqual([{userName: "John Doe", id: "1"}, {userName: "Jason Born", id: "2"}, {userName: user.userName, id: user.id}]);
         expect(mockedSaveEvent).toHaveBeenCalledTimes(1);
         expect(mockedShowEvent).toHaveBeenCalledTimes(1);
     });
@@ -107,7 +107,7 @@ describe('PrincipalCommon', function () {
             start: "12:00",
             end: "13:00",
             date: "2022-01-01",
-            members: ["John Doe", user.userName],
+            members: [{userName: "John Doe", id: "1"}, {userName: user.userName, id: user.id}],
             color: "green",
         });
         const ctx = Context.getInstance();
@@ -117,7 +117,7 @@ describe('PrincipalCommon', function () {
         principal.deleteName();
 
         //check
-        expect(event.members).toEqual(["John Doe"]);
+        expect(event.members).toEqual([{userName: "John Doe", id: "1"}]);
         expect(mockedSaveEvent).toHaveBeenCalledTimes(1);
         expect(mockedShowEvent).toHaveBeenCalledTimes(1);
     });
@@ -133,7 +133,7 @@ describe('PrincipalCommon', function () {
         principal.deleteName();
 
         //check
-        expect(event.members).toEqual(["John Doe", "Jason Born"])
+        expect(event.members).toEqual([{userName: "John Doe", id: "1"}, {userName: "Jason Born", id: "2"}])
         expect(mockedSaveEvent).toHaveBeenCalledTimes(0);
         expect(mockedShowEvent).toHaveBeenCalledTimes(0);
     });

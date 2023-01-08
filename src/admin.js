@@ -112,7 +112,6 @@ export default class Admin {
 
         this.formModal.place.value = event.place;
         this.formModal.showOptions(event.members[0]);
-        console.log(event.members[0].userName);
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;
