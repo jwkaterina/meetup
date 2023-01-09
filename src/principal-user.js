@@ -1,6 +1,6 @@
 import { Context } from "./ctx";
 
-export default class User {
+export default class principalUser {
     constructor(calendar, principalCommon) {
         this.calendar = calendar;
         this.ctx = Context.getInstance();

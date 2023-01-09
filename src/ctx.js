@@ -1,5 +1,5 @@
-import User from "./user.js";
-import Admin from "./admin.js";
+import principalUser from "./principal-user.js";
+import principalAdmin from "./principal-admin.js";
 
 
 class Ctx {
@@ -11,13 +11,13 @@ class Ctx {
     }
 
     switchToUserMode(calendar, principalCommon) {
-        this.principal = new User(calendar, principalCommon);
+        this.principal = new principalUser(calendar, principalCommon);
         document.getElementById("addButton").style.display = "none";            
         console.log("User Mode");
     }
 
     switchToAdminMode(calendar, principalCommon) {
-        this.principal = new Admin(calendar, principalCommon);
+        this.principal = new principalAdmin(calendar, principalCommon);
         document.getElementById("addButton").style.display = "";            
         console.log("Admin Mode");
     }
