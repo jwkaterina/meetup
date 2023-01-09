@@ -2,6 +2,7 @@ import Event from "../src/components/event";
 import { Context } from "../src/ctx";
 import Calendar  from "../src/calendar";
 import PrincipalCommon from "../src/principal";
+import User from "../src/user";
 
 jest.mock("../src/calendar");
 
@@ -21,12 +22,7 @@ describe('PrincipalCommon', function () {
     .spyOn(Event.prototype, 'show')
     .mockImplementation(() => {});
 
-    const user = {
-        id: '6807bee0-d200-4c53-8e00-4cf0a1742387',
-        firsName: 'Regina',
-        lastName: 'Phalange',
-        userName: 'Regina Phalange'
-    };
+    const user = new User('6807bee0-d200-4c53-8e00-4cf0a1742387', 'Regina', 'Phalange');
 
     let event = null;
 
@@ -94,7 +90,7 @@ describe('PrincipalCommon', function () {
         principal.addName();
 
         //check
-        expect(event.members).toEqual([{userName: "John Doe", id: "1"}, {userName: "Jason Born", id: "2"}, {userName: user.userName, id: user.id}]);
+        expect(event.members).toEqual([{userName: "John Doe", id: "1"}, {userName: "Jason Born", id: "2"}, {userName: user.name, id: user.id}]);
         expect(mockedSaveEvent).toHaveBeenCalledTimes(1);
         expect(mockedShowEvent).toHaveBeenCalledTimes(1);
     });
@@ -107,7 +103,7 @@ describe('PrincipalCommon', function () {
             start: "12:00",
             end: "13:00",
             date: "2022-01-01",
-            members: [{userName: "John Doe", id: "1"}, {userName: user.userName, id: user.id}],
+            members: [{userName: "John Doe", id: "1"}, {userName: user.name, id: user.id}],
             color: "green",
         });
         const ctx = Context.getInstance();

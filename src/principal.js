@@ -31,7 +31,7 @@ export default class PrincipalCommon {
     //Used for testing only
     //TODO: remove before production!
     newName(name) {
-        this.user.userName = name;
+        this.user.name = name;
     }
 
     addEventContent(event) {
@@ -58,7 +58,7 @@ export default class PrincipalCommon {
         setTimeout(() => {
             this.eventModal.close();
         },1000);
-        event.members.push({userName: this.user.userName, id: this.user.id});
+        event.members.push({userName: this.user.name, id: this.user.id});
         this.calendar.saveEvent(event);
         event.show();
     }

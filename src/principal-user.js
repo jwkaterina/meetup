@@ -1,6 +1,6 @@
 import { Context } from "./ctx";
 
-export default class principalUser {
+export default class PrincipalUser {
     constructor(calendar, principalCommon) {
         this.calendar = calendar;
         this.ctx = Context.getInstance();
@@ -9,7 +9,7 @@ export default class principalUser {
     }
 
     get userName() {
-        return this.common.user.userName;
+        return this.common.user.name;
     }
 
     openEventModal(event) {

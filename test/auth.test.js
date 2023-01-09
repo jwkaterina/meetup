@@ -73,11 +73,11 @@ describe('Auth', () => {
         .mockResolvedValue(user);
 
         const mockedSwitchToUserMode = jest.fn();
-        const mockedSwitchToAdminMode = jest.fn();
+        const mockedSwitchToEditorMode = jest.fn();
         Context.getInstance.mockImplementation(() => {
             return {
                 switchToUserMode: mockedSwitchToUserMode,
-                switchToAdminMode: mockedSwitchToAdminMode
+                switchToEditorMode: mockedSwitchToEditorMode
             }
         });
 
@@ -91,10 +91,10 @@ describe('Auth', () => {
             id : '6807bee0-d200-4c53-8e00-4cf0a1742387',
             firstName: 'John',
             lastName: 'Doe',
-            userName: 'John Doe'
+            name: 'John Doe'
         }));
         expect(mockedSwitchToUserMode).toBeCalledTimes(1);
-        expect(mockedSwitchToAdminMode).toBeCalledTimes(0);
+        expect(mockedSwitchToEditorMode).toBeCalledTimes(0);
         expect(mockedLoadCalendarEvents).toBeCalledTimes(1);
 
         //clean up
@@ -108,11 +108,11 @@ describe('Auth', () => {
         .mockResolvedValue(editor);
 
         const mockedSwitchToUserMode = jest.fn();
-        const mockedSwitchToAdminMode = jest.fn();
+        const mockedSwitchToEditorMode = jest.fn();
         Context.getInstance.mockImplementation(() => {
             return {
                 switchToUserMode: mockedSwitchToUserMode,
-                switchToAdminMode: mockedSwitchToAdminMode
+                switchToEditorMode: mockedSwitchToEditorMode
             }
         });
 
@@ -126,10 +126,10 @@ describe('Auth', () => {
             id : '6807bee0-d200-4c53-8e00-4cf0a1742387',
             firstName: 'John',
             lastName: 'Doe',
-            userName: 'John Doe'
+            name: 'John Doe'
         }));
         expect(mockedSwitchToUserMode).toBeCalledTimes(0);
-        expect(mockedSwitchToAdminMode).toBeCalledTimes(1);
+        expect(mockedSwitchToEditorMode).toBeCalledTimes(1);
         expect(mockedLoadCalendarEvents).toBeCalledTimes(1);
 
         //clean up
@@ -143,11 +143,11 @@ describe('Auth', () => {
         .mockResolvedValue(admin);
 
         const mockedSwitchToUserMode = jest.fn();
-        const mockedSwitchToAdminMode = jest.fn();
+        const mockedSwitchToEditorMode = jest.fn();
         Context.getInstance.mockImplementation(() => {
             return {
                 switchToUserMode: mockedSwitchToUserMode,
-                switchToAdminMode: mockedSwitchToAdminMode
+                switchToEditorMode: mockedSwitchToEditorMode
             }
         });
 
@@ -161,10 +161,10 @@ describe('Auth', () => {
             id : '6807bee0-d200-4c53-8e00-4cf0a1742387',
             firstName: 'John',
             lastName: 'Doe',
-            userName: 'John Doe'
+            name: 'John Doe'
         }));
         expect(mockedSwitchToUserMode).toBeCalledTimes(0);
-        expect(mockedSwitchToAdminMode).toBeCalledTimes(1);
+        expect(mockedSwitchToEditorMode).toBeCalledTimes(1);
         expect(mockedLoadCalendarEvents).toBeCalledTimes(1);
 
         //clean up
@@ -174,11 +174,11 @@ describe('Auth', () => {
     it('should ignore uninvited user', () => {
         //init
         const mockedSwitchToUserMode = jest.fn();
-        const mockedSwitchToAdminMode = jest.fn();
+        const mockedSwitchToEditorMode = jest.fn();
         Context.getInstance.mockImplementation(() => {
             return {
                 switchToUserMode: mockedSwitchToUserMode,
-                switchToAdminMode: mockedSwitchToAdminMode
+                switchToEditorMode: mockedSwitchToEditorMode
             }
         });
 
@@ -189,7 +189,7 @@ describe('Auth', () => {
         //check
         expect(PrincipalCommon).toBeCalledTimes(0);
         expect(mockedSwitchToUserMode).toBeCalledTimes(0);
-        expect(mockedSwitchToAdminMode).toBeCalledTimes(0);
+        expect(mockedSwitchToEditorMode).toBeCalledTimes(0);
         expect(mockedLoadCalendarEvents).toBeCalledTimes(0);
 
         //clean up

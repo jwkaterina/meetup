@@ -1,0 +1,37 @@
+{
+    "Users": [
+        {
+            "Username": "google_111420613982552900205",
+            "Attributes": [
+                {
+                    "Name": "sub",
+                    "Value": "369e16e1-edc1-4418-ba6c-a872059541b2"
+                },
+                {
+                    "Name": "identities",
+                    "Value": "[{\"userId\":\"111420613982552900205\",\"providerName\":\"Google\",\"providerType\":\"Google\",\"issuer\":null,\"primary\":true,\"dateCreated\":1672741465121}]"
+                },
+                {
+                    "Name": "email_verified",
+                    "Value": "false"
+                },
+                {
+                    "Name": "given_name",
+                    "Value": "Regina"
+                },
+                {
+                    "Name": "family_name",
+                    "Value": "Phalange"
+                },
+                {
+                    "Name": "email",
+                    "Value": "regina.phalange@gmail.com"
+                }
+            ],
+            "UserCreateDate": "2023-01-03T10:24:25.132Z",
+            "UserLastModifiedDate": "2023-01-08T08:11:58.555Z",
+            "Enabled": true,
+            "UserStatus": "EXTERNAL_PROVIDER"
+        }
+    ]
+}

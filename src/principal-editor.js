@@ -4,7 +4,7 @@ import FormModal from "./components/form-modal";
 import ConfirmModal from "./components/confirm-modal";
 import { dateString, addDays } from "./helper";
 
-export default class principalAdmin {
+export default class PrincipalEditor {
     constructor(calendar, principalCommon) {
         this.calendar = calendar;
         this.ctx = Context.getInstance();
@@ -44,7 +44,7 @@ export default class principalAdmin {
     }
 
     get userName() {
-        return this.common.user.userName;
+        return this.common.user.name;
     }
 
     openEventModal(event) {
