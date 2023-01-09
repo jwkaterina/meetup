@@ -1,5 +1,5 @@
-import principalUser from "./principal-user.js";
-import principalAdmin from "./principal-admin.js";
+import PrincipalUser from "./principal-user.js";
+import PrincipalEditor from "./principal-editor.js";
 
 
 class Ctx {
@@ -11,15 +11,15 @@ class Ctx {
     }
 
     switchToUserMode(calendar, principalCommon) {
-        this.principal = new principalUser(calendar, principalCommon);
+        this.principal = new PrincipalUser(calendar, principalCommon);
         document.getElementById("addButton").style.display = "none";            
         console.log("User Mode");
     }
 
-    switchToAdminMode(calendar, principalCommon) {
-        this.principal = new principalAdmin(calendar, principalCommon);
+    switchToEditorMode(calendar, principalCommon) {
+        this.principal = new PrincipalEditor(calendar, principalCommon);
         document.getElementById("addButton").style.display = "";            
-        console.log("Admin Mode");
+        console.log("Editor Mode");
     }
 
     //TODO: remove before production

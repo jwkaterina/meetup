@@ -1,6 +1,7 @@
 import { Hub, Auth as AmplifyAuth } from "aws-amplify";
 import { Context } from "./ctx";
-import PrincipalCommon from "./principal"
+import PrincipalCommon from "./principal";
+import User from "./user";
 
 export default class Auth {
     constructor(calendar) {
@@ -11,8 +12,10 @@ export default class Auth {
         this.listenerCancelToken = this.setupAuthListener();
 
         this.loginBtn = document.getElementById("loginButton");
+        //TODO: remove before production
         this.checkBox = document.getElementById("checkBox");
         this.radios = document.querySelectorAll(".radio-container");
+        
         this.setupControls();
     }
 
@@ -53,7 +56,7 @@ export default class Auth {
         this.principal = new PrincipalCommon(this.calendar, parsedUser);
         
         if (groups.includes('admin') || groups.includes('editor')) {
-            this.ctx.switchToAdminMode(this.calendar, this.principal);
+            this.ctx.switchToEditorMode(this.calendar, this.principal);
             this.checkBox.checked = true;
         } else {
             this.ctx.switchToUserMode(this.calendar, this.principal);
@@ -62,7 +65,7 @@ export default class Auth {
         this.calendar.loadEvents();
         this.displayName(parsedUser.firstName, parsedUser.lastName);
         
-        console.log(`user ${parsedUser.userName} signed in`);
+        console.log(`user ${parsedUser.name} signed in`);
     }
 
     displayName(firstName, lastName) {
@@ -93,12 +96,7 @@ export default class Auth {
     parseUser(user) {
         const givenName = user.attributes.given_name;
         const familyName = user.attributes.family_name;
-        return {
-            id: user.attributes.sub,
-            userName: `${givenName} ${familyName}`,
-            firstName: givenName,
-            lastName: familyName
-        };
+        return new User(user.attributes.sub, givenName, familyName);
     }
 
     setupControls() {

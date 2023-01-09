@@ -1,0 +1,67 @@
+{
+    "NextToken": "0beb33f3-f560-4242-b4ff-ba6c-a872059540b1",
+    "Users": [
+        {
+            "Username": "google_111420613982552900205",
+            "Attributes": [
+                {
+                    "Name": "sub",
+                    "Value": "369e16e1-edc1-4418-ba6c-a872059540b1"
+                },
+                {
+                    "Name": "identities",
+                    "Value": "[{\"userId\":\"111420613982552900205\",\"providerName\":\"Google\",\"providerType\":\"Google\",\"issuer\":null,\"primary\":true,\"dateCreated\":1672741465121}]"
+                },
+                {
+                    "Name": "email_verified",
+                    "Value": "false"
+                },
+                {
+                    "Name": "given_name",
+                    "Value": "John"
+                },
+                {
+                    "Name": "family_name",
+                    "Value": "Doe"
+                },
+                {
+                    "Name": "email",
+                    "Value": "john.doe@gmail.com"
+                }
+            ],
+            "UserCreateDate": "2023-01-03T10:24:25.132Z",
+            "UserLastModifiedDate": "2023-01-08T08:11:58.555Z",
+            "Enabled": true,
+            "UserStatus": "EXTERNAL_PROVIDER"
+        },
+        {
+            "Username": "0beb33f3-f560-4242-b4ff-a6e61123e0db",
+            "Attributes": [
+                {
+                    "Name": "sub",
+                    "Value": "0beb33f3-f560-4242-b4ff-a6e61123e0db"
+                },
+                {
+                    "Name": "email_verified",
+                    "Value": "true"
+                },
+                {
+                    "Name": "given_name",
+                    "Value": "Jason"
+                },
+                {
+                    "Name": "family_name",
+                    "Value": "Born"
+                },
+                {
+                    "Name": "email",
+                    "Value": "jason.born@gmail.com"
+                }
+            ],
+            "UserCreateDate": "2023-01-09T14:34:57.544Z",
+            "UserLastModifiedDate": "2023-01-09T14:35:11.039Z",
+            "Enabled": true,
+            "UserStatus": "CONFIRMED"
+        }
+    ]
+}
