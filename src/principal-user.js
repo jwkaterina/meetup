@@ -8,10 +8,6 @@ export default class PrincipalUser {
         this.common.eventModal.hideEditButton();
     }
 
-    get userName() {
-        return this.common.user.name;
-    }
-
     openEventModal(event) {
         const ids = event.members.map((member) => member.id);
 

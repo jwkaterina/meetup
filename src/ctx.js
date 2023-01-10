@@ -35,7 +35,7 @@ class Ctx {
         } else if(radioC.checked) {
           principalCommon.newName("Liubov Zasadna");
         } 
-        console.log(principalCommon.userName)
+        console.log(principalCommon.use.name)
         calendar.loadEvents();
     }
 }

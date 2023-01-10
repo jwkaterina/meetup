@@ -1,7 +1,7 @@
 import { Context } from "./ctx";
-import Event from "./components/event";
-import FormModal from "./components/form-modal";
-import ConfirmModal from "./components/confirm-modal";
+import Event from "./component/event";
+import FormModal from "./component/form-modal";
+import ConfirmModal from "./component/confirm-modal";
 import { dateString, addDays } from "./helper";
 
 export default class PrincipalEditor {
@@ -41,10 +41,6 @@ export default class PrincipalEditor {
             this.confirmModal.close();
             this.ctx.currentEvent = null;
         });
-    }
-
-    get userName() {
-        return this.common.user.name;
     }
 
     openEventModal(event) {
@@ -137,6 +133,7 @@ export default class PrincipalEditor {
 
     updateEvent(event) {
         event.place = this.formModal.place.value;
+        
         event.prevDate = event.date;
         event.start = this.formModal.start.value;
         event.end = this.formModal.end.value;
@@ -145,7 +142,7 @@ export default class PrincipalEditor {
         const selectedIndex = this.formModal.name.selectedIndex;
         this.newMainName = this.formModal.name.options[selectedIndex].value;
         this.newMainId = this.formModal.name.options[selectedIndex].id;
-        this.newMain = {userName: this.newMainName, id: this.newMainId};
+        this.newMain = {name: this.newMainName, id: this.newMainId};
 
         const ids = event.members.map((member) => member.id);        
         if(ids.includes(this.newMainId) && event.members[0].id !== this.newMainId) {

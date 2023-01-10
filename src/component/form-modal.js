@@ -1,9 +1,10 @@
 import './form-modal.css';
 import './modals-common.css';
-import { editors } from "../editors_list";
+import UserInfoService from "../service/userinfo";
 
 export default class FormModal {
     constructor() {
+        this.userInfo = new UserInfoService();
         this.formModal = document.getElementById("formModal");
         this.place = document.getElementById("eventPlace");
         this.name = document.getElementById("eventMainName");
@@ -34,10 +35,11 @@ export default class FormModal {
         this.deleteButton.style.display = "";
     }
 
-    showOptions(main) {
-        let options = `<option id="${main.id}" value="${main.userName}">${main.userName}</option>`;
+    async showOptions(main) {
+        const editors = await this.userInfo.listEditors();
+        let options = `<option id="${main.id}" value="${main.name}">${main.name}</option>`;
         editors.forEach((editor) => {
-            options += `<option id="${editor.id}" value="${editor.userName}">${editor.userName}</option>`
+            options += `<option id="${editor.id}" value="${editor.name}">${editor.name}</option>`
         });
         this.name.innerHTML = options;
     }
