@@ -4,7 +4,12 @@ import UserInfoService from "../service/userinfo";
 
 export default class FormModal {
     constructor() {
+        this.editors = [];
         this.userInfo = new UserInfoService();
+        this.userInfo.listEditors()
+        .then(editors => this.editors.push(...editors))
+        .catch(error => console.log(error.message));
+
         this.formModal = document.getElementById("formModal");
         this.place = document.getElementById("eventPlace");
         this.name = document.getElementById("eventMainName");
@@ -35,10 +40,9 @@ export default class FormModal {
         this.deleteButton.style.display = "";
     }
 
-    async showOptions(main) {
-        const editors = await this.userInfo.listEditors();
+    showOptions(main) {
         let options = `<option id="${main.id}" value="${main.name}">${main.name}</option>`;
-        editors.forEach((editor) => {
+        this.editors.forEach((editor) => {
             options += `<option id="${editor.id}" value="${editor.name}">${editor.name}</option>`
         });
         this.name.innerHTML = options;
