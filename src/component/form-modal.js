@@ -43,7 +43,9 @@ export default class FormModal {
     showOptions(main) {
         let options = `<option id="${main.id}" value="${main.name}">${main.name}</option>`;
         this.editors.forEach((editor) => {
-            options += `<option id="${editor.id}" value="${editor.name}">${editor.name}</option>`
+            if(editor.id != main.id) {
+                options += `<option id="${editor.id}" value="${editor.name}">${editor.name}</option>`
+            }
         });
         this.name.innerHTML = options;
     }
