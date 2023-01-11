@@ -92,7 +92,7 @@ export default class Event {
 
             let lis = "";
             this.members.forEach((member, index) => {
-                lis += `<li class="member" member=${index + 1}>${member.userName}</li>`
+                lis += `<li class="member" member=${index + 1}>${member.name}</li>`
             });
             let txt = "";
             txt = `<a class="place" target="_blank">

@@ -1,6 +1,6 @@
 import { dateString, getDayIndex, addDays } from "./helper";
 import { Context } from "./ctx";
-import Event from "./components/event";
+import Event from "./component/event";
 import "./calendar.css";
 
 export default class Calendar {

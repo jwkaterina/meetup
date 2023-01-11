@@ -1,9 +1,15 @@
 import './form-modal.css';
 import './modals-common.css';
-import { editors } from "../editors_list";
+import UserInfoService from "../service/userinfo";
 
 export default class FormModal {
     constructor() {
+        this.editors = [];
+        this.userInfo = new UserInfoService();
+        this.userInfo.listEditors()
+        .then(editors => this.editors.push(...editors))
+        .catch(error => console.log(error.message));
+
         this.formModal = document.getElementById("formModal");
         this.place = document.getElementById("eventPlace");
         this.name = document.getElementById("eventMainName");
@@ -35,9 +41,11 @@ export default class FormModal {
     }
 
     showOptions(main) {
-        let options = `<option id="${main.id}" value="${main.userName}">${main.userName}</option>`;
-        editors.forEach((editor) => {
-            options += `<option id="${editor.id}" value="${editor.userName}">${editor.userName}</option>`
+        let options = `<option id="${main.id}" value="${main.name}">${main.name}</option>`;
+        this.editors.forEach((editor) => {
+            if(editor.id != main.id) {
+                options += `<option id="${editor.id}" value="${editor.name}">${editor.name}</option>`
+            }
         });
         this.name.innerHTML = options;
     }

@@ -1,5 +1,5 @@
 import { Context } from "./ctx";
-import EventModal from "./components/event-modal";
+import EventModal from "./component/event-modal";
 
 
 export default class PrincipalCommon {
@@ -37,7 +37,7 @@ export default class PrincipalCommon {
     addEventContent(event) {
         let lis = "";
         event.members.forEach((member, index) => {
-            lis += `<li class="member" member=${index + 1}>${member.userName}</li>`;
+            lis += `<li class="member" member=${index + 1}>${member.name}</li>`;
         });
 
         let txt = "";
@@ -58,7 +58,7 @@ export default class PrincipalCommon {
         setTimeout(() => {
             this.eventModal.close();
         },1000);
-        event.members.push({userName: this.user.name, id: this.user.id});
+        event.members.push({name: this.user.name, id: this.user.id});
         this.calendar.saveEvent(event);
         event.show();
     }
