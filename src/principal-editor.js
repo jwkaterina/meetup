@@ -43,10 +43,6 @@ export default class PrincipalEditor {
         });
     }
 
-    get userName() {
-        return this.common.user.name;
-    }
-
     openEventModal(event) {
         const ids = event.members.map((member) => member.id);
 
@@ -137,6 +133,7 @@ export default class PrincipalEditor {
 
     updateEvent(event) {
         event.place = this.formModal.place.value;
+        
         event.prevDate = event.date;
         event.start = this.formModal.start.value;
         event.end = this.formModal.end.value;
@@ -145,7 +142,7 @@ export default class PrincipalEditor {
         const selectedIndex = this.formModal.name.selectedIndex;
         this.newMainName = this.formModal.name.options[selectedIndex].value;
         this.newMainId = this.formModal.name.options[selectedIndex].id;
-        this.newMain = {userName: this.newMainName, id: this.newMainId};
+        this.newMain = {name: this.newMainName, id: this.newMainId};
 
         const ids = event.members.map((member) => member.id);        
         if(ids.includes(this.newMainId) && event.members[0].id !== this.newMainId) {
