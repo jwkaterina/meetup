@@ -1,7 +1,7 @@
 import { Context } from "./ctx";
-import Event from "./components/event";
-import FormModal from "./components/form-modal";
-import ConfirmModal from "./components/confirm-modal";
+import Event from "./component/event";
+import FormModal from "./component/form-modal";
+import ConfirmModal from "./component/confirm-modal";
 import { dateString, addDays } from "./helper";
 
 export default class PrincipalEditor {

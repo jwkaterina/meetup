@@ -1,5 +1,5 @@
 import { Context } from "./ctx";
-import EventModal from "./components/event-modal";
+import EventModal from "./component/event-modal";
 
 
 export default class PrincipalCommon {
