@@ -73,7 +73,7 @@ export default class FormModal {
         this.showCalendar();
     }
 
-      showCalendar() {
+    showCalendar() {
         document.body.classList.remove("opaque");
         document.body.style.overflow = 'auto'; 
     }
@@ -128,14 +128,24 @@ export default class FormModal {
         const customSelect = document.querySelector(".custom-select");
         const select = document.getElementsByTagName("select")[0];
         const l = select.length;
-
-        const selectedItem = document.createElement("DIV");
+ 
+        let selectedItem = document.querySelector(".select-selected");
+        if(selectedItem) {
+            selectedItem.remove();
+            console.log("selectedItem deleted");
+        } 
+        selectedItem = document.createElement("DIV");
         selectedItem.setAttribute("class", "select-selected");
         selectedItem.innerHTML = select.options[select.selectedIndex].innerHTML;
         selectedItem.id = select.options[select.selectedIndex].id;
         customSelect.appendChild(selectedItem);
-
-        const selectItems = document.createElement("DIV");
+        
+        let selectItems = document.querySelector(".select-items");
+        if(selectItems) {
+            selectItems.remove();
+            console.log("selectItems deleted");
+        } 
+        selectItems = document.createElement("DIV");
         selectItems.setAttribute("class", "select-items select-hide");
         const h = document.querySelector(".shortInput").clientHeight;
         selectItems.style.top = h - 1 + "px";
