@@ -76,10 +76,12 @@ export default class Event {
             
         }
 
+        const ids = this.members.map((member) => member.id);        
+
         if (media.matches) {
             const h = this.slotHeightMobile;
             eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
-            eventSlot.style.bottom = (24 - this.endHour + this.endMinutes / 60) * h + 3 + "px";
+            eventSlot.style.bottom = 24 * h - (this.endHour + this.endMinutes / 60) * h + 3 + "px";
 
             if(this.members.length > 0) {
                 numberCircle.style.display = "inline-block";
@@ -88,11 +90,18 @@ export default class Event {
         } else {
             const h = this.slotHeight;
             eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
-            eventSlot.style.bottom = (24 - this.endHour + this.endMinutes / 60) * h + 5 + "px";
+            eventSlot.style.bottom = 24 * h - (this.endHour + this.endMinutes / 60) * h + 5 + "px";
 
+            const main = this.members[0];    
             let lis = "";
-            this.members.forEach((member, index) => {
-                lis += `<li class="member" member=${index + 1}>${member.name}</li>`
+            lis = `<li class="member">${main.name}</li>`;
+            if(ids.includes(ctx.principal.common.user.id) && ctx.principal.common.user.id != main.id) {
+                lis += `<li class="member">${ctx.principal.common.user.name}</li>`;
+            }
+            this.members.forEach((member) => {
+                if(member.id != main.id && member.id != ctx.principal.common.user.id) {
+                    lis += `<li class="member">${member.name}</li>`;
+                }
             });
             let txt = "";
             txt = `<a class="place" target="_blank">
@@ -102,7 +111,6 @@ export default class Event {
             eventSlot.innerHTML = txt;
         }
 
-        const ids = this.members.map((member) => member.id);
         if(ids.includes(ctx.principal.common.user.id)) {
             this.color = "var(--blue)";
         } else {
