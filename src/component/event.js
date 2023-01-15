@@ -79,7 +79,7 @@ export default class Event {
         if (media.matches) {
             const h = this.slotHeightMobile;
             eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
-            eventSlot.style.bottom = (24 - this.endHour + this.endMinutes / 60) * h + 3 + "px";
+            eventSlot.style.bottom = 24 * h - (this.endHour + this.endMinutes / 60) * h + 3 + "px";
 
             if(this.members.length > 0) {
                 numberCircle.style.display = "inline-block";
@@ -88,7 +88,7 @@ export default class Event {
         } else {
             const h = this.slotHeight;
             eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
-            eventSlot.style.bottom = (24 - this.endHour + this.endMinutes / 60) * h + 5 + "px";
+            eventSlot.style.bottom = 24 * h - (this.endHour + this.endMinutes / 60) * h + 5 + "px";
 
             let lis = "";
             this.members.forEach((member, index) => {
