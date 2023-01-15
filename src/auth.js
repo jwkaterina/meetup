@@ -65,7 +65,7 @@ export default class Auth {
         this.calendar.loadEvents();
         this.displayName(parsedUser.firstName, parsedUser.lastName);
         
-        console.log(`user ${parsedUser.name} signed in`);
+        console.log(`user ${parsedUser.name} with id: ${parsedUser.id}  signed in`);
     }
 
     displayName(firstName, lastName) {

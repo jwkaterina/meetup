@@ -1,14 +1,17 @@
 import './form-modal.css';
 import './modals-common.css';
 import UserInfoService from "../service/userinfo";
+import { editors } from './editors_list';
 
 export default class FormModal {
     constructor() {
-        this.editors = [];
-        this.userInfo = new UserInfoService();
-        this.userInfo.listEditors()
-        .then(editors => this.editors.push(...editors))
-        .catch(error => console.log(error.message));
+        // this.editors = [];
+        // this.userInfo = new UserInfoService();
+        // this.userInfo.listEditors()
+        // .then(editors => this.editors.push(...editors))
+        // .catch(error => console.log(error.message));
+
+        this.editors = editors;
 
         this.formModal = document.getElementById("formModal");
         this.place = document.getElementById("eventPlace");
@@ -40,14 +43,18 @@ export default class FormModal {
         this.deleteButton.style.display = "";
     }
 
-    showOptions(main) {
+    showOptions(main, user) {
         let options = `<option id="${main.id}" value="${main.name}">${main.name}</option>`;
+        if(user.id != main.id) {
+            options += `<option id="${user.id}" value="${user.name}">${user.name}</option>`
+        }
         this.editors.forEach((editor) => {
-            if(editor.id != main.id) {
+            if(editor.id != main.id && editor.id != user.id) {
                 options += `<option id="${editor.id}" value="${editor.name}">${editor.name}</option>`
             }
         });
         this.name.innerHTML = options;
+        this.customizeSelect();
     }
 
     showModal() {
@@ -69,7 +76,7 @@ export default class FormModal {
         this.showCalendar();
     }
 
-      showCalendar() {
+    showCalendar() {
         document.body.classList.remove("opaque");
         document.body.style.overflow = 'auto'; 
     }
@@ -119,4 +126,92 @@ export default class FormModal {
         });
         return true;
     }
-}
+
+    customizeSelect() {
+        const customSelect = document.querySelector(".custom-select");
+        const select = document.getElementsByTagName("select")[0];
+        const l = select.length;
+ 
+        let selectedItem = document.querySelector(".select-selected");
+        if(selectedItem) {
+            selectedItem.remove();
+            console.log("selectedItem deleted");
+        } 
+        selectedItem = document.createElement("DIV");
+        selectedItem.setAttribute("class", "select-selected");
+        selectedItem.innerHTML = select.options[select.selectedIndex].innerHTML;
+        selectedItem.id = select.options[select.selectedIndex].id;
+        customSelect.appendChild(selectedItem);
+        
+        let selectItems = document.querySelector(".select-items");
+        if(selectItems) {
+            selectItems.remove();
+            console.log("selectItems deleted");
+        } 
+        selectItems = document.createElement("DIV");
+        selectItems.setAttribute("class", "select-items select-hide");
+        const h = document.querySelector(".shortInput").clientHeight;
+        selectItems.style.top = h - 1 + "px";
+
+        for (let i = 0; i < l; i++) {
+            const option = document.createElement("DIV");
+            option.innerHTML = select.options[i].innerHTML;
+            option.id = select.options[i].id;
+            if (option.id == selectedItem.id) {
+                option.setAttribute("class", "same-as-selected");
+            };
+
+            option.addEventListener("click", function(e) {
+            const prevOption = selectedItem;
+                for (let j = 0; j < l; j++) {
+                if (select.options[i].id == this.id) {
+                    select.selectedIndex = i;
+                    prevOption.innerHTML = this.innerHTML;
+                    prevOption.id = this.id;
+                    const sameAsSelected = this.parentNode.querySelectorAll(".same-as-selected");
+                    const sl = sameAsSelected.length;
+                    for (let k = 0; k < sl; k++) {
+                    sameAsSelected[k].removeAttribute("class");
+
+                    }
+                    this.setAttribute("class", "same-as-selected");
+                    break;
+                }
+                }
+                prevOption.click();
+            });
+            selectItems.appendChild(option);
+        }
+        customSelect.appendChild(selectItems);
+
+        selectedItem.addEventListener("click", function(e) {
+            e.stopPropagation();
+            closeAllSelect(this);
+            selectItems.classList.toggle("select-hide");
+            this.classList.toggle("select-arrow-active");
+        });
+
+        function closeAllSelect(item) {
+            const arrNo = [];
+            const selectItems = document.getElementsByClassName("select-items");
+            const selectedItem = document.getElementsByClassName("select-selected");
+            const l1 = selectItems.length;
+            const l2 = selectedItem.length;
+            for (let i = 0; i < l2; i++) {
+                if (item == selectedItem[i]) {
+                arrNo.push(i)
+                } else {
+                selectedItem[i].classList.remove("select-arrow-active");
+                }
+            }
+            for (let i = 0; i < l1; i++) {
+                if (arrNo.indexOf(i)) {
+                selectItems[i].classList.add("select-hide");
+                }
+            }
+            }
+
+            document.addEventListener("click", closeAllSelect);
+        }
+
+    }
