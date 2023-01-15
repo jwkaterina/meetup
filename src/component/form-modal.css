@@ -100,6 +100,8 @@ input, select {
     left: 0;
     right: 0;
     z-index: 99;
+    height: 250px;
+    overflow: auto;
 }
 
 .select-selected:after {
@@ -208,6 +210,10 @@ input, select {
 
     .shortInput {
         padding: 0.5vh 1vh;
+    }
+
+    .select-items {
+        height: 25vh;
     }
 
     .select-items div,.select-selected {
