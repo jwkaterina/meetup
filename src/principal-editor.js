@@ -3,21 +3,13 @@ import Event from "./component/event";
 import FormModal from "./component/form-modal";
 import ConfirmModal from "./component/confirm-modal";
 import { dateString, addDays } from "./helper";
-import UserInfoService from "./service/userinfo";
-
 
 export default class PrincipalEditor {
     constructor(calendar, principalCommon) {
-        this.editors = [];
-        this.userInfo = new UserInfoService();
-        this.userInfo.listEditors()
-        .then(editors => this.editors.push(...editors))
-        .catch(error => console.log(error.message));
-
         this.calendar = calendar;
         this.ctx = Context.getInstance();
         this.common = principalCommon;
-        this.formModal = new FormModal(this.editors);
+        this.formModal = new FormModal();
         this.confirmModal = new ConfirmModal();
 
         this.loadEventListeners();

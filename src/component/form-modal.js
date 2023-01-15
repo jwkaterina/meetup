@@ -1,9 +1,18 @@
 import './form-modal.css';
 import './modals-common.css';
+import UserInfoService from "../service/userinfo";
+// import { editors } from './editors_list';
 
 export default class FormModal {
-    constructor(editors) {
-        this.editors = editors;
+    constructor() {
+        this.editors = [];
+        this.userInfo = new UserInfoService();
+        this.userInfo.listEditors()
+        .then(editors => this.editors.push(...editors))
+        .catch(error => console.log(error.message));
+
+        // this.editors = editors;
+
         this.formModal = document.getElementById("formModal");
         this.place = document.getElementById("eventPlace");
         this.name = document.getElementById("eventMainName");
