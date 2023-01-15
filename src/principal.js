@@ -35,9 +35,18 @@ export default class PrincipalCommon {
     }
 
     addEventContent(event) {
+        const main = event.members[0];
+        const ids = event.members.map((member) => member.id);        
+
         let lis = "";
-        event.members.forEach((member, index) => {
-            lis += `<li class="member" member=${index + 1}>${member.name}</li>`;
+        lis = `<li class="member">${main.name}</li>`;
+        if(ids.includes(this.user.id) && this.user.id != main.id) {
+            lis += `<li class="member">${this.user.name}</li>`;
+        }
+        event.members.forEach((member) => {
+            if(member.id != main.id && member.id != this.user.id) {
+                lis += `<li class="member">${member.name}</li>`;
+            }
         });
 
         let txt = "";
