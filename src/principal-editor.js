@@ -92,7 +92,7 @@ export default class PrincipalEditor {
         this.formModal.hideDeleteButton();
 
         this.formModal.place.value = event.place;
-        this.formModal.showOptions(this.common.user);
+        this.formModal.showOptions(this.common.user, this.common.user);
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;
@@ -107,7 +107,7 @@ export default class PrincipalEditor {
         this.formModal.showDeleteButton();
 
         this.formModal.place.value = event.place;
-        this.formModal.showOptions(event.members[0]);
+        this.formModal.showOptions(event.members[0], this.common.user);
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;

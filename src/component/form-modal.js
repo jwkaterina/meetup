@@ -43,10 +43,13 @@ export default class FormModal {
         this.deleteButton.style.display = "";
     }
 
-    showOptions(main) {
+    showOptions(main, user) {
         let options = `<option id="${main.id}" value="${main.name}">${main.name}</option>`;
+        if(user.id != main.id) {
+            options += `<option id="${user.id}" value="${user.name}">${user.name}</option>`
+        }
         this.editors.forEach((editor) => {
-            if(editor.id != main.id) {
+            if(editor.id != main.id && editor.id != user.id) {
                 options += `<option id="${editor.id}" value="${editor.name}">${editor.name}</option>`
             }
         });

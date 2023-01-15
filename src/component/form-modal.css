@@ -90,6 +90,69 @@ input, select {
     color: var(--gray-light);
 }
 
+/* Custom select */
+.custom-select select {
+    display: none;
+}
+
+.select-items {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 99;
+}
+
+.select-selected:after {
+    position: absolute;
+    content: "";
+    top: 25%;
+    right: 15px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: var(--gray-light) transparent transparent transparent;
+}
+
+.select-selected.select-arrow-active:after {
+    border-color: transparent transparent var(--gray-light) transparent;
+    top: 7px;
+}
+
+.select-items div,.select-selected {
+    text-align: left;
+    padding: 10px 20px;
+    width: 100%;
+}
+
+.select-items div {
+    background-color: var(--blue);
+    border: 1px solid var(--blue);
+    color: var(--white);
+}
+
+.select-items div:hover {
+    background-color: var(--gray-darker);
+}
+
+.select-selected {
+    background-color: var(--white);
+    border: 1px solid var(--gray-light);
+    color: var(--gray-light)
+}
+
+.select-selected.select-arrow-active {
+    border: 1px solid var(--blue);
+    color: var(--black);
+}
+
+.select-hide {
+    display: none;
+}
+
+.same-as-selected {
+    display: none;
+}
+
 /* Alert */
 
 .alert {
@@ -147,6 +210,10 @@ input, select {
         padding: 0.5vh 1vh;
     }
 
+    .select-items div,.select-selected {
+        padding: 0.5vh 1vh;
+    }
+
     .alert, #errors {
         height: 1rem;
         font-size: 0.7rem;
@@ -157,66 +224,3 @@ input, select {
         color: var(--white);
     }
 }
-
-/* Custom select */
-    .custom-select select {
-        display: none;
-    }
-
-    .select-items {
-        position: absolute;
-        left: 0;
-        right: 0;
-        z-index: 99;
-    }
-
-    .select-selected:after {
-        position: absolute;
-        content: "";
-        top: 25%;
-        right: 15px;
-        width: 0;
-        height: 0;
-        border: 6px solid transparent;
-        border-color: var(--gray-light) transparent transparent transparent;
-    }
-
-    .select-selected.select-arrow-active:after {
-        border-color: transparent transparent var(--gray-light) transparent;
-        top: 7px;
-    }
-
-    .select-items div,.select-selected {
-        text-align: left;
-        padding: 10px 20px;
-        width: 100%;
-    }
-
-    .select-items div {
-        background-color: var(--blue);
-        border: 1px solid var(--blue);
-        color: var(--white);
-    }
-
-    .select-items div:hover {
-        background-color: var(--gray-darker);
-    }
-
-    .select-selected {
-        background-color: var(--white);
-        border: 1px solid var(--gray-light);
-        color: var(--gray-light)
-    }
-
-    .select-selected.select-arrow-active {
-        border: 1px solid var(--blue);
-        color: var(--black);
-    }
-
-    .select-hide {
-        display: none;
-    }
-
-    .same-as-selected {
-        display: none;
-    }
