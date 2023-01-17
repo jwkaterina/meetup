@@ -1,11 +1,13 @@
 import { dateString, getDayIndex, addDays } from "./helper";
 import { Context } from "./ctx";
 import Event from "./component/event";
+import EventService from "./service/event";
 import "./calendar.css";
 
 export default class Calendar {
     constructor() {
-        this.events = {};
+        this.events = [];
+        this.eventService = new EventService();
         this.weekOffset = 0;
         this.readyToTrash = false;
         this.eventsLoaded = false;
@@ -174,23 +176,13 @@ export default class Calendar {
     }
 
     saveEvent(event) {
-        if (event.prevDate && event.date != event.prevDate) {
-            delete this.events[event.prevDate][event.id];
-            if (Object.values(this.events[event.prevDate]).length == 0) {
-                delete this.events[event.prevDate];
-            }
+        const index = this.events.findIndex(evt => evt.id == event.id);
+        if (index > -1) {
+            this.events.splice(index, 1);
         }
-        if (!this.events[event.date]) {
-            this.events[event.date] = {};
-        }
-        this.events[event.date][event.id] = event;
-        this.saveEvents();
+        this.events.push(event);
+        this.eventService.saveEvent(event);
     }
-
-    saveEvents() {
-        localStorage.setItem("events", JSON.stringify(this.events));
-    }
-
 
     loadEvents() {
         const events = document.querySelectorAll(".event");
@@ -198,45 +190,20 @@ export default class Calendar {
             event.remove();
         });
         if (!this.eventsLoaded) {
-            this.events = JSON.parse(localStorage.getItem("events"));
-            if (this.events) {
-                for (const date of Object.keys(this.events)) {
-                    for (const id of Object.keys(this.events[date])) {
-                        const event = new Event(this.events[date][id]);
-                        this.events[date][id] = event;
-                    }
-                }
-            }
+            this.events = this.eventService.loadEvents(this.ctx.weekStart);
             this.eventsLoaded = true;
         }
-        if (this.events) {
-            for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
-                const date = dateString(addDays(this.ctx.weekStart, dayIndex));
-                if (this.events[date]) {
-                    for (const event of Object.values(this.events[date])) {
-                        event.show();
-                    }
-                }
-            }
-        } else {
-            this.events = {};
-        }
+
+        this.events.forEach(evt => evt.show());
     }
 
-    isEventValid(event) {
-        const newStart = document.getElementById("eventStart").value;
-        const newEnd = document.getElementById("eventEnd").value;
-        const newDate = document.getElementById("eventDate").value;
-        if (this.events[newDate]) {
-            const e = Object.values(this.events[newDate]).find(
-                (evt) =>
-                    evt.id != event.id && evt.end > newStart && evt.start < newEnd
-            );
-            if (e) {
-                document.getElementById("errors").classList.add("show-message");
-                document.getElementById("errors").querySelector("p").innerHTML = `Cela se heurte à l'équipe (${e.start} - ${e.end}).`;
-                return false;
-            }
+    checkEvent(event, newStart, newEnd, newDate) {
+        const collision = this.events
+        .filter(evt => evt.date == newDate)
+        .find(evt => evt.id != event.id && evt.end > newStart && evt.start < newEnd);
+
+        if(collision) {
+            throw new Error(`Cela se heurte à l'équipe (${collision.start} - ${collision.end}).`);
         }
 
         const duration =
@@ -244,18 +211,16 @@ export default class Calendar {
                 new Date(`${newDate}T${newStart}`).getTime()) /
             (1000 * 60);
         if (duration < 0) {
-            document.getElementById("errors").classList.add("show-message");
-            document.getElementById("errors").querySelector("p").innerHTML = "Le début ne peut pas être après la fin.";
-            return false;
+            throw new Error("Le début ne peut pas être après la fin.");
         }
-        return true;
     }
 
+    //TODO: remove before production
     trash() {
         if (this.readyToTrash) {
             this.readyToTrash = false;
-            this.events = {};
-            this.saveEvents();
+            this.events = [];
+            localStorage.setItem("events", JSON.stringify({}));
             const events = document.querySelectorAll(".event");
             events.forEach((event) => {
                 event.remove();

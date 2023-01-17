@@ -62,8 +62,8 @@ describe('helper.generateId', function () {
     });
 
     it('should generate ID', () => {
-        const id = generateId(3);
-        expect(id).toBe('H9a');
+        const id = generateId("2023-01-09", 3);
+        expect(id).toBe('2023-01-09#H9a');
     })
 
     afterEach(() => {
