@@ -9,10 +9,14 @@ export default class PrincipalEditor {
         this.calendar = calendar;
         this.ctx = Context.getInstance();
         this.common = principalCommon;
-        this.formModal = new FormModal();
-        this.confirmModal = new ConfirmModal();
+        this.formModal = null;
+        this.confirmModal = null;
 
-        this.loadEventListeners();
+        this.ctx.usersLoadedPromise.then(() => {
+            this.formModal = new FormModal(this.ctx.editors);
+            this.confirmModal = new ConfirmModal();
+            this.loadEventListeners();
+        });
     }
 
     loadEventListeners() {

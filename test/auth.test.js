@@ -74,10 +74,12 @@ describe('Auth', () => {
 
         const mockedSwitchToUserMode = jest.fn();
         const mockedSwitchToEditorMode = jest.fn();
+        const mockedFetchUsers = jest.fn();
         Context.getInstance.mockImplementation(() => {
             return {
                 switchToUserMode: mockedSwitchToUserMode,
-                switchToEditorMode: mockedSwitchToEditorMode
+                switchToEditorMode: mockedSwitchToEditorMode,
+                fetchUsers: mockedFetchUsers
             }
         });
 
@@ -88,11 +90,12 @@ describe('Auth', () => {
         //check
         expect(mockedGetUser).toBeCalled();
         expect(PrincipalCommon).toBeCalledWith(expect.anything(), expect.objectContaining({
-            id : '6807bee0-d200-4c53-8e00-4cf0a1742387',
+            id : 'google_105045525067602259238',
             firstName: 'John',
             lastName: 'Doe',
             name: 'John Doe'
         }));
+        expect(mockedFetchUsers).toBeCalledTimes(1);
         expect(mockedSwitchToUserMode).toBeCalledTimes(1);
         expect(mockedSwitchToEditorMode).toBeCalledTimes(0);
         expect(mockedLoadCalendarEvents).toBeCalledTimes(1);
@@ -109,10 +112,12 @@ describe('Auth', () => {
 
         const mockedSwitchToUserMode = jest.fn();
         const mockedSwitchToEditorMode = jest.fn();
+        const mockedFetchUsers = jest.fn();
         Context.getInstance.mockImplementation(() => {
             return {
                 switchToUserMode: mockedSwitchToUserMode,
-                switchToEditorMode: mockedSwitchToEditorMode
+                switchToEditorMode: mockedSwitchToEditorMode,
+                fetchUsers: mockedFetchUsers
             }
         });
 
@@ -123,11 +128,12 @@ describe('Auth', () => {
         //check
         expect(mockedGetUser).toBeCalled();
         expect(PrincipalCommon).toBeCalledWith(expect.anything(), expect.objectContaining({
-            id : '6807bee0-d200-4c53-8e00-4cf0a1742387',
+            id : 'google_105045525067602259238',
             firstName: 'John',
             lastName: 'Doe',
             name: 'John Doe'
         }));
+        expect(mockedFetchUsers).toBeCalledTimes(1);
         expect(mockedSwitchToUserMode).toBeCalledTimes(0);
         expect(mockedSwitchToEditorMode).toBeCalledTimes(1);
         expect(mockedLoadCalendarEvents).toBeCalledTimes(1);
@@ -144,10 +150,12 @@ describe('Auth', () => {
 
         const mockedSwitchToUserMode = jest.fn();
         const mockedSwitchToEditorMode = jest.fn();
+        const mockedFetchUsers = jest.fn();
         Context.getInstance.mockImplementation(() => {
             return {
                 switchToUserMode: mockedSwitchToUserMode,
-                switchToEditorMode: mockedSwitchToEditorMode
+                switchToEditorMode: mockedSwitchToEditorMode,
+                fetchUsers: mockedFetchUsers
             }
         });
 
@@ -158,11 +166,12 @@ describe('Auth', () => {
         //check
         expect(mockedGetUser).toBeCalled();
         expect(PrincipalCommon).toBeCalledWith(expect.anything(), expect.objectContaining({
-            id : '6807bee0-d200-4c53-8e00-4cf0a1742387',
+            id : 'google_105045525067602259238',
             firstName: 'John',
             lastName: 'Doe',
             name: 'John Doe'
         }));
+        expect(mockedFetchUsers).toBeCalledTimes(1);
         expect(mockedSwitchToUserMode).toBeCalledTimes(0);
         expect(mockedSwitchToEditorMode).toBeCalledTimes(1);
         expect(mockedLoadCalendarEvents).toBeCalledTimes(1);
@@ -175,10 +184,12 @@ describe('Auth', () => {
         //init
         const mockedSwitchToUserMode = jest.fn();
         const mockedSwitchToEditorMode = jest.fn();
+        const mockedFetchUsers = jest.fn();
         Context.getInstance.mockImplementation(() => {
             return {
                 switchToUserMode: mockedSwitchToUserMode,
-                switchToEditorMode: mockedSwitchToEditorMode
+                switchToEditorMode: mockedSwitchToEditorMode,
+                fetchUsers: mockedFetchUsers
             }
         });
 
@@ -188,6 +199,7 @@ describe('Auth', () => {
 
         //check
         expect(PrincipalCommon).toBeCalledTimes(0);
+        expect(mockedFetchUsers).toBeCalledTimes(0);
         expect(mockedSwitchToUserMode).toBeCalledTimes(0);
         expect(mockedSwitchToEditorMode).toBeCalledTimes(0);
         expect(mockedLoadCalendarEvents).toBeCalledTimes(0);

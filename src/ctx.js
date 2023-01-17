@@ -1,10 +1,14 @@
 import PrincipalUser from "./principal-user.js";
 import PrincipalEditor from "./principal-editor.js";
+import UserInfoService from "./service/userinfo";
 
 
 class Ctx {
     constructor() {
         this.principal = null;
+        this.users = [];
+        this.editors = [];
+        this.usersLoadedPromise = null;
         this.currentEvent = null;
         this.weekStart = null;
         this.weekEnd = null;
@@ -20,6 +24,19 @@ class Ctx {
         this.principal = new PrincipalEditor(calendar, principalCommon);
         document.getElementById("addButton").style.display = "";            
         console.log("Editor Mode");
+    }
+
+    fetchUsers() {
+      const userInfo = new UserInfoService();
+      const usersPromise = userInfo.listUsers()
+      .then(users => this.users.push(...users))
+      .catch(error => console.log('Cannot fetch users:', error));
+
+      const editorsPromise = userInfo.listEditors()
+      .then(editors => this.editors.push(...editors))
+      .catch(error => console.log('Cannot fetch editors:', error));
+
+      this.usersLoadedPromise = Promise.all([usersPromise, editorsPromise]);
     }
 
     //TODO: remove before production
