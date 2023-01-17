@@ -4,13 +4,12 @@ import { Context } from "../ctx";
 
 export default class Event {
     constructor(data) {
-        this.id = data.id || generateId();
+        this.id = data.id || generateId(data.date);
         this.place = data.place;
         this.members = data.members;
         this.start = data.start;
         this.end = data.end;
         this.date = data.date;
-        this.prevDate = this.date;
         this.color = data.color;
         this.slotHeight = 50;
         this.slotHeightMobile = 35;

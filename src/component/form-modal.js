@@ -12,11 +12,24 @@ export default class FormModal {
         this.date = document.getElementById("eventDate");
         this.start = document.getElementById("eventStart");
         this.end = document.getElementById("eventEnd");
+        this.errors = document.getElementById("errors");
         this.submitButton = this.formModal.querySelector(".submitButton");
         this.deleteButton = this.formModal.querySelector(".deleteButton");
         this.cancelButton = this.formModal.querySelector(".cancelButton");
         this.flipCard = this.formModal.querySelector(".flip-card-inner");
         this.flipCardText = this.formModal.querySelector(".flipCardText");
+    }
+
+    get newStart() {
+        return this.start.value;
+    }
+
+    get newEnd() {
+        return this.end.value;
+    }
+
+    get newDate() {
+        return this.date.value;
     }
 
     hideSubmitButton() {
@@ -80,9 +93,14 @@ export default class FormModal {
         document.body.style.overflow = 'hidden';
     }
 
+    showError(message) {
+        this.errors.classList.add("show-message");
+        this.errors.querySelector("p").innerHTML = message;
+    }
+
     hideErrors() {
-        document.getElementById("errors").querySelector("p").innerHTML = "";    
-        document.getElementById("errors").classList.remove("show-message");
+        this.errors.querySelector("p").innerHTML = "";    
+        this.errors.classList.remove("show-message");
         document.querySelectorAll(".alert").forEach((alert) => {
             alert.classList.remove("show-message");
         })

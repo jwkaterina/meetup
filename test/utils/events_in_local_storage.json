@@ -1,0 +1,54 @@
+{
+    "2023-01-09": [
+        {
+            "id": "2023-01-10#wQiII2SpY7hZ4n9vmJL2",
+            "place": "Neuenburger Str. 22",
+            "members": [
+                {
+                    "name": "Andrii Logoshko",
+                    "id": "0beb33f3-f560-4242-b4ff-a6e61123e0db"
+                }
+            ],
+            "start": "10:00",
+            "end": "11:00",
+            "date": "2023-01-10",
+            "color": "var(--blue)",
+            "slotHeight": 50,
+            "slotHeightMobile": 35
+        },
+        {
+            "id": "2023-01-10#xhkpXxQQzyPWTrYVLm0b",
+            "place": "Hochstrasse 4",
+            "members": [
+                {
+                    "name": "Andrii Logoshko",
+                    "id": "0beb33f3-f560-4242-b4ff-a6e61123e0db"
+                }
+            ],
+            "start": "13:00",
+            "end": "14:00",
+            "date": "2023-01-10",
+            "color": "var(--green)",
+            "slotHeight": 50,
+            "slotHeightMobile": 35
+        }
+    ],
+    "2023-01-16": [
+        {
+            "id": "2023-01-17#XrvrbMhF9SptEoz2Rkio",
+            "place": "Alexander Platz",
+            "members": [
+                {
+                    "name": "Kateryna Logoshko",
+                    "id": "369e16e1-edc1-4418-ba6c-a872059540b1"
+                }
+            ],
+            "start": "12:00",
+            "end": "13:00",
+            "date": "2023-01-17",
+            "color": "var(--green)",
+            "slotHeight": 50,
+            "slotHeightMobile": 35
+        }
+    ]
+}

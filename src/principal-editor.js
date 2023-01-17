@@ -112,6 +112,7 @@ export default class PrincipalEditor {
 
         this.formModal.place.value = event.place;
         this.formModal.showOptions(event.members[0], this.common.user);
+        this.formModal.date.disabled = true;
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;
@@ -123,22 +124,27 @@ export default class PrincipalEditor {
 
     submitEvent() {
         const event = this.ctx.currentEvent;
-        if(this.formModal.formIsValid() && this.calendar.isEventValid(event)) {
+
+        if(!this.formModal.formIsValid()) {
+            return;
+        }
+        
+        try {
+            this.calendar.checkEvent(event, this.formModal.newStart, this.formModal.newEnd, this.formModal.newDate);
             this.updateEvent(event);
             this.formModal.animateFlip();       
             setTimeout(() => {
                 this.formModal.close();
             },1000);
             this.ctx.currentEvent = null;
-        } else {
-            return;
+        } catch (e) {
+            this.formModal.showError(e.message);
         }
     }
 
     updateEvent(event) {
         event.place = this.formModal.place.value;
         
-        event.prevDate = event.date;
         event.start = this.formModal.start.value;
         event.end = this.formModal.end.value;
         event.date = this.formModal.date.value;
