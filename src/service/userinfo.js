@@ -10,6 +10,23 @@ export default class UserInfoService {
       return 60;
   }
 
+  async listUsers() {
+    const users = [];
+
+    const req = {
+      limit: UserInfoService.MAX_USERS_PER_REQUEST,
+      nextToken: null,
+    };
+
+    do {
+      const res = await this.sendListUsersInGroupRequest(req, "user");
+      const inUsersGroup = this.processUsersResult(res);
+      users.push(...inUsersGroup);
+    } while (req.nextToken != null);
+
+    return users;
+  }
+
 
   async listEditors() {
     const users = [];
@@ -20,20 +37,20 @@ export default class UserInfoService {
     };
 
     do {
-      const res = await this.sendListEditorsRequest(req);
-      const editors = this.processUsersResult(res);
-      users.push(...editors);
+      const res = await this.sendListUsersInGroupRequest(req, "editor");
+      const inEditorsGroup = this.processUsersResult(res);
+      users.push(...inEditorsGroup);
     } while (req.nextToken != null);
 
     return users;
   }
 
-  async sendListEditorsRequest(req){
+  async sendListUsersInGroupRequest(req, group){
     const apiName = 'AdminQueries';
     const path = '/listUsersInGroup';
     const init = { 
       queryStringParameters: {
-        "groupname": "editor",
+        "groupname": group,
         "limit": req.limit,
         "token": req.nextToken
       },
@@ -61,7 +78,7 @@ export default class UserInfoService {
         return acc;
       }, {});
 
-      return new User(attr.sub, attr.given_name, attr.family_name);
+      return new User(user.Username, attr.given_name, attr.family_name);
     });
   }
 

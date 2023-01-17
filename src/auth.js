@@ -54,6 +54,7 @@ export default class Auth {
 
         const parsedUser = this.parseUser(user);
         this.principal = new PrincipalCommon(this.calendar, parsedUser);
+        this.ctx.fetchUsers();
         
         if (groups.includes('admin') || groups.includes('editor')) {
             this.ctx.switchToEditorMode(this.calendar, this.principal);
@@ -96,7 +97,7 @@ export default class Auth {
     parseUser(user) {
         const givenName = user.attributes.given_name;
         const familyName = user.attributes.family_name;
-        return new User(user.attributes.sub, givenName, familyName);
+        return new User(user.username, givenName, familyName);
     }
 
     setupControls() {
