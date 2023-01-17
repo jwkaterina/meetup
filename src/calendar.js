@@ -31,7 +31,9 @@ export default class Calendar {
             this.changeWeek(-1)
         });
         document.getElementById("addButton").addEventListener("click", () => {
-            this.ctx.principal.createNewEvent()
+            if(this.ctx.principal) {
+                this.ctx.principal.createNewEvent()
+            }
         });
         document.getElementById("todayButton").addEventListener("click", () => {
             this.showCurrentWeek()
@@ -111,7 +113,9 @@ export default class Calendar {
                 slot.className = "slot";
                 slots.appendChild(slot);
                 slot.addEventListener("click", () => {
-                    cal.ctx.principal.clickSlot(hour, dayIndex);
+                    if(cal.ctx.principal) {
+                        cal.ctx.principal.clickSlot(hour, dayIndex);
+                    }
                 })
             }
             day.appendChild(slots);
