@@ -50,10 +50,7 @@ export default class FormModal {
     }
 
     showOptions(mainId, user) {
-        const editorIds = this.editors.map((editor) => editor.id);
-        const editorNames = this.editors.map((editor) => editor.name);
-        const index = editorIds.indexOf(mainId);
-        const mainName = editorNames[index];
+        const mainName = this.editors.find(editor => editor.id == mainId).name;
        
         let options = `<option id="${mainId}" value="${mainName}">${mainName}</option>`;
         if(user.id != mainId) {

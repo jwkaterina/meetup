@@ -35,11 +35,8 @@ export default class PrincipalCommon {
     }
 
     addEventContent(event) {
-        const mainId = event.memberIds[0];
-        const userIds = this.ctx.users.map((user) => user.id);
-        const userNames = this.ctx.users.map((user) => user.name);
-        const index = userIds.indexOf(mainId);
-        const mainName = userNames[index];            
+        const mainId = event.memberIds[0];         
+        const mainName = this.ctx.users.find(user => user.id == mainId).name;
 
         let lis = "";
         lis = `<li class="member">${mainName}</li>`;
@@ -48,8 +45,8 @@ export default class PrincipalCommon {
         }
         event.memberIds.forEach((id) => {
             if(id != mainId && id != this.user.id) {
-                const userName = userNames[userIds.indexOf(id)];
-                lis += `<li class="member">${member.name}</li>`;
+                const memberName = this.ctx.users.find(user => user.id == id).name;
+                lis += `<li class="member">${memberName}</li>`;
             }
         });
 
@@ -77,9 +74,7 @@ export default class PrincipalCommon {
     }
 
     deleteName() {
-
         const event = this.ctx.currentEvent;
-
         if (!event.memberIds.includes(this.user.id)) {
             return;
         }

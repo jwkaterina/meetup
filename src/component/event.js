@@ -89,12 +89,9 @@ export default class Event {
             eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
             eventSlot.style.bottom = 24 * h - (this.endHour + this.endMinutes / 60) * h + 5 + "px";
 
-            const mainId = this.memberIds[0];
-            const userIds = ctx.users.map((user) => user.id);
-            const userNames = ctx.users.map((user) => user.name);
-            const index = userIds.indexOf(mainId);
-            const mainName = userNames[index];            
-
+            const mainId = this.memberIds[0];         
+            const mainName = ctx.users.find(user => user.id == mainId).name;
+    
             let lis = "";
             lis = `<li class="member">${mainName}</li>`;
             if(this.memberIds.includes(ctx.principal.common.user.id) && ctx.principal.common.user.id != mainId) {
@@ -102,10 +99,11 @@ export default class Event {
             }
             this.memberIds.forEach((id) => {
                 if(id != mainId && id != ctx.principal.common.user.id) {
-                    const userName = userNames[userIds.indexOf(id)];
-                    lis += `<li class="member">${userName}</li>`;
+                    const memberName = ctx.users.find(user => user.id == id).name;
+                    lis += `<li class="member">${memberName}</li>`;
                 }
-            });
+            });         
+
             let txt = "";
             txt = `<a class="place" target="_blank">
             <i class="fa-sharp fa-solid fa-location-dot"></i>
