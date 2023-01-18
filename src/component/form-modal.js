@@ -49,13 +49,18 @@ export default class FormModal {
         this.deleteButton.style.display = "";
     }
 
-    showOptions(main, user) {
-        let options = `<option id="${main.id}" value="${main.name}">${main.name}</option>`;
-        if(user.id != main.id) {
+    showOptions(mainId, user) {
+        const editorIds = this.editors.map((editor) => editor.id);
+        const editorNames = this.editors.map((editor) => editor.name);
+        const index = editorIds.indexOf(mainId);
+        const mainName = editorNames[index];
+       
+        let options = `<option id="${mainId}" value="${mainName}">${mainName}</option>`;
+        if(user.id != mainId) {
             options += `<option id="${user.id}" value="${user.name}">${user.name}</option>`
         }
         this.editors.forEach((editor) => {
-            if(editor.id != main.id && editor.id != user.id) {
+            if(editor.id != mainId && editor.id != user.id) {
                 options += `<option id="${editor.id}" value="${editor.name}">${editor.name}</option>`
             }
         });
@@ -146,7 +151,6 @@ export default class FormModal {
         let selectedItem = document.querySelector(".select-selected");
         if(selectedItem) {
             selectedItem.remove();
-            console.log("selectedItem deleted");
         } 
         selectedItem = document.createElement("DIV");
         selectedItem.setAttribute("class", "select-selected");
@@ -157,7 +161,6 @@ export default class FormModal {
         let selectItems = document.querySelector(".select-items");
         if(selectItems) {
             selectItems.remove();
-            console.log("selectItems deleted");
         } 
         selectItems = document.createElement("DIV");
         selectItems.setAttribute("class", "select-items select-hide");

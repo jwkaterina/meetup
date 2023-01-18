@@ -35,16 +35,20 @@ export default class PrincipalCommon {
     }
 
     addEventContent(event) {
-        const main = event.members[0];
-        const ids = event.members.map((member) => member.id);        
+        const mainId = event.memberIds[0];
+        const userIds = this.ctx.users.map((user) => user.id);
+        const userNames = this.ctx.users.map((user) => user.name);
+        const index = userIds.indexOf(mainId);
+        const mainName = userNames[index];            
 
         let lis = "";
-        lis = `<li class="member">${main.name}</li>`;
-        if(ids.includes(this.user.id) && this.user.id != main.id) {
+        lis = `<li class="member">${mainName}</li>`;
+        if(event.memberIds.includes(this.user.id) && this.user.id != mainId) {
             lis += `<li class="member">${this.user.name}</li>`;
         }
-        event.members.forEach((member) => {
-            if(member.id != main.id && member.id != this.user.id) {
+        event.memberIds.forEach((id) => {
+            if(id != mainId && id != this.user.id) {
+                const userName = userNames[userIds.indexOf(id)];
                 lis += `<li class="member">${member.name}</li>`;
             }
         });
@@ -67,7 +71,7 @@ export default class PrincipalCommon {
         setTimeout(() => {
             this.eventModal.close();
         },1000);
-        event.members.push({name: this.user.name, id: this.user.id});
+        event.memberIds.push(this.user.id);
         this.calendar.saveEvent(event);
         event.show();
     }
@@ -75,9 +79,8 @@ export default class PrincipalCommon {
     deleteName() {
 
         const event = this.ctx.currentEvent;
-        const ids = event.members.map((member) => member.id);
 
-        if (!ids.includes(this.user.id)) {
+        if (!event.memberIds.includes(this.user.id)) {
             return;
         }
         this.eventModal.writeOnFlip("Ta participation est annulée.");
@@ -85,8 +88,8 @@ export default class PrincipalCommon {
         setTimeout(() => {
             this.eventModal.close();
         },1000);
-        const index = ids.indexOf(this.user.id);
-        event.members.splice(index, 1);
+        const index = event.memberIds.indexOf(this.user.id);
+        event.memberIds.splice(index, 1);
         this.calendar.saveEvent(event);
         event.show();
     }

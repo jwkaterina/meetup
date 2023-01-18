@@ -9,12 +9,10 @@ export default class PrincipalUser {
     }
 
     openEventModal(event) {
-        const ids = event.members.map((member) => member.id);
-
         this.ctx.currentEvent = event;
         this.common.eventModal.open();
         this.common.addEventContent(event);
-        if (ids.includes(this.common.user.id)) {
+        if (event.memberIds.includes(this.common.user.id)) {
             this.common.eventModal.hideSubmitButton();
             this.common.eventModal.showDeleteButton();
         } else {

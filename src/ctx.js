@@ -37,6 +37,8 @@ class Ctx {
       .catch(error => console.log('Cannot fetch editors:', error));
 
       this.usersLoadedPromise = Promise.all([usersPromise, editorsPromise]);
+
+      return this.usersLoadedPromise;
     }
 
     //TODO: remove before production

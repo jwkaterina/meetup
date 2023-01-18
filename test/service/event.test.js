@@ -51,7 +51,7 @@ describe('EventService', () => {
         start: "10:00",
         end: "12:00",
         date: dateString(date),
-        members: [],
+        memberIds: [],
         color: "var(--green)"
     });
       const eventsService = new EventService();
