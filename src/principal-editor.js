@@ -19,6 +19,10 @@ export default class PrincipalEditor {
         });
     }
 
+    get user() {
+        return this.common.user;
+    }
+
     loadEventListeners() {
         this.common.eventModal.editButton.addEventListener("click", () => {
             this.openChangeFormModal();

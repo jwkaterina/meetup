@@ -89,18 +89,24 @@ export default class Event {
             eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
             eventSlot.style.bottom = 24 * h - (this.endHour + this.endMinutes / 60) * h + 5 + "px";
 
-            const mainId = this.memberIds[0];         
-            const mainName = ctx.users.find(user => user.id == mainId).name;
+            const mainId = this.memberIds[0];
+            let mainName = "???";
+            if(ctx.users[mainId]) {
+                mainName = this.ctx.users[mainId].name;
+            }
     
             let lis = "";
-            lis = `<li class="member">${mainName}</li>`;
-            if(this.memberIds.includes(ctx.principal.common.user.id) && ctx.principal.common.user.id != mainId) {
-                lis += `<li class="member">${ctx.principal.common.user.name}</li>`;
+            lis = `<li class="member" data-user-id="${mainId}">${mainName}</li>`;
+            if(this.memberIds.includes(ctx.principal.user.id) && ctx.principal.user.id != mainId) {
+                lis += `<li class="member" data-user-id="${ctx.principal.user.id}">${ctx.principal.user.name}</li>`;
             }
             this.memberIds.forEach((id) => {
-                if(id != mainId && id != ctx.principal.common.user.id) {
-                    const memberName = ctx.users.find(user => user.id == id).name;
-                    lis += `<li class="member">${memberName}</li>`;
+                if(id != mainId && id != ctx.principal.user.id) {
+                    let memberName = "???"
+                    if(ctx.users[id]) {
+                        memberName = ctx.users[id].name;
+                    }
+                    lis += `<li class="member" data-user-id="${id}">${memberName}</li>`;
                 }
             });         
 
@@ -112,7 +118,7 @@ export default class Event {
             eventSlot.innerHTML = txt;
         }
 
-        if(this.memberIds.includes(ctx.principal.common.user.id)) {
+        if(this.memberIds.includes(ctx.principal.user.id)) {
             this.color = "var(--blue)";
         } else {
             this.color = "var(--green)";

@@ -8,6 +8,10 @@ export default class PrincipalUser {
         this.common.eventModal.hideEditButton();
     }
 
+    get user() {
+        return this.common.user;
+    }
+
     openEventModal(event) {
         this.ctx.currentEvent = event;
         this.common.eventModal.open();

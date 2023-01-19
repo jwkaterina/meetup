@@ -37,9 +37,8 @@ export default class PrincipalCommon {
     addEventContent(event) {
         let mainName = "???"
         const mainId = event.memberIds[0];         
-        const mainUser = this.ctx.users.find(user => user.id == mainId);
-        if(mainUser) {
-            mainName = mainUser.name;
+        if(this.ctx.users[mainId]) {
+            mainName = this.ctx.users[mainId].name;
         }
 
         /*
@@ -54,9 +53,8 @@ export default class PrincipalCommon {
         event.memberIds.forEach((id) => {
             if(id != mainId && id != this.user.id) {
                 let memberName = "???"
-                const member = this.ctx.users.find(user => user.id == id);
-                if(member) {
-                    memberName = member.name;
+                if(this.ctx.users[id]) {
+                    memberName = this.ctx.users[id].name;
                 }
                 lis += `<li class="member" data-user-id="${id}">${memberName}</li>`;
             }
