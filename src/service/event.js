@@ -1,4 +1,3 @@
-import { Auth, API } from "aws-amplify";
 import Event from "../component/event";
 import { dateString, addDays, getDayIndex } from "../helper";
 
