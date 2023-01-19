@@ -1,0 +1,37 @@
+{
+  "resourceName": "meetup",
+  "tableName": "meetup",
+  "partitionKey": {
+    "fieldName": "PK",
+    "fieldType": "string"
+  },
+  "sortKey": {
+    "fieldName": "SK",
+    "fieldType": "string"
+  },
+  "gsi": [
+    {
+      "name": "GSI1",
+      "partitionKey": {
+        "fieldName": "GSI1",
+        "fieldType": "string"
+      },
+      "sortKey": {
+        "fieldName": "SK",
+        "fieldType": "string"
+      }
+    },
+    {
+      "name": "GSI2",
+      "partitionKey": {
+        "fieldName": "GSI2",
+        "fieldType": "string"
+      },
+      "sortKey": {
+        "fieldName": "SK",
+        "fieldType": "string"
+      }
+    }
+  ],
+  "triggerFunctions": []
+}
