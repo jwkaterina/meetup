@@ -152,7 +152,7 @@ export default class PrincipalEditor {
         event.date = this.formModal.date.value;
 
         const selectedIndex = this.formModal.name.selectedIndex;
-        const newMainId = this.formModal.name.options[selectedIndex].id;
+        const newMainId = this.formModal.name.options[selectedIndex].dataset.editorId;
        
         if(event.memberIds.includes(newMainId) && event.memberIds[0] !== newMainId) {
             const index = event.memberIds.indexOf(newMainId);
