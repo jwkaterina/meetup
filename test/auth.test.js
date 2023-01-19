@@ -14,6 +14,12 @@ jest.mock("../src/principal");
  
 describe('Auth', () => {
 
+    window.matchMedia = jest.fn(() => {
+        return {
+         matches: true
+        }
+    });
+
     const mockedLoadCalendarEvents = jest
     .spyOn(Calendar.prototype, 'loadEvents')
     .mockImplementation(() => {});

@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Booking System For Meetings",
   "dependencies": {
-    "aws-amplify": "^5.0.8"
+    "aws-amplify": "^5.0.8",
+    "luxon": "^3.2.1",
+    "ulid": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.5",
