@@ -32,7 +32,7 @@ describe('PrincipalCommon', function () {
             start: "12:00",
             end: "13:00",
             date: "2022-01-01",
-            members: [{name: "John Doe", id: "1"}, {name: "Jason Born", id: "2"}],
+            memberIds: ["1", "2"],
             color: "green",
         });
 
@@ -52,11 +52,11 @@ describe('PrincipalCommon', function () {
                         </div>   
                     </div>
                     <div class="flip-card-back">
-                        <h2 class="flipCardText">Bon predication!</h2> 
+                        <h2 class="flipCardText">Bonne prédication!</h2> 
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>  
         `;
     });
 
@@ -72,11 +72,11 @@ describe('PrincipalCommon', function () {
         expect(names.length).toBe(2);
         
         
-        const members = [];
+        const memberIds = [];
         for (const name of names) {
-            members.push(name.innerHTML);
+            memberIds.push(name.dataset.userId);
         }
-        const intresection = event.members.map((member) => member.name).filter(value => members.includes(value));
+        const intresection = event.memberIds.filter(value => memberIds.includes(value));
         expect(intresection.length).toBe(2);
     });
 
@@ -90,7 +90,7 @@ describe('PrincipalCommon', function () {
         principal.addName();
 
         //check
-        expect(event.members).toEqual([{name: "John Doe", id: "1"}, {name: "Jason Born", id: "2"}, {name: user.name, id: user.id}]);
+        expect(event.memberIds).toEqual(["1", "2", user.id]);
         expect(mockedSaveEvent).toHaveBeenCalledTimes(1);
         expect(mockedShowEvent).toHaveBeenCalledTimes(1);
     });
@@ -103,7 +103,7 @@ describe('PrincipalCommon', function () {
             start: "12:00",
             end: "13:00",
             date: "2022-01-01",
-            members: [{name: "John Doe", id: "1"}, {name: user.name, id: user.id}],
+            memberIds: ["1", user.id],
             color: "green",
         });
         const ctx = Context.getInstance();
@@ -113,7 +113,7 @@ describe('PrincipalCommon', function () {
         principal.deleteName();
 
         //check
-        expect(event.members).toEqual([{name: "John Doe", id: "1"}]);
+        expect(event.memberIds).toEqual(["1"]);
         expect(mockedSaveEvent).toHaveBeenCalledTimes(1);
         expect(mockedShowEvent).toHaveBeenCalledTimes(1);
     });
@@ -129,7 +129,7 @@ describe('PrincipalCommon', function () {
         principal.deleteName();
 
         //check
-        expect(event.members).toEqual([{name: "John Doe", id: "1"}, {name: "Jason Born", id: "2"}])
+        expect(event.memberIds).toEqual(["1", "2"])
         expect(mockedSaveEvent).toHaveBeenCalledTimes(0);
         expect(mockedShowEvent).toHaveBeenCalledTimes(0);
     });

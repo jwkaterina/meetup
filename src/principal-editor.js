@@ -19,6 +19,10 @@ export default class PrincipalEditor {
         });
     }
 
+    get user() {
+        return this.common.user;
+    }
+
     loadEventListeners() {
         this.common.eventModal.editButton.addEventListener("click", () => {
             this.openChangeFormModal();
@@ -48,18 +52,16 @@ export default class PrincipalEditor {
     }
 
     openEventModal(event) {
-        const ids = event.members.map((member) => member.id);
-
         this.ctx.currentEvent = event;
         this.common.eventModal.open();
         this.common.addEventContent(event);
         this.common.eventModal.showEditButton();
-        if(!ids.includes(this.common.user.id)) {
+        if(!event.memberIds.includes(this.common.user.id)) {
             this.common.eventModal.hideDeleteButton();
             this.common.eventModal.showSubmitButton();
             return
         }
-        if (this.common.user.id == event.members[0].id) {
+        if (this.common.user.id == event.memberIds[0]) {
             this.common.eventModal.hideDeleteButton();
             this.common.eventModal.hideSubmitButton();
             return
@@ -82,7 +84,7 @@ export default class PrincipalEditor {
             start,
             end,
             date,
-            members: [],
+            memberIds: [],
             color: "var(--green)"
         });
         this.ctx.currentEvent = event;
@@ -96,7 +98,7 @@ export default class PrincipalEditor {
         this.formModal.hideDeleteButton();
 
         this.formModal.place.value = event.place;
-        this.formModal.showOptions(this.common.user, this.common.user);
+        this.formModal.showOptions(this.common.user.id, this.common.user);
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;
@@ -111,7 +113,7 @@ export default class PrincipalEditor {
         this.formModal.showDeleteButton();
 
         this.formModal.place.value = event.place;
-        this.formModal.showOptions(event.members[0], this.common.user);
+        this.formModal.showOptions(event.memberIds[0], this.common.user);
         this.formModal.date.disabled = true;
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
@@ -139,27 +141,24 @@ export default class PrincipalEditor {
             this.ctx.currentEvent = null;
         } catch (e) {
             this.formModal.showError(e.message);
+            console.log(e);
         }
     }
 
     updateEvent(event) {
         event.place = this.formModal.place.value;
-        
         event.start = this.formModal.start.value;
         event.end = this.formModal.end.value;
         event.date = this.formModal.date.value;
 
         const selectedIndex = this.formModal.name.selectedIndex;
-        this.newMainName = this.formModal.name.options[selectedIndex].value;
-        this.newMainId = this.formModal.name.options[selectedIndex].id;
-        this.newMain = {name: this.newMainName, id: this.newMainId};
-
-        const ids = event.members.map((member) => member.id);        
-        if(ids.includes(this.newMainId) && event.members[0].id !== this.newMainId) {
-            const index = ids.indexOf(this.newMainId);
-            event.members.splice(index, 1);
+        const newMainId = this.formModal.name.options[selectedIndex].dataset.editorId;
+       
+        if(event.memberIds.includes(newMainId) && event.memberIds[0] !== newMainId) {
+            const index = event.memberIds.indexOf(newMainId);
+            event.memberIds.splice(index, 1);
         }
-        event.members[0] = this.newMain;
+        event.memberIds[0] = newMainId;
         this.calendar.saveEvent(event);
         event.show();
     }
@@ -170,11 +169,7 @@ export default class PrincipalEditor {
             this.confirmModal.close();
         },1000);
         document.getElementById(this.ctx.currentEvent.id).remove();
-        delete this.calendar.events[this.ctx.currentEvent.date][this.ctx.currentEvent.id];
-        if (Object.values(this.calendar.events[this.ctx.currentEvent.date]).length == 0) {
-            delete this.calendar.events[this.ctx.currentEvent.date];
-        }
-        this.calendar.saveEvents();
+        this.calendar.deleteEvent(this.ctx.currentEvent.id)
     }
 
     createNewEvent() {
@@ -183,7 +178,7 @@ export default class PrincipalEditor {
             start: "12:00",
             end: "13:00",
             date: dateString(this.ctx.weekStart),
-            members: [],
+            memberIds: [],
             color: "green",
         });
         this.ctx.currentEvent = event;

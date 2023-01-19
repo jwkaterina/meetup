@@ -8,13 +8,15 @@ export default class PrincipalUser {
         this.common.eventModal.hideEditButton();
     }
 
-    openEventModal(event) {
-        const ids = event.members.map((member) => member.id);
+    get user() {
+        return this.common.user;
+    }
 
+    openEventModal(event) {
         this.ctx.currentEvent = event;
         this.common.eventModal.open();
         this.common.addEventContent(event);
-        if (ids.includes(this.common.user.id)) {
+        if (event.memberIds.includes(this.common.user.id)) {
             this.common.eventModal.hideSubmitButton();
             this.common.eventModal.showDeleteButton();
         } else {

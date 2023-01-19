@@ -11,6 +11,10 @@ export default class EventService {
         this.saveToLocalStorage(event);
     }
 
+    deleteEvent(event) {
+        this.deleteFromLocalStorage(event);
+    }
+
     loadFromLocalStorage(weekStart) {
         const allEvents = this.loadEventsFromLocalStorage();
         const key = dateString(weekStart);
@@ -48,6 +52,26 @@ export default class EventService {
         weekEvents.push(event);
 
         allEvents[weekStarts] = weekEvents;
+
+        this.saveEventsToLocalStorage(allEvents);
+    }
+
+    deleteFromLocalStorage(event) {
+        const allEvents = this.loadEventsFromLocalStorage();
+        const timestamp = Date.parse(event.date);
+        const date = new Date(timestamp);
+        const weekStarts = dateString(addDays(date, -getDayIndex(date)));
+
+        let weekEvents = allEvents[weekStarts];
+
+        if (!weekEvents) {
+            weekEvents = [];
+        }
+
+        const index = weekEvents.findIndex(evt => evt.id == event.id);
+        if (index > -1) {
+            weekEvents.splice(index, 1);
+        }
 
         this.saveEventsToLocalStorage(allEvents);
     }

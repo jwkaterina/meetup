@@ -6,8 +6,8 @@ import UserInfoService from "./service/userinfo";
 class Ctx {
     constructor() {
         this.principal = null;
-        this.users = [];
-        this.editors = [];
+        this.users = {};
+        this.editors = {};
         this.usersLoadedPromise = null;
         this.currentEvent = null;
         this.weekStart = null;
@@ -29,14 +29,26 @@ class Ctx {
     fetchUsers() {
       const userInfo = new UserInfoService();
       const usersPromise = userInfo.listUsers()
-      .then(users => this.users.push(...users))
+      .then(users => {
+        this.users = users.reduce((acc, currentUser) => {
+          acc[currentUser.id] = currentUser
+          return acc;
+        }, {});
+      })
       .catch(error => console.log('Cannot fetch users:', error));
 
       const editorsPromise = userInfo.listEditors()
-      .then(editors => this.editors.push(...editors))
+      .then(editors => {
+        this.editors = editors.reduce((acc, currentEditor) => {
+          acc[currentEditor.id] = currentEditor
+          return acc;
+        }, {});
+      })
       .catch(error => console.log('Cannot fetch editors:', error));
 
       this.usersLoadedPromise = Promise.all([usersPromise, editorsPromise]);
+
+      return this.usersLoadedPromise;
     }
 
     //TODO: remove before production

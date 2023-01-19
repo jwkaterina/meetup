@@ -49,16 +49,19 @@ export default class FormModal {
         this.deleteButton.style.display = "";
     }
 
-    showOptions(main, user) {
-        let options = `<option id="${main.id}" value="${main.name}">${main.name}</option>`;
-        if(user.id != main.id) {
-            options += `<option id="${user.id}" value="${user.name}">${user.name}</option>`
+    showOptions(mainId, user) {
+        let mainName = "???";
+        if(this.editors[mainId]) {
+            mainName = this.editors[mainId].name;
         }
-        this.editors.forEach((editor) => {
-            if(editor.id != main.id && editor.id != user.id) {
-                options += `<option id="${editor.id}" value="${editor.name}">${editor.name}</option>`
-            }
-        });
+       
+        let options = `<option value="${mainName}" data-editor-id="${mainId}">${mainName}</option>`;
+        if(user.id != mainId) {
+            options += `<option value="${user.name}" data-editor-id="${user.id}">${user.name}</option>`
+        }
+        Object.values(this.editors)
+        .filter(editor => editor.id != mainId && editor.id != user.id)
+        .forEach(editor => options += `<option value="${editor.name}" data-editor-id="${editor.id}">${editor.name}</option>`);
         this.name.innerHTML = options;
         this.customizeSelect();
     }
@@ -146,46 +149,46 @@ export default class FormModal {
         let selectedItem = document.querySelector(".select-selected");
         if(selectedItem) {
             selectedItem.remove();
-            console.log("selectedItem deleted");
         } 
         selectedItem = document.createElement("DIV");
-        selectedItem.setAttribute("class", "select-selected");
+        selectedItem.className = "select-selected";
         selectedItem.innerHTML = select.options[select.selectedIndex].innerHTML;
-        selectedItem.id = select.options[select.selectedIndex].id;
+        const selectedId = select.options[select.selectedIndex].dataset.editorId;
+        selectedItem.dataset.editorId = selectedId;
         customSelect.appendChild(selectedItem);
         
         let selectItems = document.querySelector(".select-items");
         if(selectItems) {
             selectItems.remove();
-            console.log("selectItems deleted");
         } 
         selectItems = document.createElement("DIV");
-        selectItems.setAttribute("class", "select-items select-hide");
+        selectItems.className = "select-items select-hide";
         const h = document.querySelector(".shortInput").clientHeight;
         selectItems.style.top = h - 1 + "px";
 
         for (let i = 0; i < l; i++) {
             const option = document.createElement("DIV");
             option.innerHTML = select.options[i].innerHTML;
-            option.id = select.options[i].id;
-            if (option.id == selectedItem.id) {
-                option.setAttribute("class", "same-as-selected");
+            option.dataset.editorId = select.options[i].dataset.editorId;
+            if (option.dataset.editorId == selectedId) {
+                option.className = "same-as-selected";
             };
 
             option.addEventListener("click", function(e) {
             const prevOption = selectedItem;
                 for (let j = 0; j < l; j++) {
-                if (select.options[i].id == this.id) {
+                    const thisId = this.dataset.editorId;
+                if (select.options[i].dataset.editorId == thisId) {
                     select.selectedIndex = i;
                     prevOption.innerHTML = this.innerHTML;
-                    prevOption.id = this.id;
+                    prevOption.dataset.editorId = thisId;
                     const sameAsSelected = this.parentNode.querySelectorAll(".same-as-selected");
                     const sl = sameAsSelected.length;
                     for (let k = 0; k < sl; k++) {
-                    sameAsSelected[k].removeAttribute("class");
+                    sameAsSelected[k].classList.remove("same-as-selected");
 
                     }
-                    this.setAttribute("class", "same-as-selected");
+                    this.className = "same-as-selected";
                     break;
                 }
                 }

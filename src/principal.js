@@ -35,17 +35,28 @@ export default class PrincipalCommon {
     }
 
     addEventContent(event) {
-        const main = event.members[0];
-        const ids = event.members.map((member) => member.id);        
-
-        let lis = "";
-        lis = `<li class="member">${main.name}</li>`;
-        if(ids.includes(this.user.id) && this.user.id != main.id) {
-            lis += `<li class="member">${this.user.name}</li>`;
+        let mainName = "???"
+        const mainId = event.memberIds[0];         
+        if(this.ctx.users[mainId]) {
+            mainName = this.ctx.users[mainId].name;
         }
-        event.members.forEach((member) => {
-            if(member.id != main.id && member.id != this.user.id) {
-                lis += `<li class="member">${member.name}</li>`;
+
+        /*
+        * See: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes
+        *
+        */
+        let lis = "";
+        lis = `<li class="member" data-user-id="${mainId}">${mainName}</li>`;
+        if(event.memberIds.includes(this.user.id) && this.user.id != mainId) {
+            lis += `<li class="member" data-user-id="${this.user.id}">${this.user.name}</li>`;
+        }
+        event.memberIds.forEach((id) => {
+            if(id != mainId && id != this.user.id) {
+                let memberName = "???"
+                if(this.ctx.users[id]) {
+                    memberName = this.ctx.users[id].name;
+                }
+                lis += `<li class="member" data-user-id="${id}">${memberName}</li>`;
             }
         });
 
@@ -67,17 +78,14 @@ export default class PrincipalCommon {
         setTimeout(() => {
             this.eventModal.close();
         },1000);
-        event.members.push({name: this.user.name, id: this.user.id});
+        event.memberIds.push(this.user.id);
         this.calendar.saveEvent(event);
         event.show();
     }
 
     deleteName() {
-
         const event = this.ctx.currentEvent;
-        const ids = event.members.map((member) => member.id);
-
-        if (!ids.includes(this.user.id)) {
+        if (!event.memberIds.includes(this.user.id)) {
             return;
         }
         this.eventModal.writeOnFlip("Ta participation est annulée.");
@@ -85,8 +93,8 @@ export default class PrincipalCommon {
         setTimeout(() => {
             this.eventModal.close();
         },1000);
-        const index = ids.indexOf(this.user.id);
-        event.members.splice(index, 1);
+        const index = event.memberIds.indexOf(this.user.id);
+        event.memberIds.splice(index, 1);
         this.calendar.saveEvent(event);
         event.show();
     }

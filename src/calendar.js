@@ -1,6 +1,5 @@
-import { dateString, getDayIndex, addDays } from "./helper";
+import { getDayIndex, addDays } from "./helper";
 import { Context } from "./ctx";
-import Event from "./component/event";
 import EventService from "./service/event";
 import "./calendar.css";
 
@@ -9,9 +8,10 @@ export default class Calendar {
         this.events = [];
         this.eventService = new EventService();
         this.weekOffset = 0;
-        this.readyToTrash = false;
-        this.eventsLoaded = false;
         this.ctx = Context.getInstance();
+
+        //TODO: remove before production
+        this.readyToTrash = false;
     }
 
     setup() {
@@ -176,10 +176,7 @@ export default class Calendar {
     }
 
     saveEvent(event) {
-        const index = this.events.findIndex(evt => evt.id == event.id);
-        if (index > -1) {
-            this.events.splice(index, 1);
-        }
+        this.deleteEvent(event.id);
         this.events.push(event);
         this.eventService.saveEvent(event);
     }
@@ -189,12 +186,18 @@ export default class Calendar {
         events.forEach((event) => {
             event.remove();
         });
-        if (!this.eventsLoaded) {
-            this.events = this.eventService.loadEvents(this.ctx.weekStart);
-            this.eventsLoaded = true;
-        }
+
+        this.events = this.eventService.loadEvents(this.ctx.weekStart);
 
         this.events.forEach(evt => evt.show());
+    }
+
+    deleteEvent(id) {
+        const index = this.events.findIndex(evt => evt.id == id);
+        if (index > -1) {
+            const evts = this.events.splice(index, 1);
+            this.eventService.deleteEvent(evts[0]);
+        }
     }
 
     checkEvent(event, newStart, newEnd, newDate) {
@@ -203,7 +206,7 @@ export default class Calendar {
         .find(evt => evt.id != event.id && evt.end > newStart && evt.start < newEnd);
 
         if(collision) {
-            throw new Error(`Cela se heurte à l'équipe (${collision.start} - ${collision.end}).`);
+            throw new Error(`Cela se heurte au groupe (${collision.start} - ${collision.end}).`);
         }
 
         const duration =

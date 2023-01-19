@@ -6,7 +6,7 @@ export default class Event {
     constructor(data) {
         this.id = data.id || generateId(data.date);
         this.place = data.place;
-        this.members = data.members;
+        this.memberIds = data.memberIds;
         this.start = data.start;
         this.end = data.end;
         this.date = data.date;
@@ -75,33 +75,41 @@ export default class Event {
             
         }
 
-        const ids = this.members.map((member) => member.id);        
-
         if (media.matches) {
             const h = this.slotHeightMobile;
             eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
             eventSlot.style.bottom = 24 * h - (this.endHour + this.endMinutes / 60) * h + 3 + "px";
 
-            if(this.members.length > 0) {
+            if(this.memberIds.length > 0) {
                 numberCircle.style.display = "inline-block";
-                numberCircle.innerHTML = this.members.length;
+                numberCircle.innerHTML = this.memberIds.length;
             }
         } else {
             const h = this.slotHeight;
             eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
             eventSlot.style.bottom = 24 * h - (this.endHour + this.endMinutes / 60) * h + 5 + "px";
 
-            const main = this.members[0];    
-            let lis = "";
-            lis = `<li class="member">${main.name}</li>`;
-            if(ids.includes(ctx.principal.common.user.id) && ctx.principal.common.user.id != main.id) {
-                lis += `<li class="member">${ctx.principal.common.user.name}</li>`;
+            const mainId = this.memberIds[0];
+            let mainName = "???";
+            if(ctx.users[mainId]) {
+                mainName = ctx.users[mainId].name;
             }
-            this.members.forEach((member) => {
-                if(member.id != main.id && member.id != ctx.principal.common.user.id) {
-                    lis += `<li class="member">${member.name}</li>`;
+    
+            let lis = "";
+            lis = `<li class="member" data-user-id="${mainId}">${mainName}</li>`;
+            if(this.memberIds.includes(ctx.principal.user.id) && ctx.principal.user.id != mainId) {
+                lis += `<li class="member" data-user-id="${ctx.principal.user.id}">${ctx.principal.user.name}</li>`;
+            }
+            this.memberIds.forEach((id) => {
+                if(id != mainId && id != ctx.principal.user.id) {
+                    let memberName = "???"
+                    if(ctx.users[id]) {
+                        memberName = ctx.users[id].name;
+                    }
+                    lis += `<li class="member" data-user-id="${id}">${memberName}</li>`;
                 }
-            });
+            });         
+
             let txt = "";
             txt = `<a class="place" target="_blank">
             <i class="fa-sharp fa-solid fa-location-dot"></i>
@@ -110,7 +118,7 @@ export default class Event {
             eventSlot.innerHTML = txt;
         }
 
-        if(ids.includes(ctx.principal.common.user.id)) {
+        if(this.memberIds.includes(ctx.principal.user.id)) {
             this.color = "var(--blue)";
         } else {
             this.color = "var(--green)";

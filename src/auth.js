@@ -54,7 +54,8 @@ export default class Auth {
 
         const parsedUser = this.parseUser(user);
         this.principal = new PrincipalCommon(this.calendar, parsedUser);
-        this.ctx.fetchUsers();
+        
+        this.ctx.fetchUsers().then(() => this.calendar.loadEvents());
         
         if (groups.includes('admin') || groups.includes('editor')) {
             this.ctx.switchToEditorMode(this.calendar, this.principal);
@@ -63,7 +64,6 @@ export default class Auth {
             this.ctx.switchToUserMode(this.calendar, this.principal);
             this.checkBox.checked = false;
         }
-        this.calendar.loadEvents();
         this.displayName(parsedUser.firstName, parsedUser.lastName);
         
         console.log(`user ${parsedUser.name} with id: ${parsedUser.id}  signed in`);
