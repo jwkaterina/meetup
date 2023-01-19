@@ -35,18 +35,30 @@ export default class PrincipalCommon {
     }
 
     addEventContent(event) {
+        let mainName = "???"
         const mainId = event.memberIds[0];         
-        const mainName = this.ctx.users.find(user => user.id == mainId).name;
+        const mainUser = this.ctx.users.find(user => user.id == mainId);
+        if(mainUser) {
+            mainName = mainUser.name;
+        }
 
+        /*
+        * See: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes
+        *
+        */
         let lis = "";
-        lis = `<li class="member">${mainName}</li>`;
+        lis = `<li class="member" data-user-id="${mainId}">${mainName}</li>`;
         if(event.memberIds.includes(this.user.id) && this.user.id != mainId) {
-            lis += `<li class="member">${this.user.name}</li>`;
+            lis += `<li class="member" data-user-id="${this.user.id}">${this.user.name}</li>`;
         }
         event.memberIds.forEach((id) => {
             if(id != mainId && id != this.user.id) {
-                const memberName = this.ctx.users.find(user => user.id == id).name;
-                lis += `<li class="member">${memberName}</li>`;
+                let memberName = "???"
+                const member = this.ctx.users.find(user => user.id == id);
+                if(member) {
+                    memberName = member.name;
+                }
+                lis += `<li class="member" data-user-id="${id}">${memberName}</li>`;
             }
         });
 

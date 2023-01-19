@@ -74,7 +74,7 @@ describe('Auth', () => {
 
         const mockedSwitchToUserMode = jest.fn();
         const mockedSwitchToEditorMode = jest.fn();
-        const mockedFetchUsers = jest.fn();
+        const mockedFetchUsers = jest.fn(() => Promise.resolve({}));
         Context.getInstance.mockImplementation(() => {
             return {
                 switchToUserMode: mockedSwitchToUserMode,
@@ -112,7 +112,7 @@ describe('Auth', () => {
 
         const mockedSwitchToUserMode = jest.fn();
         const mockedSwitchToEditorMode = jest.fn();
-        const mockedFetchUsers = jest.fn();
+        const mockedFetchUsers = jest.fn(() => Promise.resolve({}));
         Context.getInstance.mockImplementation(() => {
             return {
                 switchToUserMode: mockedSwitchToUserMode,
@@ -150,7 +150,7 @@ describe('Auth', () => {
 
         const mockedSwitchToUserMode = jest.fn();
         const mockedSwitchToEditorMode = jest.fn();
-        const mockedFetchUsers = jest.fn();
+        const mockedFetchUsers = jest.fn(() => Promise.resolve({}));
         Context.getInstance.mockImplementation(() => {
             return {
                 switchToUserMode: mockedSwitchToUserMode,

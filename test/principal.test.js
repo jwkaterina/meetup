@@ -52,34 +52,33 @@ describe('PrincipalCommon', function () {
                         </div>   
                     </div>
                     <div class="flip-card-back">
-                        <h2 class="flipCardText">Bon predication!</h2> 
+                        <h2 class="flipCardText">Bonne prédication!</h2> 
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>  
         `;
     });
 
-    // it('should populate eventModal with content from event object', () => {
-    //     //init
-    //     const principal = new PrincipalCommon(new Calendar(), user);
-    //     const ctx = Context.getInstance();
+    it('should populate eventModal with content from event object', () => {
+        //init
+        const principal = new PrincipalCommon(new Calendar(), user);
 
-    //     //invoke
-    //     principal.addEventContent(event);
+        //invoke
+        principal.addEventContent(event);
 
-    //     //check
-    //     const names = document.querySelectorAll(".member")
-    //     expect(names.length).toBe(2);
+        //check
+        const names = document.querySelectorAll(".member")
+        expect(names.length).toBe(2);
         
         
-    //     const members = [];
-    //     for (const name of names) {
-    //         members.push(name.innerHTML);
-    //     }
-    //     const intresection = event.memberIds.map((member) => member.name).filter(value => members.includes(value));
-    //     expect(intresection.length).toBe(2);
-    // });
+        const memberIds = [];
+        for (const name of names) {
+            memberIds.push(name.dataset.userId);
+        }
+        const intresection = event.memberIds.filter(value => memberIds.includes(value));
+        expect(intresection.length).toBe(2);
+    });
 
     it('should add name to current event', () => {
         //init
