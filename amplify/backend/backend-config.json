@@ -136,6 +136,22 @@
           "resourceName": "AdminQueries44a8a8b3"
         }
       ]
+    },
+    "AMPLIFY_function_meetupAPI_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "meetupAPI"
+        }
+      ]
+    },
+    "AMPLIFY_function_meetupAPI_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "meetupAPI"
+        }
+      ]
     }
   },
   "storage": {
