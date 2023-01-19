@@ -1,6 +1,5 @@
-import { dateString, getDayIndex, addDays } from "./helper";
+import { getDayIndex, addDays } from "./helper";
 import { Context } from "./ctx";
-import Event from "./component/event";
 import EventService from "./service/event";
 import "./calendar.css";
 

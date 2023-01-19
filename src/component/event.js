@@ -92,7 +92,7 @@ export default class Event {
             const mainId = this.memberIds[0];
             let mainName = "???";
             if(ctx.users[mainId]) {
-                mainName = this.ctx.users[mainId].name;
+                mainName = ctx.users[mainId].name;
             }
     
             let lis = "";
