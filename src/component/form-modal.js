@@ -60,8 +60,8 @@ export default class FormModal {
             options += `<option id="${user.id}" value="${user.name}" data-editor-id="${user.id}">${user.name}</option>`
         }
         Object.values(this.editors)
-        .filter((editor) => editor.id != mainId && editor.id != user.id)
-        .forEach((editor) => options += `<option id="${editor.id}" value="${editor.name}">${editor.name}</option>`);
+        .filter(editor => editor.id != mainId && editor.id != user.id)
+        .forEach(editor => options += `<option id="${editor.id}" value="${editor.name}">${editor.name}</option>`);
         this.name.innerHTML = options;
         this.customizeSelect();
     }
