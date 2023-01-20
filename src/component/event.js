@@ -4,7 +4,8 @@ import { Context } from "../ctx";
 
 export default class Event {
     constructor(data) {
-        this.id = data.id || generateId(data.date);
+        this.id = data.id;
+        this.weekStart = data.weekStart;
         this.place = data.place;
         this.memberIds = data.memberIds;
         this.start = data.start;

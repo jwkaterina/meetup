@@ -13,11 +13,11 @@ export default class PrincipalCommon {
     }
 
     loadEventListeners() {
-        this.eventModal.joinButton.addEventListener("click", () => {
+        this.eventModal.joinButton.addEventListener("click", async () => {
             this.addName(this.eventModal);
             this.ctx.currentEvent = null;
         });
-        this.eventModal.deleteButton.addEventListener("click", () => {
+        this.eventModal.deleteButton.addEventListener("click", async () => {
             this.deleteName(this.eventModal);
             this.ctx.currentEvent = null;
         });
@@ -71,31 +71,44 @@ export default class PrincipalCommon {
         this.eventModal.setCardColor(event.color);
     }
 
-    addName() {
+    async addName() {
         const event = this.ctx.currentEvent;
-        this.eventModal.writeOnFlip("Bonne prédication!");
-        this.eventModal.animateFlip();
-        setTimeout(() => {
-            this.eventModal.close();
-        },1000);
         event.memberIds.push(this.user.id);
-        this.calendar.saveEvent(event);
-        event.show();
+
+        try {
+            await this.calendar.updateEvent(event);
+            this.eventModal.writeOnFlip("Bonne prédication!");
+            this.eventModal.animateFlip();       
+            setTimeout(() => {
+                this.eventModal.close();
+            },1000);
+            event.show();
+        } catch (err) {
+            //TODO: Consider to show the user some friendly message
+            console.log("Cannot add user name:", err);
+        }
     }
 
-    deleteName() {
+    async deleteName() {
         const event = this.ctx.currentEvent;
         if (!event.memberIds.includes(this.user.id)) {
             return;
         }
-        this.eventModal.writeOnFlip("Ta participation est annulée.");
-        this.eventModal.animateFlip();
-        setTimeout(() => {
-            this.eventModal.close();
-        },1000);
+
         const index = event.memberIds.indexOf(this.user.id);
         event.memberIds.splice(index, 1);
-        this.calendar.saveEvent(event);
-        event.show();
+
+        try {
+            await this.calendar.updateEvent(event);
+            this.eventModal.writeOnFlip("Ta participation est annulée.");
+            this.eventModal.animateFlip();       
+            setTimeout(() => {
+                this.eventModal.close();
+            },1000);
+            event.show();
+        } catch (err) {
+            //TODO: Consider to show the user some friendly message
+            console.log("Cannot delete user name:", err);
+        }
     }
 }

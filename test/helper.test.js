@@ -57,16 +57,12 @@ describe('helper.addDays', function () {
 
 describe('helper.weekStartOf', function () {
     it('should calculate weekstart of a date', () => {
-        //init
-        const date = new Date(2023, 0, 18);
-
         //invoke
-        const weekStart = weekStartOf(date);
+        const weekStart = weekStartOf("2023-01-18");
+        const isoDate = weekStart.toISODate();
 
         //check
-        expect(weekStart.getFullYear()).toBe(2023);
-        expect(weekStart.getMonth()).toBe(0);
-        expect(weekStart.getDate()).toBe(16);
+        expect(isoDate).toBe("2023-01-16");
     })
 })
 
@@ -79,8 +75,10 @@ describe('helper.generateId', function () {
     });
 
     it('should generate ID', () => {
-        const id = generateId("2023-01-09", 3);
-        expect(id).toBe('2023-01-09#H9a');
+
+        const expectedPrefix = "01GP9SSEC0";
+        const id = generateId("2023-01-09");
+        expect(id.startsWith(expectedPrefix)).toBeTruthy();
     })
 
     afterEach(() => {

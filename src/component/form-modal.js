@@ -80,6 +80,7 @@ export default class FormModal {
 
     hideModal() {
         this.formModal.style.display = "none";
+        this.date.disabled = false;
     }
 
     open() {

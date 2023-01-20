@@ -8,13 +8,15 @@ jest.mock("../src/calendar");
 
 describe('PrincipalCommon', function () {
 
-    const mockedSaveEvent = jest.fn();
+    const mockedCreateEvent = jest.fn(() => Promise.resolve());
+    const mockedUpdateEvent = jest.fn(() => Promise.resolve());
     Calendar.mockImplementation(() => {
         const actualModule = jest.requireActual("../src/calendar");
         return {
             ...actualModule,
             // eslint-disable-next-line @typescript-eslint/no-empty-function
-            saveEvent: mockedSaveEvent,
+            createEvent: mockedCreateEvent,
+            updateEvent: mockedUpdateEvent,
         };
     });
 
@@ -28,10 +30,11 @@ describe('PrincipalCommon', function () {
 
     beforeEach(() => {
         event = new Event({
+            weekStart: "2023-01-16",
             place: "",
             start: "12:00",
             end: "13:00",
-            date: "2022-01-01",
+            date: "2023-01-17",
             memberIds: ["1", "2"],
             color: "green",
         });
@@ -80,29 +83,31 @@ describe('PrincipalCommon', function () {
         expect(intresection.length).toBe(2);
     });
 
-    it('should add name to current event', () => {
+    it('should add name to current event', async () => {
         //init
         const principal = new PrincipalCommon(new Calendar(), user);
         const ctx = Context.getInstance();
         ctx.currentEvent = event;
 
         //invoke
-        principal.addName();
+        await principal.addName();
 
         //check
         expect(event.memberIds).toEqual(["1", "2", user.id]);
-        expect(mockedSaveEvent).toHaveBeenCalledTimes(1);
+        expect(mockedUpdateEvent).toHaveBeenCalledTimes(1);
+        expect(mockedCreateEvent).toHaveBeenCalledTimes(0);
         expect(mockedShowEvent).toHaveBeenCalledTimes(1);
     });
 
-    it('should delete name from current event', () => {
+    it('should delete name from current event', async () => {
         //init
         const principal = new PrincipalCommon(new Calendar(), user);
         const event = new Event({
+            weekStart: "2023-01-16",
             place: "",
             start: "12:00",
             end: "13:00",
-            date: "2022-01-01",
+            date: "2023-01-18",
             memberIds: ["1", user.id],
             color: "green",
         });
@@ -110,15 +115,16 @@ describe('PrincipalCommon', function () {
         ctx.currentEvent = event;
 
         //invoke
-        principal.deleteName();
+        await principal.deleteName();
 
         //check
         expect(event.memberIds).toEqual(["1"]);
-        expect(mockedSaveEvent).toHaveBeenCalledTimes(1);
+        expect(mockedUpdateEvent).toHaveBeenCalledTimes(1);
+        expect(mockedCreateEvent).toHaveBeenCalledTimes(0);
         expect(mockedShowEvent).toHaveBeenCalledTimes(1);
     });
 
-    it('should delete only current user name from current event', () => {
+    it('should delete only current user name from current event', async () => {
         //init
         const ctx = Context.getInstance();
         ctx.currentEvent = event;
@@ -126,11 +132,12 @@ describe('PrincipalCommon', function () {
         const principal = new PrincipalCommon(new Calendar(), user);
 
         //invoke
-        principal.deleteName();
+        await principal.deleteName();
 
         //check
         expect(event.memberIds).toEqual(["1", "2"])
-        expect(mockedSaveEvent).toHaveBeenCalledTimes(0);
+        expect(mockedUpdateEvent).toHaveBeenCalledTimes(0);
+        expect(mockedCreateEvent).toHaveBeenCalledTimes(0);
         expect(mockedShowEvent).toHaveBeenCalledTimes(0);
     });
 });

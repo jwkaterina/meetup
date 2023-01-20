@@ -1,6 +1,6 @@
 import EventService from "../../src/service/event";
 import events from "../utils/events_in_local_storage.json";
-import { dateString } from "../../src/helper";
+import { dateString, generateId, weekStartOf } from "../../src/helper";
 import Event from "../../src/component/event";
 
 
@@ -37,7 +37,7 @@ describe('EventService', () => {
         const eventsService = new EventService();
 
         //invoke
-        const res = eventsService.loadFromLocalStorage(date);
+        const res = await eventsService._loadFromLocalStorage(date);
 
         //check
         expect(res.length).toBe(2);
@@ -46,21 +46,25 @@ describe('EventService', () => {
     it("should save event to localstorage", async () => {
       //init
       const date = new Date(2023, 0, 11);
+      const dateStr = dateString(date);
+      const weekStart = weekStartOf(dateStr).toISODate();
       const event = new Event({
+        id: generateId(dateStr),
+        weekStart: weekStart,
         place: "Some Str 15",
         start: "10:00",
         end: "12:00",
-        date: dateString(date),
+        date: dateStr,
         memberIds: [],
         color: "var(--green)"
     });
       const eventsService = new EventService();
 
       //invoke
-      eventsService.saveToLocalStorage(event);
+      eventsService._saveToLocalStorage(event);
 
       //check
-      const res = eventsService.loadFromLocalStorage(new Date(2023, 0, 9));
+      const res = await eventsService._loadFromLocalStorage(new Date(2023, 0, 9));
       expect(res.length).toBe(3);
   });
 });

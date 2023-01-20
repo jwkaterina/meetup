@@ -18,8 +18,10 @@ export function addDays(date, number) {
     return new Date(date.getTime() + number * dayInMillis);
 }
 
-export function weekStartOf(date) {
-    return addDays(date, -getDayIndex(date));
+export function weekStartOf(dateString) {
+    const date = DateTime.fromISO(dateString);
+    const offset = date.weekday - 1;
+    return date.minus({days: offset});
 }
 
 export function generateId(dateString) {

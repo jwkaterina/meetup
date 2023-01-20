@@ -1,4 +1,4 @@
-import { getDayIndex, addDays } from "./helper";
+import { getDayIndex, addDays, dateString } from "./helper";
 import { Context } from "./ctx";
 import EventService from "./service/event";
 import "./calendar.css";
@@ -175,10 +175,21 @@ export default class Calendar {
         });
     }
 
-    saveEvent(event) {
-        this.deleteEvent(event.id);
-        this.events.push(event);
-        this.eventService.saveEvent(event);
+    async createEvent(event) {
+        const evt = await this.eventService.createEvent(event);
+        if (evt.weekStart !== dateString(this.ctx.weekStart)) {
+            return;
+        }
+        this._removeEventLocally(evt.id);
+        this.events.push(evt);
+        event.show();
+    }
+
+    async updateEvent(event) {
+        const evt = await this.eventService.updateEvent(event);
+        this._removeEventLocally(evt.id);
+        this.events.push(evt);
+        event.show();
     }
 
     loadEvents() {
@@ -187,17 +198,30 @@ export default class Calendar {
             event.remove();
         });
 
-        this.events = this.eventService.loadEvents(this.ctx.weekStart);
-
-        this.events.forEach(evt => evt.show());
+        this.events = this.eventService.loadEvents(dateString(this.ctx.weekStart))
+        .then(events => {
+            this.events = events;
+            this.events.forEach(evt => evt.show());
+        })
+        .catch(err => console.log("Cannot Load Events:", err));
     }
 
-    deleteEvent(id) {
+    async deleteEvent(id) {
+        const removedEvent = this._removeEventLocally(id);
+        if (removedEvent) {
+            return await this.eventService.deleteEvent(removedEvent);
+        } else {
+            return Promise.reject(`No event with id ${id}`);
+        }
+    }
+
+    _removeEventLocally(id) {
         const index = this.events.findIndex(evt => evt.id == id);
         if (index > -1) {
-            const evts = this.events.splice(index, 1);
-            this.eventService.deleteEvent(evts[0]);
+            const removedEvents = this.events.splice(index, 1);
+            return removedEvents[0];
         }
+        return null;
     }
 
     checkEvent(event, newStart, newEnd, newDate) {
