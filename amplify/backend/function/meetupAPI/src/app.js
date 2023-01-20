@@ -56,16 +56,17 @@ app.get(path + hashKeyPath, async (req, res) => {
   condition[partitionKeyName] = {
     ComparisonOperator: 'EQ'
   }
-
-  condition[partitionKeyName]['AttributeValueList'] = [ req.params[partitionKeyName] ];
+  const pk = EventEntity.generatePk(req.params[partitionKeyName]);
+  condition[partitionKeyName]['AttributeValueList'] = [ pk ];
 
   try {
     const queryRes = await queryEvents(condition);
     const events = queryRes.Items.map((item) => EventEntity.fromItem(item).toDto());
-    res.json(events);
+    res.json({success: true, url: req.url, data: events});
   } catch (e) {
     res.statusCode = 500;
-    res.json({error: 'Could not load items: ' + err});
+    console.log("Could not load items:", e);
+    res.json({success: false, error: 'Could not load items: ' + err.message, url: req.url, req: req});
   }
 });
 
@@ -75,20 +76,23 @@ app.get(path + hashKeyPath, async (req, res) => {
 
 app.get(path + '/object' + hashKeyPath + sortKeyPath, async (req, res) => {
   const params = {};
-  params[partitionKeyName] = req.params[partitionKeyName];
-  params[sortKeyName] = req.params[sortKeyName];
+  const pk = EventEntity.generatePk(req.params[partitionKeyName]);
+  const sk = EventEntity.generateSk(req.params[sortKeyName]);
+  params[partitionKeyName] = pk;
+  params[sortKeyName] = sk;
 
   try {
     const getRes = await getEvent(params);
     if (getRes.Item) {
-      res.json(EventEntity.fromItem(getRes.Item).toDto());
+      res.json({success: true, url: req.url, data: EventEntity.fromItem(getRes.Item).toDto()});
     } else {
       res.statusCode = 500;
-      res.json({error: 'Could not load event. No Item object in returned data: ' + JSON.stringify(getRes)});
+      console.log("Could not load event. No Item object in returned data:", getRes);
+      res.json({success: false, error: 'Could not load event. No Item object in returned data: ' + JSON.stringify(getRes), url: req.url, req: req});
     }
   } catch (e) {
     res.statusCode = 500;
-    res.json({error: 'Could not load item: ' + err.message});
+    res.json({success: false, error: 'Could not load item: ' + err.message, url: req.url, req: req});
   }
 });
 
@@ -107,15 +111,16 @@ app.put(path, async (req, res) => {
     const getRes = await getEvent(params);
     if (!getRes.Item) {
       res.statusCode = 500;
-      res.json({error: 'Could not load event. No Item object in returned data: ' + JSON.stringify(getRes)});
+      console.log("Could not load event:", getRes);
+      res.json({success: false, error: 'Could not load event: ' + JSON.stringify(getRes), url: req.url, req: req});
       return;
     }
 
     const existingEvent = EventEntity.fromItem(getRes.Item);
     existingEvent.updateFrom(event);
 
-    const putRes = await putEvent(existingEvent)
-    res.json({success: 'put call succeed!', url: req.url, data: putRes})
+    await putEvent(existingEvent)
+    res.json({success: true, url: req.url, data: existingEvent.toDto()})
 
   } catch (e) {
     if(e instanceof EntityError) {
@@ -123,7 +128,8 @@ app.put(path, async (req, res) => {
     } else {
       res.statusCode = 500;
     }
-    res.json({error: e.message, url: req.url, body: req.body});
+    console.log("Cannot update an Event:", e);
+    res.json({success: false, error: e.message, url: req.url, req: req});
   }
 });
 
@@ -134,15 +140,16 @@ app.put(path, async (req, res) => {
 app.post(path, async (req, res) => {
   try {
     const event = EventEntity.fromInsertDto(req.body);
-    const putRes = await postEvent(event)
-    res.json({success: 'post call succeed!', url: req.url, data: putRes})
+    await postEvent(event)
+    res.json({success: true, url: req.url, data: event.toDto()})
   } catch (e) {
     if(e instanceof EntityError) {
       res.statusCode = 400;
     } else {
       res.statusCode = 500;
     }
-    res.json({error: e.message, url: req.url, body: req.body});
+    console.log("Cannot create an Event:", e);
+    res.json({success: false, error: e.message, url: req.url, req: req});
   }
 });
 
@@ -152,15 +159,18 @@ app.post(path, async (req, res) => {
 
 app.delete(path + '/object' + hashKeyPath + sortKeyPath, async (req, res) => {
   const params = {};
-  params[partitionKeyName] = req.params[partitionKeyName];
-  params[sortKeyName] = req.params[sortKeyName];
+  const pk = EventEntity.generatePk(req.params[partitionKeyName]);
+  const sk = EventEntity.generateSk(req.params[sortKeyName]);
+  params[partitionKeyName] = pk;
+  params[sortKeyName] = sk;
 
   try {
     const delRes = await deleteEvent(params)
-    res.json({url: req.url, data: delRes});
+    res.json({success: true, url: req.url, data: delRes});
   } catch(err) {
+    console.log("Cannot delete an Event:", e);
     res.statusCode = 500;
-    res.json({error: err.message, url: req.url});
+    res.json({success: false, error: err.message, url: req.url, req: req});
   }
 });
 

@@ -120,8 +120,8 @@ class EventEntity {
 
     toDto() {
         return {
-            id: this.item.id,
-            weekStart: this.item.weekStart,
+            id: this.id,
+            weekStart: this.weekStart,
             ...this.rest
         }
     }

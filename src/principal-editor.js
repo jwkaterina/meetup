@@ -29,13 +29,13 @@ export default class PrincipalEditor {
             this.common.eventModal.hideModal();
         });
 
-        this.formModal.createButton.addEventListener("click", () => {
+        this.formModal.createButton.addEventListener("click", async () => {
             this.createEvent();
         });
-        this.formModal.updateButton.addEventListener("click", () => {
+        this.formModal.updateButton.addEventListener("click", async () => {
             this.updateEvent();
         });
-        this.formModal.deleteButton.addEventListener("click", () => {
+        this.formModal.deleteButton.addEventListener("click", async () => {
             this.openConfirmModal();
             this.formModal.hideModal();
         });
@@ -44,7 +44,7 @@ export default class PrincipalEditor {
             this.formModal.close();
             this.ctx.currentEvent = null;
         });
-        this.confirmModal.yesButton.addEventListener("click", () => {
+        this.confirmModal.yesButton.addEventListener("click", async () => {
             this.deleteEvent();
             this.ctx.currentEvent = null;
         });
@@ -82,7 +82,7 @@ export default class PrincipalEditor {
 
         const date = dateString(addDays(this.ctx.weekStart, dayIndex));
         const event = new Event({
-            weekStart: this.ctx.weekStart,
+            weekStart: dateString(this.ctx.weekStart),
             place: "",
             start,
             end,
@@ -145,7 +145,7 @@ export default class PrincipalEditor {
         }
     }
 
-    createEvent() {
+    async createEvent() {
         const event = this.ctx.currentEvent;
         const isValid = this.validateEvent(event);
         if(isValid) {
@@ -157,18 +157,25 @@ export default class PrincipalEditor {
             const selectedIndex = this.formModal.name.selectedIndex;
             const newMainId = this.formModal.name.options[selectedIndex].dataset.editorId;
             event.memberIds[0] = newMainId;
+            try {
+                await this.calendar.createEvent(event);
+                this.formModal.animateFlip();       
+            this.formModal.animateFlip();       
             this.formModal.animateFlip();       
             setTimeout(() => {
                 this.formModal.close();
             },1000);
-            this.calendar.saveEvent(event);
-            event.show();
+            // event.show();
+            } catch (err) {
+                console.log(err);
+                this.formModal.showError(err.message);
+            }
         } else {
             return
         }
     }
 
-    updateEvent() {
+    async updateEvent() {
         const event = this.ctx.currentEvent;
         const isValid = this.validateEvent(event);
         if(isValid) {
@@ -184,28 +191,49 @@ export default class PrincipalEditor {
                 event.memberIds.splice(index, 1);
             }
             event.memberIds[0] = newMainId;
-            this.formModal.animateFlip();       
-            setTimeout(() => {
-                this.formModal.close();
-            },1000);
-            this.calendar.saveEvent(event);
-            event.show();
+
+            try {
+                await this.calendar.updateEvent(event);
+                this.formModal.animateFlip();       
+                this.formModal.animateFlip();       
+                this.formModal.animateFlip();       
+                setTimeout(() => {
+                    this.formModal.close();
+                },1000);
+            } catch (err) {
+                this.formModal.showError(err);
+            }
         } else {
             return
         }
     }
 
-    deleteEvent() {
-        this.confirmModal.animateFlip();     
-        setTimeout(() => {
-            this.confirmModal.close();
-        },1000);
-        document.getElementById(this.ctx.currentEvent.id).remove();
-        this.calendar.deleteEvent(this.ctx.currentEvent.id)
+    async deleteEvent() {
+        try{
+            const id = this.ctx.currentEvent.id;
+            const res = await this.calendar.deleteEvent(id);
+
+            if (!res.success) {
+                this.formModal.showError("Oops... could not delete the event.");
+                return;
+            }
+
+            this.confirmModal.animateFlip();     
+            this.confirmModal.animateFlip();     
+            this.confirmModal.animateFlip();     
+            setTimeout(() => {
+                this.confirmModal.close();
+            },1000);
+            document.getElementById(id).remove();
+        } catch (err) {
+            //TODO: Consider to show the user some friendly message
+            console.log("Cannot delete event:", err);
+        }
     }
 
     createNewEvent() {
         const event = new Event({
+            weekStart: dateString(this.ctx.weekStart),
             place: "",
             start: "12:00",
             end: "13:00",

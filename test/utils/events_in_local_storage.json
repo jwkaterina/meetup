@@ -2,6 +2,7 @@
     "2023-01-09": [
         {
             "id": "2023-01-10#wQiII2SpY7hZ4n9vmJL2",
+            "weekStart": "2023-01-09",
             "place": "Neuenburger Str. 22",
             "members": [
                 {
@@ -18,6 +19,7 @@
         },
         {
             "id": "2023-01-10#xhkpXxQQzyPWTrYVLm0b",
+            "weekStart": "2023-01-09",
             "place": "Hochstrasse 4",
             "members": [
                 {
@@ -36,6 +38,7 @@
     "2023-01-16": [
         {
             "id": "2023-01-17#XrvrbMhF9SptEoz2Rkio",
+            "weekStart": "2023-01-16",
             "place": "Alexander Platz",
             "members": [
                 {
