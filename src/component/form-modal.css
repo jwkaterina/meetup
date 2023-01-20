@@ -164,6 +164,7 @@ input, select {
     visibility: hidden;
     color: var(--black);
     text-align: left;
+    border-radius: 0 2px 2px 2px;
 }
 
 #start .alert, #end .alert {
@@ -192,7 +193,7 @@ input, select {
     align-self: end;
     text-align: center;
     visibility: hidden;
-    
+    border-radius: 2px;
 }
 
 .alert, #errors {
