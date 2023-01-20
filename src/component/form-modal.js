@@ -13,7 +13,8 @@ export default class FormModal {
         this.start = document.getElementById("eventStart");
         this.end = document.getElementById("eventEnd");
         this.errors = document.getElementById("errors");
-        this.submitButton = this.formModal.querySelector(".submitButton");
+        this.createButton = this.formModal.querySelector(".createButton");
+        this.updateButton = this.formModal.querySelector(".updateButton");
         this.deleteButton = this.formModal.querySelector(".deleteButton");
         this.cancelButton = this.formModal.querySelector(".cancelButton");
         this.flipCard = this.formModal.querySelector(".flip-card-inner");
@@ -32,17 +33,24 @@ export default class FormModal {
         return this.date.value;
     }
 
-    hideSubmitButton() {
-        this.submitButton.style.display = "none";
+    hideCreateButton() {
+        this.createButton.style.display = "none";
+    }
+
+    hideUpdateButton() {
+        this.updateButton.style.display = "none";
     }
 
     hideDeleteButton() {
         this.deleteButton.style.display = "none";
     }
 
-    showSubmitButton(value) {
-        this.submitButton.style.display = "";
-        this.submitButton.value = value;
+    showCreateButton() {
+        this.createButton.style.display = "";
+    }
+
+    showUpdateButton() {
+        this.updateButton.style.display = "";
     }
 
     showDeleteButton() {
