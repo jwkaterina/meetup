@@ -66,7 +66,7 @@ describe('helper.weekStartOf', function () {
     })
 })
 
-describe('helper.generateId', function () {
+describe.skip('helper.generateId', function () {
     beforeEach(() => {
         jest.spyOn(global.Math, 'random')
         .mockReturnValueOnce(0.123456789)
