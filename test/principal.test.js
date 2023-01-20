@@ -46,7 +46,7 @@ describe('PrincipalCommon', function () {
                         </a>
                         <div id="eventContent"></div>         
                         <div class="eventControls">
-                            <input type="button" value="S'inscrire" class="button submitButton">
+                            <input type="button" value="S'inscrire" class="button joinButton">
                             <input type="button" value="Annuler" class="button deleteButton">
                             <input type="button" value="Éditer" class="button editButton">
                         </div>   
