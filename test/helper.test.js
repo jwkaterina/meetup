@@ -1,4 +1,4 @@
-import { dateString, getDayIndex, addDays, generateId } from '../src/helper'
+import { dateString, getDayIndex, addDays, weekStartOf, generateId } from '../src/helper'
 import { ulid } from 'ulid';
 import { DateTime } from 'luxon';
 
@@ -52,6 +52,21 @@ describe('helper.addDays', function () {
         expect(actual.getFullYear()).toBe(2022);
         expect(actual.getMonth()).toBe(11);
         expect(actual.getDate()).toBe(17);
+    })
+})
+
+describe('helper.weekStartOf', function () {
+    it('should calculate weekstart of a date', () => {
+        //init
+        const date = new Date(2023, 0, 18);
+
+        //invoke
+        const weekStart = weekStartOf(date);
+
+        //check
+        expect(weekStart.getFullYear()).toBe(2023);
+        expect(weekStart.getMonth()).toBe(0);
+        expect(weekStart.getDate()).toBe(16);
     })
 })
 

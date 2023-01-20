@@ -1,3 +1,6 @@
+import { ulid } from "ulid";
+import { DateTime } from "luxon";
+
 export function dateString(date) {
     return `${date.getFullYear()}-${(date.getMonth() + 1)
         .toString()
@@ -15,12 +18,11 @@ export function addDays(date, number) {
     return new Date(date.getTime() + number * dayInMillis);
 }
 
-export function generateId(dateString, length = 20) {
-    const chars = "ABCDEFGHIHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let id = "";
-    for (let i = 0; i < length; i++) {
-        const rand = Math.floor(Math.random() * chars.length);
-        id += chars.charAt(rand);
-    }
-    return `${dateString}#${id}`;
+export function weekStartOf(date) {
+    return addDays(date, -getDayIndex(date));
+}
+
+export function generateId(dateString) {
+    const date = DateTime.fromISO(dateString);
+    return ulid(date.toMillis());
 }
