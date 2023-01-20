@@ -5,7 +5,7 @@ export default class EventModal {
     constructor() {
         this.container = document.getElementById("eventModal");
         this.editButton = this.container.querySelector(".editButton");
-        this.submitButton = this.container.querySelector(".submitButton");
+        this.joinButton = this.container.querySelector(".joinButton");
         this.deleteButton = this.container.querySelector(".deleteButton");
         this.cancelButton = this.container.querySelector(".cancelButton");
         this.flipCard = this.container.querySelector(".flip-card-inner");
@@ -19,8 +19,8 @@ export default class EventModal {
         this.editButton.style.display = "none";
     }
 
-    hideSubmitButton() {
-        this.submitButton.style.display = "none";
+    hideJoinButton() {
+        this.joinButton.style.display = "none";
     }
 
     hideDeleteButton() {
@@ -30,8 +30,8 @@ export default class EventModal {
         this.editButton.style.display = "";
     }
 
-    showSubmitButton() {
-        this.submitButton.style.display = "";
+    showJoinButton() {
+        this.joinButton.style.display = "";
     }
 
     showDeleteButton() {

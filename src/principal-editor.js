@@ -29,8 +29,11 @@ export default class PrincipalEditor {
             this.common.eventModal.hideModal();
         });
 
-        this.formModal.submitButton.addEventListener("click", () => {
-            this.submitEvent();
+        this.formModal.createButton.addEventListener("click", () => {
+            this.createEvent();
+        });
+        this.formModal.updateButton.addEventListener("click", () => {
+            this.updateEvent();
         });
         this.formModal.deleteButton.addEventListener("click", () => {
             this.openConfirmModal();
@@ -58,15 +61,14 @@ export default class PrincipalEditor {
         this.common.eventModal.showEditButton();
         if(!event.memberIds.includes(this.common.user.id)) {
             this.common.eventModal.hideDeleteButton();
-            this.common.eventModal.showSubmitButton();
+            this.common.eventModal.showJoinButton();
             return
         }
         if (this.common.user.id == event.memberIds[0]) {
             this.common.eventModal.hideDeleteButton();
-            this.common.eventModal.hideSubmitButton();
-            return
+            this.common.eventModal.hideJoinButton();
         } else {
-            this.common.eventModal.hideSubmitButton();
+            this.common.eventModal.hideJoinButton();
             this.common.eventModal.showDeleteButton();
         }
     }
@@ -80,6 +82,7 @@ export default class PrincipalEditor {
 
         const date = dateString(addDays(this.ctx.weekStart, dayIndex));
         const event = new Event({
+            weekStart: this.ctx.weekStart,
             place: "",
             start,
             end,
@@ -94,8 +97,9 @@ export default class PrincipalEditor {
     openCreateFormModal(event) {
         this.formModal.open();
         this.formModal.writeOnFlip("Ça y est! Le groupe est créé.");
-        this.formModal.showSubmitButton("Créer");
+        this.formModal.showCreateButton();
         this.formModal.hideDeleteButton();
+        this.formModal.hideUpdateButton();
 
         this.formModal.place.value = event.place;
         this.formModal.showOptions(this.common.user.id, this.common.user);
@@ -109,8 +113,9 @@ export default class PrincipalEditor {
         const event = this.ctx.currentEvent;
         this.formModal.open();
         this.formModal.writeOnFlip("Ça y est! Le groupe est changé.");
-        this.formModal.showSubmitButton("Changer");
+        this.formModal.showUpdateButton();
         this.formModal.showDeleteButton();
+        this.formModal.hideCreateButton();
 
         this.formModal.place.value = event.place;
         this.formModal.showOptions(event.memberIds[0], this.common.user);
@@ -124,43 +129,70 @@ export default class PrincipalEditor {
         this.confirmModal.open();
     }
 
-    submitEvent() {
-        const event = this.ctx.currentEvent;
-
+    validateEvent(event) {
         if(!this.formModal.formIsValid()) {
-            return;
+            return false;
         }
-        
         try {
             this.calendar.checkEvent(event, this.formModal.newStart, this.formModal.newEnd, this.formModal.newDate);
-            this.updateEvent(event);
+           
+            this.ctx.currentEvent = null;
+            return true;
+        } catch (e) {
+            this.formModal.showError(e.message);
+            console.log(e);
+            return false;
+        }
+    }
+
+    createEvent() {
+        const event = this.ctx.currentEvent;
+        const isValid = this.validateEvent(event);
+        if(isValid) {
+            event.place = this.formModal.place.value;
+            event.start = this.formModal.start.value;
+            event.end = this.formModal.end.value;
+            event.date = this.formModal.date.value;
+    
+            const selectedIndex = this.formModal.name.selectedIndex;
+            const newMainId = this.formModal.name.options[selectedIndex].dataset.editorId;
+            event.memberIds[0] = newMainId;
             this.formModal.animateFlip();       
             setTimeout(() => {
                 this.formModal.close();
             },1000);
-            this.ctx.currentEvent = null;
-        } catch (e) {
-            this.formModal.showError(e.message);
-            console.log(e);
+            this.calendar.saveEvent(event);
+            event.show();
+        } else {
+            return
         }
     }
 
-    updateEvent(event) {
-        event.place = this.formModal.place.value;
-        event.start = this.formModal.start.value;
-        event.end = this.formModal.end.value;
-        event.date = this.formModal.date.value;
-
-        const selectedIndex = this.formModal.name.selectedIndex;
-        const newMainId = this.formModal.name.options[selectedIndex].dataset.editorId;
-       
-        if(event.memberIds.includes(newMainId) && event.memberIds[0] !== newMainId) {
-            const index = event.memberIds.indexOf(newMainId);
-            event.memberIds.splice(index, 1);
+    updateEvent() {
+        const event = this.ctx.currentEvent;
+        const isValid = this.validateEvent(event);
+        if(isValid) {
+            event.place = this.formModal.place.value;
+            event.start = this.formModal.start.value;
+            event.end = this.formModal.end.value;
+            event.date = this.formModal.date.value;
+    
+            const selectedIndex = this.formModal.name.selectedIndex;
+            const newMainId = this.formModal.name.options[selectedIndex].dataset.editorId;
+            if(event.memberIds.includes(newMainId) && event.memberIds[0] !== newMainId) {
+                const index = event.memberIds.indexOf(newMainId);
+                event.memberIds.splice(index, 1);
+            }
+            event.memberIds[0] = newMainId;
+            this.formModal.animateFlip();       
+            setTimeout(() => {
+                this.formModal.close();
+            },1000);
+            this.calendar.saveEvent(event);
+            event.show();
+        } else {
+            return
         }
-        event.memberIds[0] = newMainId;
-        this.calendar.saveEvent(event);
-        event.show();
     }
 
     deleteEvent() {

@@ -13,7 +13,7 @@ export default class PrincipalCommon {
     }
 
     loadEventListeners() {
-        this.eventModal.submitButton.addEventListener("click", () => {
+        this.eventModal.joinButton.addEventListener("click", () => {
             this.addName(this.eventModal);
             this.ctx.currentEvent = null;
         });
