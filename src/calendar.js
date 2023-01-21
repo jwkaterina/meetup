@@ -9,9 +9,6 @@ export default class Calendar {
         this.eventService = new EventService();
         this.weekOffset = 0;
         this.ctx = Context.getInstance();
-
-        //TODO: remove before production
-        this.readyToTrash = false;
     }
 
     setup() {
@@ -23,9 +20,7 @@ export default class Calendar {
         this.addSwipe();
     }
 
-    setupControls() {
-        //See: https://pancy.medium.com/context-smuggle-with-injection-6f38e0ae478e#19e5
-        //     
+    setupControls() {  
         document.getElementById("nextWeekBtn").addEventListener("click", () => {
             this.changeWeek(1)
         });
@@ -39,9 +34,6 @@ export default class Calendar {
         });
         document.getElementById("todayButton").addEventListener("click", () => {
             this.showCurrentWeek()
-        });
-        document.getElementById("trashButton").addEventListener("click", () => {
-            this.trash()
         });
         window.addEventListener("load", () => {
             scrollTo(0, 375);
@@ -239,29 +231,6 @@ export default class Calendar {
             (1000 * 60);
         if (duration < 0) {
             throw new Error("Le début ne peut pas être après la fin.");
-        }
-    }
-
-    //TODO: remove before production
-    trash() {
-        if (this.readyToTrash) {
-            this.readyToTrash = false;
-            this.events = [];
-            localStorage.setItem("events", JSON.stringify({}));
-            const events = document.querySelectorAll(".event");
-            events.forEach((event) => {
-                event.remove();
-            });
-        } else {
-            this.readyToTrash = true;
-            window.alert(
-                "Cela supprimera tous les équipes de votre calendrier. " +
-                    "Ça ne peut pas être annulé. Si vous êtes sûr, cliquez" + 
-                    "à nouveau sur la corbeille dans la minute suivante."
-            );
-            setTimeout(() => {
-                this.readyToTrash = false;
-            }, 60 * 1000);
         }
     }
 }

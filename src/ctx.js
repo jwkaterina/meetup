@@ -50,23 +50,6 @@ class Ctx {
 
     return this.usersLoadedPromise;
   }
-
-  //TODO: remove before production
-  userChange(calendar, principalCommon) {
-    const radioA = document.getElementById("userA");
-    const radioB = document.getElementById("userB");
-    const radioC = document.getElementById("userC");
-
-    if(radioA.checked) {
-      principalCommon.newName("Kateryna Logoshko");
-    } else if(radioB.checked) {
-      principalCommon.newName("Andrii Logoshko");
-    } else if(radioC.checked) {
-      principalCommon.newName("Liubov Zasadna");
-    } 
-    console.log(principalCommon.userName)
-    calendar.loadEvents();
-  }
 }
 
 export const Context = (() => {

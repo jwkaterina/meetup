@@ -12,10 +12,7 @@ export default class Auth {
         this.listenerCancelToken = this.setupAuthListener();
 
         this.loginBtn = document.getElementById("loginButton");
-        //TODO: remove before production
-        this.checkBox = document.getElementById("checkBox");
-        this.radios = document.querySelectorAll(".radio-container");
-        
+    
         this.setupControls();
     }
 
@@ -59,10 +56,8 @@ export default class Auth {
         
         if (groups.includes('admin') || groups.includes('editor')) {
             this.ctx.switchToEditorMode(this.calendar, this.principal);
-            this.checkBox.checked = true;
         } else {
             this.ctx.switchToUserMode(this.calendar, this.principal);
-            this.checkBox.checked = false;
         }
         this.displayName(parsedUser.firstName, parsedUser.lastName);
         
@@ -102,22 +97,5 @@ export default class Auth {
 
     setupControls() {
         this.loginBtn.addEventListener("click", () => AmplifyAuth.federatedSignIn());
-
-        //TODO: remove before production
-        this.checkBox.addEventListener("click", () => this.modeChange());
-        this.radios.forEach((radio) => {
-            radio.addEventListener("change", () => this.ctx.userChange(this.calendar, this.principal));
-        });
-    }
-
-
-    //TODO: remove before production
-    modeChange() {
-    
-        if (this.checkBox.checked){
-            this.ctx.switchToAdminMode(this.calendar, this.principal);
-        } else {
-            this.ctx.switchToUserMode(this.calendar, this.principal);
-        }
     }
 }

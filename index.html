@@ -20,28 +20,18 @@
             <img src="icons/Watchtower.svg" alt="">
             <h1 id="currentMonth"></h1>
             <div class="generalControls">
-                <label class="radio-container">A
-                    <input type="radio" id="userA" checked="checked" name="radio">
-                    <span class="checkmark"></span>
-                </label>
-                <label class="radio-container">B
-                    <input type="radio" id="userB" name="radio">
-                    <span class="checkmark"></span>
-                </label>
-                <label class="radio-container">C
-                    <input type="radio" id="userC" name="radio">
-                    <span class="checkmark"></span>
-                </label>
                 <i id="todayButton" class="fa-solid fa-calendar-day"></i>
                 <i id="addButton" class="fa-solid fa-plus fa-lg"></i>            
-                <i id="trashButton" class="fa-solid fa-trash-can"></i>
-                <i id="loginButton" class="fa-solid fa-arrow-right-to-bracket"></i>
-                <div id="log-name"></div>
-                <div id="log-circle"></div>
-                <label id="toggleSwitch" class="switch">
-                    <input id="checkBox" type="checkbox">
-                    <span class="slider"></span>
-                </label>
+                <div id="log-in" class="log">
+                    <i id="loginButton" class="fa-solid fa-arrow-right-to-bracket"></i>
+                    <p class="log-text">Se connecter</p>
+                </div>
+                <div id="log-out" class="log">
+                    <i id="loginButton" class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <p class="log-text">Se déconnecter</p>
+                </div>
+                <div id="log-name" class="log"></div>
+                <div id="log-circle" class="log"></div>
             </div>
         </header>
     
