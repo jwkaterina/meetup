@@ -160,12 +160,11 @@ export default class PrincipalEditor {
             try {
                 await this.calendar.createEvent(event);
                 this.formModal.animateFlip();       
-            this.formModal.animateFlip();       
-            this.formModal.animateFlip();       
-            setTimeout(() => {
-                this.formModal.close();
-            },1000);
-            // event.show();
+                this.formModal.animateFlip();       
+                this.formModal.animateFlip();       
+                setTimeout(() => {
+                    this.formModal.close();
+                },1000);
             } catch (err) {
                 console.log(err);
                 this.formModal.showError(err.message);

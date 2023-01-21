@@ -73,7 +73,7 @@ export default class EventService {
             throw new ApiError(`Could not create Event: ${res.error}`);
         }
 
-        return res.data;
+        return new Event(res.data);
     }
 
     async _updateOnBackend(event) {
@@ -91,7 +91,7 @@ export default class EventService {
             throw new ApiError(`Could not update Event: ${res.error}`);
         }
 
-        return res.data;
+        return new Event(res.data);
     }
 
     async _deleteFromBackend(event) {

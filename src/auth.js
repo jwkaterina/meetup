@@ -11,7 +11,7 @@ export default class Auth {
 
         this.listenerCancelToken = this.setupAuthListener();
 
-        this.loginBtn = document.getElementById("loginButton");
+        this.loginButton = document.getElementById("loginButton");
     
         this.setupControls();
     }
@@ -65,18 +65,18 @@ export default class Auth {
     }
 
     displayName(firstName, lastName) {
-        this.loginBtn.style.display = "none";
+        this.loginButton.style.display = "none";
 
         const initials = firstName.substring(0, 1).toUpperCase() + lastName.substring(0, 1).toUpperCase();
 
         const media = window.matchMedia("(max-width: 800px)");
 
         if (media.matches) {
-            document.getElementById("log-circle").style.display = "inline-block";
-            document.getElementById("log-circle").innerHTML = initials;
+            document.getElementById("loggedButton-circle").style.display = "inline-block";
+            document.getElementById("loggedButton-circle").innerHTML = initials;
         } else {
-            document.getElementById("log-name").style.display = "inline-block";
-            document.getElementById("log-name").innerHTML = `Salut, <br> ${firstName}` ;
+            document.getElementById("loggedButton-name").style.display = "flex";
+            document.getElementById("loggedButton-name").querySelector(".log-text").innerHTML = `Salut, ${firstName}` ;
         }
     }
 
@@ -96,6 +96,6 @@ export default class Auth {
     }
 
     setupControls() {
-        this.loginBtn.addEventListener("click", () => AmplifyAuth.federatedSignIn());
+        this.loginButton.addEventListener("click", () => AmplifyAuth.federatedSignIn());
     }
 }

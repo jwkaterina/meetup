@@ -14,26 +14,32 @@
     <main>
         <header class="header">
             <div class="weekControls">
-                <i id="prevWeekBtn" class="fa-solid fa-angle-left"></i>
-                <i id="nextWeekBtn" class="fa-solid fa-angle-right"></i>
+                <i id="prevWeekBtn" class="fa-solid fa-angle-left i-btn"></i>
+                <i id="nextWeekBtn" class="fa-solid fa-angle-right i-btn"></i>
             </div>
             <img src="icons/Watchtower.svg" alt="">
             <h1 id="currentMonth"></h1>
             <div class="generalControls">
-                <i id="todayButton" class="fa-solid fa-calendar-day"></i>
-                <i id="addButton" class="fa-solid fa-plus fa-lg"></i>            
-                <div id="log-in" class="log">
-                    <i id="loginButton" class="fa-solid fa-arrow-right-to-bracket"></i>
+                <i id="todayButton" class="fa-solid fa-calendar-day i-btn"></i>
+                <i id="addButton" class="fa-solid fa-plus fa-lg i-btn"></i>        
+                <div id="loginButton" class="log">
+                    <i class="fa-solid fa-arrow-right-to-bracket"></i>
                     <p class="log-text">Se connecter</p>
                 </div>
-                <div id="log-out" class="log">
-                    <i id="loginButton" class="fa-solid fa-arrow-right-from-bracket"></i>
-                    <p class="log-text">Se déconnecter</p>
+                <div id="loggedButton-name" class="log">
+                    <i class="fa-solid fa-user logged"></i>
+                    <p class="log-text logged"></p>
                 </div>
-                <div id="log-name" class="log"></div>
-                <div id="log-circle" class="log"></div>
+                <div id="loggedButton-circle" class="log logged"></div>
             </div>
         </header>
+        <div id="dropdown">
+            <div id="logoutButton" class="log">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <p class="log-text">Se déconnecter</p>
+            </div>
+            <div id="log-data" class="log log-text">Mes donnes</div>
+        </div>
     
         <section id="calendar">
             <div class="dayTime">            

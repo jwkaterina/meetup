@@ -35,9 +35,27 @@ export default class Calendar {
         document.getElementById("todayButton").addEventListener("click", () => {
             this.showCurrentWeek()
         });
+        document.getElementById("loggedButton-name").addEventListener("click", () => {
+            this.showMenu()
+        });
+        document.getElementById("loggedButton-circle").addEventListener("click", () => {
+            this.showMenu()
+        });
         window.addEventListener("load", () => {
             scrollTo(0, 375);
         });
+        document.addEventListener("click", (e) => {
+            if (!e.target.matches('.logged')) {
+                const dropdown = document.getElementById("dropdown");
+                  if (dropdown.classList.contains('show-menu')) {
+                    dropdown.classList.remove('show-menu');
+                  }
+                }
+            });
+    }
+
+    showMenu() {
+        document.getElementById("dropdown").classList.toggle("show-menu");
     }
 
     addSwipe() {
@@ -172,9 +190,8 @@ export default class Calendar {
         if (evt.weekStart !== dateString(this.ctx.weekStart)) {
             return;
         }
-        this._removeEventLocally(evt.id);
         this.events.push(evt);
-        event.show();
+        evt.show();
     }
 
     async updateEvent(event) {
