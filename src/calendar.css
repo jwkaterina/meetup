@@ -88,10 +88,6 @@ body {
     height: 30px;
 }
 
-#trashButton {
-    display: none;
-}
-
 #log-name {
     color: var(--white);
     line-height: 15px;
@@ -103,119 +99,6 @@ body {
     margin-left: 15px;
     display: none;
 }
-
-/* Toggle Switch */
-.switch {
-    position: relative;
-    display: inline-block;
-    display: none;
-    margin-left: 20px;
-    width: 52px;
-    height: 30px;
-}
-  
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-  
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--blue);
-    -webkit-transition: .4s;
-    transition: .4s;
-    border-radius: 3px;
-    box-shadow: 0 0 3px #666;
-
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 22px;
-    width: 22px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    border-radius: 3px;
-    -webkit-transition: .4s;
-    transition: .4s;
-}
-
-input:checked + .slider {
-    background-color: var(--green);
-}
-
-input:checked + .slider:before {
-    -webkit-transform: translateX(22px);
-    -ms-transform: translateX(22px);
-    transform: translateX(22px);
-}
-
-/* Radio buttons */
-.radio-container {
-    display: block;
-    display: none;
-    position: relative;
-    padding-left: 20px;
-    margin-right: 12px;
-    cursor: pointer;
-    font-size: 16px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-  
-.radio-container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-}
-  
-.checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 15px;
-    width: 15px;
-    background-color: #eee;
-    border-radius: 50%;
-}
-  
-.radio-container:hover input ~ .checkmark {
-    background-color: var(--black);
-}
-  
-.radio-container input:checked ~ .checkmark {
-    background-color: var(--blue);
-}
-  
-.checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-}
-  
-.radio-container input:checked ~ .checkmark:after {
-    display: block;
-}
-  
-.radio-container .checkmark:after {
-    top: 5px;
-    left: 5px;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: white;
-}
-
 
 /* calendar */
 

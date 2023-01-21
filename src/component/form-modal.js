@@ -1,6 +1,5 @@
 import './form-modal.css';
 import './modals-common.css';
-// import { editors } from './editors_list';
 
 export default class FormModal {
     constructor(editors) {

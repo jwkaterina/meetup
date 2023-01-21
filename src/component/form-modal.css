@@ -185,7 +185,6 @@ input, select {
 
 /* Errors */
 #errors {
-    /* font-family: inherit; */
     width: 100%;
     background-color: var(--yellow);
     grid-column: 1 / span 2;
