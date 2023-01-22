@@ -32,16 +32,20 @@ body {
 
 .header {
     height: 80px;
-    width: 100%;
     position: sticky;
     top: 0;
     text-align: center;
-    padding: 20px 10px;
+    padding: 10px 50px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     z-index: 1;
     background-color: var(--gray);
+}
+
+#heading {
+    display: flex;
+    align-items: center;
 }
 
 .header img {
@@ -53,45 +57,60 @@ body {
 .header h1 {
     color: var(--white);
     font-weight: 400;
+    width: 100%;
 }
 
 /* controls */
 
 .weekControls {
-    position: absolute;
-    left: 50px;
     font-size: 25px;
 }
 
 .generalControls {
-    position: absolute;
     display: flex;
-    right: 50px;
     font-size: 20px;
 }
 
 .header i {
     cursor: pointer;
-    margin-right: 25px;
     color: var(--white);
     transition: all 80ms linear;
-    line-height: 30px;
-    width: 30px;
-    height: 30px;
+    line-height: 60px;
+    width: 60px;
+    height: 60px;
 }
 
 .header .i-btn:hover {
-    color: var(--green);
+    transform: scale(1.5);
 }
 
 /* log in */
 
+
+#loginButton:hover .log-text, 
+#loggedButton-name:hover .log-text {
+    transform: scale(1.1);
+}
+
+#loginButton .log-text, 
+#loggedButton-name .log-text {
+    transition: all 80ms linear;
+    line-height: 60px;
+    height: 60px;
+}
+
+#loginButton:hover i, 
+#loggedButton-name:hover i {
+    transform: scale(1.5);
+}
+
 #logoutButton i {
     line-height: 30px;
-    width: 30px;
+    width: 60px;
     height: 30px;
     color: var(--white);
     font-size: 20px;
+    /* margin-right: 10px; */
 }
 
 .log {
@@ -99,34 +118,31 @@ body {
     flex-direction: row;
     cursor: pointer;
     transition: all 80ms linear;
+    align-items: center;
 }
 
-.log:hover .log-text, .log:hover i {
-    color: var(--green);
+#log-data, #logoutButton {
+    height: 40px;
 }
 
-#logoutButton:hover .log-text, #logoutButton:hover i {
-    color: var(--green);
+#logoutButton:hover, #log-data:hover {
+    background-color: var(--gray-lighter);
 }
 
-#log-data:hover {
-    color: var(--green);
+#logoutButton:hover .log-text, #logoutButton:hover i, #log-data:hover .log-text{
+    color: var(--black);
 }
 
-.log i {
-    margin-right: 10px;
+#log-data .log-text, #logoutButton  i {
+    margin-left: 25px;
 }
 
-#loginButton {
+#loginButton, #logoutButton {
     display: flex;
 }
 
 #loggedButton-name {
     display: none;
-}
-
-#logoutButton {
-    display: flex;
 }
 
 .log-text {
@@ -138,24 +154,19 @@ body {
     font-style: italic;
 }
 
-#dropdown{
+#dropdown {
     background-color: var(--gray);
     position: fixed;
     top: 80px;
     right: 0;
     z-index: 2;
     height: 80px;
-    width: 200px;
     margin-left: 25px;
     display: none;
 }
 
 .show-menu {
     display: block !important;
-}
-
-#dropdown .log {
-    margin-left: 25px;
 }
 
 /* calendar */
@@ -251,10 +262,6 @@ body {
     :root {
         --slotHeight: 50px;
     }
-    
-    .header {
-        justify-content: flex-start;
-    }
 
     .header img {
         width: 50px;
@@ -266,22 +273,17 @@ body {
         font-size: 3vh;
     }
 
-    .header i:hover {
-        color: var(--white);
-    }
-
     .weekControls {
         display: none;
-        /* left: 20px; */
-    }
-
-    .generalControls {
-        right: 20px;
     }
 
     .slot,
     .time {
         height: var(--slotHeightMobile);
+    }
+
+    .header .i-btn:hover {
+        transform: scale(1);
     }
 
     #addButton {
@@ -298,19 +300,23 @@ body {
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2), 0 4px 15px rgba(0, 0, 0, 0.19);
     }
 
-    .log-text {
-        display: none;
+    #todayButton {
+        margin: 10px 0 10px 0;
+        font-size: 30px;
+        /* transform: scale(1.4); */
     }
 
     #loggedButton-circle {
         border-radius: 50%;
         width: 30px;
+        height: 30px;
         line-height: 30px;
         background: white;
         border: 1px solid white;
         color: var(--gray-darker);
         text-align: center;
         font-size: 16px;
+        margin: 25px 10px 25px 10px;
         /* display: inline-block; */
         display: none;
     }

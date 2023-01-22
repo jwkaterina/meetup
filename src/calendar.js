@@ -55,7 +55,12 @@ export default class Calendar {
     }
 
     showMenu() {
-        document.getElementById("dropdown").classList.toggle("show-menu");
+        const dropdown = document.getElementById("dropdown");
+        const loggedButton = document.getElementById("loggedButton-name");
+        const h = loggedButton.clientWidth;
+        console.log(h);
+        dropdown.classList.toggle("show-menu");
+        dropdown.style.width = h + 50 + "px";
     }
 
     addSwipe() {

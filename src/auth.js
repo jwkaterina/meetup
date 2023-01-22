@@ -12,6 +12,7 @@ export default class Auth {
         this.listenerCancelToken = this.setupAuthListener();
 
         this.loginButton = document.getElementById("loginButton");
+        this.logoutButton = document.getElementById("logoutButton");
     
         this.setupControls();
     }
