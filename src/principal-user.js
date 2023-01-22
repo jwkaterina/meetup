@@ -26,11 +26,11 @@ export default class PrincipalUser {
     }
 
     clickSlot(hour, dayIndex) {
-     return
+        return
     }
 
     createNewEvent() {
-      return
+        return
     }
 }
 

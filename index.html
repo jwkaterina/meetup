@@ -41,7 +41,7 @@
                 <p class="log-text">Se déconnecter</p>
             </div>
             <div id="log-data" class="log">
-                <p class="log-text">Mes donnes</p>
+                <p class="log-text">Mes données</p>
             </div>
         </div>
     
@@ -156,6 +156,58 @@
                     </div>     
                     <div class="flip-card-back">
                         <h2 class="flipCardText">Ça y est! Le groupe est effacé.</h2> 
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Modal -->
+        <div id="dataModal" class="modal">
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <a href="" class="cancelButton">
+                            <div class="cross"></div>
+                        </a>
+                        <div id="user-firstName" class="input-group">
+                            <input required type="name" id="user-firstName" class="shortInput" name="firstName" placeholder="Le prénom"></input>
+                            <div class="alert">
+                                <div class="arrow"></div>
+                                <p>Ce champ est requis.</p>
+                            </div>
+                        </div> 
+                        <div id="user-lastName" class="input-group">
+                            <input required type="name" id="user-lastName" class="shortInput" name="lastName" placeholder="Le nom"></input>
+                            <div class="alert">
+                                <div class="arrow"></div>
+                                <p>Ce champ est requis.</p>
+                            </div>
+                        </div> 
+                        <div id="user-phoneNumber" class="input-group">
+                            <input required type="phonenumber" id="user-phoneNumber" class="shortInput" name="phoneNumber" placeholder="Le numéro de téléphone"></input>
+                            <div class="alert">
+                                <div class="arrow"></div>
+                                <p>Ce champ est requis.</p>
+                            </div>
+                        </div> 
+                        <div class="checkbox">
+                            <label class="container">
+                                <input type="checkbox" checked="checked">
+                                <span class="checkmark"></span>
+                            </label>
+                            <p id="checkbox-acept">
+                                Veux-tu recevoir les messages?
+                            </p>
+                        </div>
+                        <div class="eventControls">
+                            <input type="submitButton" value="Soumettre" class="button submitButton">
+                        </div>
+                        <!-- <div id="errors">
+                            <p></p>
+                        </div>   -->
+                    </div>     
+                    <div class="flip-card-back">
+                        <h2 class="flipCardText">Ça y est! Tes données sont à jour.</h2> 
                     </div>
                 </div>
             </div>

@@ -35,38 +35,11 @@ export default class Calendar {
         document.getElementById("todayButton").addEventListener("click", () => {
             this.showCurrentWeek()
         });
-        document.getElementById("loggedButton-name").addEventListener("click", () => {
-            this.showMenu()
-        });
-        document.getElementById("loggedButton-circle").addEventListener("click", () => {
-            this.showMenu()
-        });
         window.addEventListener("load", () => {
             scrollTo(0, 375);
         });
-        document.addEventListener("click", (e) => {
-            if (!e.target.matches('.logged')) {
-                const dropdown = document.getElementById("dropdown");
-                  if (dropdown.classList.contains('show-menu')) {
-                    dropdown.classList.remove('show-menu');
-                  }
-                }
-            });
     }
 
-    showMenu() {
-        const dropdown = document.getElementById("dropdown");
-        dropdown.classList.toggle("show-menu");
-
-        const media = window.matchMedia("(max-width: 800px)");
-        if (media.matches) {
-            dropdown.style.width = 50 + "vw";
-        } else {
-            const loggedButton = document.getElementById("loggedButton-name");
-            const h = loggedButton.clientWidth;
-            dropdown.style.width = h + 50 + "px";
-        }
-    }
 
     addSwipe() {
         let touchstartX = 0;
