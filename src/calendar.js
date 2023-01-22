@@ -56,11 +56,16 @@ export default class Calendar {
 
     showMenu() {
         const dropdown = document.getElementById("dropdown");
-        const loggedButton = document.getElementById("loggedButton-name");
-        const h = loggedButton.clientWidth;
-        console.log(h);
         dropdown.classList.toggle("show-menu");
-        dropdown.style.width = h + 50 + "px";
+
+        const media = window.matchMedia("(max-width: 800px)");
+        if (media.matches) {
+            dropdown.style.width = 50 + "vw";
+        } else {
+            const loggedButton = document.getElementById("loggedButton-name");
+            const h = loggedButton.clientWidth;
+            dropdown.style.width = h + 50 + "px";
+        }
     }
 
     addSwipe() {
