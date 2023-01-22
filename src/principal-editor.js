@@ -33,7 +33,6 @@ export default class PrincipalEditor {
             this.createEvent();
         });
         this.formModal.updateButton.addEventListener("click", async () => {
-            console.log("change");
             this.updateEvent();
         });
         this.formModal.deleteButton.addEventListener("click", async () => {
@@ -150,8 +149,6 @@ export default class PrincipalEditor {
         const event = this.ctx.currentEvent;
         const isValid = this.validateEvent(event);
         if(isValid) {
-            console.log("create");
-
             event.place = this.formModal.place.value;
             event.start = this.formModal.start.value;
             event.end = this.formModal.end.value;
@@ -168,6 +165,7 @@ export default class PrincipalEditor {
                 setTimeout(() => {
                     this.formModal.close();
                 },1000);
+                // event.show();
             } catch (err) {
                 console.log(err);
                 this.formModal.showError(err.message);
