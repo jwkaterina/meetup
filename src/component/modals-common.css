@@ -11,6 +11,7 @@
 }
 
 .button {
+    text-align: center;
     padding: 10px 20px;
     color: white;
     cursor: pointer;
@@ -93,6 +94,72 @@
     transform: rotateY(180deg);
 }
 
+/* Inputs */
+
+.input-group {
+    position: relative;
+}
+
+input, select {
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+    border: none;
+}
+
+.shortInput {
+    border-radius: 2px;
+    padding: 10px 20px;
+    width: 100%;
+}
+
+/* Alert */
+
+.alert {
+    background-color: var(--yellow);
+    position: relative;
+    top: -10px;
+    width: 70%;
+    visibility: hidden;
+    color: var(--black);
+    text-align: left;
+    border-radius: 0 2px 2px 2px;
+}
+
+#start .alert, #end .alert {
+    width: 100%;
+}
+  
+.show-message {
+    visibility: visible !important;
+}
+  
+.alert .arrow {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    border: 5px solid;
+    border-color: transparent transparent var(--yellow) var(--yellow);
+}
+
+/* Errors */
+#errors {
+    width: 100%;
+    background-color: var(--yellow);
+    grid-column: 1 / span 2;
+    grid-row: 6;
+    align-self: end;
+    text-align: center;
+    visibility: hidden;
+    border-radius: 2px;
+}
+
+.alert, #errors {
+    font-size: 0.8rem;
+    font-weight: 200;
+    padding: 0.1rem;
+    height: 20px;
+}
 
 @media (max-width: 800px) {
     /* Modals */
@@ -108,6 +175,11 @@
         padding: 0.5vh 1vh;
     }
 
+    .flip-card {
+        width: 90vw;
+        height: 50vh;
+    }
+
     .flip {
         transform: rotateX(180deg);
     }
@@ -118,5 +190,22 @@
 
     .flip-card-front, .flip-card-back {
         padding: 3vh 5vh;
+    }
+
+    .shortInput {
+        padding: 0.5vh 1vh;
+    }
+
+    .alert, #errors {
+        height: 1rem;
+        font-size: 0.7rem;
+    }
+
+    .alert {
+        top: -0.3rem;
+    }
+
+    .alert .arrow {
+        left: 0.3rem;
     }
 }

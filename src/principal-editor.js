@@ -23,6 +23,10 @@ export default class PrincipalEditor {
         return this.common.user;
     }
 
+    set user(newUser) {
+        this.common.user = newUser;
+    }
+
     loadEventListeners() {
         this.common.eventModal.editButton.addEventListener("click", () => {
             this.openChangeFormModal();
@@ -102,7 +106,7 @@ export default class PrincipalEditor {
         this.formModal.hideUpdateButton();
 
         this.formModal.place.value = event.place;
-        this.formModal.showOptions(this.common.user.id, this.common.user);
+        this.formModal.showOptions(this.user.id, this.user);
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;
@@ -118,7 +122,7 @@ export default class PrincipalEditor {
         this.formModal.hideCreateButton();
 
         this.formModal.place.value = event.place;
-        this.formModal.showOptions(event.memberIds[0], this.common.user);
+        this.formModal.showOptions(event.memberIds[0], this.user);
         this.formModal.date.disabled = true;
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
@@ -159,13 +163,11 @@ export default class PrincipalEditor {
             event.memberIds[0] = newMainId;
             try {
                 await this.calendar.createEvent(event);
-                this.formModal.animateFlip();       
-            this.formModal.animateFlip();       
-            this.formModal.animateFlip();       
-            setTimeout(() => {
-                this.formModal.close();
-            },1000);
-            // event.show();
+                this.formModal.animateFlip();             
+                setTimeout(() => {
+                    this.formModal.close();
+                },1000);
+                // event.show();
             } catch (err) {
                 console.log(err);
                 this.formModal.showError(err.message);
@@ -194,9 +196,7 @@ export default class PrincipalEditor {
 
             try {
                 await this.calendar.updateEvent(event);
-                this.formModal.animateFlip();       
-                this.formModal.animateFlip();       
-                this.formModal.animateFlip();       
+                this.formModal.animateFlip();            
                 setTimeout(() => {
                     this.formModal.close();
                 },1000);

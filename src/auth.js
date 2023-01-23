@@ -1,21 +1,21 @@
 import { Hub, Auth as AmplifyAuth } from "aws-amplify";
 import { Context } from "./ctx";
 import PrincipalCommon from "./principal";
+import UserData from "./user-data";
 import User from "./user";
 
 export default class Auth {
     constructor(calendar) {
         this.calendar = calendar;
         this.principal = null;
+        this.userData = new UserData();
         this.ctx = Context.getInstance();
 
         this.listenerCancelToken = this.setupAuthListener();
 
-        this.loginBtn = document.getElementById("loginButton");
-        //TODO: remove before production
-        this.checkBox = document.getElementById("checkBox");
-        this.radios = document.querySelectorAll(".radio-container");
-        
+        this.loginButton = document.getElementById("loginButton");
+        this.logoutButton = document.getElementById("logoutButton");
+    
         this.setupControls();
     }
 
@@ -59,30 +59,12 @@ export default class Auth {
         
         if (groups.includes('admin') || groups.includes('editor')) {
             this.ctx.switchToEditorMode(this.calendar, this.principal);
-            this.checkBox.checked = true;
         } else {
             this.ctx.switchToUserMode(this.calendar, this.principal);
-            this.checkBox.checked = false;
         }
-        this.displayName(parsedUser.firstName, parsedUser.lastName);
+        this.userData.displayName(parsedUser.firstName, parsedUser.lastName);
         
         console.log(`user ${parsedUser.name} with id: ${parsedUser.id}  signed in`);
-    }
-
-    displayName(firstName, lastName) {
-        this.loginBtn.style.display = "none";
-
-        const initials = firstName.substring(0, 1).toUpperCase() + lastName.substring(0, 1).toUpperCase();
-
-        const media = window.matchMedia("(max-width: 800px)");
-
-        if (media.matches) {
-            document.getElementById("log-circle").style.display = "inline-block";
-            document.getElementById("log-circle").innerHTML = initials;
-        } else {
-            document.getElementById("log-name").style.display = "inline-block";
-            document.getElementById("log-name").innerHTML = `Salut, <br> ${firstName}` ;
-        }
     }
 
     parseUserGroups(user) {
@@ -101,23 +83,10 @@ export default class Auth {
     }
 
     setupControls() {
-        this.loginBtn.addEventListener("click", () => AmplifyAuth.federatedSignIn());
-
-        //TODO: remove before production
-        this.checkBox.addEventListener("click", () => this.modeChange());
-        this.radios.forEach((radio) => {
-            radio.addEventListener("change", () => this.ctx.userChange(this.calendar, this.principal));
+        this.loginButton.addEventListener("click", () => AmplifyAuth.federatedSignIn());
+        this.logoutButton.addEventListener("click", () => {
+             // Create function
+            console.log("logout");
         });
-    }
-
-
-    //TODO: remove before production
-    modeChange() {
-    
-        if (this.checkBox.checked){
-            this.ctx.switchToAdminMode(this.calendar, this.principal);
-        } else {
-            this.ctx.switchToUserMode(this.calendar, this.principal);
-        }
     }
 }

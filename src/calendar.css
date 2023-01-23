@@ -32,16 +32,20 @@ body {
 
 .header {
     height: 80px;
-    width: 100%;
     position: sticky;
     top: 0;
     text-align: center;
-    padding: 20px 10px;
+    padding: 10px 50px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     z-index: 1;
     background-color: var(--gray);
+}
+
+#heading {
+    display: flex;
+    align-items: center;
 }
 
 .header img {
@@ -53,169 +57,118 @@ body {
 .header h1 {
     color: var(--white);
     font-weight: 400;
-}
-
-.header i {
-    cursor: pointer;
-    margin-right: 25px;
-    color: var(--white);
-    transition: all 80ms linear;
-}
-
-.header i:hover {
-    color: var(--blue);
+    width: 100%;
 }
 
 /* controls */
 
 .weekControls {
-    position: absolute;
-    left: 50px;
     font-size: 25px;
 }
 
 .generalControls {
-    position: absolute;
     display: flex;
-    right: 50px;
     font-size: 20px;
 }
 
-.generalControls i {
-    line-height: 30px;
-    display: inline-block;
-    width: 30px;
-    height: 30px;
+.header i {
+    cursor: pointer;
+    color: var(--white);
+    transition: all 80ms linear;
+    line-height: 60px;
+    width: 60px;
+    height: 60px;
 }
 
-#trashButton {
+.header .i-btn:hover {
+    transform: scale(1.5);
+}
+
+/* log in */
+
+
+#loginButton:hover .log-text, 
+#loggedButton-name:hover .log-text {
+    transform: scale(1.1);
+}
+
+#loginButton .log-text, 
+#loggedButton-name .log-text {
+    transition: all 80ms linear;
+    line-height: 60px;
+    height: 60px;
+}
+
+#loginButton:hover i, 
+#loggedButton-name:hover i {
+    transform: scale(1.5);
+}
+
+#logoutButton i {
+    line-height: 30px;
+    width: 60px;
+    height: 30px;
+    color: var(--white);
+    font-size: 20px;
+    /* margin-right: 10px; */
+}
+
+.log {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    transition: all 80ms linear;
+    align-items: center;
+}
+
+#log-data, #logoutButton {
+    height: 40px;
+}
+
+#logoutButton:hover, #log-data:hover {
+    background-color: var(--gray-lighter);
+}
+
+#logoutButton:hover .log-text, #logoutButton:hover i, #log-data:hover .log-text{
+    color: var(--black);
+}
+
+#log-data, #logoutButton {
+    padding-right: 50px;
+}
+
+#loginButton, #logoutButton {
+    display: flex;
+}
+
+#loggedButton-name {
     display: none;
 }
 
-#log-name {
+.log-text {
     color: var(--white);
-    line-height: 15px;
-    /* display: inline-block; */
+    line-height: 30px;
     width: 100%;
     height: 30px;
-    font-size: 13px;
+    font-size: 15px;
     font-style: italic;
-    margin-left: 15px;
-    display: none;
 }
 
-/* Toggle Switch */
-.switch {
-    position: relative;
-    display: inline-block;
-    display: none;
-    margin-left: 20px;
-    width: 52px;
-    height: 30px;
-}
-  
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-  
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
+#dropdown {
+    background-color: var(--gray);
+    /* padding-right: 50px; */
+    position: fixed;
+    top: 80px;
     right: 0;
-    bottom: 0;
-    background-color: var(--blue);
-    -webkit-transition: .4s;
-    transition: .4s;
-    border-radius: 3px;
-    box-shadow: 0 0 3px #666;
-
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 22px;
-    width: 22px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    border-radius: 3px;
-    -webkit-transition: .4s;
-    transition: .4s;
-}
-
-input:checked + .slider {
-    background-color: var(--green);
-}
-
-input:checked + .slider:before {
-    -webkit-transform: translateX(22px);
-    -ms-transform: translateX(22px);
-    transform: translateX(22px);
-}
-
-/* Radio buttons */
-.radio-container {
-    display: block;
-    display: none;
-    position: relative;
-    padding-left: 20px;
-    margin-right: 12px;
-    cursor: pointer;
-    font-size: 16px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-  
-.radio-container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-}
-  
-.checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 15px;
-    width: 15px;
-    background-color: #eee;
-    border-radius: 50%;
-}
-  
-.radio-container:hover input ~ .checkmark {
-    background-color: var(--black);
-}
-  
-.radio-container input:checked ~ .checkmark {
-    background-color: var(--blue);
-}
-  
-.checkmark:after {
-    content: "";
-    position: absolute;
+    z-index: 2;
+    height: 80px;
+    text-align: center;
     display: none;
 }
-  
-.radio-container input:checked ~ .checkmark:after {
-    display: block;
-}
-  
-.radio-container .checkmark:after {
-    top: 5px;
-    left: 5px;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: white;
-}
 
+.show-menu {
+    display: block !important;
+}
 
 /* calendar */
 
@@ -310,9 +263,9 @@ input:checked + .slider:before {
     :root {
         --slotHeight: 50px;
     }
-    
+
     .header {
-        justify-content: flex-start;
+        padding: 10px 20px;
     }
 
     .header img {
@@ -325,22 +278,17 @@ input:checked + .slider:before {
         font-size: 3vh;
     }
 
-    .header i:hover {
-        color: var(--white);
-    }
-
     .weekControls {
         display: none;
-        /* left: 20px; */
-    }
-
-    .generalControls {
-        right: 20px;
     }
 
     .slot,
     .time {
         height: var(--slotHeightMobile);
+    }
+
+    .header .i-btn:hover {
+        transform: scale(1);
     }
 
     #addButton {
@@ -357,19 +305,22 @@ input:checked + .slider:before {
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2), 0 4px 15px rgba(0, 0, 0, 0.19);
     }
 
-    #trashButton {
-        display: none;
+    #todayButton {
+        margin: 10px 0 10px 0;
+        font-size: 30px;
     }
 
-    #log-circle {
+    #loggedButton-circle {
         border-radius: 50%;
         width: 30px;
+        height: 30px;
         line-height: 30px;
         background: white;
         border: 1px solid white;
         color: var(--gray-darker);
         text-align: center;
         font-size: 16px;
+        margin: 25px 10px 25px 10px;
         /* display: inline-block; */
         display: none;
     }

@@ -1,6 +1,5 @@
 import './form-modal.css';
 import './modals-common.css';
-// import { editors } from './editors_list';
 
 export default class FormModal {
     constructor(editors) {
@@ -13,6 +12,7 @@ export default class FormModal {
         this.start = document.getElementById("eventStart");
         this.end = document.getElementById("eventEnd");
         this.errors = document.getElementById("errors");
+        this.inputs = this.formModal.querySelectorAll(".shortInput");
         this.createButton = this.formModal.querySelector(".createButton");
         this.updateButton = this.formModal.querySelector(".updateButton");
         this.deleteButton = this.formModal.querySelector(".deleteButton");
@@ -131,7 +131,7 @@ export default class FormModal {
     }
 
     formIsValid() {
-        const inputs = Array.from(document.querySelectorAll(".shortInput"));
+        const inputs = Array.from(this.inputs);
 
         if (inputs.find((input) => {return input.value == "";})) {
             inputs.forEach((input) => {
@@ -236,5 +236,4 @@ export default class FormModal {
 
             document.addEventListener("click", closeAllSelect);
         }
-
     }

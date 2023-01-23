@@ -28,12 +28,6 @@ export default class PrincipalCommon {
         });
     }
 
-    //Used for testing only
-    //TODO: remove before production!
-    newName(name) {
-        this.user.name = name;
-    }
-
     addEventContent(event) {
         let mainName = "???"
         const mainId = event.memberIds[0];         

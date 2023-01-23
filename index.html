@@ -14,36 +14,36 @@
     <main>
         <header class="header">
             <div class="weekControls">
-                <i id="prevWeekBtn" class="fa-solid fa-angle-left"></i>
-                <i id="nextWeekBtn" class="fa-solid fa-angle-right"></i>
+                <i id="prevWeekBtn" class="fa-solid fa-angle-left i-btn"></i>
+                <i id="nextWeekBtn" class="fa-solid fa-angle-right i-btn"></i>
             </div>
-            <img src="icons/Watchtower.svg" alt="">
-            <h1 id="currentMonth"></h1>
+            <div id="heading">
+                <img src="icons/Watchtower.svg" alt="">
+                <h1 id="currentMonth"></h1>
+            </div>
             <div class="generalControls">
-                <label class="radio-container">A
-                    <input type="radio" id="userA" checked="checked" name="radio">
-                    <span class="checkmark"></span>
-                </label>
-                <label class="radio-container">B
-                    <input type="radio" id="userB" name="radio">
-                    <span class="checkmark"></span>
-                </label>
-                <label class="radio-container">C
-                    <input type="radio" id="userC" name="radio">
-                    <span class="checkmark"></span>
-                </label>
-                <i id="todayButton" class="fa-solid fa-calendar-day"></i>
-                <i id="addButton" class="fa-solid fa-plus fa-lg"></i>            
-                <i id="trashButton" class="fa-solid fa-trash-can"></i>
-                <i id="loginButton" class="fa-solid fa-arrow-right-to-bracket"></i>
-                <div id="log-name"></div>
-                <div id="log-circle"></div>
-                <label id="toggleSwitch" class="switch">
-                    <input id="checkBox" type="checkbox">
-                    <span class="slider"></span>
-                </label>
+                <i id="todayButton" class="fa-solid fa-calendar-day i-btn"></i>
+                <i id="addButton" class="fa-solid fa-plus fa-lg i-btn"></i>        
+                <div id="loginButton" class="log">
+                    <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                    <p class="log-text">Se connecter</p>
+                </div>
+                <div id="loggedButton-name" class="log">
+                    <i class="fa-solid fa-user logged"></i>
+                    <p class="log-text logged"></p>
+                </div>
+                <div id="loggedButton-circle" class="log logged"></div>
             </div>
         </header>
+        <div id="dropdown">
+            <div id="logoutButton" class="log">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <p class="log-text">Se déconnecter</p>
+            </div>
+            <div id="log-data" class="log">
+                <p class="log-text">Mes données</p>
+            </div>
+        </div>
     
         <section id="calendar">
             <div class="dayTime">            
@@ -96,7 +96,7 @@
                             <div class="cross"></div>
                         </a>
                         <div id="place" class="input-group">
-                            <input required type="adress" id="eventPlace" class="shortInput" name="place" placeholder="L'adresse"></input>
+                            <input required type="adress" id="eventPlace" class="shortInput" name="place" placeholder="Adresse"></input>
                             <div class="alert">
                                 <div class="arrow"></div>
                                 <p>Ce champ est requis.</p>
@@ -104,10 +104,6 @@
                         </div>
                         <div id="name" class="input-group custom-select">
                             <select id="eventMainName" class="shortInput" name="name"></select>
-                            <!-- <div class="alert">
-                                <div class="arrow"></div>
-                                <p>Ce champ est requis.</p>
-                            </div> -->
                         </div>
                         <div id="date" class="input-group">
                             <input required type="date" id="eventDate" class="shortInput" name="date"></input>
@@ -160,6 +156,59 @@
                     </div>     
                     <div class="flip-card-back">
                         <h2 class="flipCardText">Ça y est! Le groupe est effacé.</h2> 
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Modal -->
+        <div id="dataModal" class="modal">
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <a href="" class="cancelButton">
+                            <div class="cross"></div>
+                        </a>
+                        <p id="intro">Tu peux modifier tes données ici</p>
+                        <div id="firstName" class="input-group">
+                            <input required type="name" id="user-firstName" class="shortInput" name="firstName" placeholder="Prénom"></input>
+                            <div class="alert">
+                                <div class="arrow"></div>
+                                <p>Ce champ est requis.</p>
+                            </div>
+                        </div> 
+                        <div id="lastName" class="input-group">
+                            <input required type="name" id="user-lastName" class="shortInput" name="lastName" placeholder="Nom"></input>
+                            <div class="alert">
+                                <div class="arrow"></div>
+                                <p>Ce champ est requis.</p>
+                            </div>
+                        </div> 
+                        <div id="phoneNumber" class="input-group">
+                            <input required type="phonenumber" id="user-phoneNumber" class="shortInput" name="phoneNumber" placeholder="Numéro de téléphone"></input>
+                            <div class="alert">
+                                <div class="arrow"></div>
+                                <p>Ce champ est requis.</p>
+                            </div>
+                        </div> 
+                        <div class="checkbox">
+                            <label class="container">
+                                <input type="checkbox" checked="checked">
+                                <span class="checkmark"></span>
+                            </label>
+                            <p id="checkbox-acept">
+                                Veux-tu recevoir les messages?
+                            </p>
+                        </div>
+                        <div class="eventControls">
+                            <input type="submitButton" value="Soumettre" class="button submitButton">
+                        </div>
+                        <!-- <div id="errors">
+                            <p></p>
+                        </div>   -->
+                    </div>     
+                    <div class="flip-card-back">
+                        <h2 class="flipCardText">Ça y est! Tes données sont à jour.</h2> 
                     </div>
                 </div>
             </div>
