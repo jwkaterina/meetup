@@ -236,5 +236,4 @@ export default class FormModal {
 
             document.addEventListener("click", closeAllSelect);
         }
-
     }

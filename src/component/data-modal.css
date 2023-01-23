@@ -1,7 +1,6 @@
 #dataModal .flip-card-front {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(6, 1fr);
+    grid-template-rows: repeat(7, 1fr);
 }
 
 #dataModal .flip-card-front, #dataModal .flip-card-back {
@@ -13,37 +12,35 @@
 }
 
 #dataModal a {
-    grid-column: 1 / span 2;
     grid-row: 1;
     justify-self: end;
 }
 
-#user-firstName {
-    grid-column: 1 / span 2;
+#intro {
     grid-row: 2;
 }
 
-#user-lastName {
-    grid-column: 1 / span 2;
+#firstName {
     grid-row: 3;
 }
 
-#user-phoneNumber {
-    grid-column: 1 / span 2;
+#lastName {
     grid-row: 4;
 }
 
-.checkbox {
-    grid-column: 1 / span 2;
+#phoneNumber {
     grid-row: 5;
+}
+
+.checkbox {
+    grid-row: 6;
     display: flex;
     justify-content: center;
     padding-top: 0.7rem;
 }
 
 #dataModal .eventControls {
-    grid-column: 1 / span 2;
-    grid-row: 6;
+    grid-row: 7;
 }
 
 #dataModal .button {
@@ -85,57 +82,10 @@
     color: var(--gray-light);
 }
 
-#dataModal .checkbox p {
+#dataModal .checkbox p, #intro {
     font-family: inherit;
     font-size: inherit;
     color: var(--white);
-}
-
-/* Alert */
-
-.alert {
-    background-color: var(--yellow);
-    position: relative;
-    width: 70%;
-    visibility: hidden;
-    color: var(--black);
-    text-align: left;
-    border-radius: 0 2px 2px 2px;
-}
-
-#start .alert, #end .alert {
-    width: 100%;
-}
-  
-.show-message {
-    visibility: visible !important;
-}
-  
-.alert .arrow {
-    position: absolute;
-    top: -10px;
-    left: 10px;
-    border: 5px solid;
-    border-color: transparent transparent var(--yellow) var(--yellow);
-}
-
-/* Errors */
-#errors {
-    width: 100%;
-    background-color: var(--yellow);
-    grid-column: 1 / span 2;
-    grid-row: 6;
-    align-self: end;
-    text-align: center;
-    visibility: hidden;
-    border-radius: 2px;
-}
-
-.alert, #errors {
-    font-size: 0.8rem;
-    font-weight: 200;
-    padding: 0.1rem;
-    height: 20px;
 }
 
 /* Checkbox */
@@ -210,18 +160,8 @@
   
 
 @media (max-width: 800px) {
-    #dataModal .flip-card {
-        width: 90vw;
-        height: 50vh;
-    }
-
     .shortInput {
         padding: 0.5vh 1vh;
-    }
-
-    .alert, #errors {
-        height: 1rem;
-        font-size: 0.7rem;
     }
 
     #dataModal .button:hover {

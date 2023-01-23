@@ -6,32 +6,14 @@ export default class DataModal {
         this.dataModal = document.getElementById("dataModal");
         this.firstName = document.getElementById("user-firstName");
         this.lastName = document.getElementById("user-lastName");
+        this.phoneNumber = document.getElementById("user-phoneNumber");
         // this.errors = document.getElementById("errors");
         this.submitButton = this.dataModal.querySelector(".submitButton");
         this.cancelButton = this.dataModal.querySelector(".cancelButton");
         this.flipCard = this.dataModal.querySelector(".flip-card-inner");
         this.flipCardText = this.dataModal.querySelector(".flipCardText");
+        this.inputs = this.dataModal.querySelectorAll(".shortInput")
     }
-
-    // get newStart() {
-    //     return this.start.value;
-    // }
-
-    // get newEnd() {
-    //     return this.end.value;
-    // }
-
-    // get newDate() {
-    //     return this.date.value;
-    // }
-
-    // hideSubmitButton() {
-    //     this.submitButton.style.display = "none";
-    // }
-
-    // showSubmitButton() {
-    //     this.submitButton.style.display = "";
-    // }
 
     showModal() {
         this.dataModal.style.display = "block";
@@ -39,7 +21,6 @@ export default class DataModal {
 
     hideModal() {
         this.dataModal.style.display = "none";
-        // this.date.disabled = false;
     }
 
     open() {
@@ -48,7 +29,7 @@ export default class DataModal {
     }
 
     close() {
-        // this.hideErrors();
+        this.hideErrors();
         this.hideModal();
         this.showCalendar();
     }
@@ -69,13 +50,13 @@ export default class DataModal {
     //     this.errors.querySelector("p").innerHTML = message;
     // }
 
-    // hideErrors() {
-    //     this.errors.querySelector("p").innerHTML = "";    
-    //     this.errors.classList.remove("show-message");
-    //     document.querySelectorAll(".alert").forEach((alert) => {
-    //         alert.classList.remove("show-message");
-    //     })
-    // }
+    hideErrors() {
+        // this.errors.querySelector("p").innerHTML = "";    
+        // this.errors.classList.remove("show-message");
+        document.querySelectorAll(".alert").forEach((alert) => {
+            alert.classList.remove("show-message");
+        })
+    }
 
 
     animateFlip() {
@@ -86,22 +67,34 @@ export default class DataModal {
     }
 
     formIsValid() {
-        const inputs = Array.from(document.querySelectorAll(".shortInput"));
-
-        if (inputs.find((input) => {return input.value == "";})) {
-            inputs.forEach((input) => {
-                if (input.value == "") {
-                    const alert = input.nextElementSibling;
-                    alert.classList.add("show-message");
-                }
+        if(this.firstName.value != "" && this.lastName.value == "") {
+            this.showAlert(this.lastName);
+            return false
+        } else if (this.firstName.value == "" && this.lastName.value != "") {
+            this.showAlert(this.firstName);
+            return false
+        } else {
+            if(this.phoneNumber.value != "" && !this.phoneIsValid()){
+                this.showAlert(this.phoneNumber);
+                return false
+            } else {
+                const inputs = Array.from(this.inputs);
+                inputs.forEach((input) => {
+                const alert = input.nextElementSibling;
+                alert.classList.remove("show-message");
             });
-            return false;
-        } 
+                return true
+            }
+        }
+    }
 
-        inputs.forEach((input) => {
-            const alert = input.nextElementSibling;
-            alert.classList.remove("show-message");
-        });
-        return true;
+    showAlert(input) {
+        const alert = input.nextElementSibling;
+        alert.classList.add("show-message");
     }
+
+    phoneIsValid() {
+        // Create function
+        return true
     }
+}

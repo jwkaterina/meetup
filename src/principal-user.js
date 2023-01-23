@@ -12,11 +12,15 @@ export default class PrincipalUser {
         return this.common.user;
     }
 
+    set user(newUser) {
+        this.common.user = newUser;
+    }
+
     openEventModal(event) {
         this.ctx.currentEvent = event;
         this.common.eventModal.open();
         this.common.addEventContent(event);
-        if (event.memberIds.includes(this.common.user.id)) {
+        if (event.memberIds.includes(this.user.id)) {
             this.common.eventModal.hideSubmitButton();
             this.common.eventModal.showDeleteButton();
         } else {
