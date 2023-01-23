@@ -94,6 +94,25 @@
     transform: rotateY(180deg);
 }
 
+/* Inputs */
+
+.input-group {
+    position: relative;
+}
+
+input, select {
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+    border: none;
+}
+
+.shortInput {
+    border-radius: 2px;
+    padding: 10px 20px;
+    width: 100%;
+}
+
 /* Alert */
 
 .alert {
@@ -173,8 +192,20 @@
         padding: 3vh 5vh;
     }
 
+    .shortInput {
+        padding: 0.5vh 1vh;
+    }
+
     .alert, #errors {
         height: 1rem;
         font-size: 0.7rem;
+    }
+
+    .alert {
+        top: -0.3rem;
+    }
+
+    .alert .arrow {
+        left: 0.3rem;
     }
 }

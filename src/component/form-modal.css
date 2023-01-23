@@ -61,24 +61,10 @@
     color: var(--white);
 }
 
-.input-group {
-    position: relative;
-}
-
-input, select {
-    font-family: inherit;
-    font-size: inherit;
-    outline: none;
-    border: none;
-}
-
 .shortInput {
     border: 1px solid var(--gray-light);
-    border-radius: 2px;
     background-color: var(--white);
-    padding: 10px 20px;
     color: var(--gray-light);
-    width: 100%;
 }
 
 .shortInput:focus {
@@ -157,7 +143,7 @@ input, select {
 
 @media (max-width: 800px) {
     .shortInput {
-        padding: 0.5vh 1vh;
+        padding: 0.6vh 1.5vh;
     }
 
     .select-items {

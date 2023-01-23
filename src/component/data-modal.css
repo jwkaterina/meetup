@@ -53,24 +53,10 @@
     color: var(--black);
 }
 
-.input-group {
-    position: relative;
-}
-
-#dataModal input {
-    font-family: inherit;
-    font-size: inherit;
-    outline: none;
-    border: none;
-}
-
 #dataModal .shortInput {
     border: 1px solid var(--gray-light);
-    border-radius: 2px;
     background-color: var(--gray-base);
-    padding: 10px 20px;
     color: var(--gray-light);
-    width: 100%;
 }
 
 #dataModal .shortInput:focus {
@@ -160,9 +146,6 @@
   
 
 @media (max-width: 800px) {
-    .shortInput {
-        padding: 0.5vh 1vh;
-    }
 
     #dataModal .button:hover {
         background-color: var(--blue);
