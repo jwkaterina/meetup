@@ -7,10 +7,12 @@ import user from "./utils/user.json";
 import editor from "./utils/editor.json";
 import admin from "./utils/admin.json";
 import uninvited from "./utils/uninvited.json";
+import UserData from "../src/user-data";
 
 jest.mock("../src/ctx");
 jest.mock("../src/calendar");
 jest.mock("../src/principal");
+jest.mock("../src/user-data");
  
 describe('Auth', () => {
 
@@ -30,28 +32,26 @@ describe('Auth', () => {
     beforeEach(() => {
         document.body.innerHTML = `
         <div class="generalControls">
-            <label class="radio-container">A
-                <input type="radio" id="userA" checked="checked" name="radio">
-                <span class="checkmark"></span>
-            </label>
-            <label class="radio-container">B
-                <input type="radio" id="userB" name="radio">
-                <span class="checkmark"></span>
-            </label>
-            <label class="radio-container">C
-                <input type="radio" id="userC" name="radio">
-                <span class="checkmark"></span>
-            </label>
-            <i id="todayButton" class="fas fa-solid fa-calendar-day"></i>
-            <i id="addButton" class="fas fa-solid fa-plus"></i>                
-            <i id="trashButton" class="fas fa-trash-alt"></i>
-            <i id="loginButton" class="fas fa-solid fa-arrow-right-to-bracket"></i>
-            <div id="log-name"></div>
-            <div id="log-circle"></div>
-            <label id="toggleSwitch" class="switch">
-                <input id="checkBox" type="checkbox">
-                <span class="slider"></span>
-            </label>
+            <i id="todayButton" class="fa-solid fa-calendar-day i-btn"></i>
+            <i id="addButton" class="fa-solid fa-plus fa-lg i-btn"></i>        
+            <div id="loginButton" class="log">
+                <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                <p class="log-text">Se connecter</p>
+            </div>
+            <div id="loggedButton-name" class="log">
+                <i class="fa-solid fa-user logged"></i>
+                <p class="log-text logged"></p>
+            </div>
+            <div id="loggedButton-circle" class="log logged"></div>
+        </div>
+        <div id="dropdown">
+            <div id="logoutButton" class="log">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <p class="log-text">Se déconnecter</p>
+            </div>
+            <div id="log-data" class="log">
+                <p class="log-text">Mes données</p>
+            </div>
         </div>
         `;
     });

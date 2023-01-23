@@ -142,10 +142,6 @@
 }
 
 @media (max-width: 800px) {
-    .shortInput {
-        padding: 0.6vh 1.5vh;
-    }
-
     .select-items {
         height: 25vh;
     }
