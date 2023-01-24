@@ -48,7 +48,7 @@ export default class UserData {
             this.dataModal.animateFlip();       
             setTimeout(() => {
                 this.dataModal.close();
-            },1000);
+            },2000);
 
             // console.log(user);
             return user;

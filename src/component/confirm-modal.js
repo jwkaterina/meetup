@@ -42,6 +42,6 @@ export default class ConfirmModal {
         this.flipCard.classList.add("flip");
         setTimeout(() => {
             this.flipCard.classList.remove("flip");
-        },1000); 
+        },2000); 
     }
 }

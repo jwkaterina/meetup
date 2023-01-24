@@ -123,7 +123,7 @@ export default class FormModal {
         this.flipCard.classList.add("flip");
         setTimeout(() => {
             this.flipCard.classList.remove("flip");
-        },1000); 
+        },2000); 
     }
 
     writeOnFlip(text) {

@@ -63,7 +63,7 @@ export default class DataModal {
         this.flipCard.classList.add("flip");
         setTimeout(() => {
             this.flipCard.classList.remove("flip");
-        },1000); 
+        },2000); 
     }
 
     formIsValid() {

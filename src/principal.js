@@ -75,7 +75,7 @@ export default class PrincipalCommon {
             this.eventModal.animateFlip();       
             setTimeout(() => {
                 this.eventModal.close();
-            },1000);
+            },2000);
             event.show();
         } catch (err) {
             //TODO: Consider to show the user some friendly message
@@ -98,7 +98,7 @@ export default class PrincipalCommon {
             this.eventModal.animateFlip();       
             setTimeout(() => {
                 this.eventModal.close();
-            },1000);
+            },2000);
             event.show();
         } catch (err) {
             //TODO: Consider to show the user some friendly message
