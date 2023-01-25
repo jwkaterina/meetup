@@ -166,7 +166,7 @@ export default class PrincipalEditor {
                 this.formModal.animateFlip();             
                 setTimeout(() => {
                     this.formModal.close();
-                },1000);
+                },2000);
                 // event.show();
             } catch (err) {
                 console.log(err);
@@ -199,7 +199,7 @@ export default class PrincipalEditor {
                 this.formModal.animateFlip();            
                 setTimeout(() => {
                     this.formModal.close();
-                },1000);
+                },2000);
             } catch (err) {
                 this.formModal.showError(err);
             }
@@ -223,7 +223,7 @@ export default class PrincipalEditor {
             this.confirmModal.animateFlip();     
             setTimeout(() => {
                 this.confirmModal.close();
-            },1000);
+            },2000);
             document.getElementById(id).remove();
         } catch (err) {
             //TODO: Consider to show the user some friendly message
