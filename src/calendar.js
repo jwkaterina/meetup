@@ -38,7 +38,13 @@ export default class Calendar {
         window.addEventListener("load", () => {
             scrollTo(0, 375);
         });
-        window.onresize = () => { window.location.reload()}
+        let lastWidth = window.innerWidth;
+        window.addEventListener("resize", () => {
+            if(window.innerWidth!=lastWidth){
+                window.location.reload();
+                lastWidth = window.innerWidth;
+            }
+        })     
     }
 
 
