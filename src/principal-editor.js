@@ -1,5 +1,6 @@
 import { Context } from "./ctx";
 import Event from "./component/event";
+import ValidationError from "./error/validation-error";
 import FormModal from "./component/form-modal";
 import ConfirmModal from "./component/confirm-modal";
 import { dateString, addDays } from "./helper";
@@ -143,7 +144,9 @@ export default class PrincipalEditor {
             this.ctx.currentEvent = null;
             return true;
         } catch (e) {
-            this.formModal.showError(e.message);
+            if (e instanceof ValidationError) {
+                this.formModal.showError(e.message);
+            }
             console.log(e);
             return false;
         }
@@ -170,7 +173,7 @@ export default class PrincipalEditor {
                 // event.show();
             } catch (err) {
                 console.log(err);
-                this.formModal.showError(err.message);
+                // this.formModal.showError(err.message);
             }
         } else {
             return
@@ -195,13 +198,15 @@ export default class PrincipalEditor {
             event.memberIds[0] = newMainId;
 
             try {
+                // showLoadingAnimation();
                 await this.calendar.updateEvent(event);
                 this.formModal.animateFlip();            
                 setTimeout(() => {
                     this.formModal.close();
                 },2000);
             } catch (err) {
-                this.formModal.showError(err);
+                console.log(err);
+                // this.formModal.showError(err);
             }
         } else {
             return
@@ -243,5 +248,15 @@ export default class PrincipalEditor {
         });
         this.ctx.currentEvent = event;
         this.openCreateFormModal(event);
+    }
+
+    showLoadingAnimation() {
+        const onLoad = document.createElement("div");
+        onload.className = "loading";
+        onload.innerHTML = `<img src="icons/loading.gif" alt="">`;
+        onload.style.zIndex = "4";
+        onload.style.position = "absolute";
+        onload.style.top = "0";
+        onload.style.left = "0";
     }
 }

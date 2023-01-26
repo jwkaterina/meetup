@@ -1,6 +1,7 @@
 import { getDayIndex, addDays, dateString } from "./helper";
 import { Context } from "./ctx";
 import EventService from "./service/event";
+import ValidationError from "./error/validation-error";
 import "./calendar.css";
 
 export default class Calendar {
@@ -229,7 +230,7 @@ export default class Calendar {
         .find(evt => evt.id != event.id && evt.end > newStart && evt.start < newEnd);
 
         if(collision) {
-            throw new Error(`Cela se heurte au groupe (${collision.start} - ${collision.end}).`);
+            throw new ValidationError(`Cela se heurte au groupe (${collision.start} - ${collision.end}).`);
         }
 
         const duration =
@@ -237,7 +238,7 @@ export default class Calendar {
                 new Date(`${newDate}T${newStart}`).getTime()) /
             (1000 * 60);
         if (duration < 0) {
-            throw new Error("Le début ne peut pas être après la fin.");
+            throw new ValidationError("Le début ne peut pas être après la fin.");
         }
     }
 }
