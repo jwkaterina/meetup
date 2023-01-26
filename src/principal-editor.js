@@ -1,5 +1,6 @@
 import { Context } from "./ctx";
 import Event from "./component/event";
+import ValidationError from "./error/validation-error";
 import FormModal from "./component/form-modal";
 import ConfirmModal from "./component/confirm-modal";
 import { dateString, addDays } from "./helper";
@@ -143,7 +144,9 @@ export default class PrincipalEditor {
             this.ctx.currentEvent = null;
             return true;
         } catch (e) {
-            this.formModal.showError(e.message);
+            if (e instanceof ValidationError) {
+                this.formModal.showError(e.message);
+            }
             console.log(e);
             return false;
         }
@@ -153,6 +156,8 @@ export default class PrincipalEditor {
         const event = this.ctx.currentEvent;
         const isValid = this.validateEvent(event);
         if(isValid) {
+            document.getElementById("loading-1").style.display = "block";
+
             event.place = this.formModal.place.value;
             event.start = this.formModal.start.value;
             event.end = this.formModal.end.value;
@@ -163,14 +168,15 @@ export default class PrincipalEditor {
             event.memberIds[0] = newMainId;
             try {
                 await this.calendar.createEvent(event);
-                this.formModal.animateFlip();             
                 setTimeout(() => {
-                    this.formModal.close();
-                },2000);
-                // event.show();
+                    document.getElementById("loading-1").style.display = "none";
+                    this.formModal.animateFlip();            
+                    setTimeout(() => {
+                        this.formModal.close();
+                    },2000);
+                }, 1000);
             } catch (err) {
                 console.log(err);
-                this.formModal.showError(err.message);
             }
         } else {
             return
@@ -181,6 +187,8 @@ export default class PrincipalEditor {
         const event = this.ctx.currentEvent;
         const isValid = this.validateEvent(event);
         if(isValid) {
+            document.getElementById("loading-1").style.display = "block";
+
             event.place = this.formModal.place.value;
             event.start = this.formModal.start.value;
             event.end = this.formModal.end.value;
@@ -196,12 +204,16 @@ export default class PrincipalEditor {
 
             try {
                 await this.calendar.updateEvent(event);
-                this.formModal.animateFlip();            
                 setTimeout(() => {
-                    this.formModal.close();
-                },2000);
+                    document.getElementById("loading-1").style.display = "none";
+                    this.formModal.animateFlip();            
+                    setTimeout(() => {
+                        this.formModal.close();
+                    },2000);
+                }, 1000);
+             
             } catch (err) {
-                this.formModal.showError(err);
+                console.log(err);
             }
         } else {
             return
@@ -243,5 +255,9 @@ export default class PrincipalEditor {
         });
         this.ctx.currentEvent = event;
         this.openCreateFormModal(event);
+    }
+
+    showLoadingAnimation() {
+
     }
 }

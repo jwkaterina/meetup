@@ -66,16 +66,21 @@ export default class PrincipalCommon {
     }
 
     async addName() {
+        document.getElementById("loading-2").style.display = "block";
+
         const event = this.ctx.currentEvent;
         event.memberIds.push(this.user.id);
 
         try {
             await this.calendar.updateEvent(event);
             this.eventModal.writeOnFlip("Bonne prédication!");
-            this.eventModal.animateFlip();       
             setTimeout(() => {
-                this.eventModal.close();
-            },2000);
+                document.getElementById("loading-2").style.display = "none";
+                this.eventModal.animateFlip();            
+                setTimeout(() => {
+                    this.eventModal.close();
+                },2000);
+            }, 1000);
             event.show();
         } catch (err) {
             //TODO: Consider to show the user some friendly message
@@ -84,6 +89,8 @@ export default class PrincipalCommon {
     }
 
     async deleteName() {
+        document.getElementById("loading-2").style.display = "block";
+
         const event = this.ctx.currentEvent;
         if (!event.memberIds.includes(this.user.id)) {
             return;
@@ -95,10 +102,14 @@ export default class PrincipalCommon {
         try {
             await this.calendar.updateEvent(event);
             this.eventModal.writeOnFlip("Ta participation est annulée.");
-            this.eventModal.animateFlip();       
             setTimeout(() => {
-                this.eventModal.close();
-            },2000);
+                document.querySelector(".loading").style.display = "none";                document.getElementById("loading-2").style.display = "none";
+
+                this.eventModal.animateFlip();            
+                setTimeout(() => {
+                    this.eventModal.close();
+                },2000);
+            }, 1000);
             event.show();
         } catch (err) {
             //TODO: Consider to show the user some friendly message

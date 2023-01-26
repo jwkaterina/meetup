@@ -10,9 +10,13 @@
     height: 500px;
 }
 
+.button, .shortInput, select, .select-items div, .select-selected  {
+    padding: 10px 20px;
+}
+
+
 .button {
     text-align: center;
-    padding: 10px 20px;
     color: white;
     cursor: pointer;
     margin-right: 5%;
@@ -88,7 +92,6 @@
 }
   
 .flip-card-back {
-    font-weight: normal;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -110,7 +113,6 @@ input, select {
 
 .shortInput {
     border-radius: 2px;
-    padding: 10px 20px;
     width: 100%;
 }
 
@@ -157,7 +159,7 @@ input, select {
 
 .alert, #errors {
     font-size: 0.8rem;
-    font-weight: 200;
+    font-weight: bold;
     padding: 0.1rem;
     height: 20px;
 }
@@ -172,8 +174,8 @@ input, select {
         height: 50vh;
     }
 
-    .button {
-        padding: 0.5vh 1vh;
+    .button, .shortInput, select, .select-items div, .select-selected  {
+        padding: 1vh 2vh;
     }
 
     .flip-card {
@@ -191,10 +193,6 @@ input, select {
 
     .flip-card-front, .flip-card-back {
         padding: 3vh 5vh;
-    }
-
-    .shortInput {
-        padding: 0.5vh 1vh;
     }
 
     .alert, #errors {

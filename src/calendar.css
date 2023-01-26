@@ -8,6 +8,7 @@
     --yellow: #FDCA40;
     --green: #86D8C9;
 
+    --gray-darkest: #666;
     --gray-darker: #9FAAB7;
     --gray-base: #99A4AE;
     --gray-light: #DCDCE3;
@@ -56,7 +57,7 @@ body {
 
 .header h1 {
     color: var(--white);
-    font-weight: 400;
+    font-weight: normal;
     width: 100%;
 }
 
@@ -68,6 +69,7 @@ body {
 
 .generalControls {
     display: flex;
+    align-items: center;
     font-size: 20px;
 }
 
@@ -259,6 +261,24 @@ body {
     background-color: var(--gray-light);
 }
 
+.loading {
+    z-index: 20;
+    position: absolute;
+    top: 0;
+    left: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#loading-1 {
+    display: none;   
+}
+
+#loading-2 {
+    display: none;   
+}
+
 @media (max-width: 800px) {
     :root {
         --slotHeight: 50px;
@@ -293,7 +313,7 @@ body {
 
     #addButton {
         border: var(--yellow);
-        background-color: #666;
+        background-color: var(--gray-darkest);
         border-radius: 50%;
         position: fixed;
         bottom: 40px;
@@ -306,8 +326,7 @@ body {
     }
 
     #todayButton {
-        margin: 10px 0 10px 0;
-        font-size: 30px;
+        font-size: 25px;
     }
 
     #loggedButton-circle {
@@ -320,8 +339,6 @@ body {
         color: var(--gray-darker);
         text-align: center;
         font-size: 16px;
-        margin: 25px 10px 25px 10px;
-        /* display: inline-block; */
         display: none;
     }
 
