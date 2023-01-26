@@ -261,6 +261,24 @@ body {
     background-color: var(--gray-light);
 }
 
+.loading {
+    z-index: 20;
+    position: absolute;
+    top: 0;
+    left: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#loading-1 {
+    display: none;   
+}
+
+#loading-2 {
+    display: none;   
+}
+
 @media (max-width: 800px) {
     :root {
         --slotHeight: 50px;

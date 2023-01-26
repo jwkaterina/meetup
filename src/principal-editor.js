@@ -156,6 +156,8 @@ export default class PrincipalEditor {
         const event = this.ctx.currentEvent;
         const isValid = this.validateEvent(event);
         if(isValid) {
+            document.getElementById("loading-1").style.display = "block";
+
             event.place = this.formModal.place.value;
             event.start = this.formModal.start.value;
             event.end = this.formModal.end.value;
@@ -166,14 +168,15 @@ export default class PrincipalEditor {
             event.memberIds[0] = newMainId;
             try {
                 await this.calendar.createEvent(event);
-                this.formModal.animateFlip();             
                 setTimeout(() => {
-                    this.formModal.close();
-                },2000);
-                // event.show();
+                    document.getElementById("loading-1").style.display = "none";
+                    this.formModal.animateFlip();            
+                    setTimeout(() => {
+                        this.formModal.close();
+                    },2000);
+                }, 1000);
             } catch (err) {
                 console.log(err);
-                // this.formModal.showError(err.message);
             }
         } else {
             return
@@ -184,6 +187,8 @@ export default class PrincipalEditor {
         const event = this.ctx.currentEvent;
         const isValid = this.validateEvent(event);
         if(isValid) {
+            document.getElementById("loading-1").style.display = "block";
+
             event.place = this.formModal.place.value;
             event.start = this.formModal.start.value;
             event.end = this.formModal.end.value;
@@ -198,15 +203,17 @@ export default class PrincipalEditor {
             event.memberIds[0] = newMainId;
 
             try {
-                // showLoadingAnimation();
                 await this.calendar.updateEvent(event);
-                this.formModal.animateFlip();            
                 setTimeout(() => {
-                    this.formModal.close();
-                },2000);
+                    document.getElementById("loading-1").style.display = "none";
+                    this.formModal.animateFlip();            
+                    setTimeout(() => {
+                        this.formModal.close();
+                    },2000);
+                }, 1000);
+             
             } catch (err) {
                 console.log(err);
-                // this.formModal.showError(err);
             }
         } else {
             return
@@ -251,12 +258,6 @@ export default class PrincipalEditor {
     }
 
     showLoadingAnimation() {
-        const onLoad = document.createElement("div");
-        onload.className = "loading";
-        onload.innerHTML = `<img src="icons/loading.gif" alt="">`;
-        onload.style.zIndex = "4";
-        onload.style.position = "absolute";
-        onload.style.top = "0";
-        onload.style.left = "0";
+
     }
 }
