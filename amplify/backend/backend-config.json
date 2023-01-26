@@ -85,6 +85,13 @@
       "service": "Cognito-UserPool-Groups"
     }
   },
+  "custom": {
+    "webPushKeys": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "customCloudformation"
+    }
+  },
   "function": {
     "AdminQueries44a8a8b3": {
       "build": true,
