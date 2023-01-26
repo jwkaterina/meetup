@@ -108,7 +108,6 @@
 
 .select-items div,.select-selected {
     text-align: left;
-    padding: 10px 20px;
     width: 100%;
 }
 
@@ -144,10 +143,6 @@
 @media (max-width: 800px) {
     .select-items {
         height: 25vh;
-    }
-
-    .select-items div,.select-selected {
-        padding: 0.5vh 1vh;
     }
 
     #formModal .button:hover {

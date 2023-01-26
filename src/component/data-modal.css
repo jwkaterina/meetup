@@ -4,7 +4,7 @@
 }
 
 #dataModal .flip-card-front, #dataModal .flip-card-back {
-    background-color: var(--gray-base); 
+    background-color: var(--gray-darkest); 
 }
 
 #dataModal .flipCardText {
@@ -44,19 +44,19 @@
 }
 
 #dataModal .button {
-    background-color: var(--yellow);
-    color: var(--white);
-}
-
-#dataModal .button:hover {
     background-color: var(--white);
     color: var(--black);
 }
 
+#dataModal .button:hover {
+    background-color: var(--yellow);
+    color: var(--white);
+}
+
 #dataModal .shortInput {
-    border: 1px solid var(--gray-light);
-    background-color: var(--gray-base);
-    color: var(--gray-light);
+    border: 1px solid var(--gray-base);
+    background-color: var(--gray-darkest);
+    color: var(--gray-base);
 }
 
 #dataModal .shortInput:focus {
@@ -65,7 +65,7 @@
 }
 
 #dataModal .shortInput::placeholder {
-    color: var(--gray-light);
+    color: var(--gray-base);
 }
 
 #dataModal .checkbox p, #intro {
