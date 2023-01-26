@@ -1,0 +1,227 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Parameters": {
+    "env": {
+      "Type": "String"
+    }
+  },
+  "Conditions": {
+    "ShouldNotCreateEnvResources": {
+      "Fn::Equals": [
+        {
+          "Ref": "env"
+        },
+        "NONE"
+      ]
+    }
+  },
+  "Resources": {
+    "WebPushKeyCustomResourceFunctionRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "RoleName": {
+          "Fn::Join": [
+            "-",
+            [
+              "WebPushKeyCustomResourceFunctionRole",
+              {
+                "Ref": "env"
+              }
+            ]
+          ]
+        },
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Path": "/",
+        "Policies": [
+          {
+            "PolicyName": "root",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogGroup",
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": "arn:aws:logs:*:*:*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "ssm:GetParameters",
+                    "ssm:PutParameter",
+                    "ssm:DeleteParameter"
+                  ],
+                  "Resource": "*"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "WebPushKeyCustomResourceFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "FunctionName": {
+          "Fn::Join": [
+            "-",
+            [
+              "WebPushKeyCustomResourceFunction",
+              {
+                "Ref": "env"
+              }
+            ]
+          ]
+        },
+        "Handler": "index.handler",
+        "Role": {
+          "Fn::GetAtt": [
+            "WebPushKeyCustomResourceFunctionRole",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs16.x",
+        "Timeout": 60,
+        "Code": {
+          "ZipFile": {
+            "Fn::Join": [
+              "\n",
+              [
+                "'use strict';",
+                "const response = require('cfn-response');",
+                "const aws = require('aws-sdk');",
+                "const crypto = require('crypto');",
+                "const ssm = new aws.SSM();",
+                "exports.handler = async (event, context, cb) => {",
+                "  console.log(`Invoke: ${JSON.stringify(event)}`);",
+                "  const props = event.ResourceProperties;",
+                "  const paramPrefix = `/amplify/meetupSecrets/${process.env.ENV}/webPushKeys`;",
+                "  const pubKeyName = `${paramPrefix}/public`;",
+                "  const priveKeyName = `${paramPrefix}/private`;",
+                "  if (event.RequestType == 'Create') {",
+                "    try {",
+                "      const keysExist = await checkWebPushKeysExist([pubKeyName, priveKeyName]);",
+                "      if (!keysExist) {",
+                "        const keys = generateNewKeys();",
+                "        await storeNew(keys.public, pubKeyName);",
+                "        await storeNew(keys.private, priveKeyName);",
+                "      }",
+                "      response.send(event, context, response.SUCCESS, { pubKeyName, priveKeyName }, event.PhysicalResourceId);",
+                "      cb();",
+                "    } catch(err) {",
+                "      response.send(event, context, response.FAILED, {}, event.PhysicalResourceId);",
+                "      cb(err);",
+                "    }",
+                "  } else if (event.RequestType == 'Update') {",
+                "    response.send(event, context, response.SUCCESS, { pubKeyName, priveKeyName }, event.PhysicalResourceId);",
+                "    cb();",
+                "  } else if (event.RequestType == 'Delete') {",
+                "    try {",
+                "      await ssm.deleteParameter({ Name: pubKeyName }).promise();",
+                "      await ssm.deleteParameter({ Name: priveKeyName }).promise();",
+                "      response.send(event, context, response.SUCCESS, {}, event.PhysicalResourceId);",
+                "      cb();",
+                "    } catch(err) {",
+                "      response.send(event, context, response.SUCCESS, {}, event.PhysicalResourceId);",
+                "      cb(err);",
+                "    }",
+                "  }",
+                "};",
+                "",
+                "function generateNewKeys() {",
+                "  console.log(`Generating new keys...`);",
+                "  const ecdh = crypto.createECDH(\"secp256k1\");",
+                "  const pubKey = ecdh.generateKeys('base64url');",
+                "  const priveKey = ecdh.getPrivateKey('base64url');",
+                "  return {",
+                "    public: pubKey,",
+                "    private: priveKey",
+                "  };",
+                "}",
+                "",
+                "async function storeNew(value, name) {",
+                "  const params = {",
+                "    Name: name,",
+                "    Type: 'SecureString',",
+                "    Value: value,",
+                "    Overwrite: false",
+                "  };",
+                "  await ssm.putParameter(params).promise();",
+                "}",
+                "",
+                "async function checkWebPushKeysExist(names) {",
+                "  const { Parameters } = await ssm.getParameters({",
+                "    Names: names,",
+                "    WithDecryption: true,",
+                "  }).promise();",
+                "  ",
+                "  console.log('Existing SSM WebPush Keys:', Parameters);",
+                "  return Parameters.length != 0;",
+                "}"
+              ]
+            ]
+          }
+        }
+      }
+    },
+    "WebPushKey": {
+      "Type": "Custom::WebPushKey",
+      "Properties": {
+        "ServiceToken": {
+          "Fn::GetAtt": [
+            "WebPushKeyCustomResourceFunction",
+            "Arn"
+          ]
+        },
+        "ENV": {
+          "Fn::If": [
+            "ShouldNotCreateEnvResources",
+            "common",
+            {
+              "Ref": "env"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "PublicKeyName": {
+      "Description": "SSM Parameter Store Name For WebPush Public Key",
+      "Value": {
+        "Fn::GetAtt": [
+          "WebPushKey",
+          "pubKeyName"
+        ]
+      }
+    },
+    "PrivateKeyName": {
+      "Description": "SSM Parameter Store Name For WebPush Private Key",
+      "Value": {
+        "Fn::GetAtt": [
+          "WebPushKey",
+          "priveKeyName"
+        ]
+      }
+    }
+  },
+  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"10.6.2\",\"stackType\":\"custom-customCloudformation\",\"metadata\":{}}"
+}

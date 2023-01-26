@@ -29,6 +29,12 @@ export type AmplifyDependentResourcesAttributes = {
       "userGroupRole": "string"
     }
   },
+  "custom": {
+    "webPushKeys": {
+      "PrivateKeyName": "string",
+      "PublicKeyName": "string"
+    }
+  },
   "function": {
     "AdminQueries44a8a8b3": {
       "Arn": "string",
