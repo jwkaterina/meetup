@@ -113,7 +113,7 @@
                 "exports.handler = async (event, context, cb) => {",
                 "  console.log(`Invoke: ${JSON.stringify(event)}`);",
                 "  const props = event.ResourceProperties;",
-                "  const paramPrefix = `/amplify/meetupSecrets/${process.env.ENV}/webPushKeys`;",
+                "  const paramPrefix = `/amplify/meetupSecrets/${props.ENV}/webPushKeys`;",
                 "  const pubKeyName = `${paramPrefix}/public`;",
                 "  const priveKeyName = `${paramPrefix}/private`;",
                 "  if (event.RequestType == 'Create') {",
