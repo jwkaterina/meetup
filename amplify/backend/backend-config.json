@@ -125,6 +125,22 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "meetupTrigger0f667146": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "meetup"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -157,6 +173,22 @@
         {
           "category": "function",
           "resourceName": "meetupAPI"
+        }
+      ]
+    },
+    "AMPLIFY_function_meetupTrigger0f667146_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "meetupTrigger0f667146"
+        }
+      ]
+    },
+    "AMPLIFY_function_meetupTrigger0f667146_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "meetupTrigger0f667146"
         }
       ]
     }
