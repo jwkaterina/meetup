@@ -15,8 +15,19 @@ export default class ConfirmModal {
 
     hideModal() {
         this.confirmModal.style.display = "none";
+        this.enableButtons();
     }
     
+    enableButtons() {
+        this.yesButton.disabled = false;
+        this.noButton.disabled = false;
+    }
+
+    disableButtons() {
+        this.yesButton.disabled = true;
+        this.noButton.disabled = true;
+    }
+
     open() {
         this.showModal();
         this.hideCalendar();

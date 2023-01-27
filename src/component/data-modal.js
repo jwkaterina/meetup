@@ -21,7 +21,19 @@ export default class DataModal {
 
     hideModal() {
         this.dataModal.style.display = "none";
+        this.enableButtons();
     }
+
+    enableButtons() {
+        this.submitButton.disabled = false;
+        this.cancelButton.disabled = false;
+    }
+
+    disableButtons() {
+        this.submitButton.disabled = true;
+        this.cancelButton.disabled = true;
+    }
+    
 
     open() {
         this.showModal();

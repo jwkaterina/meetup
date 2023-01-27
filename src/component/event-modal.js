@@ -44,6 +44,21 @@ export default class EventModal {
 
     hideModal() {
         this.container.style.display = "none";
+        this.enableButtons();
+    }
+
+    enableButtons() {
+        this.joinButton.disabled = false;
+        this.deleteButton.disabled = false;
+        this.cancelButton.disabled = false;
+        this.editButton.disabled = false;
+    }
+
+    disableButtons() {
+        this.joinButton.disabled = true;
+        this.deleteButton.disabled = true;
+        this.cancelButton.disabled = true;
+        this.editButton.disabled = true;
     }
     
     open() {

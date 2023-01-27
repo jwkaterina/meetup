@@ -81,6 +81,21 @@ export default class FormModal {
     hideModal() {
         this.formModal.style.display = "none";
         this.date.disabled = false;
+        this.enableButtons();
+    }
+
+    enableButtons() {
+        this.updateButton.disabled = false;
+        this.createButton.disabled = false;
+        this.deleteButton.disabled = false;
+        this.cancelButton.disabled = false;
+    }
+
+    disableButtons() {
+        this.updateButton.disabled = true;
+        this.createButton.disabled = true;
+        this.deleteButton.disabled = true;
+        this.cancelButton.disabled = true;
     }
 
     open() {
@@ -105,6 +120,7 @@ export default class FormModal {
         document.body.style.overflow = 'hidden';
     }
 
+    // TODO: consider another way
     showError(message) {
         this.errors.classList.add("show-message");
         this.errors.querySelector("p").innerHTML = message;
