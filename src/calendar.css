@@ -271,11 +271,7 @@ body {
     transform: translate(-50%, -50%);
 }
 
-#loading-1 {
-    display: none;   
-}
-
-#loading-2 {
+#loading-form, #loading-data, #loading-event {
     display: none;   
 }
 

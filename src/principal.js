@@ -8,7 +8,7 @@ export default class PrincipalCommon {
         this.user = user;
         this.ctx = Context.getInstance();
         this.eventModal = new EventModal();
-        this.loadingAnime = document.getElementById("loading-2");
+        this.loadingAnime = document.getElementById("loading-event");
 
         this.loadEventListeners();
     }
@@ -105,8 +105,7 @@ export default class PrincipalCommon {
             await this.calendar.updateEvent(event);
             this.eventModal.writeOnFlip("Ta participation est annulée.");
             setTimeout(() => {
-                this.loadingAnime.style.display = "none";                document.getElementById("loading-2").style.display = "none";
-
+                this.loadingAnime.style.display = "none";                
                 this.eventModal.animateFlip();            
                 setTimeout(() => {
                     this.eventModal.close();

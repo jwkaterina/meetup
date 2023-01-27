@@ -12,7 +12,7 @@ export default class PrincipalEditor {
         this.common = principalCommon;
         this.formModal = null;
         this.confirmModal = null;
-        this.loadingAnime = document.getElementById("loading-1");
+        this.loadingAnime = document.getElementById("loading-form");
 
         this.ctx.usersLoadedPromise.then(() => {
             this.formModal = new FormModal(this.ctx.editors);

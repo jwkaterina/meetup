@@ -7,7 +7,7 @@ export default class UserData {
     constructor() {
         this.ctx = Context.getInstance();
         this.dataModal = new DataModal();
-        this.loadingAnime = document.getElementById("loading-2");
+        this.loadingAnime = document.getElementById("loading-data");
 
         this.loadEventListeners();
     }
