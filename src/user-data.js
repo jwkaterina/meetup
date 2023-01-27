@@ -7,6 +7,7 @@ export default class UserData {
     constructor() {
         this.ctx = Context.getInstance();
         this.dataModal = new DataModal();
+        this.loadingAnime = document.getElementById("loading-data");
 
         this.loadEventListeners();
     }
@@ -38,6 +39,8 @@ export default class UserData {
         const user = this.ctx.principal.user;
 
         if(this.dataModal.formIsValid()) {
+            this.dataModal.disableButtons();
+            this.loadingAnime.style.display = "block";
 
             // Check for empty fields
             user.firstName = this.dataModal.firstName.value;
@@ -45,10 +48,13 @@ export default class UserData {
             user.lastName = this.dataModal.lastName.value;
             user.phoneNumber = this.dataModal.phoneNumber.value;
 
-            this.dataModal.animateFlip();       
             setTimeout(() => {
-                this.dataModal.close();
-            },2000);
+                this.loadingAnime.style.display = "none";
+                this.dataModal.animateFlip();            
+                setTimeout(() => {
+                    this.dataModal.close();
+                },2000);
+            }, 1000);
 
             // console.log(user);
             return user;

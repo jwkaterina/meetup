@@ -12,6 +12,7 @@ export default class PrincipalEditor {
         this.common = principalCommon;
         this.formModal = null;
         this.confirmModal = null;
+        this.loadingAnime = document.getElementById("loading-form");
 
         this.ctx.usersLoadedPromise.then(() => {
             this.formModal = new FormModal(this.ctx.editors);
@@ -45,7 +46,6 @@ export default class PrincipalEditor {
             this.formModal.hideModal();
         });
         this.formModal.cancelButton.addEventListener("click", (e) => {
-            e.preventDefault();
             this.formModal.close();
             this.ctx.currentEvent = null;
         });
@@ -147,16 +147,18 @@ export default class PrincipalEditor {
             if (e instanceof ValidationError) {
                 this.formModal.showError(e.message);
             }
+            // TODO snackbar
             console.log(e);
             return false;
         }
     }
 
-    async createEvent() {
+    async createEvent() {        
         const event = this.ctx.currentEvent;
         const isValid = this.validateEvent(event);
         if(isValid) {
-            document.getElementById("loading-1").style.display = "block";
+            this.formModal.disableButtons();
+            this.loadingAnime.style.display = "block";
 
             event.place = this.formModal.place.value;
             event.start = this.formModal.start.value;
@@ -169,7 +171,7 @@ export default class PrincipalEditor {
             try {
                 await this.calendar.createEvent(event);
                 setTimeout(() => {
-                    document.getElementById("loading-1").style.display = "none";
+                    this.loadingAnime.style.display = "none";
                     this.formModal.animateFlip();            
                     setTimeout(() => {
                         this.formModal.close();
@@ -187,7 +189,8 @@ export default class PrincipalEditor {
         const event = this.ctx.currentEvent;
         const isValid = this.validateEvent(event);
         if(isValid) {
-            document.getElementById("loading-1").style.display = "block";
+            this.formModal.disableButtons();
+            this.loadingAnime.style.display = "block";
 
             event.place = this.formModal.place.value;
             event.start = this.formModal.start.value;
@@ -205,7 +208,7 @@ export default class PrincipalEditor {
             try {
                 await this.calendar.updateEvent(event);
                 setTimeout(() => {
-                    document.getElementById("loading-1").style.display = "none";
+                    this.loadingAnime.style.display = "none";
                     this.formModal.animateFlip();            
                     setTimeout(() => {
                         this.formModal.close();
@@ -221,21 +224,26 @@ export default class PrincipalEditor {
     }
 
     async deleteEvent() {
+        this.confirmModal.disableButtons();
+        this.loadingAnime.style.display = "block";
+
         try{
             const id = this.ctx.currentEvent.id;
             const res = await this.calendar.deleteEvent(id);
 
             if (!res.success) {
+                // TODO: consider another way
                 this.formModal.showError("Oops... could not delete the event.");
                 return;
             }
-
-            this.confirmModal.animateFlip();     
-            this.confirmModal.animateFlip();     
-            this.confirmModal.animateFlip();     
+   
             setTimeout(() => {
-                this.confirmModal.close();
-            },2000);
+                this.loadingAnime.style.display = "none";
+                this.confirmModal.animateFlip();            
+                setTimeout(() => {
+                    this.confirmModal.close();
+                },2000);
+            }, 1000);
             document.getElementById(id).remove();
         } catch (err) {
             //TODO: Consider to show the user some friendly message

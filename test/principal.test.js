@@ -44,9 +44,9 @@ describe('PrincipalCommon', function () {
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
-                        <a href="" class="cancelButton">
+                        <button type="button" class="cancelButton">
                             <div class="cross"></div>
-                        </a>
+                        </button>
                         <div id="eventContent"></div>         
                         <div class="eventControls">
                             <input type="button" value="S'inscrire" class="button joinButton">
@@ -60,6 +60,9 @@ describe('PrincipalCommon', function () {
                 </div>
             </div>
         </div>  
+        <div class="loading">
+            <img id="loading-event" src="icons/loading-event.gif" alt="">
+         </div>
         `;
     });
 

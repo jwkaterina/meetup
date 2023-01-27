@@ -11,7 +11,7 @@
     color: var(--white);
 }
 
-#dataModal a {
+#dataModal .cancelButton{
     grid-row: 1;
     justify-self: end;
 }
