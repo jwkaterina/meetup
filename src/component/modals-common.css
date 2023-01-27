@@ -10,6 +10,25 @@
     height: 500px;
 }
 
+.show-modal {
+    display: block;
+    animation: modalFadeIn 0.5s forwards linear;
+}
+
+.hide-modal {
+    animation: modalFadeOut 0.5s linear;
+}
+
+@keyframes modalFadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes modalFadeOut {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
+
 .button, .shortInput, select, .select-items div, .select-selected  {
     padding: 10px 20px;
 }
@@ -91,7 +110,7 @@
     padding: 30px 50px;
     width: 100%;
     height: 100%;
-    -webkit-backface-visibility: hidden;
+    /* -webkit-backface-visibility: hidden; */
     backface-visibility: hidden;
 }
   
@@ -184,31 +203,31 @@ input, select {
     bottom: 30px; 
   }
   
-  #snackbar.show {
+#snackbar.show {
     visibility: visible;
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    /* -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s; */
     animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  }
+    }
   
-  @-webkit-keyframes fadein {
+/* @-webkit-keyframes fadein {
     from {bottom: 0; opacity: 0;}
     to {bottom: 30px; opacity: 1;}
-  }
-  
-  @keyframes fadein {
+} */
+
+@keyframes fadein {
     from {bottom: 0; opacity: 0;}
     to {bottom: 30px; opacity: 1;}
-  }
-  
-  @-webkit-keyframes fadeout {
+}
+
+/* @-webkit-keyframes fadeout {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
-  }
-  
-  @keyframes fadeout {
+} */
+
+@keyframes fadeout {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
-  }
+}
 
 @media (max-width: 800px) {
 

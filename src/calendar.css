@@ -104,7 +104,22 @@ body {
     background-color: black;
     z-index: 2;
     opacity: 0.8;
-    transition: opacity 200ms ease-in;
+    /* transition: opacity 200ms ease-in; */
+    animation: calendarFadeIn 0.5s linear;
+}
+
+.transparent::before {
+    animation: calendarFadeOut 0.5s linear;
+}
+
+@keyframes calendarFadeIn {
+    from {opacity: 0;}
+    to {opacity: 0.8;}
+}
+
+@keyframes calendarFadeOut {
+    from {opacity: 0.8;}
+    to {opacity: 0;}
 }
 
 /* columns */

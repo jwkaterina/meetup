@@ -14,15 +14,6 @@ export default class DataModal {
         this.inputs = this.dataModal.querySelectorAll(".shortInput")
     }
 
-    showModal() {
-        this.dataModal.style.display = "block";
-    }
-
-    hideModal() {
-        this.dataModal.style.display = "none";
-        this.enableButtons();
-    }
-
     enableButtons() {
         this.submitButton.disabled = false;
         this.cancelButton.disabled = false;
@@ -32,7 +23,36 @@ export default class DataModal {
         this.submitButton.disabled = true;
         this.cancelButton.disabled = true;
     }
-    
+
+    showModal() {
+        this.dataModal.classList.add("show-modal");
+    }
+
+    hideModal() {
+        this.dataModal.classList.add("hide-modal");
+        this.enableButtons();
+        setTimeout(() => {
+            this.dataModal.classList.remove("show-modal");
+            this.dataModal.classList.remove("hide-modal");
+        }, 500);
+    }
+
+    showCalendar() {
+        document.body.classList.add("transparent");
+        setTimeout(() => {
+            document.body.classList.remove("transparent");
+            document.body.classList.remove("opaque");
+            document.body.style.overflow = 'auto'; 
+        }, 500);
+        
+    }
+
+    hideCalendar() {
+        scroll(0, 0);
+        document.body.classList.add("opaque");
+        document.body.style.overflow = 'hidden';
+    }
+
 
     open() {
         this.showModal();
@@ -45,23 +65,11 @@ export default class DataModal {
         this.showCalendar();
     }
 
-    showCalendar() {
-        document.body.classList.remove("opaque");
-        document.body.style.overflow = 'auto'; 
-    }
-
-    hideCalendar() {
-        scroll(0, 0);
-        document.body.classList.add("opaque");
-        document.body.style.overflow = 'hidden';
-    }
-
     hideErrors() {
         document.querySelectorAll(".alert").forEach((alert) => {
             alert.classList.remove("show-message");
         })
     }
-
 
     animateFlip() {
         this.flipCard.classList.add("flip");
