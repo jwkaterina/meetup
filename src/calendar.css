@@ -303,7 +303,7 @@ body {
         height: var(--slotHeightMobile);
     }
 
-    .header .i-btn:hover {
+    .header .i-btn:active {
         transform: scale(1);
     }
 

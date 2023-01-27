@@ -51,4 +51,9 @@
         color: var(--black);
         text-align: center;
     }
+
+    #confirmModal .button:active {
+        background-color: var(--yellow);
+        color: var(--white);
+    }
 }

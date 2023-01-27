@@ -111,7 +111,6 @@ export default class PrincipalEditor {
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;
-        this.formModal.place.focus();
     }
 
     openChangeFormModal() {

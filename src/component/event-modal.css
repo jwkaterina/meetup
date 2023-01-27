@@ -67,4 +67,9 @@
         width: 90vw;
         height: 50vh;
     }
+
+    #eventModal .button:active {
+        background-color: var(--yellow);
+        color: var(--white);
+    }
 }

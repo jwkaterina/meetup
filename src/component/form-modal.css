@@ -145,8 +145,8 @@
         height: 25vh;
     }
 
-    #formModal .button:hover {
-        background-color: var(--blue);
+    #formModal .button:active {
+        background-color: var(--yellow);
         color: var(--white);
     }
 }
