@@ -7,7 +7,6 @@ export default class DataModal {
         this.firstName = document.getElementById("user-firstName");
         this.lastName = document.getElementById("user-lastName");
         this.phoneNumber = document.getElementById("user-phoneNumber");
-        // this.errors = document.getElementById("errors");
         this.submitButton = this.dataModal.querySelector(".submitButton");
         this.cancelButton = this.dataModal.querySelector(".cancelButton");
         this.flipCard = this.dataModal.querySelector(".flip-card-inner");
@@ -57,14 +56,7 @@ export default class DataModal {
         document.body.style.overflow = 'hidden';
     }
 
-    // showError(message) {
-    //     this.errors.classList.add("show-message");
-    //     this.errors.querySelector("p").innerHTML = message;
-    // }
-
     hideErrors() {
-        // this.errors.querySelector("p").innerHTML = "";    
-        // this.errors.classList.remove("show-message");
         document.querySelectorAll(".alert").forEach((alert) => {
             alert.classList.remove("show-message");
         })

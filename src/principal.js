@@ -84,9 +84,13 @@ export default class PrincipalCommon {
             }, 1000);
             event.show();
         } catch (err) {
-            //TODO: Consider to show the user some friendly message
+            this.loadingAnime.style.display = "none";
+            this.showSnackbar("Oups! Impossible de s'inscrire...");
+            setTimeout(() => {
+                this.eventModal.close();
+            },1000);   
             console.log("Cannot add user name:", err);
-        }
+        } 
     }
 
     async deleteName() {
@@ -113,8 +117,22 @@ export default class PrincipalCommon {
             }, 1000);
             event.show();
         } catch (err) {
-            //TODO: Consider to show the user some friendly message
+            this.loadingAnime.style.display = "none";
+            this.showSnackbar("Oups! Impossible d'annuler...");
+            setTimeout(() => {
+                this.eventModal.close();
+            },1000);   
             console.log("Cannot delete user name:", err);
-        }
+        } 
+    }
+
+    showSnackbar(text) {
+        const snackbar = document.getElementById("snackbar");
+        snackbar.className = "show";
+        snackbar.innerHTML = text;
+
+        setTimeout(function() { 
+            snackbar.className = snackbar.className.replace("show", ""); 
+        }, 3000);
     }
 }

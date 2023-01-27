@@ -3,6 +3,7 @@ import { Context } from "./ctx";
 import EventService from "./service/event";
 import ValidationError from "./error/validation-error";
 import "./calendar.css";
+import "./user-data.css";
 
 export default class Calendar {
     constructor() {

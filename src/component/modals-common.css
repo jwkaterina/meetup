@@ -5,7 +5,7 @@
     top: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
-    z-index: 10;
+    z-index: 2;
     width: 500px;
     height: 500px;
 }
@@ -167,6 +167,48 @@ input, select {
     padding: 0.1rem;
     height: 20px;
 }
+
+/* Snackbar */
+#snackbar {
+    visibility: hidden;
+    width: 250px;
+    transform: translateX(-50%); 
+    background-color: var(--yellow); 
+    color: var(--black); 
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px; 
+    position: fixed; 
+    z-index: 20; 
+    left: 50%; 
+    bottom: 30px; 
+  }
+  
+  #snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+  
+  @-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }
+  
+  @keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }
 
 @media (max-width: 800px) {
 
