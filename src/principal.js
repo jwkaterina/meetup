@@ -80,7 +80,7 @@ export default class PrincipalCommon {
                 this.eventModal.animateFlip();            
                 setTimeout(() => {
                     this.eventModal.close();
-                },2000);
+                },1500);
             }, 1000);
             event.show();
         } catch (err) {
@@ -113,7 +113,7 @@ export default class PrincipalCommon {
                 this.eventModal.animateFlip();            
                 setTimeout(() => {
                     this.eventModal.close();
-                },2000);
+                },1500);
             }, 1000);
             event.show();
         } catch (err) {

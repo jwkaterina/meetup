@@ -179,7 +179,7 @@ export default class PrincipalEditor {
                     this.formModal.animateFlip();            
                     setTimeout(() => {
                         this.formModal.close();
-                    },2000);
+                    },1500);
                 }, 1000);
             } catch (err) {
                 this.loadingAnime.style.display = "none";
@@ -221,7 +221,7 @@ export default class PrincipalEditor {
                     this.formModal.animateFlip();            
                     setTimeout(() => {
                         this.formModal.close();
-                    },2000);
+                    },1500);
                 }, 1000);
              
             } catch (err) {
@@ -259,7 +259,7 @@ export default class PrincipalEditor {
                 this.confirmModal.animateFlip();            
                 setTimeout(() => {
                     this.confirmModal.close();
-                },2000);
+                },1500);
             }, 1000);
             document.getElementById(id).remove();
         } catch (err) {
