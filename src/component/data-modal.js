@@ -7,21 +7,11 @@ export default class DataModal {
         this.firstName = document.getElementById("user-firstName");
         this.lastName = document.getElementById("user-lastName");
         this.phoneNumber = document.getElementById("user-phoneNumber");
-        // this.errors = document.getElementById("errors");
         this.submitButton = this.dataModal.querySelector(".submitButton");
         this.cancelButton = this.dataModal.querySelector(".cancelButton");
         this.flipCard = this.dataModal.querySelector(".flip-card-inner");
         this.flipCardText = this.dataModal.querySelector(".flipCardText");
         this.inputs = this.dataModal.querySelectorAll(".shortInput")
-    }
-
-    showModal() {
-        this.dataModal.style.display = "block";
-    }
-
-    hideModal() {
-        this.dataModal.style.display = "none";
-        this.enableButtons();
     }
 
     enableButtons() {
@@ -33,7 +23,36 @@ export default class DataModal {
         this.submitButton.disabled = true;
         this.cancelButton.disabled = true;
     }
-    
+
+    showModal() {
+        this.dataModal.classList.add("show-modal");
+    }
+
+    hideModal() {
+        this.dataModal.classList.add("hide-modal");
+        this.enableButtons();
+        setTimeout(() => {
+            this.dataModal.classList.remove("show-modal");
+            this.dataModal.classList.remove("hide-modal");
+        }, 500);
+    }
+
+    showCalendar() {
+        document.body.classList.add("transparent");
+        setTimeout(() => {
+            document.body.classList.remove("transparent");
+            document.body.classList.remove("opaque");
+            document.body.style.overflow = 'auto'; 
+        }, 500);
+        
+    }
+
+    hideCalendar() {
+        scroll(0, 0);
+        document.body.classList.add("opaque");
+        document.body.style.overflow = 'hidden';
+    }
+
 
     open() {
         this.showModal();
@@ -46,30 +65,11 @@ export default class DataModal {
         this.showCalendar();
     }
 
-    showCalendar() {
-        document.body.classList.remove("opaque");
-        document.body.style.overflow = 'auto'; 
-    }
-
-    hideCalendar() {
-        scroll(0, 0);
-        document.body.classList.add("opaque");
-        document.body.style.overflow = 'hidden';
-    }
-
-    // showError(message) {
-    //     this.errors.classList.add("show-message");
-    //     this.errors.querySelector("p").innerHTML = message;
-    // }
-
     hideErrors() {
-        // this.errors.querySelector("p").innerHTML = "";    
-        // this.errors.classList.remove("show-message");
         document.querySelectorAll(".alert").forEach((alert) => {
             alert.classList.remove("show-message");
         })
     }
-
 
     animateFlip() {
         this.flipCard.classList.add("flip");

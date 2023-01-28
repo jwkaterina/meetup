@@ -38,15 +38,6 @@ export default class EventModal {
         this.deleteButton.style.display = "";
     }
 
-    showModal() {
-        this.container.style.display = "block";
-    }
-
-    hideModal() {
-        this.container.style.display = "none";
-        this.enableButtons();
-    }
-
     enableButtons() {
         this.joinButton.disabled = false;
         this.deleteButton.disabled = false;
@@ -60,7 +51,36 @@ export default class EventModal {
         this.cancelButton.disabled = true;
         this.editButton.disabled = true;
     }
-    
+
+    showModal() {
+        this.container.classList.add("show-modal");
+    }
+
+    hideModal() {
+        this.container.classList.add("hide-modal");
+        this.enableButtons();
+        setTimeout(() => {
+            this.container.classList.remove("show-modal");
+            this.container.classList.remove("hide-modal");
+        }, 500);
+    }
+
+    showCalendar() {
+        document.body.classList.add("transparent");
+        setTimeout(() => {
+            document.body.classList.remove("transparent");
+            document.body.classList.remove("opaque");
+            document.body.style.overflow = 'auto'; 
+        }, 500);
+        
+    }
+
+    hideCalendar() {
+        scroll(0, 0);
+        document.body.classList.add("opaque");
+        document.body.style.overflow = 'hidden';
+    }
+
     open() {
         this.showModal();
         this.hideCalendar();
@@ -69,17 +89,6 @@ export default class EventModal {
     close() {
         this.hideModal();
         this.showCalendar();
-    }
-
-    showCalendar() {
-        document.body.classList.remove("opaque");
-        document.body.style.overflow = 'auto'; 
-    }
-
-    hideCalendar() {
-        scroll(0, 0);
-        document.body.classList.add("opaque");
-        document.body.style.overflow = 'hidden';
     }
 
     animateFlip(){

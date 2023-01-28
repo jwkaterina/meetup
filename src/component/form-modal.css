@@ -85,7 +85,7 @@
     position: absolute;
     left: 0;
     right: 0;
-    z-index: 99;
+    z-index: 3;
     height: 250px;
     overflow: auto;
 }
@@ -145,8 +145,8 @@
         height: 25vh;
     }
 
-    #formModal .button:hover {
-        background-color: var(--blue);
+    #formModal .button:active {
+        background-color: var(--yellow);
         color: var(--white);
     }
 }

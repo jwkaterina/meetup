@@ -9,15 +9,6 @@ export default class ConfirmModal {
         this.flipCard = this.confirmModal.querySelector(".flip-card-inner");
     }
 
-    showModal() {
-        this.confirmModal.style.display = "block";
-    }
-
-    hideModal() {
-        this.confirmModal.style.display = "none";
-        this.enableButtons();
-    }
-    
     enableButtons() {
         this.yesButton.disabled = false;
         this.noButton.disabled = false;
@@ -28,6 +19,35 @@ export default class ConfirmModal {
         this.noButton.disabled = true;
     }
 
+    showModal() {
+        this.confirmModal.classList.add("show-modal");
+    }
+
+    hideModal() {
+        this.confirmModal.classList.add("hide-modal");
+        this.enableButtons();
+        setTimeout(() => {
+            this.confirmModal.classList.remove("show-modal");
+            this.confirmModal.classList.remove("hide-modal");
+        }, 500);
+    }
+
+    showCalendar() {
+        document.body.classList.add("transparent");
+        setTimeout(() => {
+            document.body.classList.remove("transparent");
+            document.body.classList.remove("opaque");
+            document.body.style.overflow = 'auto'; 
+        }, 500);
+        
+    }
+
+    hideCalendar() {
+        scroll(0, 0);
+        document.body.classList.add("opaque");
+        document.body.style.overflow = 'hidden';
+    }
+
     open() {
         this.showModal();
         this.hideCalendar();
@@ -36,17 +56,6 @@ export default class ConfirmModal {
     close() {
         this.hideModal();
         this.showCalendar();
-    }
-
-    showCalendar() {
-        document.body.classList.remove("opaque");
-        document.body.style.overflow = 'auto'; 
-    }
-
-    hideCalendar() {
-        scroll(0, 0);
-        document.body.classList.add("opaque");
-        document.body.style.overflow = 'hidden';
     }
 
     animateFlip(){

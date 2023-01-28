@@ -111,7 +111,6 @@ export default class PrincipalEditor {
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;
-        this.formModal.place.focus();
     }
 
     openChangeFormModal() {
@@ -146,11 +145,16 @@ export default class PrincipalEditor {
         } catch (e) {
             if (e instanceof ValidationError) {
                 this.formModal.showError(e.message);
+            } else {
+                this.common.showSnackbar("Oups! Quelque chose s'est mal passé...");
+                setTimeout(() => {
+                    this.formModal.close();
+                },1000);
+                console.log(e);
+
             }
-            // TODO snackbar
-            console.log(e);
             return false;
-        }
+        } 
     }
 
     async createEvent() {        
@@ -175,11 +179,16 @@ export default class PrincipalEditor {
                     this.formModal.animateFlip();            
                     setTimeout(() => {
                         this.formModal.close();
-                    },2000);
+                    },1500);
                 }, 1000);
             } catch (err) {
+                this.loadingAnime.style.display = "none";
+                this.common.showSnackbar("Oups! Impossible de créer un groupe...");
+                setTimeout(() => {
+                    this.formModal.close();
+                },1000);
                 console.log(err);
-            }
+            } 
         } else {
             return
         }
@@ -212,10 +221,15 @@ export default class PrincipalEditor {
                     this.formModal.animateFlip();            
                     setTimeout(() => {
                         this.formModal.close();
-                    },2000);
+                    },1500);
                 }, 1000);
              
             } catch (err) {
+                this.loadingAnime.style.display = "none";
+                this.common.showSnackbar("Oups! Impossible de changer un groupe...");
+                setTimeout(() => {
+                    this.formModal.close();
+                },1000);
                 console.log(err);
             }
         } else {
@@ -232,8 +246,11 @@ export default class PrincipalEditor {
             const res = await this.calendar.deleteEvent(id);
 
             if (!res.success) {
-                // TODO: consider another way
-                this.formModal.showError("Oops... could not delete the event.");
+                this.loadingAnime.style.display = "none";
+                this.common.showSnackbar("Oups! Impossible d'effacer un groupe...");
+                setTimeout(() => {
+                    this.confirmModal.close();
+                },1000);
                 return;
             }
    
@@ -242,13 +259,17 @@ export default class PrincipalEditor {
                 this.confirmModal.animateFlip();            
                 setTimeout(() => {
                     this.confirmModal.close();
-                },2000);
+                },1500);
             }, 1000);
             document.getElementById(id).remove();
         } catch (err) {
-            //TODO: Consider to show the user some friendly message
+            this.loadingAnime.style.display = "none";
+            this.common.showSnackbar("Oups! Impossible d'effacer un groupe...");
+            setTimeout(() => {
+                this.confirmModal.close();
+            },1000);            
             console.log("Cannot delete event:", err);
-        }
+        } 
     }
 
     createNewEvent() {

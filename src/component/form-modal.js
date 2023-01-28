@@ -19,6 +19,7 @@ export default class FormModal {
         this.cancelButton = this.formModal.querySelector(".cancelButton");
         this.flipCard = this.formModal.querySelector(".flip-card-inner");
         this.flipCardText = this.formModal.querySelector(".flipCardText");
+        this.loadingAnime = document.getElementById("loading-form");
     }
 
     get newStart() {
@@ -57,6 +58,20 @@ export default class FormModal {
         this.deleteButton.style.display = "";
     }
 
+    enableButtons() {
+        this.updateButton.disabled = false;
+        this.createButton.disabled = false;
+        this.deleteButton.disabled = false;
+        this.cancelButton.disabled = false;
+    }
+
+    disableButtons() {
+        this.updateButton.disabled = true;
+        this.createButton.disabled = true;
+        this.deleteButton.disabled = true;
+        this.cancelButton.disabled = true;
+    }
+
     showOptions(mainId, user) {
         let mainName = "???";
         if(this.editors[mainId]) {
@@ -75,27 +90,33 @@ export default class FormModal {
     }
 
     showModal() {
-        this.formModal.style.display = "block";
+        this.formModal.classList.add("show-modal");
     }
 
     hideModal() {
-        this.formModal.style.display = "none";
+        this.formModal.classList.add("hide-modal");
         this.date.disabled = false;
         this.enableButtons();
+        setTimeout(() => {
+            this.formModal.classList.remove("show-modal");
+            this.formModal.classList.remove("hide-modal");
+        }, 500);
     }
 
-    enableButtons() {
-        this.updateButton.disabled = false;
-        this.createButton.disabled = false;
-        this.deleteButton.disabled = false;
-        this.cancelButton.disabled = false;
+    showCalendar() {
+        document.body.classList.add("transparent");
+        setTimeout(() => {
+            document.body.classList.remove("transparent");
+            document.body.classList.remove("opaque");
+            document.body.style.overflow = 'auto'; 
+        }, 500);
+        
     }
 
-    disableButtons() {
-        this.updateButton.disabled = true;
-        this.createButton.disabled = true;
-        this.deleteButton.disabled = true;
-        this.cancelButton.disabled = true;
+    hideCalendar() {
+        scroll(0, 0);
+        document.body.classList.add("opaque");
+        document.body.style.overflow = 'hidden';
     }
 
     open() {
@@ -106,21 +127,9 @@ export default class FormModal {
     close() {
         this.hideErrors();
         this.hideModal();
-        this.showCalendar();
+        this.showCalendar();       
     }
 
-    showCalendar() {
-        document.body.classList.remove("opaque");
-        document.body.style.overflow = 'auto'; 
-    }
-
-    hideCalendar() {
-        scroll(0, 0);
-        document.body.classList.add("opaque");
-        document.body.style.overflow = 'hidden';
-    }
-
-    // TODO: consider another way
     showError(message) {
         this.errors.classList.add("show-message");
         this.errors.querySelector("p").innerHTML = message;
@@ -133,7 +142,6 @@ export default class FormModal {
             alert.classList.remove("show-message");
         })
     }
-
 
     animateFlip() {
         this.flipCard.classList.add("flip");

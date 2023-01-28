@@ -12,6 +12,7 @@
 </head>
 <body>
     <main>
+        <!-- Header -->
         <header class="header">
             <div class="weekControls">
                 <i id="prevWeekBtn" class="fa-solid fa-angle-left i-btn"></i>
@@ -45,6 +46,7 @@
             </div>
         </div>
     
+        <!-- Calendar -->
         <section id="calendar">
             <div class="dayTime">            
             </div>
@@ -203,9 +205,6 @@
                         <div class="eventControls">
                             <input type="button" value="Soumettre" class="button submitButton">
                         </div>
-                        <!-- <div id="errors">
-                            <p></p>
-                        </div>   -->
                     </div>     
                     <div class="flip-card-back">
                         <h2 class="flipCardText">Ça y est! Tes données sont à jour.</h2> 
@@ -213,6 +212,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- Loading Animation -->
         <div class="loading">
             <img id="loading-form" src="icons/loading-form.gif" alt="">
         </div>
@@ -222,6 +223,10 @@
         <div class="loading">
             <img id="loading-data" src="icons/loading-data.gif" alt="">
         </div>
+
+        <!-- Snackbar -->
+        <div id="snackbar">Oups! Quelque chose s'est mal passé...</div>
+
     </main>    
 
     <script src="main.bundle.js" type="module"></script>

@@ -1,7 +1,3 @@
-#confirmModal {
-    display: none;
-}
-
 #confirmModal .flip-card-front, #confirmModal .flip-card-back {
     background-color: var(--white); 
 }
@@ -50,5 +46,10 @@
         height: 6vh;
         color: var(--black);
         text-align: center;
+    }
+
+    #confirmModal .button:active {
+        background-color: var(--yellow);
+        color: var(--white);
     }
 }

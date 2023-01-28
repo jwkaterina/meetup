@@ -86,92 +86,6 @@ body {
     transform: scale(1.5);
 }
 
-/* log in */
-
-
-#loginButton:hover .log-text, 
-#loggedButton-name:hover .log-text {
-    transform: scale(1.1);
-}
-
-#loginButton .log-text, 
-#loggedButton-name .log-text {
-    transition: all 80ms linear;
-    line-height: 60px;
-    height: 60px;
-}
-
-#loginButton:hover i, 
-#loggedButton-name:hover i {
-    transform: scale(1.5);
-}
-
-#logoutButton i {
-    line-height: 30px;
-    width: 60px;
-    height: 30px;
-    color: var(--white);
-    font-size: 20px;
-    /* margin-right: 10px; */
-}
-
-.log {
-    display: flex;
-    flex-direction: row;
-    cursor: pointer;
-    transition: all 80ms linear;
-    align-items: center;
-}
-
-#log-data, #logoutButton {
-    height: 40px;
-}
-
-#logoutButton:hover, #log-data:hover {
-    background-color: var(--gray-lighter);
-}
-
-#logoutButton:hover .log-text, #logoutButton:hover i, #log-data:hover .log-text{
-    color: var(--black);
-}
-
-#log-data, #logoutButton {
-    padding-right: 50px;
-}
-
-#loginButton, #logoutButton {
-    display: flex;
-}
-
-#loggedButton-name {
-    display: none;
-}
-
-.log-text {
-    color: var(--white);
-    line-height: 30px;
-    width: 100%;
-    height: 30px;
-    font-size: 15px;
-    font-style: italic;
-}
-
-#dropdown {
-    background-color: var(--gray);
-    /* padding-right: 50px; */
-    position: fixed;
-    top: 80px;
-    right: 0;
-    z-index: 2;
-    height: 80px;
-    text-align: center;
-    display: none;
-}
-
-.show-menu {
-    display: block !important;
-}
-
 /* calendar */
 
 #calendar {
@@ -190,7 +104,22 @@ body {
     background-color: black;
     z-index: 2;
     opacity: 0.8;
-    transition: opacity 200ms ease-in;
+    /* transition: opacity 200ms ease-in; */
+    animation: calendarFadeIn 0.5s linear;
+}
+
+.transparent::before {
+    animation: calendarFadeOut 0.5s linear;
+}
+
+@keyframes calendarFadeIn {
+    from {opacity: 0;}
+    to {opacity: 0.8;}
+}
+
+@keyframes calendarFadeOut {
+    from {opacity: 0.8;}
+    to {opacity: 0;}
 }
 
 /* columns */
@@ -262,7 +191,7 @@ body {
 }
 
 .loading {
-    z-index: 20;
+    z-index: 10;
     position: absolute;
     top: 0;
     left: 0;
@@ -303,7 +232,7 @@ body {
         height: var(--slotHeightMobile);
     }
 
-    .header .i-btn:hover {
+    .header .i-btn:active {
         transform: scale(1);
     }
 

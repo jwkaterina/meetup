@@ -84,9 +84,9 @@
     margin-bottom: 12px;
     cursor: pointer;
     font-size: 22px;
-    -webkit-user-select: none;
+    /* -webkit-user-select: none;
     -moz-user-select: none;
-    -ms-user-select: none;
+    -ms-user-select: none; */
     user-select: none;
   }
   
@@ -139,16 +139,16 @@
     height: 10px;
     border: solid white;
     border-width: 0 3px 3px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
+    /* -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg); */
     transform: rotate(45deg);
   }
   
 
 @media (max-width: 800px) {
 
-    #dataModal .button:hover {
-        background-color: var(--blue);
+    #dataModal .button:active {
+        background-color: var(--yellow);
         color: var(--white);
     }
 }
