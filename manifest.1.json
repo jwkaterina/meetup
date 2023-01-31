@@ -1,0 +1,40 @@
+{
+    "short_name": "Meetup",
+    "name": "Meetings Organiser",
+    "icons": [
+      {
+        "src": "icons/meetup-18.png",
+        "sizes": "18x18",
+        "type": "image/png"
+      },
+      {
+        "src": "icons/meetup-24.png",
+        "sizes": "24x24",
+        "type": "image/png"
+      },
+      {
+        "src": "icons/meetup-36.png",
+        "sizes": "36x36",
+        "type": "image/png"
+      },
+      {
+        "src": "icons/meetup-48.png",
+        "sizes": "48x48",
+        "type": "image/png"
+      },
+      {
+        "src": "icons/meetup-72.png",
+        "sizes": "72x72",
+        "type": "image/png"
+      },
+      {
+        "src": "icons/meetup-96.png",
+        "sizes": "96x96",
+        "type": "image/png"
+      }
+    ],
+    "start_url": ".",
+    "display": "fullscreen",
+    "theme_color": "#66DCEC",
+    "background_color": "#DCDCE3"
+}  

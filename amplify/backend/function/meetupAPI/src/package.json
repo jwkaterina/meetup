@@ -5,12 +5,15 @@
   "main": "index.js",
   "license": "Apache-2.0",
   "dependencies": {
+    "@aws-sdk/client-ssm": "^3.259.0",
     "aws-serverless-express": "^3.3.5",
     "body-parser": "^1.19.1",
     "express": "^4.17.2",
     "https": "^1.0.0",
     "luxon": "^3.2.1",
-    "ulid": "^2.3.0"
+    "ulid": "^2.3.0",
+    "universal-base64url": "^1.1.0",
+    "web-push": "^3.5.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.92",

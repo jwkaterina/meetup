@@ -1,14 +1,13 @@
 import { Hub, Auth as AmplifyAuth } from "aws-amplify";
 import { Context } from "./ctx";
 import PrincipalCommon from "./principal";
-import UserData from "./user-data";
 import User from "./user";
 
 export default class Auth {
-    constructor(calendar) {
+    constructor(calendar, userData) {
         this.calendar = calendar;
         this.principal = null;
-        this.userData = new UserData();
+        this.userData = userData;
         this.ctx = Context.getInstance();
 
         this.listenerCancelToken = this.setupAuthListener();
@@ -84,9 +83,12 @@ export default class Auth {
 
     setupControls() {
         this.loginButton.addEventListener("click", () => AmplifyAuth.federatedSignIn());
-        this.logoutButton.addEventListener("click", () => {
-             // Create function
-            console.log("logout");
+        this.logoutButton.addEventListener("click", async () => {
+            try {
+                await AmplifyAuth.signOut();
+            } catch (err) {
+                console.log('error signing out: ', err);
+            }
         });
     }
 }

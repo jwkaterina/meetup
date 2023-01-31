@@ -26,6 +26,10 @@ describe('Auth', () => {
     .spyOn(Calendar.prototype, 'loadEvents')
     .mockImplementation(() => {});
 
+    const mockeddisplayName = jest
+    .spyOn(UserData.prototype, 'displayName')
+    .mockImplementation(() => {});
+
     const mockedPrincipalConstructor = jest.fn();
     PrincipalCommon.mockImplementation(mockedPrincipalConstructor);
 
@@ -63,7 +67,7 @@ describe('Auth', () => {
         .mockImplementation(() => {});
 
         //invoke
-        new Auth(new Calendar());
+        new Auth(new Calendar(), new UserData());
 
         //check
         expect(mockedHubListen).toBeCalledWith("auth", expect.anything());
@@ -90,7 +94,7 @@ describe('Auth', () => {
         });
 
         //invoke
-        const auth = new Auth(new Calendar());
+        const auth = new Auth(new Calendar(), new UserData());
         await auth.checkUser();
 
         //check
@@ -105,6 +109,7 @@ describe('Auth', () => {
         expect(mockedSwitchToUserMode).toBeCalledTimes(1);
         expect(mockedSwitchToEditorMode).toBeCalledTimes(0);
         expect(mockedLoadCalendarEvents).toBeCalledTimes(1);
+        expect(mockeddisplayName).toBeCalledTimes(1);
 
         //clean up
         auth.listenerCancelToken();
@@ -128,7 +133,7 @@ describe('Auth', () => {
         });
 
         //invoke
-        const auth = new Auth(new Calendar());
+        const auth = new Auth(new Calendar(), new UserData());
         await auth.checkUser();
 
         //check
@@ -143,6 +148,7 @@ describe('Auth', () => {
         expect(mockedSwitchToUserMode).toBeCalledTimes(0);
         expect(mockedSwitchToEditorMode).toBeCalledTimes(1);
         expect(mockedLoadCalendarEvents).toBeCalledTimes(1);
+        expect(mockeddisplayName).toBeCalledTimes(1);
 
         //clean up
         auth.listenerCancelToken();
@@ -166,7 +172,7 @@ describe('Auth', () => {
         });
 
         //invoke
-        const auth = new Auth(new Calendar());
+        const auth = new Auth(new Calendar(), new UserData());
         await auth.checkUser();
 
         //check
@@ -181,6 +187,7 @@ describe('Auth', () => {
         expect(mockedSwitchToUserMode).toBeCalledTimes(0);
         expect(mockedSwitchToEditorMode).toBeCalledTimes(1);
         expect(mockedLoadCalendarEvents).toBeCalledTimes(1);
+        expect(mockeddisplayName).toBeCalledTimes(1);
 
         //clean up
         auth.listenerCancelToken();
@@ -200,7 +207,7 @@ describe('Auth', () => {
         });
 
         //invoke
-        const auth = new Auth(new Calendar());
+        const auth = new Auth(new Calendar(), new UserData());
         auth.processUser(uninvited); //not using auth.checkUser() cause it catches Errors
 
         //check
@@ -209,6 +216,7 @@ describe('Auth', () => {
         expect(mockedSwitchToUserMode).toBeCalledTimes(0);
         expect(mockedSwitchToEditorMode).toBeCalledTimes(0);
         expect(mockedLoadCalendarEvents).toBeCalledTimes(0);
+        expect(mockeddisplayName).toBeCalledTimes(0);
 
         //clean up
         auth.listenerCancelToken();

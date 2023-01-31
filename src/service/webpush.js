@@ -1,0 +1,201 @@
+import { API, Auth } from "aws-amplify";
+const { encode } = require('universal-base64url');
+
+export default class WebPushService {
+  constructor() {
+    this.swRegistration = null;
+  }
+
+  set registration(value) {
+    this.swRegistration = value;
+  }
+
+  onRegistrationUpdate(registration) {
+    this.registration = registration;
+  }
+
+  onRegistrationSuccess(registration) {
+    this.registration = registration;
+  }
+
+  async subscribe() {
+    if (!("Notification" in window)) {
+      console.log("This browser does not support desktop notification");
+    } else if (Notification.permission === "granted") {
+      // Check whether notification permissions have already been granted;
+      console.log('Notification granted previously');
+      await this.subscribeUser();
+    } else if (Notification.permission !== "denied") {
+      const permission = await Notification.requestPermission();
+
+      if (permission === "granted") {
+        console.log('Notification granted just now');
+        await this.subscribeUser();
+      }
+    }
+  }
+
+  async unsubscribe() {
+    if(!this.swRegistration) {
+      return;
+    }
+    let subscription = await this.getSubscribtion();
+    if (!subscription) {
+      console.log('No WebPush Subscription Found');
+      return
+    }
+    console.log('Trying to delete WebPush Subscription:', subscription);
+    await this.deleteUserSubscription(subscription);
+
+    try {
+      await subscription.unsubscribe();
+      console.log('Successfully unsubscribed from subscription');
+    } catch (err) {
+      console.log('Cannot unsubscribed from subscription: ', err);
+    }
+  }
+
+  async subscribeUser() {
+    if(!this.swRegistration) {
+      return;
+    }
+    if (await this.getSubscribtion()) {
+      return
+    }
+    const key = await this.getWebPushKey();
+    if(!key) {
+      console.log('WebPush Public Key Not defined');
+      return;
+    }
+    const keyBytes = this.urlB64ToUint8Array(key);
+
+    const subscription = await this.subscribeUserToWebPush(keyBytes)
+
+    if(!subscription) {
+      return;
+    }
+
+    await this.saveUserSubscription(subscription);
+      
+  }
+
+  async getSubscribtion() {
+    if(!this.swRegistration) {
+      return null;
+    }
+    try {
+      return await this.swRegistration.pushManager.getSubscription();
+    } catch (err) {
+      console.log("Cannot get subscription:", err);
+      return null;
+    }
+  }
+
+  async getWebPushKey() {
+    const myInit = {
+      headers: {
+        'Content-Type' : 'application/json',
+        Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`,
+      }
+    };
+
+    try{
+      const res = await API.get('meetup', `/webpush/keys`, myInit);
+      console.log('Key Response:', res)
+      return res.data
+    } catch (err) {
+      console.log('Key Response Error:', err.response.data);
+      return null;
+    }
+  }
+
+  urlB64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding)
+      .replace(/\-/g, '+')
+      .replace(/_/g, '/');
+  
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+  
+    for (let i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+  }
+
+  async subscribeUserToWebPush(applicationServerKey) {
+    if(!this.swRegistration) {
+      return null;
+    }
+    console.log("ServiceWorker Registration:", this.swRegistration);
+    console.log("ServiceWorker Registration PushManager:", this.swRegistration.pushManager);
+
+    if(!this.swRegistration.pushManager) {
+      return null;
+    }
+
+    try {
+      return await this.swRegistration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: applicationServerKey
+      })
+    } catch (err) {
+      console.log("Cannot register user to WebPush:", err);
+      return null;
+    }
+  }
+
+  async saveUserSubscription(subscription) {
+    const user = await this.getUser();
+    if(!user) {
+      console.log("User not defined");
+      return;
+    }
+    const myInit = {
+      headers: {
+        'Content-Type' : 'application/json',
+        Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`,
+      },
+      body: subscription
+    };
+
+    try{
+      const res = await API.put('meetup', `/webpush/subscriptions/${user.username}`, myInit);
+      console.log('Put Subscription Response:', res)
+    } catch (err) {
+      console.log('Put Subscription Response Error:', err.response.data);
+    }
+  }
+
+  async deleteUserSubscription(subscription) {
+    if(!subscription.endpoint) {
+      console.log('No endpoint in subscription', subscription)
+      return;
+    }
+    const subscriptionId = subscription.endpoint.split("/").pop();
+
+    const user = await this.getUser();
+    if(!user) {
+      console.log("User not defined");
+      return;
+    }
+    const myInit = {
+      headers: {
+        Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`,
+      }
+    };
+
+    try{
+      const id = encode(subscriptionId);
+      const res = await API.del('meetup', `/webpush/subscriptions/${user.username}/${id}`, myInit);
+      console.log('Delete Subscription Response:', res)
+    } catch (err) {
+      console.log('Delete Subscription Response Error:', err);
+    }
+  }
+
+  async getUser() {
+    return await Auth.currentAuthenticatedUser();
+  }
+}

@@ -29,12 +29,6 @@ export type AmplifyDependentResourcesAttributes = {
       "userGroupRole": "string"
     }
   },
-  "custom": {
-    "webPushKeys": {
-      "PrivateKeyName": "string",
-      "PublicKeyName": "string"
-    }
-  },
   "function": {
     "AdminQueries44a8a8b3": {
       "Arn": "string",
@@ -55,6 +49,15 @@ export type AmplifyDependentResourcesAttributes = {
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",
       "Name": "string",
+      "Region": "string"
+    },
+    "webPushKeys": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "PrivateKeyName": "string",
+      "PublicKeyName": "string",
       "Region": "string"
     }
   },
