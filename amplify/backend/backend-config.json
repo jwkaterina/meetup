@@ -85,13 +85,7 @@
       "service": "Cognito-UserPool-Groups"
     }
   },
-  "custom": {
-    "webPushKeys": {
-      "dependsOn": [],
-      "providerPlugin": "awscloudformation",
-      "service": "customCloudformation"
-    }
-  },
+  "custom": {},
   "function": {
     "AdminQueries44a8a8b3": {
       "build": true,
@@ -139,6 +133,11 @@
           "resourceName": "meetup"
         }
       ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "webPushKeys": {
+      "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
@@ -189,6 +188,22 @@
         {
           "category": "function",
           "resourceName": "meetupTrigger0f667146"
+        }
+      ]
+    },
+    "AMPLIFY_function_webPushKeys_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "webPushKeys"
+        }
+      ]
+    },
+    "AMPLIFY_function_webPushKeys_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "webPushKeys"
         }
       ]
     }

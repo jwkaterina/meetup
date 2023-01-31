@@ -2,6 +2,9 @@ import Calendar from "./calendar";
 import { Amplify } from 'aws-amplify';
 import awsconfig from './aws-exports';
 import Auth from "./auth";
+import UserData from "./user-data";
+import ServiceWorkerConfigService from './service/service-worker-config';
+import WebPushService from './service/webpush';
 
 export default class App {
     constructor() {
@@ -9,7 +12,16 @@ export default class App {
         Amplify.configure(awsconfig);
         this.calendar = new Calendar();
         this.calendar.setup();
-        this.auth = new Auth(this.calendar);
+
+        if(process.env.WEBPACK_ENV === 'production') {
+            this.webpush = new WebPushService();
+            this.serviceWorkerConfig = new ServiceWorkerConfigService();
+            this.serviceWorkerConfig.register(this.webpush);
+            this.userData = new UserData(this.webpush);
+        } else {
+            this.userData = new UserData(null);
+        }
+        this.auth = new Auth(this.calendar, this.userData);
         this.auth.checkUser();
     }
 

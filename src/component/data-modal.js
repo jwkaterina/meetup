@@ -11,7 +11,8 @@ export default class DataModal {
         this.cancelButton = this.dataModal.querySelector(".cancelButton");
         this.flipCard = this.dataModal.querySelector(".flip-card-inner");
         this.flipCardText = this.dataModal.querySelector(".flipCardText");
-        this.inputs = this.dataModal.querySelectorAll(".shortInput")
+        this.inputs = this.dataModal.querySelectorAll(".shortInput");
+        this.notifyMe = this.dataModal.querySelector(".checkbox > .container > input");
     }
 
     enableButtons() {
@@ -108,5 +109,15 @@ export default class DataModal {
     phoneIsValid() {
         // Create function
         return true
+    }
+
+    onNotifyMe(notifier) {
+        this.notifyMe.addEventListener('click', () => {
+            if (this.notifyMe.checked) {
+                notifier.subscribe();
+            } else {
+                notifier.unsubscribe();
+            }
+        });
     }
 }

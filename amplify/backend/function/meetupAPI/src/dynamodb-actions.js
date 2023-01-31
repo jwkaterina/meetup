@@ -18,7 +18,7 @@ if (process.env.ENV && process.env.ENV !== "NONE") {
     tableName = tableName + '-' + process.env.ENV;
 }
 
-async function queryEvents(condition) {
+async function queryEntities(condition) {
     let getItemParams = {
         TableName: tableName,
         KeyConditions: condition
@@ -29,7 +29,7 @@ async function queryEvents(condition) {
     return res;
 }
 
-async function getEvent(params) {
+async function getEntity(params) {
     let getItemParams = {
         TableName: tableName,
         Key: params
@@ -40,20 +40,20 @@ async function getEvent(params) {
     return res;
 }
 
-async function putEvent(event) {
+async function putEntity(entity) {
     let putItemParams = {
         TableName: tableName,
-        Item: event.toDynamoDbItem()
+        Item: entity.toDynamoDbItem()
     }
     const res = await dynamodb.put(putItemParams).promise();
 
     return res;
 }
 
-async function postEvent(event) {
+async function postEntity(entity) {
     let putItemParams = {
         TableName: tableName,
-        Item: event.toDynamoDbItem(),
+        Item: entity.toDynamoDbItem(),
         ConditionExpression: "attribute_not_exists(SK)"
     }
     const res = await dynamodb.put(putItemParams).promise();
@@ -61,7 +61,7 @@ async function postEvent(event) {
     return res;
 }
 
-async function deleteEvent(params) {
+async function deleteEntity(params) {
     let removeItemParams = {
         TableName: tableName,
         Key: params
@@ -72,9 +72,9 @@ async function deleteEvent(params) {
 }
 
 module.exports = {
-    queryEvents,
-    getEvent,
-    deleteEvent,
-    putEvent,
-    postEvent,
+    queryEntities,
+    getEntity,
+    deleteEntity,
+    putEntity,
+    postEntity,
 };

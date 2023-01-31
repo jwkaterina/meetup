@@ -15,14 +15,6 @@
     },
     "s3Key": {
       "Type": "String"
-    },
-    "storagemeetupName": {
-      "Type": "String",
-      "Default": "storagemeetupName"
-    },
-    "storagemeetupArn": {
-      "Type": "String",
-      "Default": "storagemeetupArn"
     }
   },
   "Conditions": {
@@ -55,12 +47,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "meetupAPI",
+            "webPushKeys",
             {
               "Fn::Join": [
                 "",
                 [
-                  "meetupAPI",
+                  "webPushKeys",
                   "-",
                   {
                     "Ref": "env"
@@ -86,9 +78,9 @@
             "Arn"
           ]
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Layers": [],
-        "Timeout": 25
+        "Timeout": 45
       }
     },
     "LambdaExecutionRole": {
@@ -97,12 +89,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "meetupLambdaRole1f52c93b",
+            "serrviceworkertestLambdaRole9d76c817",
             {
               "Fn::Join": [
                 "",
                 [
-                  "meetupLambdaRole1f52c93b",
+                  "serrviceworkertestLambdaRole9d76c817",
                   "-",
                   {
                     "Ref": "env"
@@ -172,39 +164,32 @@
             {
               "Effect": "Allow",
               "Action": [
-                "dynamodb:DescribeTable",
-                "dynamodb:GetItem",
-                "dynamodb:Query",
-                "dynamodb:Scan",
-                "dynamodb:PutItem",
-                "dynamodb:UpdateItem",
-                "dynamodb:DeleteItem"
-              ],
-              "Resource": [
-                {
-                  "Ref": "storagemeetupArn"
-                },
-                {
-                  "Fn::Join": [
-                    "/",
-                    [
-                      {
-                        "Ref": "storagemeetupArn"
-                      },
-                      "index/*"
-                    ]
-                  ]
-                }
-              ]
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "ssm:GetParametersByPath"
+                "ssm:GetParameters",
+                "ssm:PutParameter",
+                "ssm:DeleteParameter"
               ],
               "Resource": "*"
             }
           ]
+        }
+      }
+    },
+    "WebPushKeys": {
+      "DependsOn": [
+        "LambdaFunction",
+        "LambdaExecutionRole",
+        "lambdaexecutionpolicy"
+      ],
+      "Type": "Custom::WebPushKeys",
+      "Properties": {
+        "ServiceToken": {
+          "Fn::GetAtt": [
+            "LambdaFunction",
+            "Arn"
+          ]
+        },
+        "ENV": {
+          "Ref": "env"
         }
       }
     }
@@ -238,6 +223,24 @@
         "Fn::GetAtt": [
           "LambdaExecutionRole",
           "Arn"
+        ]
+      }
+    },
+    "PublicKeyName": {
+      "Description": "SSM Parameter Store Name For WebPush Public Key",
+      "Value": {
+        "Fn::GetAtt": [
+          "WebPushKeys",
+          "pubKeyName"
+        ]
+      }
+    },
+    "PrivateKeyName": {
+      "Description": "SSM Parameter Store Name For WebPush Private Key",
+      "Value": {
+        "Fn::GetAtt": [
+          "WebPushKeys",
+          "priveKeyName"
         ]
       }
     }

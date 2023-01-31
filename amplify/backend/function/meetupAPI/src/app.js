@@ -3,18 +3,24 @@ const bodyParser = require('body-parser')
 const express = require('express')
 const EventEntity = require('./event-entity')
 const EntityError = require('./entity-error')
+const WebpushSubscriptionEntity = require('./webpush-subscription')
+const { decode } = require('universal-base64url');
 
 const {
-  queryEvents,
-  getEvent,
-  deleteEvent,
-  putEvent,
-  postEvent,
-} = require('./dynamoDbActions');
+  queryEntities,
+  getEntity,
+  deleteEntity,
+  putEntity,
+  postEntity,
+} = require('./dynamodb-actions');
+
+const { getPubKey } = require('./webpush-actions');
 
 const partitionKeyName = "PK";
 const sortKeyName = "SK";
 const path = "/events";
+const pathWebPushKeys = "/webpush/keys";
+const pathWebPushSubscriptions = "/webpush/subscriptions";
 const hashKeyPath = '/:' + partitionKeyName;
 const sortKeyPath = '/:' + sortKeyName;
 
@@ -60,7 +66,7 @@ app.get(path + hashKeyPath, async (req, res) => {
   condition[partitionKeyName]['AttributeValueList'] = [ pk ];
 
   try {
-    const queryRes = await queryEvents(condition);
+    const queryRes = await queryEntities(condition);
     const events = queryRes.Items.map((item) => EventEntity.fromItem(item).toDto());
     res.json({success: true, url: req.url, data: events});
   } catch (e) {
@@ -82,7 +88,7 @@ app.get(path + '/object' + hashKeyPath + sortKeyPath, async (req, res) => {
   params[sortKeyName] = sk;
 
   try {
-    const getRes = await getEvent(params);
+    const getRes = await getEntity(params);
     if (getRes.Item) {
       res.json({success: true, url: req.url, data: EventEntity.fromItem(getRes.Item).toDto()});
     } else {
@@ -108,7 +114,7 @@ app.put(path, async (req, res) => {
     params[partitionKeyName] = event.pk;
     params[sortKeyName] = event.sk;
 
-    const getRes = await getEvent(params);
+    const getRes = await getEntity(params);
     if (!getRes.Item) {
       res.statusCode = 500;
       console.log("Could not load event:", getRes);
@@ -119,7 +125,7 @@ app.put(path, async (req, res) => {
     const existingEvent = EventEntity.fromItem(getRes.Item);
     existingEvent.updateFrom(event);
 
-    await putEvent(existingEvent)
+    await putEntity(existingEvent)
     res.json({success: true, url: req.url, data: existingEvent.toDto()})
 
   } catch (e) {
@@ -140,7 +146,7 @@ app.put(path, async (req, res) => {
 app.post(path, async (req, res) => {
   try {
     const event = EventEntity.fromInsertDto(req.body);
-    await postEvent(event)
+    await postEntity(event)
     res.json({success: true, url: req.url, data: event.toDto()})
   } catch (e) {
     if(e instanceof EntityError) {
@@ -165,7 +171,7 @@ app.delete(path + '/object' + hashKeyPath + sortKeyPath, async (req, res) => {
   params[sortKeyName] = sk;
 
   try {
-    const delRes = await deleteEvent(params)
+    const delRes = await deleteEntity(params)
     res.json({success: true, url: req.url, data: delRes});
   } catch(err) {
     console.log("Cannot delete an Event:", e);
@@ -173,6 +179,74 @@ app.delete(path + '/object' + hashKeyPath + sortKeyPath, async (req, res) => {
     res.json({success: false, error: err.message, url: req.url, req: req});
   }
 });
+
+
+
+/**************************************
+* Webpush *
+***************************************/
+
+app.get(pathWebPushKeys, async (req, res) => {
+  try {
+    const pubKey = await getPubKey();
+    res.json({success: true, url: req.url, data: pubKey})
+  } catch (e) {
+    res.statusCode = 500;
+    console.log("Could not load keys:", e);
+    res.json({success: false, error: 'Could not load webpush public key: ' + err.message, url: req.url, req: req.body});
+  }
+});
+
+app.put(pathWebPushSubscriptions + hashKeyPath, async (req, res) => {
+  try {
+    let subToPut = null;
+    const sub = WebpushSubscriptionEntity.fromUpdateDto(req.body, req.params[partitionKeyName]);
+    const params = {};
+    params[partitionKeyName] = sub.pk;
+    params[sortKeyName] = sub.sk;
+
+    const getRes = await getEntity(params);
+    if (getRes.Item) {
+      subToPut = EventEntity.fromItem(getRes.Item);
+      subToPut.updateFrom(sub);
+    } else {
+      subToPut = sub;
+    }
+
+    await putEntity(subToPut);
+
+    res.json({success: true, url: req.url, data: subToPut.toDto()})
+
+  } catch (e) {
+    if(e instanceof EntityError) {
+      res.statusCode = 400;
+    } else {
+      res.statusCode = 500;
+    }
+    console.log("Cannot put a Subscription:", e);
+    res.json({success: false, error: e.message, url: req.url, req: req.body});
+  }
+});
+
+app.delete(pathWebPushSubscriptions + hashKeyPath + sortKeyPath, async (req, res) => {
+  const params = {};
+  const id = decode(req.params[sortKeyName])
+  const pk = WebpushSubscriptionEntity.generatePk(req.params[partitionKeyName]);
+  const sk = WebpushSubscriptionEntity.generateSk(id);
+  params[partitionKeyName] = pk;
+  params[sortKeyName] = sk;
+
+  try {
+    const delRes = await deleteEntity(params)
+    res.json({success: true, url: req.url, data: delRes});
+  } catch(err) {
+    console.log("Cannot delete an Event:", e);
+    res.statusCode = 500;
+    res.json({success: false, error: err.message, url: req.url, req: req});
+  }
+});
+
+
 
 app.listen(3000, function() {
   console.log("App started")

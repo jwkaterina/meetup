@@ -3,7 +3,6 @@ import { Context } from "./ctx";
 import EventService from "./service/event";
 import ValidationError from "./error/validation-error";
 import "./calendar.css";
-import "./user-data.css";
 
 export default class Calendar {
     constructor() {
@@ -42,13 +41,12 @@ export default class Calendar {
         });
         let lastWidth = window.innerWidth;
         window.addEventListener("resize", () => {
-            if(window.innerWidth!=lastWidth){
+            if(window.innerWidth!=lastWidth) {
                 window.location.reload();
                 lastWidth = window.innerWidth;
             }
-        })     
+        });
     }
-
 
     addSwipe() {
         let touchstartX = 0;

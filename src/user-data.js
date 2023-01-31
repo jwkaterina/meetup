@@ -1,12 +1,13 @@
 import DataModal from "./component/data-modal";
 import { Context } from "./ctx";
-
-
+import "./user-data.css";
 
 export default class UserData {
-    constructor() {
+    constructor(webpush) {
+        this.webpush = webpush;
         this.ctx = Context.getInstance();
         this.dataModal = new DataModal();
+        this.container = document.getElementById("dataModal");
         this.loadingAnime = document.getElementById("loading-data");
 
         this.loadEventListeners();
@@ -23,11 +24,14 @@ export default class UserData {
             e.preventDefault();
             this.dataModal.close();
         });
+
+        if(this.webpush) {
+            this.dataModal.onNotifyMe(this.webpush);
+        }
     }
 
     openDataModal() {
         const user = this.ctx.principal.user;
-        // console.log(user);
 
         this.dataModal.open();
         this.dataModal.firstName.value = user.firstName;
@@ -56,7 +60,6 @@ export default class UserData {
                 },1500);
             }, 1000);
 
-            // console.log(user);
             return user;
         } else {
             return
