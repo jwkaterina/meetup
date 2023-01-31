@@ -50,8 +50,6 @@ async function sendPush(subscription, data) {
     throw new Error('Cannot find WebPush Keys');
   }
 
-  console.log('WebPush Keys:', keys);
-
   const options = {
     vapidDetails: {
       subject: 'https://developers.google.com/web/fundamentals/',
