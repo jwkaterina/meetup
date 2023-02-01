@@ -138,4 +138,8 @@
         background-color: var(--yellow);
         color: var(--white);
     }
+
+    #user-phoneNumber + .alert {
+        width: 100%;
+    }
 }
