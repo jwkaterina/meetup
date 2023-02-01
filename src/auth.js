@@ -22,7 +22,6 @@ export default class Auth {
         const listener = async (data) => {
             if(data.payload.event == 'signOut') {
                 console.log('user signed out');
-                //TODO: Clean the app
             }
         };
 

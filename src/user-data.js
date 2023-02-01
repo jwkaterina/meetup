@@ -68,7 +68,6 @@ export default class UserData {
     }
     
     parsePhone(phone) {
-        // console.log(phone);
         let phoneNumber = phone.replaceAll(" ", "");
         phoneNumber = phoneNumber.replaceAll("-", "");
         if (phoneNumber.charAt(0) == "0") {
@@ -80,7 +79,6 @@ export default class UserData {
         } else {
             phoneNumber = "+49".concat(phoneNumber);
         }
-        // console.log(phoneNumber);
         return phoneNumber;
     }
 

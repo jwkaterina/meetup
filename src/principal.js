@@ -35,10 +35,6 @@ export default class PrincipalCommon {
             mainName = this.ctx.users[mainId].name;
         }
 
-        /*
-        * See: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes
-        *
-        */
         let lis = "";
         lis = `<li class="member" data-user-id="${mainId}">${mainName}</li>`;
         if(event.memberIds.includes(this.user.id) && this.user.id != mainId) {
