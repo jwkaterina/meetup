@@ -121,14 +121,5 @@ export default class UserData {
     showMenu() {
         const dropdown = document.getElementById("dropdown");
         dropdown.classList.toggle("show-menu");
-
-        const media = window.matchMedia("(max-width: 800px)");
-        if (media.matches) {
-            dropdown.style.width = 50 + "vw";
-        } else {
-            const loggedButton = document.getElementById("loggedButton-name");
-            const h = loggedButton.clientWidth;
-            dropdown.style.width = h + 50 + "px";
-        }
     }
 }

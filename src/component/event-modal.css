@@ -68,8 +68,13 @@
         height: 50vh;
     }
 
-    #eventModal .button:active {
+    #eventModal .button:hover {
         background-color: var(--yellow);
         color: var(--white);
+    }
+
+    #eventModal .editButton:hover {
+        background-color: var(--white);
+        color: var(--black);
     }
 }

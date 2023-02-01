@@ -145,8 +145,13 @@
         height: 25vh;
     }
 
-    #formModal .button:active {
+    #formModal .button:hover {
         background-color: var(--yellow);
+        color: var(--white);
+    }
+
+    #formModal .deleteButton:hover {
+        background-color: var(--blue);
         color: var(--white);
     }
 }

@@ -232,10 +232,6 @@ body {
         height: var(--slotHeightMobile);
     }
 
-    .header .i-btn:active {
-        transform: scale(1);
-    }
-
     #addButton {
         border: var(--yellow);
         background-color: var(--gray-darkest);
@@ -254,17 +250,8 @@ body {
         font-size: 25px;
     }
 
-    #loggedButton-circle {
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        line-height: 30px;
-        background: white;
-        border: 1px solid white;
-        color: var(--gray-darker);
-        text-align: center;
-        font-size: 16px;
-        display: none;
+    #todayButton:hover {
+        transform: scale(1);
     }
 
     .dayTime {

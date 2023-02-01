@@ -48,8 +48,13 @@
         text-align: center;
     }
 
-    #confirmModal .button:active {
+    #confirmModal .yesButton:hover {
         background-color: var(--yellow);
+        color: var(--white);
+    }
+
+    #confirmModal .noButton:hover {
+        background-color: var(--blue);
         color: var(--white);
     }
 }

@@ -147,7 +147,7 @@
 
 @media (max-width: 800px) {
 
-    #dataModal .button:active {
+    #dataModal .button:hover {
         background-color: var(--yellow);
         color: var(--white);
     }

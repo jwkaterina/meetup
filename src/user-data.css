@@ -73,10 +73,43 @@
     right: 0;
     z-index: 2;
     height: 80px;
+    width: 200px;
     text-align: center;
     display: none;
 }
 
 .show-menu {
     display: block !important;
+}
+
+@media (max-width: 800px) {
+
+    #loginButton i {
+        font-size: 25px;
+    }
+
+    #loginButton i:hover {
+        transform: scale(1);
+    }
+
+    #loginButton .log-text {
+        display: none;
+    }
+    
+    #loggedButton-circle {
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        background: white;
+        border: 1px solid white;
+        color: var(--gray-darker);
+        text-align: center;
+        font-size: 16px;
+        display: none;
+    }
+
+    #dropdown {
+        width: 50vw;
+    }
 }
