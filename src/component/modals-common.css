@@ -12,11 +12,11 @@
 
 .show-modal {
     display: block;
-    animation: modalFadeIn 0.5s forwards linear;
+    animation: modalFadeIn 0.2s forwards ease-in-out;
 }
 
 .hide-modal {
-    animation: modalFadeOut 0.5s linear;
+    animation: modalFadeOut 0.2s ease-in-out;
 }
 
 @keyframes modalFadeIn {

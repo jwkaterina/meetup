@@ -180,7 +180,7 @@ export default class PrincipalEditor {
                     setTimeout(() => {
                         this.formModal.close();
                     },1500);
-                }, 1000);
+                }, 500);
             } catch (err) {
                 this.loadingAnime.style.display = "none";
                 this.common.showSnackbar("Oups! Impossible de créer un groupe...");
@@ -222,7 +222,7 @@ export default class PrincipalEditor {
                     setTimeout(() => {
                         this.formModal.close();
                     },1500);
-                }, 1000);
+                }, 500);
              
             } catch (err) {
                 this.loadingAnime.style.display = "none";
@@ -260,7 +260,7 @@ export default class PrincipalEditor {
                 setTimeout(() => {
                     this.confirmModal.close();
                 },1500);
-            }, 1000);
+            }, 500);
             document.getElementById(id).remove();
         } catch (err) {
             this.loadingAnime.style.display = "none";

@@ -100,7 +100,7 @@ export default class FormModal {
         setTimeout(() => {
             this.formModal.classList.remove("show-modal");
             this.formModal.classList.remove("hide-modal");
-        }, 500);
+        }, 200);
     }
 
     showCalendar() {
@@ -109,7 +109,7 @@ export default class FormModal {
             document.body.classList.remove("transparent");
             document.body.classList.remove("opaque");
             document.body.style.overflow = 'auto'; 
-        }, 500);
+        }, 200);
         
     }
 

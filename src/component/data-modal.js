@@ -36,7 +36,7 @@ export default class DataModal {
         setTimeout(() => {
             this.dataModal.classList.remove("show-modal");
             this.dataModal.classList.remove("hide-modal");
-        }, 500);
+        }, 200);
     }
 
     showCalendar() {
@@ -45,7 +45,7 @@ export default class DataModal {
             document.body.classList.remove("transparent");
             document.body.classList.remove("opaque");
             document.body.style.overflow = 'auto'; 
-        }, 500);
+        }, 200);
         
     }
 

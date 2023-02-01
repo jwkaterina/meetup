@@ -62,7 +62,7 @@ export default class EventModal {
         setTimeout(() => {
             this.container.classList.remove("show-modal");
             this.container.classList.remove("hide-modal");
-        }, 500);
+        }, 200);
     }
 
     showCalendar() {
@@ -71,7 +71,7 @@ export default class EventModal {
             document.body.classList.remove("transparent");
             document.body.classList.remove("opaque");
             document.body.style.overflow = 'auto'; 
-        }, 500);
+        }, 200);
         
     }
 

@@ -59,7 +59,7 @@ export default class UserData {
                 setTimeout(() => {
                     this.dataModal.close();
                 },1500);
-            }, 1000);
+            }, 500);
     
             return user;
         } else {

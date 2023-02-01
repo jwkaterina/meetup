@@ -29,7 +29,7 @@ export default class ConfirmModal {
         setTimeout(() => {
             this.confirmModal.classList.remove("show-modal");
             this.confirmModal.classList.remove("hide-modal");
-        }, 500);
+        }, 200);
     }
 
     showCalendar() {
@@ -38,7 +38,7 @@ export default class ConfirmModal {
             document.body.classList.remove("transparent");
             document.body.classList.remove("opaque");
             document.body.style.overflow = 'auto'; 
-        }, 500);
+        }, 200);
         
     }
 

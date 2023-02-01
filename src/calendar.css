@@ -105,11 +105,11 @@ body {
     z-index: 2;
     opacity: 0.8;
     /* transition: opacity 200ms ease-in; */
-    animation: calendarFadeIn 0.5s linear;
+    animation: calendarFadeIn 0.2s ease-in-out;
 }
 
 .transparent::before {
-    animation: calendarFadeOut 0.5s linear;
+    animation: calendarFadeOut 0.2s ease-in-out;
 }
 
 @keyframes calendarFadeIn {

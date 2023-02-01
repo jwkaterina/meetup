@@ -77,7 +77,7 @@ export default class PrincipalCommon {
                 setTimeout(() => {
                     this.eventModal.close();
                 },1500);
-            }, 1000);
+            }, 500);
             event.show();
         } catch (err) {
             this.loadingAnime.style.display = "none";
@@ -110,7 +110,7 @@ export default class PrincipalCommon {
                 setTimeout(() => {
                     this.eventModal.close();
                 },1500);
-            }, 1000);
+            }, 500);
             event.show();
         } catch (err) {
             this.loadingAnime.style.display = "none";
