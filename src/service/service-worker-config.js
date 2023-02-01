@@ -97,7 +97,7 @@ export default class ServiceWorkerConfigService {
               );
 
               // Execute callback
-              if (config && config.onUpdate) {
+              if (config) {
                 config.onRegistrationUpdate(registration);
               }
             } else {
@@ -107,7 +107,7 @@ export default class ServiceWorkerConfigService {
               console.log('Content is cached for offline use.');
 
               // Execute callback
-              if (config && config.onSuccess) {
+              if (config) {
                 config.onRegistrationSuccess(registration);
               }
             }

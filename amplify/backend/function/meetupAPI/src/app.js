@@ -72,7 +72,7 @@ app.get(path + hashKeyPath, async (req, res) => {
   } catch (e) {
     res.statusCode = 500;
     console.log("Could not load items:", e);
-    res.json({success: false, error: 'Could not load items: ' + err.message, url: req.url, req: req});
+    res.json({success: false, error: 'Could not load items: ' + err.message, url: req.url, req: req.body});
   }
 });
 
@@ -94,11 +94,11 @@ app.get(path + '/object' + hashKeyPath + sortKeyPath, async (req, res) => {
     } else {
       res.statusCode = 500;
       console.log("Could not load event. No Item object in returned data:", getRes);
-      res.json({success: false, error: 'Could not load event. No Item object in returned data: ' + JSON.stringify(getRes), url: req.url, req: req});
+      res.json({success: false, error: 'Could not load event. No Item object in returned data: ' + JSON.stringify(getRes), url: req.url, req: req.body});
     }
   } catch (e) {
     res.statusCode = 500;
-    res.json({success: false, error: 'Could not load item: ' + err.message, url: req.url, req: req});
+    res.json({success: false, error: 'Could not load item: ' + err.message, url: req.url, req: req.body});
   }
 });
 
@@ -118,7 +118,7 @@ app.put(path, async (req, res) => {
     if (!getRes.Item) {
       res.statusCode = 500;
       console.log("Could not load event:", getRes);
-      res.json({success: false, error: 'Could not load event: ' + JSON.stringify(getRes), url: req.url, req: req});
+      res.json({success: false, error: 'Could not load event: ' + JSON.stringify(getRes), url: req.url, req: req.body});
       return;
     }
 
@@ -135,7 +135,7 @@ app.put(path, async (req, res) => {
       res.statusCode = 500;
     }
     console.log("Cannot update an Event:", e);
-    res.json({success: false, error: e.message, url: req.url, req: req});
+    res.json({success: false, error: e.message, url: req.url, req: req.body});
   }
 });
 
@@ -155,7 +155,7 @@ app.post(path, async (req, res) => {
       res.statusCode = 500;
     }
     console.log("Cannot create an Event:", e);
-    res.json({success: false, error: e.message, url: req.url, req: req});
+    res.json({success: false, error: e.message, url: req.url, req: req.body});
   }
 });
 
@@ -176,7 +176,7 @@ app.delete(path + '/object' + hashKeyPath + sortKeyPath, async (req, res) => {
   } catch(err) {
     console.log("Cannot delete an Event:", e);
     res.statusCode = 500;
-    res.json({success: false, error: err.message, url: req.url, req: req});
+    res.json({success: false, error: err.message, url: req.url, req: req.body});
   }
 });
 
@@ -194,6 +194,28 @@ app.get(pathWebPushKeys, async (req, res) => {
     res.statusCode = 500;
     console.log("Could not load keys:", e);
     res.json({success: false, error: 'Could not load webpush public key: ' + err.message, url: req.url, req: req.body});
+  }
+});
+
+app.get(pathWebPushSubscriptions + hashKeyPath + sortKeyPath, async (req, res) => {
+  const params = {};
+  const id = decode(req.params[sortKeyName])
+  const pk = WebpushSubscriptionEntity.generatePk(req.params[partitionKeyName]);
+  const sk = WebpushSubscriptionEntity.generateSk(id);
+  params[partitionKeyName] = pk;
+  params[sortKeyName] = sk;
+
+  try {
+    const getRes = await getEntity(params);
+    if (getRes.Item) {
+      res.json({success: true, url: req.url, data: WebpushSubscriptionEntity.fromItem(getRes.Item).toDto()});
+    } else {
+      res.json({success: true, url: req.url, data: null});
+    }
+  } catch (e) {
+    res.statusCode = 500;
+    console.log("Could not load Subscription:", e);
+    res.json({success: false, error: 'Could not load Subscription: ' + err.message, url: req.url, req: req.body});
   }
 });
 
@@ -242,7 +264,7 @@ app.delete(pathWebPushSubscriptions + hashKeyPath + sortKeyPath, async (req, res
   } catch(err) {
     console.log("Cannot delete an Event:", e);
     res.statusCode = 500;
-    res.json({success: false, error: err.message, url: req.url, req: req});
+    res.json({success: false, error: err.message, url: req.url, req: req.body});
   }
 });
 

@@ -13,6 +13,7 @@ export default class DataModal {
         this.flipCardText = this.dataModal.querySelector(".flipCardText");
         this.inputs = this.dataModal.querySelectorAll(".shortInput");
         this.notifyMe = this.dataModal.querySelector(".checkbox > .container > input");
+        this.notifyMe.checked = this._loadNotificationSettingsFromLocalStorage();
     }
 
     enableButtons() {
@@ -115,9 +116,20 @@ export default class DataModal {
         this.notifyMe.addEventListener('click', () => {
             if (this.notifyMe.checked) {
                 notifier.subscribe();
+                this._saveNotificationSettingsToLocalStorage(true);
             } else {
                 notifier.unsubscribe();
+                this._saveNotificationSettingsToLocalStorage(false);
             }
         });
+    }
+
+    _loadNotificationSettingsFromLocalStorage() {
+        const notificationStr = localStorage.getItem("notificationsEnabled");
+        return notificationStr === 'true';
+    }
+
+    _saveNotificationSettingsToLocalStorage(enabled) {
+        localStorage.setItem("notificationsEnabled", String(enabled));
     }
 }

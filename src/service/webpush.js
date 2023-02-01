@@ -59,8 +59,14 @@ export default class WebPushService {
     if(!this.swRegistration) {
       return;
     }
-    if (await this.getSubscribtion()) {
-      return
+    let subscription = await this.getSubscribtion();
+    if (subscription) {
+      const fetchedSubscription = await this.fetchUserSubscription(subscription);
+      if (fetchedSubscription) {
+        return;
+      }
+      console.log("Existing Subscription is not present on the backend. Resubscribing...");
+      this.unsubscribe();
     }
     const key = await this.getWebPushKey();
     if(!key) {
@@ -69,7 +75,7 @@ export default class WebPushService {
     }
     const keyBytes = this.urlB64ToUint8Array(key);
 
-    const subscription = await this.subscribeUserToWebPush(keyBytes)
+    subscription = await this.subscribeUserToWebPush(keyBytes)
 
     if(!subscription) {
       return;
@@ -80,7 +86,11 @@ export default class WebPushService {
   }
 
   async getSubscribtion() {
-    if(!this.swRegistration) {
+    /*
+    * Safari might not have pushManager in ServiceRegistration
+    * See: https://developer.apple.com/forums/thread/712627?login=true&page=1&r_s_legacy=true#743663022
+    */
+    if(!this.swRegistration || !this.swRegistration.pushManager) {
       return null;
     }
     try {
@@ -101,7 +111,6 @@ export default class WebPushService {
 
     try{
       const res = await API.get('meetup', `/webpush/keys`, myInit);
-      console.log('Key Response:', res)
       return res.data
     } catch (err) {
       console.log('Key Response Error:', err.response.data);
@@ -169,16 +178,9 @@ export default class WebPushService {
   }
 
   async deleteUserSubscription(subscription) {
-    if(!subscription.endpoint) {
-      console.log('No endpoint in subscription', subscription)
-      return;
-    }
-    const subscriptionId = subscription.endpoint.split("/").pop();
-
-    const user = await this.getUser();
-    if(!user) {
-      console.log("User not defined");
-      return;
+    const uri = await this.createSubscriptionUri(subscription);
+    if (!uri) {
+      return null;
     }
     const myInit = {
       headers: {
@@ -187,12 +189,53 @@ export default class WebPushService {
     };
 
     try{
-      const id = encode(subscriptionId);
-      const res = await API.del('meetup', `/webpush/subscriptions/${user.username}/${id}`, myInit);
+      const res = await API.del('meetup', uri, myInit);
       console.log('Delete Subscription Response:', res)
     } catch (err) {
       console.log('Delete Subscription Response Error:', err);
     }
+  }
+
+  async fetchUserSubscription(subscription) {
+    const uri = await this.createSubscriptionUri(subscription);
+    if (!uri) {
+      return null;
+    }
+    const myInit = {
+      headers: {
+        'Content-Type' : 'application/json',
+        Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`,
+      }
+    };
+
+    try{
+      const res = await API.get('meetup', uri, myInit);
+      if(!res.success) {
+        return null;
+      }
+      return res.data;
+    } catch (err) {
+      console.log('Cannot fetch subscription:', err);
+      return null;
+    }
+  }
+
+  async createSubscriptionUri(subscription) {
+    if(!subscription.endpoint) {
+      console.log('No endpoint in subscription', subscription)
+      return null;
+    }
+
+    const subscriptionId = subscription.endpoint.split("/").pop();
+
+    const user = await this.getUser();
+    if(!user) {
+      console.log("User not defined");
+      return null;
+    }
+
+    const id = encode(subscriptionId);
+    return `/webpush/subscriptions/${user.username}/${id}`
   }
 
   async getUser() {

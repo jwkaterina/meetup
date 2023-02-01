@@ -5,7 +5,7 @@
 Use [Semantic Commit Messages](https://nitayneeman.com/posts/understanding-semantic-commit-messages-using-git-and-angular/)
 
 ## Run the app locally
-In order to call backend from `localhost` in your chrome browser go to [Flags](chrome://flags/#allow-insecure-localhost) and enable `Allow invalid certificates for resources loaded from localhost`.
+In order to call backend from `localhost` in your chrome browser use [block-insecure-private-network-requests](https://stackoverflow.com/a/66555660) in `chrome://flags/` and enable `Allow invalid certificates for resources loaded from localhost`.
 
 ## Code Quality
 ## Testing
