@@ -41,17 +41,18 @@ export default class UserData {
 
     updateData() {
         const user = this.ctx.principal.user;
-
+    
         if(this.dataModal.formIsValid()) {
             this.dataModal.disableButtons();
             this.loadingAnime.style.display = "block";
-
-            // Check for empty fields
+    
             user.firstName = this.dataModal.firstName.value;
             user.firstName = this.dataModal.firstName.value;
             user.lastName = this.dataModal.lastName.value;
-            user.phoneNumber = this.dataModal.phoneNumber.value;
-
+    
+            const phoneNumber = this.dataModal.phoneNumber.value;
+            user.phoneNumber = this.parsePhone(phoneNumber);
+    
             setTimeout(() => {
                 this.loadingAnime.style.display = "none";
                 this.dataModal.animateFlip();            
@@ -59,11 +60,28 @@ export default class UserData {
                     this.dataModal.close();
                 },1500);
             }, 1000);
-
+    
             return user;
         } else {
             return
         }
+    }
+    
+    parsePhone(phone) {
+        // console.log(phone);
+        let phoneNumber = phone.replaceAll(" ", "");
+        phoneNumber = phoneNumber.replaceAll("-", "");
+        if (phoneNumber.charAt(0) == "0") {
+            phoneNumber = phoneNumber.replace("0", "+49");
+        } else if (phoneNumber.charAt(0) == "4" && phoneNumber.charAt(1) == "9") {
+            phoneNumber = phoneNumber.replace("49", "+49");
+        } else if (phoneNumber.charAt(0) == "+") {
+            phoneNumber = phoneNumber;
+        } else {
+            phoneNumber = "+49".concat(phoneNumber);
+        }
+        // console.log(phoneNumber);
+        return phoneNumber;
     }
 
     displayName(firstName, lastName) {

@@ -108,8 +108,15 @@ export default class DataModal {
     }
 
     phoneIsValid() {
-        // Create function
-        return true
+        const re = /^(\+49|49|0)?\s?\-?[1-9]{1}\s?\-?([0-9]\s?\-?){9,10}$/;
+    
+        if(re.test(this.phoneNumber.value)) {
+            console.log(`${this.phoneNumber.value} matches ${re.source}`);
+            return true
+        } else {
+            console.log(`${this.phoneNumber.value} does NOT match ${re.source}`);
+            return false
+        }
     }
 
     onNotifyMe(notifier) {
