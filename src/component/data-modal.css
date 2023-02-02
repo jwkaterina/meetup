@@ -1,5 +1,6 @@
 #dataModal .flip-card-front {
     display: grid;
+    align-items: center;
     grid-template-rows: repeat(6, 1fr);
 }
 
@@ -16,9 +17,9 @@
     justify-self: end;
 }
 
+
 #intro {
     grid-row: 2;
-    padding-top: 0.7rem;
 }
 
 #firstName {
@@ -33,7 +34,6 @@
     grid-row: 5;
     display: flex;
     justify-content: center;
-    padding-top: 0.7rem;
 }
 
 #dataModal .eventControls {
