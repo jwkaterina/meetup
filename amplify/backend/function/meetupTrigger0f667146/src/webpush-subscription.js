@@ -60,7 +60,7 @@ class WebpushSubscriptionEntity {
         return new WebpushSubscriptionEntity(pk, sk, dto);
     }
 
-    /*
+    /**
     * Use this API to check if a dynamoDb event is of
     * WebpushSubscriptionEntity type.
     * If yes, the entity returned.

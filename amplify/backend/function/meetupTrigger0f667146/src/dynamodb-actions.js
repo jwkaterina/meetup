@@ -26,6 +26,18 @@ async function queryEntities(condition) {
     return res;
 }
 
+async function queryEntitiesWithConditionExpression(expression, attributeValues) {
+    let getItemParams = {
+        TableName: tableName,
+        KeyConditionExpression: expression,
+        ExpressionAttributeValues: attributeValues
+    }
+
+    const res = await dynamodb.query(getItemParams).promise();
+
+    return res;
+}
+
 async function getEntity(params) {
     let getItemParams = {
         TableName: tableName,
@@ -70,6 +82,7 @@ async function deleteEntity(params) {
 
 module.exports = {
     queryEntities,
+    queryEntitiesWithConditionExpression,
     getEntity,
     deleteEntity,
     putEntity,
