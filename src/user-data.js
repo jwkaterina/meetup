@@ -7,13 +7,28 @@ export default class UserData {
         this.webpush = webpush;
         this.ctx = Context.getInstance();
         this.dataModal = new DataModal();
-        this.container = document.getElementById("dataModal");
+        this.logMobile = document.getElementById("loggedButton-circle");
+        this.logPC = document.getElementById("loggedButton-name")
         this.loadingAnime = document.getElementById("loading-data");
 
         this.loadEventListeners();
     }
     
     loadEventListeners() {
+        this.logPC.addEventListener("click", () => {
+            this.showMenu()
+        });
+        this.logMobile.addEventListener("click", () => {
+            this.showMenu()
+        });
+        document.addEventListener("click", (e) => {
+            if (!e.target.matches('.logged')) {
+                const dropdown = document.getElementById("dropdown");
+                  if (dropdown.classList.contains('show-menu')) {
+                    dropdown.classList.remove('show-menu');
+                  }
+                }
+            });
         document.getElementById("log-data").addEventListener("click", () => {
             this.openDataModal();
         });
@@ -21,7 +36,6 @@ export default class UserData {
             this.updateData();
         });
         this.dataModal.cancelButton.addEventListener("click", (e) => {
-            e.preventDefault();
             this.dataModal.close();
         });
 
@@ -30,13 +44,17 @@ export default class UserData {
         }
     }
 
+    showMenu() {
+        const dropdown = document.getElementById("dropdown");
+        dropdown.classList.toggle("show-menu");
+    }
+
     openDataModal() {
         const user = this.ctx.principal.user;
 
         this.dataModal.open();
         this.dataModal.firstName.value = user.firstName;
         this.dataModal.lastName.value = user.lastName;
-        this.dataModal.phoneNumber.value = user.phoneNumber;
     }
 
     updateData() {
@@ -50,9 +68,6 @@ export default class UserData {
             user.firstName = this.dataModal.firstName.value;
             user.lastName = this.dataModal.lastName.value;
     
-            const phoneNumber = this.dataModal.phoneNumber.value;
-            user.phoneNumber = this.parsePhone(phoneNumber);
-    
             setTimeout(() => {
                 this.loadingAnime.style.display = "none";
                 this.dataModal.animateFlip();            
@@ -61,63 +76,25 @@ export default class UserData {
                 },1500);
             }, 500);
     
+            console.log(user);
             return user;
         } else {
             return
         }
     }
-    
-    parsePhone(phone) {
-        let phoneNumber = phone.replaceAll(" ", "");
-        phoneNumber = phoneNumber.replaceAll("-", "");
-        if (phoneNumber.charAt(0) == "0") {
-            phoneNumber = phoneNumber.replace("0", "+49");
-        } else if (phoneNumber.charAt(0) == "4" && phoneNumber.charAt(1) == "9") {
-            phoneNumber = phoneNumber.replace("49", "+49");
-        } else if (phoneNumber.charAt(0) == "+") {
-            phoneNumber = phoneNumber;
-        } else {
-            phoneNumber = "+49".concat(phoneNumber);
-        }
-        return phoneNumber;
-    }
 
     displayName(firstName, lastName) {
-        const loginButton = document.getElementById("loginButton");
-        const logMobile = document.getElementById("loggedButton-circle");
-        const logPC = document.getElementById("loggedButton-name")
-
-        loginButton.style.display = "none";
+        document.getElementById("loginButton").style.display = "none";
 
         const initials = firstName.substring(0, 1).toUpperCase() + lastName.substring(0, 1).toUpperCase();
 
         const media = window.matchMedia("(max-width: 800px)");
         if (media.matches) {
-            logMobile.style.display = "inline-block";
-            logMobile.innerHTML = initials;
+            this.logMobile.style.display = "inline-block";
+            this.logMobile.innerHTML = initials;
         } else {
-            logPC.style.display = "flex";
-            logPC.querySelector(".log-text").innerHTML = `Salut, ${firstName}` ;
+            this.logPC.style.display = "flex";
+            this.logPC.querySelector(".log-text").innerHTML = `Salut, ${firstName}` ;
         }
-
-        logPC.addEventListener("click", () => {
-            this.showMenu()
-        });
-        logMobile.addEventListener("click", () => {
-            this.showMenu()
-        });
-        document.addEventListener("click", (e) => {
-            if (!e.target.matches('.logged')) {
-                const dropdown = document.getElementById("dropdown");
-                  if (dropdown.classList.contains('show-menu')) {
-                    dropdown.classList.remove('show-menu');
-                  }
-                }
-            });
-    }
-
-    showMenu() {
-        const dropdown = document.getElementById("dropdown");
-        dropdown.classList.toggle("show-menu");
     }
 }

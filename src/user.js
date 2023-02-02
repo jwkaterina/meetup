@@ -3,7 +3,6 @@ export default class User{
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.phoneNumber = null;
     }
 
     get name() {

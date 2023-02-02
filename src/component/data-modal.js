@@ -81,42 +81,23 @@ export default class DataModal {
     }
 
     formIsValid() {
-        if(this.firstName.value != "" && this.lastName.value == "") {
-            this.showAlert(this.lastName);
-            return false
-        } else if (this.firstName.value == "" && this.lastName.value != "") {
-            this.showAlert(this.firstName);
-            return false
-        } else {
-            if(this.phoneNumber.value != "" && !this.phoneIsValid()){
-                this.showAlert(this.phoneNumber);
-                return false
-            } else {
-                const inputs = Array.from(this.inputs);
-                inputs.forEach((input) => {
-                const alert = input.nextElementSibling;
-                alert.classList.remove("show-message");
+        const inputs = Array.from(this.inputs);
+
+        if (inputs.find((input) => {return input.value == "";})) {
+            inputs.forEach((input) => {
+                if (input.value == "") {
+                    const alert = input.nextElementSibling;
+                    alert.classList.add("show-message");
+                }
             });
-                return true
-            }
-        }
-    }
+            return false;
+        } 
 
-    showAlert(input) {
-        const alert = input.nextElementSibling;
-        alert.classList.add("show-message");
-    }
-
-    phoneIsValid() {
-        const re = /^(\+49|49|0)?\s?\-?[1-9]{1}\s?\-?([0-9]\s?\-?){9,10}$/;
-    
-        if(re.test(this.phoneNumber.value)) {
-            console.log(`${this.phoneNumber.value} matches ${re.source}`);
-            return true
-        } else {
-            console.log(`${this.phoneNumber.value} does NOT match ${re.source}`);
-            return false
-        }
+        inputs.forEach((input) => {
+            const alert = input.nextElementSibling;
+            alert.classList.remove("show-message");
+        });
+        return true;
     }
 
     onNotifyMe(notifier) {
