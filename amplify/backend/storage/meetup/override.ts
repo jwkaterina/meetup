@@ -5,4 +5,8 @@ export function override(resources: AmplifyDDBResourceTemplate) {
         "AttributeName" : "ExpirationTime",
         "Enabled" : true
     });
+
+    resources.dynamoDBTable.addPropertyOverride("StreamSpecification", {
+        "StreamViewType" : "NEW_AND_OLD_IMAGES"
+    });
 }
