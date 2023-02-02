@@ -7,7 +7,7 @@ export default class Snackbar {
         this.container.className = "show";
         this.container.innerHTML = text;
 
-        setTimeout(function() { 
+        setTimeout(() => { 
             this.container.className = this.container.className.replace("show", ""); 
         }, 3000);
     }

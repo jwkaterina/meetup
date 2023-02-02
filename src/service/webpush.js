@@ -101,6 +101,7 @@ export default class WebPushService {
       return await this.swRegistration.pushManager.getSubscription();
     } catch (err) {
       console.log("Cannot get subscription:", err);
+      this.snackbar.show("Oups! Pas disponible sur votre appareil");
       return null;
     }
   }
