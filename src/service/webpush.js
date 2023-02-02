@@ -1,8 +1,11 @@
 import { API, Auth } from "aws-amplify";
-const { encode } = require('universal-base64url');
+import { encode } from "universal-base64url";
+
+import Snackbar from "../component/snackbar";
 
 export default class WebPushService {
   constructor() {
+    this.snackbar = new Snackbar();
     this.swRegistration = null;
   }
 
@@ -91,6 +94,7 @@ export default class WebPushService {
     * See: https://developer.apple.com/forums/thread/712627?login=true&page=1&r_s_legacy=true#743663022
     */
     if(!this.swRegistration || !this.swRegistration.pushManager) {
+      this.snackbar.show("Oups! Pas disponible sur votre appareil");
       return null;
     }
     try {

@@ -146,7 +146,7 @@ export default class PrincipalEditor {
             if (e instanceof ValidationError) {
                 this.formModal.showError(e.message);
             } else {
-                this.common.showSnackbar("Oups! Quelque chose s'est mal passé...");
+                this.common.snackbar.show("Oups! Quelque chose s'est mal passé...");
                 setTimeout(() => {
                     this.formModal.close();
                 },1000);
@@ -183,7 +183,7 @@ export default class PrincipalEditor {
                 }, 500);
             } catch (err) {
                 this.loadingAnime.style.display = "none";
-                this.common.showSnackbar("Oups! Impossible de créer un groupe...");
+                this.common.snackbar.show("Oups! Impossible de créer un groupe...");
                 setTimeout(() => {
                     this.formModal.close();
                 },1000);
@@ -216,21 +216,27 @@ export default class PrincipalEditor {
 
             try {
                 await this.calendar.updateEvent(event);
-                setTimeout(() => {
-                    this.loadingAnime.style.display = "none";
-                    this.formModal.animateFlip();            
-                    setTimeout(() => {
-                        this.formModal.close();
-                    },1500);
-                }, 500);
+                // setTimeout(() => {
+                //     this.loadingAnime.style.display = "none";
+                //     this.formModal.animateFlip();            
+                //     setTimeout(() => {
+                //         this.formModal.close();
+                //     },1500);
+                // }, 500);
              
             } catch (err) {
                 this.loadingAnime.style.display = "none";
-                this.common.showSnackbar("Oups! Impossible de changer un groupe...");
+                this.common.snackbar.show("Oups! Impossible de changer un groupe...");
                 setTimeout(() => {
                     this.formModal.close();
                 },1000);
                 console.log(err);
+            } finally {
+                this.loadingAnime.style.display = "none";
+                this.common.snackbar.show("Oups! Impossible de changer un groupe...");
+                setTimeout(() => {
+                    this.formModal.close();
+                },1000);
             }
         } else {
             return
@@ -247,7 +253,7 @@ export default class PrincipalEditor {
 
             if (!res.success) {
                 this.loadingAnime.style.display = "none";
-                this.common.showSnackbar("Oups! Impossible d'effacer un groupe...");
+                this.common.snackbar.show("Oups! Impossible d'effacer un groupe...");
                 setTimeout(() => {
                     this.confirmModal.close();
                 },1000);
@@ -264,7 +270,7 @@ export default class PrincipalEditor {
             document.getElementById(id).remove();
         } catch (err) {
             this.loadingAnime.style.display = "none";
-            this.common.showSnackbar("Oups! Impossible d'effacer un groupe...");
+            this.common.snackbar.show("Oups! Impossible d'effacer un groupe...");
             setTimeout(() => {
                 this.confirmModal.close();
             },1000);            

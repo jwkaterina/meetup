@@ -1,4 +1,5 @@
 import { Context } from "./ctx";
+import Snackbar from "./component/snackbar";
 import EventModal from "./component/event-modal";
 
 
@@ -8,6 +9,7 @@ export default class PrincipalCommon {
         this.user = user;
         this.ctx = Context.getInstance();
         this.eventModal = new EventModal();
+        this.snackbar = new Snackbar();
         this.loadingAnime = document.getElementById("loading-event");
 
         this.loadEventListeners();
@@ -120,15 +122,5 @@ export default class PrincipalCommon {
             },1000);   
             console.log("Cannot delete user name:", err);
         } 
-    }
-
-    showSnackbar(text) {
-        const snackbar = document.getElementById("snackbar");
-        snackbar.className = "show";
-        snackbar.innerHTML = text;
-
-        setTimeout(function() { 
-            snackbar.className = snackbar.className.replace("show", ""); 
-        }, 3000);
     }
 }
