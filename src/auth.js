@@ -50,7 +50,7 @@ export default class Auth {
             return;
         }
 
-        const parsedUser = this.parseUser(user);
+        const parsedUser = User.parseUser(user);
         this.principal = new PrincipalCommon(this.calendar, parsedUser);
         
         this.ctx.fetchUsers().then(() => this.calendar.loadEvents());
@@ -72,12 +72,6 @@ export default class Auth {
     hasApproved(groups) {
         return !groups ? false : 
         groups.includes('admin') || groups.includes('editor') || groups.includes('user');
-    }
-
-    parseUser(user) {
-        const givenName = user.attributes.given_name;
-        const familyName = user.attributes.family_name;
-        return new User(user.username, givenName, familyName);
     }
 
     setupControls() {

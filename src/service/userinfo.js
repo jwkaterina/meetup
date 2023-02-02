@@ -20,7 +20,7 @@ export default class UserInfoService {
 
     do {
       const res = await this.sendListUsersInGroupRequest(req, "user");
-      const inUsersGroup = this.processUsersResult(res);
+      const inUsersGroup = this._processUsersResult(res);
       users.push(...inUsersGroup);
     } while (req.nextToken != null);
 
@@ -38,7 +38,7 @@ export default class UserInfoService {
 
     do {
       const res = await this.sendListUsersInGroupRequest(req, "editor");
-      const inEditorsGroup = this.processUsersResult(res);
+      const inEditorsGroup = this._processUsersResult(res);
       users.push(...inEditorsGroup);
     } while (req.nextToken != null);
 
@@ -65,7 +65,29 @@ export default class UserInfoService {
     return rest;
   }
 
-  processUsersResult(result) {
+  async updatePrincipal(user) {
+    if(!user) {
+      throw new Error("user is undefined")
+    }
+    if(!user.firstName) {
+      throw new Error("user.firstName is undefined")
+    }
+    if(!user.lastName) {
+      throw new Error("user.lastName is undefined")
+    }
+    const authUser = await Auth.currentAuthenticatedUser();
+    const currentUser = User.parseUser(authUser);
+
+    if(currentUser.firstName == user.firstName && currentUser.lastName == user.lastName) {
+      return;
+    }
+    await Auth.updateUserAttributes(authUser, {
+      'given_name': user.firstName,
+      'family_name': user.lastName
+    });
+  }
+
+  _processUsersResult(result) {
     if (!result || !result.Users) {
       return [];
     }

@@ -1,12 +1,16 @@
+import UserInfoService from "./service/userinfo";
 import DataModal from "./component/data-modal";
+import Snackbar from "./component/snackbar";
 import { Context } from "./ctx";
 import "./user-data.css";
 
 export default class UserData {
     constructor(webpush) {
+        this.userInfo = new UserInfoService();
         this.webpush = webpush;
         this.ctx = Context.getInstance();
         this.dataModal = new DataModal();
+        this.snackbar = new Snackbar();
         this.logMobile = document.getElementById("loggedButton-circle");
         this.logPC = document.getElementById("loggedButton-name")
         this.loadingAnime = document.getElementById("loading-data");
@@ -32,11 +36,8 @@ export default class UserData {
         document.getElementById("log-data").addEventListener("click", () => {
             this.openDataModal();
         });
-        this.dataModal.submitButton.addEventListener("click", async () => {
-            this.updateData();
-        });
-        this.dataModal.cancelButton.addEventListener("click", (e) => {
-            this.dataModal.close();
+        this.dataModal.onSubmit(async () => {
+            await this.updateData();
         });
 
         if(this.webpush) {
@@ -57,7 +58,7 @@ export default class UserData {
         this.dataModal.lastName.value = user.lastName;
     }
 
-    updateData() {
+    async updateData() {
         const user = this.ctx.principal.user;
     
         if(this.dataModal.formIsValid()) {
@@ -68,15 +69,26 @@ export default class UserData {
             user.firstName = this.dataModal.firstName.value;
             user.lastName = this.dataModal.lastName.value;
     
-            setTimeout(() => {
+            console.log(user);
+            try{
+                await this.userInfo.updatePrincipal(user);
+
+                setTimeout(() => {
+                    this.loadingAnime.style.display = "none";
+                    this.dataModal.animateFlip();            
+                    setTimeout(() => {
+                        this.dataModal.close();
+                    },1500);
+                }, 500);
+                window.location.reload();
+            } catch (error) {
                 this.loadingAnime.style.display = "none";
-                this.dataModal.animateFlip();            
+                this.snackbar.show("Oups! Impossible de modifier...");
                 setTimeout(() => {
                     this.dataModal.close();
-                },1500);
-            }, 500);
-    
-            console.log(user);
+                },1000);
+                console.log("Cannot Update Principal:", error);
+            }
             return user;
         } else {
             return

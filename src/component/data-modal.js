@@ -9,6 +9,7 @@ export default class DataModal {
         this.phoneNumber = document.getElementById("user-phoneNumber");
         this.submitButton = this.dataModal.querySelector(".submitButton");
         this.cancelButton = this.dataModal.querySelector(".cancelButton");
+        this.cancelButton.addEventListener("click", () => this.close());
         this.flipCard = this.dataModal.querySelector(".flip-card-inner");
         this.flipCardText = this.dataModal.querySelector(".flipCardText");
         this.inputs = this.dataModal.querySelectorAll(".shortInput");
@@ -98,6 +99,10 @@ export default class DataModal {
             alert.classList.remove("show-message");
         });
         return true;
+    }
+
+    onSubmit(cb) {
+        this.submitButton.addEventListener("click", cb);
     }
 
     onNotifyMe(notifier) {
