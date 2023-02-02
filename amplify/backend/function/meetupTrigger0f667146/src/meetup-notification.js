@@ -51,10 +51,33 @@ class MeetupNotification {
         }
         try {
           const queryRes = await queryEntitiesWithConditionExpression(expression, attributes);
-          return queryRes.Items.map(item => WebpushSubscriptionEntity.fromItem(item).toDto())
+          return queryRes.Items.map(item => WebpushSubscriptionEntity.fromItem(item))
         } catch (err) {
           console.log("Could not load WebPush Subscriptions from Database:", err);
           return null;
+        }
+    }
+
+    static async processWebPushError(err, sub) {
+        if(err.statusCode && err.statusCode == 410) {
+            console.log("Trying to delete unvalid subscription:", sub);
+            await MeetupNotification.deleteSubscription(sub);
+        } else {
+            console.log('Cannot send push notification:', err);
+        }
+    }
+
+    static async deleteSubscription(sub) {
+        const params = {
+            "PK": sub.pk,
+            "SK": sub.sk
+        };
+
+        try {
+            await deleteEntity(params)
+            console.log("Successfully deleted subscribtion:", sub.toDto());
+        } catch(err) {
+            console.log("Cannot delete Subscribtion:", e);
         }
     }
 }

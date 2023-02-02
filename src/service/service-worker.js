@@ -70,25 +70,90 @@ self.addEventListener('message', (event) => {
   }
 });
 
-// Any other custom service worker logic can go here.
+/*
+Here is the list of all possible push payloads:
+
+{
+  "type":"WEB_PUSH_SUBSCRIBED"
+}
+
+{
+  "type":"MEETUP_UPDATE",
+  "oldMeetup": {
+    "item": {
+      "pk":"weekstart_2023-01-30",
+      "sk":"event_01GR8BBQR0S9BS4QFMWPN4G3T3"
+    },
+    "date":"2023-02-02",
+    "start":"06:00",
+    "end":"09:00"
+  },
+  "newMeetup": {
+    "item": {
+      "pk":"weekstart_2023-01-30",
+      "sk":"event_01GR8BBQR0S9BS4QFMWPN4G3T3"
+    },
+    "date":"2023-02-02",
+    "start":"10:00",
+    "end":"12:00"
+  },
+  "changes": {
+    "start": {
+      "oldValue":"06:00",
+      "newValue":"10:00"
+    },
+    "end": {
+      "oldValue":"09:00",
+      "newValue":"12:00"
+    }
+  }
+}
+
+{
+  "type":"MEETUP_DELETE",
+  "oldMeetup": {
+    "item": {
+      "pk":"weekstart_2023-01-30",
+      "sk":"event_01GRBS7BR0YVXJDNBBHCX6SHXF"
+    },
+    "date":"2023-02-03",
+    "start":"14:00",
+    "end":"15:00"
+  },
+  "newMeetup":null,
+  "changes":null
+}
+
+*/
 
 self.addEventListener('push', function(event) {
   console.log('[Service Worker] Push Received.');
   console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
 
   let message = '';
+  let title = ''
 
-  const payload = JSON.parse(event.data.text());
+  const payload = event.data.json();
 
   if(payload.type == 'WEB_PUSH_SUBSCRIBED') {
+    title = 'Meetup';
     message = 'Tu a été abonné aux notifications push';
   }
 
-  if(!message) {
+  if(payload.type == 'MEETUP_UPDATE') {
+    title = 'Le groupe a était modifié';
+    message = `Date\t: ${payload.newMeetup.date}\nAvant\t: de ${payload.oldMeetup.start} à ${payload.oldMeetup.end}\nPrésent\t: de ${payload.newMeetup.start} à ${payload.newMeetup.end}`;
+  }
+
+  if(payload.type == 'MEETUP_DELETE') {
+    title = 'Le groupe a été annulée';
+    message = `Date: ${payload.oldMeetup.date}\nDe ${payload.oldMeetup.start} à ${payload.oldMeetup.end}`;
+  }
+
+  if(!message || !title) {
     return;
   }
 
-  const title = 'Meetup';
   const options = {
     body: message,
     icon: 'icons/favicon.ico',

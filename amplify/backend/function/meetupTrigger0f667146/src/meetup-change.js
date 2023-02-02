@@ -66,31 +66,31 @@ class MeetupChangeEvent {
             return null;
         }
 
-        const pk = MeetupChangeEvent.parsePK(name, evt[name]);
+        const pk = MeetupChangeEvent.parsePK(name, image);
 
         if (!pk) {
             return null;
         }
 
-        const sk = MeetupChangeEvent.parseSK(name, evt[name]);
+        const sk = MeetupChangeEvent.parseSK(name, image);
 
         if (!sk) {
             return null;
         }
 
-        const date = MeetupChangeEvent.parseDate(name, evt[name]);
+        const date = MeetupChangeEvent.parseDate(name, image);
 
         if (!date) {
             return null;
         }
 
-        const start = MeetupChangeEvent.parseStart(name, evt[name]);
+        const start = MeetupChangeEvent.parseStart(name, image);
 
         if (!start) {
             return null;
         }
 
-        const end = MeetupChangeEvent.parseEnd(name, evt[name]);
+        const end = MeetupChangeEvent.parseEnd(name, image);
 
         if (!end) {
             return null;

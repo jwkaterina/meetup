@@ -216,13 +216,13 @@ export default class PrincipalEditor {
 
             try {
                 await this.calendar.updateEvent(event);
-                // setTimeout(() => {
-                //     this.loadingAnime.style.display = "none";
-                //     this.formModal.animateFlip();            
-                //     setTimeout(() => {
-                //         this.formModal.close();
-                //     },1500);
-                // }, 500);
+                setTimeout(() => {
+                    this.loadingAnime.style.display = "none";
+                    this.formModal.animateFlip();            
+                    setTimeout(() => {
+                        this.formModal.close();
+                    },1500);
+                }, 500);
              
             } catch (err) {
                 this.loadingAnime.style.display = "none";
@@ -231,12 +231,6 @@ export default class PrincipalEditor {
                     this.formModal.close();
                 },1000);
                 console.log(err);
-            } finally {
-                this.loadingAnime.style.display = "none";
-                this.common.snackbar.show("Oups! Impossible de changer un groupe...");
-                setTimeout(() => {
-                    this.formModal.close();
-                },1000);
             }
         } else {
             return

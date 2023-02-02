@@ -81,6 +81,7 @@ export default class WebPushService {
     subscription = await this.subscribeUserToWebPush(keyBytes)
 
     if(!subscription) {
+      this.snackbar.show("Oups! Pas disponible sur votre appareil");
       return;
     }
 
@@ -94,14 +95,12 @@ export default class WebPushService {
     * See: https://developer.apple.com/forums/thread/712627?login=true&page=1&r_s_legacy=true#743663022
     */
     if(!this.swRegistration || !this.swRegistration.pushManager) {
-      this.snackbar.show("Oups! Pas disponible sur votre appareil");
       return null;
     }
     try {
       return await this.swRegistration.pushManager.getSubscription();
     } catch (err) {
       console.log("Cannot get subscription:", err);
-      this.snackbar.show("Oups! Pas disponible sur votre appareil");
       return null;
     }
   }
