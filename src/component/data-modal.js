@@ -3,17 +3,18 @@ import './modals-common.css';
 
 export default class DataModal {
     constructor() {
-        this.dataModal = document.getElementById("dataModal");
+        this.container = document.getElementById("dataModal");
         this.firstName = document.getElementById("user-firstName");
         this.lastName = document.getElementById("user-lastName");
         this.phoneNumber = document.getElementById("user-phoneNumber");
-        this.submitButton = this.dataModal.querySelector(".submitButton");
-        this.cancelButton = this.dataModal.querySelector(".cancelButton");
+        this.submitButton = this.container.querySelector(".submitButton");
+        this.cancelButton = this.container.querySelector(".cancelButton");
         this.cancelButton.addEventListener("click", () => this.close());
-        this.flipCard = this.dataModal.querySelector(".flip-card-inner");
-        this.flipCardText = this.dataModal.querySelector(".flipCardText");
-        this.inputs = this.dataModal.querySelectorAll(".shortInput");
-        this.notifyMe = this.dataModal.querySelector(".checkbox > .container > input");
+        this.flipCard = this.container.querySelector(".flip-card-inner");
+        this.flipCardBack = this.container.querySelector(".flip-card-back");
+        this.flipCardText = this.container.querySelector(".flipCardText");
+        this.inputs = this.container.querySelectorAll(".shortInput");
+        this.notifyMe = this.container.querySelector(".checkbox > .container > input");
         this.notifyMe.checked = this._loadNotificationSettingsFromLocalStorage();
     }
 
@@ -28,15 +29,15 @@ export default class DataModal {
     }
 
     showModal() {
-        this.dataModal.classList.add("show-modal");
+        this.container.classList.add("show-modal");
     }
 
     hideModal() {
-        this.dataModal.classList.add("hide-modal");
+        this.container.classList.add("hide-modal");
         this.enableButtons();
         setTimeout(() => {
-            this.dataModal.classList.remove("show-modal");
-            this.dataModal.classList.remove("hide-modal");
+            this.container.classList.remove("show-modal");
+            this.container.classList.remove("hide-modal");
         }, 200);
     }
 
@@ -74,10 +75,12 @@ export default class DataModal {
         })
     }
 
-    animateFlip() {
+    animateFlip(){
+        this.flipCardBack.style.display = "flex";
         this.flipCard.classList.add("flip");
         setTimeout(() => {
             this.flipCard.classList.remove("flip");
+            this.flipCardBack.style.display = "none";
         },2000); 
     }
 

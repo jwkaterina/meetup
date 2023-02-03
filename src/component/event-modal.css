@@ -15,9 +15,8 @@
 }
 
 #eventContent {
-    overflow-y: scroll;
-    -webkit-overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
+    overflow: auto;
+    /* -webkit-overflow-scrolling: touch; */
 
     grid-column: 1 / span 2;
     grid-row: 2 / span 4;

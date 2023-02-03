@@ -5,20 +5,21 @@ export default class FormModal {
     constructor(editors) {
         this.editors = editors;
 
-        this.formModal = document.getElementById("formModal");
+        this.container = document.getElementById("formModal");
         this.place = document.getElementById("eventPlace");
         this.name = document.getElementById("eventMainName");
         this.date = document.getElementById("eventDate");
         this.start = document.getElementById("eventStart");
         this.end = document.getElementById("eventEnd");
         this.errors = document.getElementById("errors");
-        this.inputs = this.formModal.querySelectorAll(".shortInput");
-        this.createButton = this.formModal.querySelector(".createButton");
-        this.updateButton = this.formModal.querySelector(".updateButton");
-        this.deleteButton = this.formModal.querySelector(".deleteButton");
-        this.cancelButton = this.formModal.querySelector(".cancelButton");
-        this.flipCard = this.formModal.querySelector(".flip-card-inner");
-        this.flipCardText = this.formModal.querySelector(".flipCardText");
+        this.inputs = this.container.querySelectorAll(".shortInput");
+        this.createButton = this.container.querySelector(".createButton");
+        this.updateButton = this.container.querySelector(".updateButton");
+        this.deleteButton = this.container.querySelector(".deleteButton");
+        this.cancelButton = this.container.querySelector(".cancelButton");
+        this.flipCard = this.container.querySelector(".flip-card-inner");
+        this.flipCardBack = this.container.querySelector(".flip-card-back");
+        this.flipCardText = this.container.querySelector(".flipCardText");
         this.loadingAnime = document.getElementById("loading-form");
     }
 
@@ -90,16 +91,16 @@ export default class FormModal {
     }
 
     showModal() {
-        this.formModal.classList.add("show-modal");
+        this.container.classList.add("show-modal");
     }
 
     hideModal() {
-        this.formModal.classList.add("hide-modal");
+        this.container.classList.add("hide-modal");
         this.date.disabled = false;
         this.enableButtons();
         setTimeout(() => {
-            this.formModal.classList.remove("show-modal");
-            this.formModal.classList.remove("hide-modal");
+            this.container.classList.remove("show-modal");
+            this.container.classList.remove("hide-modal");
         }, 200);
     }
 
@@ -143,10 +144,12 @@ export default class FormModal {
         })
     }
 
-    animateFlip() {
+    animateFlip(){
+        this.flipCardBack.style.display = "flex";
         this.flipCard.classList.add("flip");
         setTimeout(() => {
             this.flipCard.classList.remove("flip");
+            this.flipCardBack.style.display = "none";
         },2000); 
     }
 

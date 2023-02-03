@@ -3,10 +3,11 @@ import './modals-common.css';
 
 export default class ConfirmModal {
     constructor() {
-        this.confirmModal = document.getElementById("confirmModal");
-        this.yesButton = this.confirmModal.querySelector(".yesButton");
-        this.noButton = this.confirmModal.querySelector(".noButton");
-        this.flipCard = this.confirmModal.querySelector(".flip-card-inner");
+        this.container = document.getElementById("confirmModal");
+        this.yesButton = this.container.querySelector(".yesButton");
+        this.noButton = this.container.querySelector(".noButton");
+        this.flipCard = this.container.querySelector(".flip-card-inner");
+        this.flipCardBack = this.container.querySelector(".flip-card-back");
     }
 
     enableButtons() {
@@ -20,15 +21,15 @@ export default class ConfirmModal {
     }
 
     showModal() {
-        this.confirmModal.classList.add("show-modal");
+        this.container.classList.add("show-modal");
     }
 
     hideModal() {
-        this.confirmModal.classList.add("hide-modal");
+        this.container.classList.add("hide-modal");
         this.enableButtons();
         setTimeout(() => {
-            this.confirmModal.classList.remove("show-modal");
-            this.confirmModal.classList.remove("hide-modal");
+            this.container.classList.remove("show-modal");
+            this.container.classList.remove("hide-modal");
         }, 200);
     }
 
@@ -59,9 +60,11 @@ export default class ConfirmModal {
     }
 
     animateFlip(){
+        this.flipCardBack.style.display = "flex";
         this.flipCard.classList.add("flip");
         setTimeout(() => {
             this.flipCard.classList.remove("flip");
+            this.flipCardBack.style.display = "none";
         },2000); 
     }
 }

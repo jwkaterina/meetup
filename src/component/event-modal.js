@@ -83,6 +83,7 @@ export default class EventModal {
 
     open() {
         this.showModal();
+        this.content.scroll(0, 0);
         this.hideCalendar();
     }
 
@@ -92,9 +93,11 @@ export default class EventModal {
     }
 
     animateFlip(){
+        this.flipCardBack.style.display = "flex";
         this.flipCard.classList.add("flip");
         setTimeout(() => {
             this.flipCard.classList.remove("flip");
+            this.flipCardBack.style.display = "none";
         },2000); 
     }
 
