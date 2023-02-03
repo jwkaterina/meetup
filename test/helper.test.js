@@ -1,4 +1,4 @@
-import { dateString, getDayIndex, addDays, weekStartOf, generateId } from '../src/helper'
+import { dateString, getDayIndex, addDays, weekStartOf, formatDate, generateId } from '../src/helper'
 import { ulid } from 'ulid';
 import { DateTime } from 'luxon';
 
