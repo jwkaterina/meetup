@@ -24,6 +24,11 @@ export function weekStartOf(dateString) {
     return date.minus({days: offset});
 }
 
+export function formatDate(dateString) {
+    const date = DateTime.fromISO(dateString);
+    return date.toLocaleString(DateTime.DATE_MED);
+}
+
 export function generateId(dateString) {
     const date = DateTime.fromISO(dateString);
     return ulid(date.toMillis());

@@ -13,6 +13,8 @@ import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
+import { formatDate } from '../helper';
+
 clientsClaim();
 self.skipWaiting();
 
@@ -140,14 +142,16 @@ self.addEventListener('push', function(event) {
     message = 'Tu a été abonné aux notifications push';
   }
 
+  const formattedDate = formatDate(payload.newMeetup.date);
+
   if(payload.type == 'MEETUP_UPDATE') {
     title = 'Le groupe a était modifié';
-    message = `Date\t: ${payload.newMeetup.date}\nAvant\t: de ${payload.oldMeetup.start} à ${payload.oldMeetup.end}\nPrésent\t: de ${payload.newMeetup.start} à ${payload.newMeetup.end}`;
+    message = `Date\t: ${formattedDate}\nAvant\t: de ${payload.oldMeetup.start} à ${payload.oldMeetup.end}\nPrésent\t: de ${payload.newMeetup.start} à ${payload.newMeetup.end}`;
   }
 
   if(payload.type == 'MEETUP_DELETE') {
     title = 'Le groupe a été annulée';
-    message = `Date: ${payload.oldMeetup.date}\nDe ${payload.oldMeetup.start} à ${payload.oldMeetup.end}`;
+    message = `Date: ${formattedDate}\nDe ${payload.oldMeetup.start} à ${payload.oldMeetup.end}`;
   }
 
   if(!message || !title) {
