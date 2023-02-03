@@ -78,9 +78,9 @@ export default class UserData {
                     this.dataModal.animateFlip();            
                     setTimeout(() => {
                         this.dataModal.close();
+                        window.location.reload();
                     },1500);
                 }, 500);
-                window.location.reload();
             } catch (error) {
                 this.loadingAnime.style.display = "none";
                 this.snackbar.show("Oups! Impossible de modifier...");
