@@ -29,7 +29,7 @@
     to {opacity: 0;}
 }
 
-.button, .shortInput, select, .select-items div, .select-selected  {
+.button, .shortInput, select, .select-items div, .select-selected, .label  {
     padding: 10px 20px;
 }
 

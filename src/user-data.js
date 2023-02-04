@@ -65,7 +65,7 @@ export default class UserData {
                 label.style.display = "block";
             })
             this.dataModal.firstNameLabel.innerHTML = `Prénom: ${user.firstName}`;
-            this.dataModal.lastNameLabel.innerHTML = `Prénom: ${user.lastName}`;
+            this.dataModal.lastNameLabel.innerHTML = `Nom: ${user.lastName}`;
         }
     }
 
