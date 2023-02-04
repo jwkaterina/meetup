@@ -91,7 +91,7 @@ export default class UserInfoService {
     if(currentUser.firstName == user.firstName && currentUser.lastName == user.lastName) {
       return;
     }
-    await Auth.updateUserAttributes(authUser, {
+    await Auth.updateUserAttributes(this.authUser, {
       'given_name': user.firstName,
       'family_name': user.lastName
     });

@@ -52,23 +52,6 @@ export default class PrincipalCommon {
             }
         });
 
-        lis = `<li class="member" data-user-id="${mainId}">${mainName}</li>
-               <li class="member" data-user-id="${mainId}">${mainName}</li>
-               <li class="member" data-user-id="${mainId}">${mainName}</li>
-               <li class="member" data-user-id="${mainId}">${mainName}</li>
-               <li class="member" data-user-id="${mainId}">${mainName}</li>
-               <li class="member" data-user-id="${mainId}">${mainName}</li>
-               <li class="member" data-user-id="${mainId}">${mainName}</li>
-               <li class="member" data-user-id="${mainId}">${mainName}</li>
-               <li class="member" data-user-id="${mainId}">${mainName}</li>
-               <li class="member" data-user-id="${mainId}">${mainName}</li>
-               <li class="member" data-user-id="${mainId}">${mainName}</li>
-               <li class="member" data-user-id="${mainId}">${mainName}</li>
-               <li class="member" data-user-id="${mainId}">${mainName}</li>
-               <li class="member" data-user-id="${mainId}">${mainName}</li>
-               <li class="member" data-user-id="${mainId}">${mainName}</li>
-               `;
-
         let txt = "";
         txt = `<ol class="list">${lis}</ol>`;
 

@@ -21,11 +21,11 @@ export default class PrincipalUser {
         this.common.eventModal.open();
         this.common.addEventContent(event);
         if (event.memberIds.includes(this.user.id)) {
-            this.common.eventModal.hideSubmitButton();
+            this.common.eventModal.hideJoinButton();
             this.common.eventModal.showDeleteButton();
         } else {
             this.common.eventModal.hideDeleteButton();
-            this.common.eventModal.showSubmitButton();
+            this.common.eventModal.showJoinButton();
         }
     }
 

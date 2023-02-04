@@ -71,6 +71,20 @@ export default class UserData {
 
     async updateData() {
         const user = this.ctx.principal.user;
+
+        if(!this.userInfo.canUpdatePrincipalAttributes()) {
+            this.dataModal.disableButtons();
+            this.loadingAnime.style.display = "block";
+            setTimeout(() => {
+                this.loadingAnime.style.display = "none";
+                this.dataModal.animateFlip();            
+                setTimeout(() => {
+                    this.dataModal.close();
+                    window.location.reload();
+                },1500);
+            }, 500);
+            return
+        }
     
         if(this.dataModal.formIsValid()) {
             this.dataModal.disableButtons();
