@@ -37,6 +37,7 @@ async function checkNewWebPushSubscriptionEvents(event, webPush) {
   for(const sub of subs) {
     try {
       await webPush.sendPush(sub.toDto(), payload);
+      console.log('Successfully sent WebPush Notification:', sub);
     } catch (err) {
       console.log('Cannot send push notification:', err);
     }
