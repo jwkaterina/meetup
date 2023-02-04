@@ -137,7 +137,7 @@ input, select {
     border: none;
 }
 
-.shortInput {
+.shortInput, .label {
     border-radius: 2px;
     width: 100%;
 }
@@ -233,7 +233,7 @@ input, select {
         height: 50vh;
     }
 
-    .button, .shortInput, select, .select-items div, .select-selected  {
+    .button, .shortInput, select, .select-items div, .select-selected, .label  {
         padding: 1vh 2vh;
     }
 

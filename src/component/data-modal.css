@@ -37,6 +37,10 @@
   color: var(--black);
 }
 
+#dataModal #lastName-label {
+  margin-bottom: 10px;
+}
+
 #dataModal .shortInput {
     /* display: none; */
     border: 1px solid var(--gray-base);
@@ -122,5 +126,9 @@
     #dataModal .button:hover {
         background-color: var(--yellow);
         color: var(--white);
+    }
+
+    #dataModal #lastName-label {
+      margin-bottom: 2vh;
     }
 }
