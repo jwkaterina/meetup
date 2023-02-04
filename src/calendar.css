@@ -246,6 +246,10 @@ body {
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2), 0 4px 15px rgba(0, 0, 0, 0.19);
     }
 
+    #addButton:hover {
+        transform: scale(1);
+    }
+
     #todayButton {
         font-size: 25px;
     }
