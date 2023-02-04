@@ -12,7 +12,8 @@ export default class EventModal {
         this.flipCardText = this.container.querySelector(".flipCardText");
         this.flipCardBack = this.container.querySelector(".flip-card-back");
         this.flipCardFront = this.container.querySelector(".flip-card-front");
-        this.content = this.container.querySelector("#eventContent");
+        this.members = this.container.querySelector(".members");
+        this.place = this.container.querySelector(".place");
     }
 
     hideEditButton() {
@@ -83,7 +84,7 @@ export default class EventModal {
 
     open() {
         this.showModal();
-        this.content.scroll(0, 0);
+        this.members.scroll(0, 0);
         this.hideCalendar();
     }
 
@@ -110,7 +111,14 @@ export default class EventModal {
         this.flipCardFront.style.background = color;
     }
 
-    setContent(txt) {
-        this.content.innerHTML = txt;
+    setMembers(txt) {
+        this.members.innerHTML = txt;
+    }
+
+    setPlace(place) {
+        this.place.innerHTML = `<a class="place" href="http://maps.google.com/?q=${place}" target="_blank">
+        <i id="mapIcon" class="fa-solid fa-map-location-dot"></i>
+        ${place}
+        </a>`
     }
 }

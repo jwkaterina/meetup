@@ -13,31 +13,12 @@
 }
 
 #dataModal .cancelButton{
-    grid-row: 1;
     justify-self: end;
 }
 
-
-#intro {
-    grid-row: 2;
-}
-
-#firstName {
-    grid-row: 3;
-}
-
-#lastName {
-    grid-row: 4;
-}
-
 .checkbox {
-    grid-row: 5;
     display: flex;
     justify-content: center;
-}
-
-#dataModal .eventControls {
-    grid-row: 6;
 }
 
 #dataModal .button {
@@ -50,7 +31,14 @@
     color: var(--white);
 }
 
+#dataModal .label {
+  display: none;
+  color: white;
+
+}
+
 #dataModal .shortInput {
+    /* display: none; */
     border: 1px solid var(--gray-base);
     background-color: var(--gray-darkest);
     color: var(--gray-base);

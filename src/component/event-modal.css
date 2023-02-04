@@ -4,36 +4,14 @@
 
 #eventModal .flip-card-front {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(6, 1fr);
+    grid-template-rows: 2fr 1fr 7fr 2fr;
 }
 
 #eventModal .cancelButton {
-    grid-column: 1 / span 2;
-    grid-row: 1;
     justify-self: end;
 }
 
-#eventContent {
-    overflow: auto;
-    /* -webkit-overflow-scrolling: touch; */
-
-    grid-column: 1 / span 2;
-    grid-row: 2 / span 4;
-    padding: 0 50px;
-    color: var(--white);
-    text-align: center;
-    line-height: 2rem;
-    font-size: 1rem;
-    margin-bottom: 20px;
-}
-
-#mapIcon {
-    margin-right: 15px;
-    font-size: 20px;
-}
-
-#eventContent .place {
+#eventModal .place {
     color: var(--black);
     font-style: italic;
 }
@@ -42,9 +20,19 @@
     color: var(--white);
 }
 
-#eventModal .eventControls {
-    grid-column: 1 / span 2;
-    grid-row: 6;
+#mapIcon {
+    margin-right: 15px;
+    font-size: 20px;
+}
+
+#eventModal .members {
+    overflow: auto;
+    padding: 0 50px;
+    color: var(--white);
+    text-align: center;
+    line-height: 2rem;
+    font-size: 1rem;
+    margin-bottom: 20px;
 }
 
 #eventModal .button {
@@ -58,7 +46,7 @@
 }
 
 @media (max-width: 800px) {
-    #eventContent {
+    #eventModal .members {
         color: var(--white);
         text-align: center;
         line-height: 2rem;

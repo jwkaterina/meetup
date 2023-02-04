@@ -3,6 +3,14 @@ import User from "../user";
 
 export default class UserInfoService {
 
+  constructor() {
+    Auth.currentAuthenticatedUser()
+    .then(user => this.authUser = user)
+    .catch(err => console.log("Cannot get Auth.currentAuthenticatedUser:", err));
+
+    this._sotialProviderPrefixes = ["google"];
+  }
+
   /*
   * This limit applied by AWS Cognito Service
   */
@@ -67,16 +75,18 @@ export default class UserInfoService {
 
   async updatePrincipal(user) {
     if(!user) {
-      throw new Error("user is undefined")
+      throw new Error("user is undefined");
     }
     if(!user.firstName) {
-      throw new Error("user.firstName is undefined")
+      throw new Error("user.firstName is undefined");
     }
     if(!user.lastName) {
-      throw new Error("user.lastName is undefined")
+      throw new Error("user.lastName is undefined");
     }
-    const authUser = await Auth.currentAuthenticatedUser();
-    const currentUser = User.parseUser(authUser);
+    if(!this.authUser) {
+      throw new Error("authUser undefined");
+    }
+    const currentUser = User.parseUser(this.authUser);
 
     if(currentUser.firstName == user.firstName && currentUser.lastName == user.lastName) {
       return;
@@ -85,6 +95,16 @@ export default class UserInfoService {
       'given_name': user.firstName,
       'family_name': user.lastName
     });
+  }
+
+  canUpdatePrincipalAttributes() {
+    if(!this.authUser) {
+      return false;
+    }
+    const presentPrefixes = this._sotialProviderPrefixes.filter(prefix => {
+      return this.authUser.username.startsWith(prefix);
+    });
+    return presentPrefixes.length > 0 ? false : true;
   }
 
   _processUsersResult(result) {

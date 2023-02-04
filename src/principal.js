@@ -70,14 +70,10 @@ export default class PrincipalCommon {
                `;
 
         let txt = "";
-        txt = `<a class="place" href="http://maps.google.com/?q=${event.place}" target="_blank">
-            <i id="mapIcon" class="fa-solid fa-map-location-dot"></i>
-            ${event.place}
-            </a>
-            <ol class="list">${lis}</ol>`;
+        txt = `<ol class="list">${lis}</ol>`;
 
-        
-        this.eventModal.setContent(txt);
+        this.eventModal.setPlace(event.place);
+        this.eventModal.setMembers(txt);
         this.eventModal.setCardColor(event.color);
     }
 

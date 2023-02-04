@@ -14,6 +14,9 @@ export default class DataModal {
         this.flipCardBack = this.container.querySelector(".flip-card-back");
         this.flipCardText = this.container.querySelector(".flipCardText");
         this.inputs = this.container.querySelectorAll(".shortInput");
+        this.labels = this.container.querySelectorAll(".label");
+        this.firstNameLabel = document.getElementById("firstName-label");
+        this.lastNameLabel = document.getElementById("lastName-label");
         this.notifyMe = this.container.querySelector(".checkbox > .container > input");
         this.notifyMe.checked = this._loadNotificationSettingsFromLocalStorage();
     }

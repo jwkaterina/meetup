@@ -51,11 +51,22 @@ export default class UserData {
     }
 
     openDataModal() {
-        const user = this.ctx.principal.user;
-
         this.dataModal.open();
-        this.dataModal.firstName.value = user.firstName;
-        this.dataModal.lastName.value = user.lastName;
+        
+        const user = this.ctx.principal.user;
+        if(this.userInfo.canUpdatePrincipalAttributes()) {
+            this.dataModal.firstName.value = user.firstName;
+            this.dataModal.lastName.value = user.lastName;
+        } else {
+            this.dataModal.inputs.forEach((input) => {
+                input.style.display ="none";
+            });
+            this.dataModal.labels.forEach((label) => {
+                label.style.display = "block";
+            })
+            this.dataModal.firstNameLabel.innerHTML = `Prénom: ${user.firstName}`;
+            this.dataModal.lastNameLabel.innerHTML = `Prénom: ${user.lastName}`;
+        }
     }
 
     async updateData() {
