@@ -84,6 +84,12 @@ class MeetupChangeEvent {
             return null;
         }
 
+        const place = MeetupChangeEvent.parsePlace(name, image);
+
+        if (!place) {
+            return null;
+        }
+
         const start = MeetupChangeEvent.parseStart(name, image);
 
         if (!start) {
@@ -96,7 +102,7 @@ class MeetupChangeEvent {
             return null;
         }
 
-        return new MeetupEntity(pk, sk, date, start, end);
+        return new MeetupEntity(pk, sk, date, place, start, end);
     }
 
     static parsePK(imageName, image) {
@@ -151,6 +157,24 @@ class MeetupChangeEvent {
             return null;
         }
         return image.date.S;
+    }
+
+    static parsePlace(imageName, image) {
+        if(!image) {
+            console.log(`No dynamoDB ${imageName} Item!`);
+            return null;
+        }
+
+        if (!image.place) {
+            console.log(`Broken MeetupChangeEvent DynamoDb Item. No ${imageName}.place`);
+            return null;
+        }
+
+        if (!image.place.S) {
+            console.log(`Broken MeetupChangeEvent DynamoDb Item. No ${imageName}.place.S`);
+            return null;
+        }
+        return image.place.S;
     }
 
     static parseStart(imageName, image) {
