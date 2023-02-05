@@ -87,6 +87,7 @@ Here is the list of all possible push payloads:
       "sk":"event_01GR8BBQR0S9BS4QFMWPN4G3T3"
     },
     "date":"2023-02-02",
+    "place":"Alexander Platz",
     "start":"06:00",
     "end":"09:00"
   },
@@ -96,6 +97,7 @@ Here is the list of all possible push payloads:
       "sk":"event_01GR8BBQR0S9BS4QFMWPN4G3T3"
     },
     "date":"2023-02-02",
+    "place":"Brandenburger Tor",
     "start":"10:00",
     "end":"12:00"
   },
@@ -107,6 +109,10 @@ Here is the list of all possible push payloads:
     "end": {
       "oldValue":"09:00",
       "newValue":"12:00"
+    },
+    "place": {
+      "oldValue":"Alexander Platz",
+      "newValue":"Brandenburger Tor"
     }
   }
 }
@@ -132,29 +138,11 @@ self.addEventListener('push', function(event) {
   console.log('[Service Worker] Push Received.');
   console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
 
-  let message = '';
-  let title = ''
-
   const payload = event.data.json();
 
-  if(payload.type == 'WEB_PUSH_SUBSCRIBED') {
-    title = 'Meetup';
-    message = 'Tu a été abonné aux notifications push';
-  }
+  const { title, message } = parsePushPayload(payload);
 
-  const formattedDate = formatDate(payload.newMeetup.date);
-
-  if(payload.type == 'MEETUP_UPDATE') {
-    title = 'Le groupe a était modifié';
-    message = `Date\t: ${formattedDate}\nAvant\t: de ${payload.oldMeetup.start} à ${payload.oldMeetup.end}\nPrésent\t: de ${payload.newMeetup.start} à ${payload.newMeetup.end}`;
-  }
-
-  if(payload.type == 'MEETUP_DELETE') {
-    title = 'Le groupe a été annulée';
-    message = `Date: ${formattedDate}\nDe ${payload.oldMeetup.start} à ${payload.oldMeetup.end}`;
-  }
-
-  if(!message || !title) {
+  if(!title || !message) {
     return;
   }
 
@@ -167,6 +155,62 @@ self.addEventListener('push', function(event) {
   const promise = registration.showNotification(title, options);
   event.waitUntil(promise);
 });
+
+function parsePushPayload(payload) {
+  if(payload.type == 'WEB_PUSH_SUBSCRIBED') {
+
+    return {
+      title: 'Meetup',
+      message: 'Tu a été abonné aux notifications'
+    }
+  }
+
+  if(payload.type == 'MEETUP_DELETE') {
+
+    return {
+      title: 'Le groupe a été annulée',
+      message: `Date: ${formatDate(payload.oldMeetup.date)} à ${payload.oldMeetup.start}h`
+    }
+  }
+
+  if(payload.type == 'MEETUP_UPDATE') {
+
+    const message = createMeetupUpdateMessage(payload);
+
+    if (!message) {
+      return {
+        title: null,
+        message: null
+      }
+    }
+
+    return {
+      title: 'Le groupe a était modifié',
+      message: message
+    }
+  }
+
+  return {
+    title: null,
+    message: null
+  }
+}
+
+function createMeetupUpdateMessage(payload) {
+  if(!payload.changes) {
+    return null;
+  }
+  if(!payload.changes.start && !payload.changes.end && !payload.changes.place) {
+    return null;
+  }
+  if(!payload.changes.start && !payload.changes.end) {
+    return `Date\t: ${formatDate(payload.newMeetup.date)} à ${payload.oldMeetup.start}h\nAvant\t: ${payload.oldMeetup.place}\nPrésent\t: ${payload.newMeetup.place}`;
+  }
+  if(!payload.changes.place) {
+    return `Date\t: ${formatDate(payload.newMeetup.date)}\nAvant\t: de ${payload.oldMeetup.start} à ${payload.oldMeetup.end}\nPrésent\t: de ${payload.newMeetup.start} à ${payload.newMeetup.end}`;
+  }
+  return `Date\t: ${formatDate(payload.newMeetup.date)} à ${payload.newMeetup.start}h\nAvant\t: ${payload.oldMeetup.place}\nPrésent\t: ${payload.newMeetup.place}`;
+}
 
 const origin = self.location.origin;
 
