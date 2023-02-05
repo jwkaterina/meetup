@@ -47,7 +47,8 @@ describe('PrincipalCommon', function () {
                         <button type="button" class="cancelButton">
                             <div class="cross"></div>
                         </button>
-                        <div id="eventContent"></div>         
+                        <div class="place"></div>
+                        <div class="members"></div>          
                         <div class="eventControls">
                             <input type="button" value="S'inscrire" class="button joinButton">
                             <input type="button" value="Annuler" class="button deleteButton">
@@ -59,10 +60,10 @@ describe('PrincipalCommon', function () {
                     </div>
                 </div>
             </div>
-        </div>  
+        </div>
         <div class="loading">
             <img id="loading-event" src="icons/loading-event.gif" alt="">
-         </div>
+        </div>
         `;
     });
 

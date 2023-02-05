@@ -2,9 +2,10 @@ const Item = require('./item');
 const MeetupChangeEntity = require('./meetup-change-entity');
 
 class MeetupEntity {
-    constructor(pk, sk, date, start, end) {
+    constructor(pk, sk, date, place, start, end) {
         this.item = new Item(pk, sk);
         this.date = date;
+        this.place = place;
         this.start = start;
         this.end = end;
     }
@@ -60,6 +61,10 @@ class MeetupEntity {
         if (this.end !== that.end) {
             changesFound = true;
             changes["end"] = {oldValue: this.end, newValue: that.end}
+        }
+        if (this.place !== that.place) {
+            changesFound = true;
+            changes["place"] = {oldValue: this.place, newValue: that.place}
         }
 
         if (!changesFound) {
