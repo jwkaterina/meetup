@@ -2,6 +2,7 @@ import { Hub, Auth as AmplifyAuth } from "aws-amplify";
 import { Context } from "./ctx";
 import PrincipalCommon from "./principal";
 import User from "./user";
+import IntroModal from "./component/intro-modal";
 
 export default class Auth {
     constructor(calendar, userData) {
@@ -46,6 +47,8 @@ export default class Auth {
     processUser(user) {
         const groups = this.parseUserGroups(user);
         if (!this.hasApproved(groups)) {
+            const introModal = new IntroModal();
+            introModal.show();
             console.log('uninvited user signed in');
             return;
         }

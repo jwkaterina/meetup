@@ -190,37 +190,6 @@ input, select {
     height: 20px;
 }
 
-/* Snackbar */
-#snackbar {
-    visibility: hidden;
-    width: 250px;
-    transform: translateX(-50%); 
-    background-color: var(--yellow); 
-    color: var(--black); 
-    text-align: center;
-    border-radius: 2px;
-    padding: 16px; 
-    position: fixed; 
-    z-index: 20; 
-    left: 50%; 
-    bottom: 30px; 
-  }
-  
-#snackbar.show {
-    visibility: visible;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    }
-
-@keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-    to {bottom: 30px; opacity: 1;}
-}
-
-@keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-    to {bottom: 0; opacity: 0;}
-}
-
 @media (max-width: 800px) {
 
     /* Modals */
