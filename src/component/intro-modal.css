@@ -1,0 +1,58 @@
+#introModal {
+    /* visibility: hidden; */
+    padding: 30px 50px;
+    justify-items: center;
+    display: grid;
+    grid-template-rows: 3fr 2fr 1fr;
+    /* justify-content: center; */
+    border-radius: 5px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    position: absolute;
+    z-index: 2;
+    width: 500px;
+    height: 500px;
+    background-color: white;
+    color: black;
+    visibility: visible;
+    animation: introFadein 0.5s forwards;
+}
+
+#introModal img {
+    width: 150px;
+    height: 150px;
+    align-self: center;
+}
+
+.okButton {
+    width: 150px;
+    background-color: var(--blue);
+    color: black;
+}
+
+#introModal .lead {
+    text-align: center;
+}
+
+@keyframes introFadein {
+    from {top: -50%; opacity: 0;}
+    to {top: 50%; opacity: 1;}
+}
+
+@media (max-width: 800px) {
+
+    #introModal {
+        padding: 3vh 5vh;
+        left: 5vw;
+        top: 25vh;
+        transform: translate(0, 0);
+        width: 90vw;
+        height: 50vh;
+    }
+
+    @keyframes introFadein {
+        from {top: -50vh; opacity: 0;}
+        to {top: 25vh; opacity: 1;}
+    }
+}

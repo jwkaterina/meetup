@@ -39,8 +39,7 @@ export default class ConfirmModal {
             document.body.classList.remove("transparent");
             document.body.classList.remove("opaque");
             document.body.style.overflow = 'auto'; 
-        }, 200);
-        
+        }, 200); 
     }
 
     hideCalendar() {
