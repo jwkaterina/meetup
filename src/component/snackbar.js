@@ -1,3 +1,5 @@
+import './snackbar.css';
+
 export default class Snackbar {
     constructor() {
         this.container = document.getElementById("snackbar");
