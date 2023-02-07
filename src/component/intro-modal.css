@@ -1,10 +1,8 @@
 #introModal {
-    /* visibility: hidden; */
     padding: 30px 50px;
     justify-items: center;
     display: grid;
     grid-template-rows: 3fr 2fr 1fr;
-    /* justify-content: center; */
     border-radius: 5px;
     left: 50%;
     top: 50%;

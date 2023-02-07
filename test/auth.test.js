@@ -13,6 +13,7 @@ jest.mock("../src/ctx");
 jest.mock("../src/calendar");
 jest.mock("../src/principal");
 jest.mock("../src/user-data");
+jest.mock("../src/component/intro-modal");
  
 describe('Auth', () => {
 
