@@ -10,7 +10,6 @@ export default class IntroModal {
     show() {
         document.body.appendChild(this.clon);
 
-        scroll(0, 0);
         document.body.classList.add("opaque");
         document.body.style.overflow = 'hidden';
         const container = document.getElementById("introModal");
