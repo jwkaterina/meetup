@@ -36,6 +36,9 @@ export default class Calendar {
         document.getElementById("todayButton").addEventListener("click", () => {
             this.showCurrentWeek()
         });
+        document.getElementById("loadButton").addEventListener("click", () => {
+            window.location.reload();
+        });
         window.addEventListener("load", () => {
             scrollTo(0, 375);
         });

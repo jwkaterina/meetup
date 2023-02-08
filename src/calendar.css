@@ -86,6 +86,10 @@ body {
     transform: scale(1.5);
 }
 
+#loadButton {
+    display: none;
+}
+
 /* calendar */
 
 #calendar {
@@ -223,13 +227,16 @@ body {
         font-size: 3vh;
     }
 
+    .header .i-btn:hover {
+        transform: scale(1);
+    }
+
     .weekControls {
         display: none;
     }
 
-    .slot,
-    .time {
-        height: var(--slotHeightMobile);
+    #loadButton {
+        display: block;
     }
 
     #addButton {
@@ -246,16 +253,13 @@ body {
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2), 0 4px 15px rgba(0, 0, 0, 0.19);
     }
 
-    #addButton:hover {
-        transform: scale(1);
-    }
-
-    #todayButton {
+    #todayButton, #loadButton {
         font-size: 25px;
     }
 
-    #todayButton:hover {
-        transform: scale(1);
+    .slot,
+    .time {
+        height: var(--slotHeightMobile);
     }
 
     .dayTime {
