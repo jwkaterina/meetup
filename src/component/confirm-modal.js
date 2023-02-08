@@ -43,7 +43,6 @@ export default class ConfirmModal {
     }
 
     hideCalendar() {
-        scroll(0, 0);
         document.body.classList.add("opaque");
         document.body.style.overflow = 'hidden';
     }
