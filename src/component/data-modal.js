@@ -55,7 +55,6 @@ export default class DataModal {
     }
 
     hideCalendar() {
-        scroll(0, 0);
         document.body.classList.add("opaque");
         document.body.style.overflow = 'hidden';
     }
