@@ -94,6 +94,7 @@
     
     #loggedButton-circle {
         border-radius: 50%;
+        margin-left: 15px;
         width: 30px;
         height: 30px;
         line-height: 30px;
