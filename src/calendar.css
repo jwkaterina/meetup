@@ -33,8 +33,10 @@ body {
 
 .header {
     height: 80px;
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    width: 100vw;
     text-align: center;
     padding: 10px 50px;
     display: flex;
@@ -93,8 +95,18 @@ body {
 /* calendar */
 
 #calendar {
+    position: relative;
+    top: 80px;
     display: flex;
-    width: 100%;
+    width: 300vw;
+    transition: opacity 200ms ease-in;
+}
+
+#calendar #main-week,
+#calendar #prev-week,
+#calendar #next-week {
+    display: flex;
+    width: 100vw;
     transition: opacity 200ms ease-in;
 }
 

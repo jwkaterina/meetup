@@ -72,20 +72,23 @@ export default class Calendar {
     }
 
     setupTimes() {
-        const header = document.createElement("div");
-        header.className = "columnHeader";
-        const slots = document.createElement("div");
-        slots.className = "slots";
-        for (let hour = 0; hour < 24; hour++) {
-            const timeSlot = document.createElement("div");
-            timeSlot.setAttribute("data-hour", hour);
-            timeSlot.className = "time";
-            timeSlot.innerHTML = `${hour}:00`;
-            slots.appendChild(timeSlot);
-        }
-        document.querySelector(".dayTime").appendChild(header);
-        document.querySelector(".dayTime").appendChild(slots);
-        document.querySelector(`.time[data-hour="0"]`).style.visibility = "hidden";
+        const timeColumns = document.querySelectorAll(".dayTime");
+        timeColumns.forEach((timeColumn) => {
+            const header = document.createElement("div");
+            header.className = "columnHeader";
+            const slots = document.createElement("div");
+            slots.className = "slots";
+            for (let hour = 0; hour < 24; hour++) {
+                const timeSlot = document.createElement("div");
+                timeSlot.setAttribute("data-hour", hour);
+                timeSlot.className = "time";
+                timeSlot.innerHTML = `${hour}:00`;
+                slots.appendChild(timeSlot);
+            }
+            timeColumn.appendChild(header);
+            timeColumn.appendChild(slots);
+            timeColumn.querySelector(`.time[data-hour="0"]`).style.visibility = "hidden";
+        })
     }
 
 
@@ -93,8 +96,8 @@ export default class Calendar {
         const media = window.matchMedia("(max-width: 800px)");
         const cal = this;
 
-            const days = document.querySelectorAll(".day");
-            days.forEach((day) => {
+        const days = document.querySelectorAll(".day");
+        days.forEach((day) => {
             const shortName = day.getAttribute("data-shortName");
             const fullName = day.getAttribute("data-name");
             const header = document.createElement("div");
