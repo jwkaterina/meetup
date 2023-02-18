@@ -144,19 +144,49 @@ export default class Calendar {
         this.loadEvents();
     }
 
+    setupMainWeek() {
+        for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
+            const mainWeek = document.getElementById("main-week");
+            const date = addDays(this.ctx.weekStart, dayIndex);
+            const display = date.toLocaleDateString('fr-FR', {day: "numeric"});
+            mainWeek.querySelector(`.day[data-dayIndex="${dayIndex}"] .dayDisplay`).innerHTML = display;
+        }
+    }
+    setupPrevWeek() {
+        for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
+            const prevWeek = document.getElementById("prev-week");
+            const prevWeekStart = addDays(this.ctx.weekStart, -7);
+            const date = addDays(prevWeekStart, dayIndex);
+            const display = date.toLocaleDateString('fr-FR', {day: "numeric"});
+            prevWeek.querySelector(`.day[data-dayIndex="${dayIndex}"] .dayDisplay`).innerHTML = display;
+        }
+    }
+    setupNextWeek() {
+        for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
+            const nextWeek = document.getElementById("next-week");
+            const nextWeekStart = addDays(this.ctx.weekStart, 7);
+            const date = addDays(nextWeekStart, dayIndex);
+            const display = date.toLocaleDateString('fr-FR', {day: "numeric"});
+            nextWeek.querySelector(`.day[data-dayIndex="${dayIndex}"] .dayDisplay`).innerHTML = display;
+        }
+    }
+
+    setupDates() {
+        this.setupMainWeek();
+        this.setupPrevWeek();
+        this.setupNextWeek();
+    }
+
     showWeek() {
          document.getElementById("currentMonth").innerHTML = this.ctx.weekStart.toLocaleDateString('fr-FR', {month: "long"});
 
-        for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
-            const date = addDays(this.ctx.weekStart, dayIndex);
-            const display = date.toLocaleDateString('fr-FR', {day: "numeric"});
-            document.querySelector(`.day[data-dayIndex="${dayIndex}"] .dayDisplay`).innerHTML = display;
-        }
-        if (this.weekOffset == 0) {
-            this.showCurrentDay();
-        } else {
-            this.hideCurrentDay();
-        }
+     
+         
+        // if (this.weekOffset == 0) {
+        //     this.showCurrentDay();
+        // } else {
+        //     this.hideCurrentDay();
+        // }
     }
 
     showCurrentWeek() {
