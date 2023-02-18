@@ -12,6 +12,8 @@ class Ctx {
     this.currentEvent = null;
     this.weekStart = null;
     this.weekEnd = null;
+    this.prevWeekStart = null;
+    this.nextWeekStart = null;
   }
 
   switchToUserMode(calendar, principalCommon) {

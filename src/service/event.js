@@ -110,8 +110,9 @@ export default class EventService {
 
     _loadFromLocalStorage(weekStart) {
         const allEvents = this._loadEventsFromLocalStorage();
-        const key = dateString(weekStart);
-        const weekEvents = allEvents[key];
+        // const key = dateString(weekStart);
+        // const weekEvents = allEvents[key];
+        const weekEvents = allEvents[weekStart];
         if (!weekEvents) {
             return [];
         }

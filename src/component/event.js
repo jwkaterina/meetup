@@ -1,5 +1,5 @@
 import './event.css';
-import { dateString, getDayIndex, generateId } from "../helper";
+import { dateString, getDayIndex, addDays } from "../helper";
 import { Context } from "../ctx";
 
 export default class Event {
@@ -49,8 +49,8 @@ export default class Event {
         const media = window.matchMedia("(max-width: 800px)");
 
         if (
-            this.date < dateString(ctx.weekStart) ||
-            this.date > dateString(ctx.weekEnd)
+            this.date < dateString(ctx.prevWeekStart) ||
+            this.date > dateString(addDays(ctx.nextWeekStart, 6))
         ) {
             document.getElementById(`${this.id}`).remove();
             return;
@@ -126,8 +126,22 @@ export default class Event {
         } 
         eventSlot.style.background = this.color;
 
-        const day = document.querySelector(`.day[data-dayIndex="${this.dayIndex}"]`);
-        const slots = day.querySelector(".slots");
+        let day;
+        let slots;
+        // console.log(this.weekStart)
+        if(this.weekStart == dateString(ctx.weekStart)) {
+            day = document.getElementById("main-week").querySelector(`.day[data-dayIndex="${this.dayIndex}"]`);
+            slots = day.querySelector(".slots");
         slots.appendChild(eventSlot);
+        } else if(this.weekStart == dateString(ctx.prevWeekStart)) {
+            day = document.getElementById("prev-week").querySelector(`.day[data-dayIndex="${this.dayIndex}"]`);
+            slots = day.querySelector(".slots");
+        slots.appendChild(eventSlot);
+        } else if(this.weekStart == dateString(ctx.nextWeekStart)) {
+            day = document.getElementById("next-week").querySelector(`.day[data-dayIndex="${this.dayIndex}"]`);
+            slots = day.querySelector(".slots");
+            slots.appendChild(eventSlot);
+        }
+        
     }
 }
