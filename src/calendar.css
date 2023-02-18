@@ -98,16 +98,50 @@ body {
     position: relative;
     top: 80px;
     display: flex;
-    width: 300vw;
+    width: 100vw;
     transition: opacity 200ms ease-in;
 }
 
-#calendar #main-week,
-#calendar #prev-week,
-#calendar #next-week {
+#main-week, #prev-week, #next-week {
     display: flex;
-    width: 100vw;
+    width: 100%;
     transition: opacity 200ms ease-in;
+}
+
+#main-week {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+#prev-week {
+    position: absolute;
+    top: 0;
+    left: -100%;
+}
+
+#next-week {
+    position: absolute;
+    top: 0;
+    left: 100%;
+}
+
+.move-right {
+    animation: move-right 1s forwards;
+}
+
+.move-left {
+    animation: move-left 1s forwards;
+}
+
+@keyframes move-right {
+    from {transform: translate(0, 0);}
+    to {transform: translate(100%, 0);}
+}
+
+@keyframes move-left {
+    from {transform: translate(0, 0);}
+    to {transform: translate(-100%, 0);}
 }
 
 .opaque::before {

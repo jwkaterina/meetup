@@ -16,17 +16,17 @@ export default class Calendar {
         this.setupTimes();
         this.calculateCurrentWeek();
         this.setupDays();
-        this.showWeek();
+        this.setupDates();
         this.setupControls();
         this.addSwipe();
     }
 
     setupControls() {  
         document.getElementById("nextWeekBtn").addEventListener("click", () => {
-            this.changeWeek(1)
+            this.nextWeek();
         });
         document.getElementById("prevWeekBtn").addEventListener("click", () => {
-            this.changeWeek(-1)
+            this.prevWeek();
         });
         document.getElementById("addButton").addEventListener("click", () => {
             if(this.ctx.principal) {
@@ -57,8 +57,8 @@ export default class Calendar {
         let that = this;
 
         function checkDirection() {
-        if (touchstartX - touchendX > 80) {that.changeWeek(1)};
-        if (touchendX -touchstartX > 80) {that.changeWeek(-1)};
+        if (touchstartX - touchendX > 80) {that.nextWeek()};
+        if (touchendX -touchstartX > 80) {that.prevWeek()};
         }
 
         document.getElementById("calendar").addEventListener('touchstart', e => {
@@ -136,12 +136,36 @@ export default class Calendar {
         this.ctx.weekEnd = addDays(this.ctx.weekStart, 6);
     }
 
-    changeWeek(number) {
-        this.weekOffset += number;
-        this.ctx.weekStart = addDays(this.ctx.weekStart, 7 * number);
-        this.ctx.weekEnd = addDays(this.ctx.weekEnd, 7 * number);
-        this.showWeek();
+    showCurrentWeek() {
+        this.hideCurrentDay();
+        this.weekOffset = 0;
+        this.calculateCurrentWeek();
+        this.setupDates();
         this.loadEvents();
+    }
+
+    nextWeek() {
+        document.getElementById("calendar").classList.add("move-left");
+        setTimeout(() => {
+            document.getElementById("calendar").classList.remove("move-left");
+            this.weekOffset += 1;
+            this.ctx.weekStart = addDays(this.ctx.weekStart, 7);
+            this.ctx.weekEnd = addDays(this.ctx.weekEnd, 7);
+            this.setupDates();
+            // this.loadEvents();
+        },1000);
+    }
+
+    prevWeek() {
+        document.getElementById("calendar").classList.add("move-right");
+        setTimeout(() => {
+            document.getElementById("calendar").classList.remove("move-right");
+            this.weekOffset += -1;
+            this.ctx.weekStart = addDays(this.ctx.weekStart, -7);
+            this.ctx.weekEnd = addDays(this.ctx.weekEnd, -7);
+            this.setupDates();
+            // this.loadEvents();
+        },1000);
     }
 
     setupMainWeek() {
@@ -172,36 +196,22 @@ export default class Calendar {
     }
 
     setupDates() {
+        document.getElementById("currentMonth").innerHTML = this.ctx.weekStart.toLocaleDateString('fr-FR', {month: "long"});
         this.setupMainWeek();
         this.setupPrevWeek();
         this.setupNextWeek();
-    }
 
-    showWeek() {
-         document.getElementById("currentMonth").innerHTML = this.ctx.weekStart.toLocaleDateString('fr-FR', {month: "long"});
-
-     
-         
-        // if (this.weekOffset == 0) {
-        //     this.showCurrentDay();
-        // } else {
-        //     this.hideCurrentDay();
-        // }
-    }
-
-    showCurrentWeek() {
-        this.hideCurrentDay();
-        this.weekOffset = 0;
-        this.calculateCurrentWeek();
-        this.showWeek();
-        this.loadEvents();
-
+        if (this.weekOffset == 0) {
+            this.showCurrentDay();
+        } else {
+            this.hideCurrentDay();
+        }
     }
 
     showCurrentDay() {
         const now = new Date();
         const dayIndex = getDayIndex(now);
-        document.querySelector(`.day[data-dayIndex="${dayIndex}"]`).classList.add("currentDay");
+        document.getElementById("main-week").querySelector(`.day[data-dayIndex="${dayIndex}"]`).classList.add("currentDay");
     }
 
     hideCurrentDay() {
