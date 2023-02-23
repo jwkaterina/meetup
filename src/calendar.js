@@ -137,7 +137,6 @@ export default class Calendar {
 
         this.ctx.prevWeekStart = addDays(this.ctx.weekStart, -7);
         this.ctx.nextWeekStart = addDays(this.ctx.weekStart, 7);
-        // console.log("prev-week: ", dateString(this.ctx.prevWeekStart), "main-week: ", dateString(this.ctx.weekStart),"next-week: ", dateString(this.ctx.nextWeekStart));
     }
 
     showCurrentWeek() {
@@ -149,6 +148,7 @@ export default class Calendar {
     }
 
     nextWeek() {
+        document.getElementById("next-week").style.display = "flex";
         document.getElementById("calendar").classList.add("move-left");
         setTimeout(() => {
             document.getElementById("calendar").classList.remove("move-left");
@@ -157,13 +157,14 @@ export default class Calendar {
             this.ctx.weekEnd = addDays(this.ctx.weekEnd, 7);
             this.ctx.prevWeekStart = addDays(this.ctx.weekStart, -7);
             this.ctx.nextWeekStart = addDays(this.ctx.weekStart, 7);
+            document.getElementById("next-week").style.display = "";
             this.setupDates();
             this.loadEvents();
-            // console.log("prev-week: ", dateString(this.ctx.prevWeekStart), "main-week: ", dateString(this.ctx.weekStart),"next-week: ", dateString(this.ctx.nextWeekStart));
-        },1000);
+        },500);
     }
 
     prevWeek() {
+        document.getElementById("prev-week").style.display = "flex";
         document.getElementById("calendar").classList.add("move-right");
         setTimeout(() => {
             document.getElementById("calendar").classList.remove("move-right");
@@ -172,10 +173,10 @@ export default class Calendar {
             this.ctx.weekEnd = addDays(this.ctx.weekEnd, -7);
             this.ctx.prevWeekStart = addDays(this.ctx.weekStart, -7);
             this.ctx.nextWeekStart = addDays(this.ctx.weekStart, 7);
+            document.getElementById("prev-week").style.display = "";
             this.setupDates();
             this.loadEvents();
-            // console.log("prev-week: ", dateString(this.ctx.prevWeekStart), "main-week: ", dateString(this.ctx.weekStart),"next-week: ", dateString(this.ctx.nextWeekStart));
-        },1000);
+        },500);
     }
 
     setupMainWeek() {

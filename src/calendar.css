@@ -100,6 +100,7 @@ body {
     display: flex;
     width: 100vw;
     transition: opacity 200ms ease-in;
+    /* overflow-x: hidden; */
 }
 
 #main-week, #prev-week, #next-week {
@@ -115,23 +116,25 @@ body {
 }
 
 #prev-week {
+    display: none;
     position: absolute;
     top: 0;
     left: -100%;
 }
 
 #next-week {
+    display: none;
     position: absolute;
     top: 0;
     left: 100%;
 }
 
 .move-right {
-    animation: move-right 1s forwards;
+    animation: move-right 0.5s forwards;
 }
 
 .move-left {
-    animation: move-left 1s forwards;
+    animation: move-left 0.5s forwards;
 }
 
 @keyframes move-right {
