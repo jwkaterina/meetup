@@ -16,14 +16,14 @@ class Ctx {
     this.nextWeekStart = null;
   }
 
-  switchToUserMode(calendar, principalCommon) {
-    this.principal = new PrincipalUser(calendar, principalCommon);
+  switchToUserMode(eventCalendar, principalCommon) {
+    this.principal = new PrincipalUser(eventCalendar, principalCommon);
     document.getElementById("addButton").style.display = "none";            
     console.log("User Mode");
   }
 
-  switchToEditorMode(calendar, principalCommon) {
-    this.principal = new PrincipalEditor(calendar, principalCommon);
+  switchToEditorMode(eventCalendar, principalCommon) {
+    this.principal = new PrincipalEditor(eventCalendar, principalCommon);
     document.getElementById("addButton").style.display = "";            
     console.log("Editor Mode");
   }

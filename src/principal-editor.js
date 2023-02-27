@@ -6,8 +6,8 @@ import ConfirmModal from "./component/confirm-modal";
 import { dateString, addDays } from "./helper";
 
 export default class PrincipalEditor {
-    constructor(calendar, principalCommon) {
-        this.calendar = calendar;
+    constructor(eventCalendar, principalCommon) {
+        this.eventCalendar = eventCalendar;
         this.ctx = Context.getInstance();
         this.common = principalCommon;
         this.formModal = null;
@@ -138,7 +138,7 @@ export default class PrincipalEditor {
             return false;
         }
         try {
-            this.calendar.checkEvent(event, this.formModal.newStart, this.formModal.newEnd, this.formModal.newDate);
+            this.eventCalendar.checkEvent(event, this.formModal.newStart, this.formModal.newEnd, this.formModal.newDate);
            
             this.ctx.currentEvent = null;
             return true;
@@ -173,7 +173,7 @@ export default class PrincipalEditor {
             const newMainId = this.formModal.name.options[selectedIndex].dataset.editorId;
             event.memberIds[0] = newMainId;
             try {
-                await this.calendar.createEvent(event);
+                await this.eventCalendar.createEvent(event);
                 setTimeout(() => {
                     this.loadingAnime.style.display = "none";
                     this.formModal.animateFlip();            
@@ -215,7 +215,7 @@ export default class PrincipalEditor {
             event.memberIds[0] = newMainId;
 
             try {
-                await this.calendar.updateEvent(event);
+                await this.eventCalendar.updateEvent(event);
                 setTimeout(() => {
                     this.loadingAnime.style.display = "none";
                     this.formModal.animateFlip();            
@@ -243,7 +243,7 @@ export default class PrincipalEditor {
 
         try{
             const id = this.ctx.currentEvent.id;
-            const res = await this.calendar.deleteEvent(id);
+            const res = await this.eventCalendar.deleteEvent(id);
 
             if (!res.success) {
                 this.loadingAnime.style.display = "none";
