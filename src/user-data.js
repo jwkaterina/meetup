@@ -14,6 +14,9 @@ export default class UserData {
         this.logMobile = document.getElementById("loggedButton-circle");
         this.logPC = document.getElementById("loggedButton-name")
         this.loadingAnime = document.getElementById("loading-data");
+        this.dropdown = document.getElementById("dropdown");
+        this.logData = document.getElementById("log-data");
+        this.logBtn = document.getElementById("loginButton");
 
         this.loadEventListeners();
     }
@@ -27,13 +30,12 @@ export default class UserData {
         });
         document.addEventListener("click", (e) => {
             if (!e.target.matches('.logged')) {
-                const dropdown = document.getElementById("dropdown");
-                  if (dropdown.classList.contains('show-menu')) {
-                    dropdown.classList.remove('show-menu');
+                  if (this.dropdown.classList.contains('show-menu')) {
+                    this.dropdown.classList.remove('show-menu');
                   }
                 }
             });
-        document.getElementById("log-data").addEventListener("click", () => {
+        this.logData.addEventListener("click", () => {
             this.openDataModal();
         });
         this.dataModal.onSubmit(async () => {
@@ -46,8 +48,7 @@ export default class UserData {
     }
 
     showMenu() {
-        const dropdown = document.getElementById("dropdown");
-        dropdown.classList.toggle("show-menu");
+        this.dropdown.classList.toggle("show-menu");
     }
 
     openDataModal() {
@@ -121,7 +122,7 @@ export default class UserData {
     }
 
     displayName(firstName, lastName) {
-        document.getElementById("loginButton").style.display = "none";
+        this.logBtn.style.display = "none";
 
         const initials = firstName.substring(0, 1).toUpperCase() + lastName.substring(0, 1).toUpperCase();
 
