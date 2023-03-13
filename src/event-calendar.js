@@ -26,43 +26,24 @@ export default class EventCalendar {
         event.show();
     }
 
-    loadEvents() {
-        const events = document.querySelectorAll(".event");
+    loadEvents(weekContainer, weekStart) {
+        const events = weekContainer.querySelectorAll(".event");
         events.forEach((event) => {
             event.remove();
         });
 
-        this.loadMainWeek();
-        this.loadPrevWeek();
-        this.loadNextWeek();
+        this._loadWeek(weekStart);
     }
 
-    loadMainWeek() {
-        this.events = this.eventService.loadEvents(dateString(this.ctx.weekStart))
+    _loadWeek(weekStart) {
+        this.events = this.eventService.loadEvents(dateString(weekStart))
         .then(events => {
             this.events = events;
             this.events.forEach(evt => evt.show());
+            console.log(`Got events for weekStart: ${weekStart}`, events);
         })
         .catch(err => console.log("Cannot Load Events:", err));
-    };
-
-    loadPrevWeek() {
-        this.events = this.eventService.loadEvents(dateString(this.ctx.prevWeekStart))
-        .then(events => {
-            this.events = events;
-            this.events.forEach(evt => evt.show());
-        })
-        .catch(err => console.log("Cannot Load Events:", err));
-    };
-
-    loadNextWeek() {
-        this.events = this.eventService.loadEvents(dateString(this.ctx.nextWeekStart))
-        .then(events => {
-            this.events = events;
-            this.events.forEach(evt => evt.show());
-        })
-        .catch(err => console.log("Cannot Load Events:", err));
-    };    
+    };   
 
     async deleteEvent(id) {
         const removedEvent = this._removeEventLocally(id);

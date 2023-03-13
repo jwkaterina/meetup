@@ -12,7 +12,7 @@ export default class App {
         this.configureAmplify();
         Amplify.configure(awsconfig);
         this.eventCalendar = new EventCalendar();
-        this.calendar = new Calendar();
+        this.calendar = new Calendar(this.eventCalendar);
 
         this.calendar.setup();
 
@@ -24,7 +24,7 @@ export default class App {
         } else {
             this.userData = new UserData(null);
         }
-        this.auth = new Auth(this.eventCalendar, this.userData);
+        this.auth = new Auth(this.calendar, this.userData);
         this.auth.checkUser();
     }
 

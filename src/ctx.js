@@ -1,6 +1,7 @@
 import PrincipalUser from "./principal-user.js";
 import PrincipalEditor from "./principal-editor.js";
 import UserInfoService from "./service/userinfo";
+import { addDays } from "./helper";
 
 
 class Ctx {
@@ -12,8 +13,20 @@ class Ctx {
     this.currentEvent = null;
     this.weekStart = null;
     this.weekEnd = null;
-    this.prevWeekStart = null;
-    this.nextWeekStart = null;
+  }
+
+  get prevWeekStart() {
+    if (!this.weekStart) {
+      return null;
+    }
+    return addDays(this.weekStart, -7);
+  }
+
+  get nextWeekStart() {
+    if (!this.weekStart) {
+      return null;
+    }
+    return addDays(this.weekStart, 7);
   }
 
   switchToUserMode(eventCalendar, principalCommon) {

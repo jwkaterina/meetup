@@ -1,17 +1,14 @@
 import { Context } from "../ctx";
 import { getDayIndex, addDays } from "../helper";
-import EventCalendar from "../event-calendar";
+import Week from "./week";
 import "./calendar.css";
 
 export default class Calendar {
-    constructor() {
+    constructor(eventCalendar) {
         this.ctx = Context.getInstance();
-        this.eventCalendar = new EventCalendar();
+        this.eventCalendar = eventCalendar;
         this.weekOffset = 0;
         this.calendar = document.getElementById("calendar");
-        this.mainWeek = document.getElementById("main-week");
-        this.prevWeek = document.getElementById("prev-week");
-        this.nextWeek = document.getElementById("next-week");
         this.month = document.getElementById("currentMonth");
         this.days = document.querySelectorAll(".day");
         this.nextWeekBtn = document.getElementById("nextWeekBtn");
@@ -25,9 +22,19 @@ export default class Calendar {
         this.setupTimes();
         this.calculateCurrentWeek();
         this.setupDays();
-        this.setupDates();
+        // this.setupDates();
         this.setupControls();
-        this.addSwipe();
+        // this.addSwipe();
+        this.assignWeeks();
+    }
+
+    assignWeeks() {
+        this.prevWeek = new Week(this.ctx.prevWeekStart, "prev-week");
+        this.mainWeek = new Week(this.ctx.weekStart, "main-week");
+        this.nextWeek = new Week(this.ctx.nextWeekStart, "next-week");
+        this.mainWeek.appendToParent(this.calendar);
+        this.mainWeek.insertBefore(this.prevWeek);
+        this.mainWeek.insertAfter(this.nextWeek);
     }
 
     setupControls() {  
@@ -154,9 +161,6 @@ export default class Calendar {
         const now = new Date();
         this.ctx.weekStart = addDays(now, -getDayIndex(now));
         this.ctx.weekEnd = addDays(this.ctx.weekStart, 6);
-
-        this.ctx.prevWeekStart = addDays(this.ctx.weekStart, -7);
-        this.ctx.nextWeekStart = addDays(this.ctx.weekStart, 7);
     }
 
     showCurrentWeek() {
@@ -202,18 +206,23 @@ export default class Calendar {
     }
 
     showNextWeek() {
-        this.nextWeek.style.display = "flex";
-        this.calendar.classList.add("move-left");
+        // this.nextWeek.style.display = "flex";
+        // this.calendar.classList.add("move-left");
         setTimeout(() => {
-            this.calendar.classList.remove("move-left");
+            // this.calendar.classList.remove("move-left");
             this.weekOffset += 1;
             this.ctx.weekStart = this.ctx.nextWeekStart;
             this.ctx.weekEnd = addDays(this.ctx.weekEnd, 7);
-            this.ctx.prevWeekStart = addDays(this.ctx.weekStart, -7);
-            this.ctx.nextWeekStart = addDays(this.ctx.weekStart, 7);
-            this.nextWeek.style.display = "";
-            this.setupDates();
-            this.eventCalendar.loadEvents();
+            
+            this.prevWeek.remove();
+            this.prevWeek = this.mainWeek;
+            this.mainWeek = this.nextWeek;
+            this.nextWeek = new Week(this.ctx.nextWeekStart, "next-week");
+            this.prevWeek.className = "prev-week";
+            this.mainWeek.className = "main-week";
+            this.mainWeek.insertAfter(this.nextWeek);
+
+            // this.setupDates();
         },500);
     }
 
@@ -231,5 +240,11 @@ export default class Calendar {
             this.setupDates();
             this.eventCalendar.loadEvents();
         },500);
+    }
+
+    loadEvents() {
+        this.prevWeek.loadEvents();
+        this.mainWeek.loadEvents();
+        this.nextWeek.loadEvents();
     }
 }

@@ -109,20 +109,20 @@ body {
     transition: opacity 200ms ease-in;
 }
 
-#main-week {
+.main-week {
     position: relative;
     top: 0;
     left: 0;
 }
 
-#prev-week {
+.prev-week {
     display: none;
     position: absolute;
     top: 0;
     left: -100%;
 }
 
-#next-week {
+.next-week {
     display: none;
     position: absolute;
     top: 0;

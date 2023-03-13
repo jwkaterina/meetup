@@ -12,7 +12,7 @@ export default class UserData {
         this.dataModal = new DataModal();
         this.snackbar = new Snackbar();
         this.logMobile = document.getElementById("loggedButton-circle");
-        this.logPC = document.getElementById("loggedButton-name")
+        this.logPC = document.getElementById("loggedButton-name");
         this.loadingAnime = document.getElementById("loading-data");
         this.dropdown = document.getElementById("dropdown");
         this.logData = document.getElementById("log-data");
