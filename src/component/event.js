@@ -48,18 +48,18 @@ export default class Event {
         const ctx = Context.getInstance();
         const media = window.matchMedia("(max-width: 800px)");
 
-        if (
-            this.date < dateString(ctx.prevWeekStart) ||
-            this.date > dateString(addDays(ctx.nextWeekStart, 6))
-        ) {
+        const weekContainer = this.findWeekContainer();
+
+        if (!weekContainer) {
+            //TODO: Check if we really need to delete the event as weeks are immutable
             document.getElementById(`${this.id}`).remove();
             return;
         }
 
         let eventSlot;
         let numberCircle;
-        if (document.getElementById(`${this.id}`)) {
-            eventSlot = document.getElementById(`${this.id}`);
+        if (weekContainer.querySelector(`#${this.id}`)) {
+            eventSlot = weekContainer.querySelector(`#${this.id}`);
             numberCircle = eventSlot.querySelector(".circle");
         } else {
             eventSlot = document.createElement("div");
@@ -126,22 +126,18 @@ export default class Event {
         } 
         eventSlot.style.background = this.color;
 
-        let day;
-        let slots;
-        // console.log(this.weekStart)
-        if(this.weekStart == dateString(ctx.weekStart)) {
-            day = document.getElementById("main-week").querySelector(`.day[data-dayIndex="${this.dayIndex}"]`);
-            slots = day.querySelector(".slots");
+        const day = weekContainer.querySelector(`.day[data-dayIndex="${this.dayIndex}"]`);
+        const slots = day.querySelector(".slots");
         slots.appendChild(eventSlot);
-        } else if(this.weekStart == dateString(ctx.prevWeekStart)) {
-            day = document.getElementById("prev-week").querySelector(`.day[data-dayIndex="${this.dayIndex}"]`);
-            slots = day.querySelector(".slots");
-        slots.appendChild(eventSlot);
-        } else if(this.weekStart == dateString(ctx.nextWeekStart)) {
-            day = document.getElementById("next-week").querySelector(`.day[data-dayIndex="${this.dayIndex}"]`);
-            slots = day.querySelector(".slots");
-            slots.appendChild(eventSlot);
+    }
+
+    findWeekContainer() {
+        const calendar = document.getElementById("calendar");
+        for (const child of calendar.children) {
+            if(child.dataset.weekStart && child.dataset.weekStart === this.weekStart) {
+                return child;
+            }
         }
-        
+        return null;
     }
 }
