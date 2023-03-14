@@ -1,12 +1,14 @@
 import { Context } from "../ctx";
 import { getDayIndex, addDays } from "../helper";
 import Week from "./week";
+import EventService from "../service/event";
 import "./calendar.css";
 
 export default class Calendar {
     constructor(eventCalendar) {
         this.ctx = Context.getInstance();
         this.eventCalendar = eventCalendar;
+        this.eventService = new EventService();
         this.weekOffset = 0;
         this.calendar = document.getElementById("calendar");
         this.month = document.getElementById("currentMonth");
@@ -29,12 +31,13 @@ export default class Calendar {
     }
 
     assignWeeks() {
-        this.prevWeek = new Week(this.ctx.prevWeekStart, "prev-week");
-        this.mainWeek = new Week(this.ctx.weekStart, "main-week");
-        this.nextWeek = new Week(this.ctx.nextWeekStart, "next-week");
-        this.mainWeek.appendToParent(this.calendar);
-        this.mainWeek.insertBefore(this.prevWeek);
-        this.mainWeek.insertAfter(this.nextWeek);
+        this.weeks = {};
+        this.weeks.prevWeek = new Week(this.ctx.prevWeekStart, "prev-week");
+        this.weeks.mainWeek = new Week(this.ctx.weekStart, "main-week");
+        this.weeks.nextWeek = new Week(this.ctx.nextWeekStart, "next-week");
+        this.weeks.mainWeek.appendToParent(this.weeks.calendar);
+        this.weeks.mainWeek.insertBefore(this.weeks.prevWeek);
+        this.weeks.mainWeek.insertAfter(this.weeks.nextWeek);
     }
 
     setupControls() {  
@@ -73,8 +76,8 @@ export default class Calendar {
         let that = this;
 
         function checkDirection() {
-        if (touchstartX - touchendX > 80) {that.nextWeek()};
-        if (touchendX -touchstartX > 80) {that.prevWeek()};
+        if (touchstartX - touchendX > 80) {that.showNextWeek()};
+        if (touchendX -touchstartX > 80) {that.showPrevWeek()};
         }
 
         this.calendar.addEventListener('touchstart', e => {
@@ -175,7 +178,7 @@ export default class Calendar {
         for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
             const date = addDays(this.ctx.weekStart, dayIndex);
             const display = date.toLocaleDateString('fr-FR', {day: "numeric"});
-            this.mainWeek.querySelector(`.day[data-dayIndex="${dayIndex}"] .dayDisplay`).innerHTML = display;
+            this.weeks.mainWeek.querySelector(`.day[data-dayIndex="${dayIndex}"] .dayDisplay`).innerHTML = display;
         }
     }
     setupPrevWeek() {
@@ -196,7 +199,7 @@ export default class Calendar {
     showCurrentDay() {
         const now = new Date();
         const dayIndex = getDayIndex(now);
-        this.mainWeek.querySelector(`.day[data-dayIndex="${dayIndex}"]`).classList.add("currentDay");
+        this.weeks.mainWeek.querySelector(`.day[data-dayIndex="${dayIndex}"]`).classList.add("currentDay");
     }
 
     hideCurrentDay() {
@@ -214,20 +217,20 @@ export default class Calendar {
             this.ctx.weekStart = this.ctx.nextWeekStart;
             this.ctx.weekEnd = addDays(this.ctx.weekEnd, 7);
             
-            this.prevWeek.remove();
-            this.prevWeek = this.mainWeek;
-            this.mainWeek = this.nextWeek;
-            this.nextWeek = new Week(this.ctx.nextWeekStart, "next-week");
-            this.prevWeek.className = "prev-week";
-            this.mainWeek.className = "main-week";
-            this.mainWeek.insertAfter(this.nextWeek);
+            this.weeks.prevWeek.removeFromDom();
+            this.weeks.prevWeek = this.weeks.mainWeek;
+            this.weeks.mainWeek = this.weeks.nextWeek;
+            this.weeks.nextWeek = new Week(this.ctx.nextWeekStart, "next-week");
+            this.weeks.prevWeek.className = "prev-week";
+            this.weeks.mainWeek.className = "main-week";
+            this.weeks.mainWeek.insertAfter(this.weeks.nextWeek);
 
             // this.setupDates();
         },500);
     }
 
     showPrevWeek() {
-        this.prevWeek.style.display = "flex";
+        this.weeks.prevWeek.style.display = "flex";
         this.calendar.classList.add("move-right");
         setTimeout(() => {
             this.calendar.classList.remove("move-right");
@@ -236,15 +239,38 @@ export default class Calendar {
             this.ctx.weekEnd = addDays(this.ctx.weekEnd, -7);
             this.ctx.prevWeekStart = addDays(this.ctx.weekStart, -7);
             this.ctx.nextWeekStart = addDays(this.ctx.weekStart, 7);
-            this.prevWeek.style.display = "";
+            this.weeks.prevWeek.style.display = "";
             this.setupDates();
             this.eventCalendar.loadEvents();
         },500);
     }
 
     loadEvents() {
-        this.prevWeek.loadEvents();
-        this.mainWeek.loadEvents();
-        this.nextWeek.loadEvents();
+        Object.values(this.weeks).forEach(week => week.loadEvents());
+    }
+
+    async createEvent(event) {
+        const evt = await this.eventService.createEvent(event);
+        Object.values(this.weeks).forEach(week => week.pushEvent(evt));
+    }
+
+    async updateEvent(event) {
+        const evt = await this.eventService.updateEvent(event);
+        Object.values(this.weeks).forEach(week => week.deleteEvent(evt.id));
+        Object.values(this.weeks).forEach(week => week.pushEvent(evt));
+    }
+
+    async deleteEvent(id) {
+        const removedEvent = Object.values(this.weeks)
+        .find(week => week.deleteEvent(id) != null);
+        if (removedEvent) {
+            return await this.eventService.deleteEvent(removedEvent);
+        } else {
+            return Promise.reject(`No event with id ${id}`);
+        }
+    }
+
+    checkEvent(event, newStart, newEnd, newDate) {
+        Object.values(this.weeks).forEach(week => week.checkEvent(event, newStart, newEnd, newDate));
     }
 }

@@ -1,4 +1,3 @@
-import EventCalendar from "./event-calendar";
 import Calendar from "./component/calendar";
 import { Amplify } from 'aws-amplify';
 import awsconfig from './aws-exports';
@@ -11,8 +10,7 @@ export default class App {
     constructor() {
         this.configureAmplify();
         Amplify.configure(awsconfig);
-        this.eventCalendar = new EventCalendar();
-        this.calendar = new Calendar(this.eventCalendar);
+        this.calendar = new Calendar();
 
         this.calendar.setup();
 

@@ -54,14 +54,14 @@ export default class Auth {
         }
 
         const parsedUser = User.parseUser(user);
-        this.principal = new PrincipalCommon(this.calendar.eventCalendar, parsedUser);
+        this.principal = new PrincipalCommon(this.calendar, parsedUser);
         
         this.ctx.fetchUsers().then(() => this.calendar.loadEvents());
         
         if (groups.includes('admin') || groups.includes('editor')) {
-            this.ctx.switchToEditorMode(this.calendar.eventCalendar, this.principal);
+            this.ctx.switchToEditorMode(this.calendar, this.principal);
         } else {
-            this.ctx.switchToUserMode(this.calendar.eventCalendar, this.principal);
+            this.ctx.switchToUserMode(this.calendar, this.principal);
         }
         this.userData.displayName(parsedUser.firstName, parsedUser.lastName);
         

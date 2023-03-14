@@ -29,14 +29,14 @@ class Ctx {
     return addDays(this.weekStart, 7);
   }
 
-  switchToUserMode(eventCalendar, principalCommon) {
-    this.principal = new PrincipalUser(eventCalendar, principalCommon);
+  switchToUserMode(calendar, principalCommon) {
+    this.principal = new PrincipalUser(principalCommon);
     document.getElementById("addButton").style.display = "none";            
     console.log("User Mode");
   }
 
-  switchToEditorMode(eventCalendar, principalCommon) {
-    this.principal = new PrincipalEditor(eventCalendar, principalCommon);
+  switchToEditorMode(calendar, principalCommon) {
+    this.principal = new PrincipalEditor(calendar, principalCommon);
     document.getElementById("addButton").style.display = "";            
     console.log("Editor Mode");
   }

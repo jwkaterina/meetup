@@ -4,8 +4,8 @@ import EventModal from "./component/event-modal";
 
 
 export default class PrincipalCommon {
-    constructor(eventCalendar, user) {
-        this.eventCalendar = eventCalendar;
+    constructor(calendar, user) {
+        this.calendar = calendar;
         this.user = user;
         this.ctx = Context.getInstance();
         this.eventModal = new EventModal();
@@ -68,7 +68,7 @@ export default class PrincipalCommon {
         event.memberIds.push(this.user.id);
 
         try {
-            await this.eventCalendar.updateEvent(event);
+            await this.calendar.updateEvent(event);
             this.eventModal.writeOnFlip("Bonne prédication!");
             setTimeout(() => {
                 this.loadingAnime.style.display = "none";
@@ -101,7 +101,7 @@ export default class PrincipalCommon {
         event.memberIds.splice(index, 1);
 
         try {
-            await this.eventCalendar.updateEvent(event);
+            await this.calendar.updateEvent(event);
             this.eventModal.writeOnFlip("Ta participation est annulée.");
             setTimeout(() => {
                 this.loadingAnime.style.display = "none";                
