@@ -52,14 +52,14 @@ export default class Event {
 
         if (!weekContainer) {
             //TODO: Check if we really need to delete the event as weeks are immutable
-            document.getElementById(`${this.id}`).remove();
+            // document.getElementById(`${this.id}`).remove();
             return;
         }
 
         let eventSlot;
         let numberCircle;
-        if (weekContainer.querySelector(`#${this.id}`)) {
-            eventSlot = weekContainer.querySelector(`#${this.id}`);
+        if (weekContainer.querySelector(`[id='${this.id}']`)) {
+            eventSlot = weekContainer.querySelector(`[id='${this.id}']`);
             numberCircle = eventSlot.querySelector(".circle");
         } else {
             eventSlot = document.createElement("div");

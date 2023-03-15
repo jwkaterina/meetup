@@ -1,14 +1,15 @@
-import { addDays, dateString } from "../helper";
+import { addDays, dateString, getDayIndex } from "../helper";
 import ValidationError from "../error/validation-error";
+import EventService from "../service/event";
+import { Context } from "../ctx";
 
 export default class Week {
-    constructor(weekStart, className) {
+    constructor(weekStart, weekOffset, className) {
 
+        this.ctx = Context.getInstance();
         this.weekStart = weekStart;
-        this.container = document.createElement("div");
-        this.container.className = className;
-        this.container.innerText = weekStart;
-        this.setupDates();
+        this.weekOffset = weekOffset;
+        this.container = this._createDomElements(className, weekStart);
         this.show();
 
         this.events = [];
@@ -35,16 +36,126 @@ export default class Week {
         this.container.style.display = "flex";
     }
 
+    hide() {
+        this.container.style.display = "";
+    }
+
     set className(className) {
         this.container.className = className;
     }
 
-    setupDates() {
+    _createDomElements(className, weekStart) {
+        const container = document.createElement("div");
+        container.className = className;
+        container.dataset.weekStart = dateString(weekStart);
+
+        container.innerHTML = `
+        <div class="dayTime">            
+        </div>
+        <div data-name="Lundi" data-shortName="L" data-dayIndex = "0" class="day">           
+        </div>
+        <div data-name="Mardi" data-shortName="M" data-dayIndex = "1" class="day">           
+        </div>
+        <div data-name="Mercredi" data-shortName="M" data-dayIndex = "2" class="day">           
+        </div>
+        <div data-name="Jeudi" data-shortName="J" data-dayIndex = "3" class="day">            
+        </div>
+        <div data-name="Vendredi" data-shortName="V" data-dayIndex = "4" class="day">           
+        </div>
+        <div data-name="Samedi" data-shortName="S" data-dayIndex = "5" class="day">            
+        </div>
+        <div data-name="Dimanche" data-shortName="D" data-dayIndex = "6" class="day">           
+        </div>
+        `;
+
+        this._setupTimes(container);
+        this._setupDays(container);
+        this._setupDates(container);
+
+        return container;
+    }
+
+    _setupTimes(container) {
+        const timeColumn = container.querySelector(".dayTime");
+        const header = document.createElement("div");
+        header.className = "columnHeader";
+        const slots = document.createElement("div");
+        slots.className = "slots";
+        for (let hour = 0; hour < 24; hour++) {
+            const timeSlot = document.createElement("div");
+            timeSlot.setAttribute("data-hour", hour);
+            timeSlot.className = "time";
+            timeSlot.innerHTML = `${hour}:00`;
+            slots.appendChild(timeSlot);
+        }
+        timeColumn.appendChild(header);
+        timeColumn.appendChild(slots);
+        timeColumn.querySelector(`.time[data-hour="0"]`).style.visibility = "hidden";
+    }
+
+    _setupDays(container) {
+        const media = window.matchMedia("(max-width: 800px)");
+        const week = this;
+
+        const days = container.querySelectorAll(".day");
+        days.forEach((day) => {
+            const shortName = day.getAttribute("data-shortName");
+            const fullName = day.getAttribute("data-name");
+            const header = document.createElement("div");
+            header.className = "columnHeader";
+            if (media.matches) {
+                header.innerHTML = `${shortName}`;
+            } else {
+                header.innerHTML = `${fullName}`;
+            }
+            const dayDisplay = document.createElement("div")
+            dayDisplay.className = "dayDisplay";
+            header.appendChild(dayDisplay);
+            day.appendChild(header);
+
+            const dayIndex = parseInt(day.getAttribute("data-dayIndex"));
+            const slots = document.createElement("div");
+            slots.className = "slots";
+            for (let hour = 0; hour < 24; hour++) {
+                const slot = document.createElement("div");
+                slot.setAttribute("data-hour", hour);
+                slot.className = "slot";
+                slots.appendChild(slot);
+                slot.addEventListener("click", () => {
+                    if(week.ctx.principal) {
+                        week.ctx.principal.clickSlot(hour, dayIndex);
+                    }
+                })
+            }
+            day.appendChild(slots);
+        });
+    }
+
+    _setupDates(container) {
         for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
             const date = addDays(this.weekStart, dayIndex);
             const display = date.toLocaleDateString('fr-FR', {day: "numeric"});
-            // this.container.querySelector(`.day[data-dayIndex="${dayIndex}"] .dayDisplay`).innerHTML = display;
+            container.querySelector(`.day[data-dayIndex="${dayIndex}"] .dayDisplay`).innerHTML = display;
         }
+
+        if (this.weekOffset == 0) {
+            this._showCurrentDay(container);
+        } else {
+            this._hideCurrentDay(container);
+        }
+    }
+
+    _showCurrentDay(container) {
+        const now = new Date();
+        const dayIndex = getDayIndex(now);
+        container.querySelector(`.day[data-dayIndex="${dayIndex}"]`).classList.add("currentDay");
+    }
+
+    _hideCurrentDay(container) {
+        const days = container.querySelectorAll(".day");
+        days.forEach((day) => {
+            day.classList.remove("currentDay");
+        });
     }
 
     pushEvent(event) {
