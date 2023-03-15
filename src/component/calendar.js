@@ -135,6 +135,7 @@ export default class Calendar {
             this.weekOffset += 1;
             this.ctx.weekStart = this.ctx.nextWeekStart;
             this.ctx.weekEnd = addDays(this.ctx.weekEnd, 7);
+            this.setupMonth();
             
             this.weeks.prevWeek.removeFromDom();
             this.weeks.prevWeek = this.weeks.mainWeek;
@@ -157,6 +158,7 @@ export default class Calendar {
             this.weekOffset += -1;
             this.ctx.weekStart = this.ctx.prevWeekStart;
             this.ctx.weekEnd = addDays(this.ctx.weekEnd, -7);
+            this.setupMonth();
 
             this.weeks.nextWeek.removeFromDom();
             this.weeks.nextWeek = this.weeks.mainWeek;

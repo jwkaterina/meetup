@@ -132,8 +132,8 @@ export default class Event {
     }
 
     findWeekContainer() {
-        const calendar = document.getElementById("calendar");
-        for (const child of calendar.children) {
+        const weeksContainer = document.getElementById("weeks");
+        for (const child of weeksContainer.children) {
             if(child.dataset.weekStart && child.dataset.weekStart === this.weekStart) {
                 return child;
             }
