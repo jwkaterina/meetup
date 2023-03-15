@@ -2,6 +2,8 @@ import { addDays, dateString, getDayIndex } from "../helper";
 import ValidationError from "../error/validation-error";
 import EventService from "../service/event";
 import { Context } from "../ctx";
+import "./week.css";
+
 
 export default class Week {
     constructor(weekStart, weekOffset, className) {
@@ -50,8 +52,6 @@ export default class Week {
         container.dataset.weekStart = dateString(weekStart);
 
         container.innerHTML = `
-        <div class="dayTime">            
-        </div>
         <div data-name="Lundi" data-shortName="L" data-dayIndex = "0" class="day">           
         </div>
         <div data-name="Mardi" data-shortName="M" data-dayIndex = "1" class="day">           
@@ -68,30 +68,12 @@ export default class Week {
         </div>
         `;
 
-        this._setupTimes(container);
         this._setupDays(container);
         this._setupDates(container);
 
         return container;
     }
 
-    _setupTimes(container) {
-        const timeColumn = container.querySelector(".dayTime");
-        const header = document.createElement("div");
-        header.className = "columnHeader";
-        const slots = document.createElement("div");
-        slots.className = "slots";
-        for (let hour = 0; hour < 24; hour++) {
-            const timeSlot = document.createElement("div");
-            timeSlot.setAttribute("data-hour", hour);
-            timeSlot.className = "time";
-            timeSlot.innerHTML = `${hour}:00`;
-            slots.appendChild(timeSlot);
-        }
-        timeColumn.appendChild(header);
-        timeColumn.appendChild(slots);
-        timeColumn.querySelector(`.time[data-hour="0"]`).style.visibility = "hidden";
-    }
 
     _setupDays(container) {
         const media = window.matchMedia("(max-width: 800px)");

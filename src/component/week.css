@@ -1,0 +1,110 @@
+
+#weeks {
+    display: flex;
+    flex: 1;
+}
+
+.main-week, .prev-week, .next-week {
+    display: flex;
+    width: 100%;
+    transition: opacity 200ms ease-in;
+}
+
+.main-week {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.prev-week {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: -100%;
+}
+
+.next-week {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+}
+
+.move-right {
+    animation: move-right 0.5s forwards;
+}
+
+.move-left {
+    animation: move-left 0.5s forwards;
+}
+
+@keyframes move-right {
+    from {transform: translate(0, 0);}
+    to {transform: translate(100%, 0);}
+}
+
+@keyframes move-left {
+    from {transform: translate(0, 0);}
+    to {transform: translate(-100%, 0);}
+}
+
+.day {
+    width: 100%;
+}
+
+.columnHeader {
+    position: sticky;
+    top: 80px;
+    text-align: center;
+    font-size: 20px;
+    padding: 10px 0px;
+    height: 60px;
+    background-color: var(--white);
+    z-index: 1;
+}
+
+.day.currentDay .columnHeader, .day.currentDay .dayDisplay {
+    color: var(--green);
+}
+
+.dayDisplay {
+    font-size: 15px;
+    color: var(--gray-darker);
+}
+
+/* slots */
+
+.slots {
+    position: relative;
+    border-left: 1px solid var(--gray-lightest);
+}
+
+.slot,
+.time {
+    height: var(--slotHeight);
+}
+
+.time {
+    position: relative;
+    top: -8px;
+    font-size: 14px;
+    transition: all 0.5s linear ;
+}
+
+.slot {
+    border-top: 1px solid var(--gray-lightest);
+    background-color: var(--white);
+    transition: all 0.5s linear ;
+}
+
+.slot:hover {
+    cursor: pointer;
+    background-color: var(--gray-light);
+}
+
+@media (max-width: 800px) {
+    .slot,
+    .time {
+        height: var(--slotHeightMobile);
+    }
+}

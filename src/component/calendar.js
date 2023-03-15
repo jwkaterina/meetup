@@ -11,6 +11,7 @@ export default class Calendar {
         this.eventService = new EventService();
         this.weekOffset = 0;
         this.calendar = document.getElementById("calendar");
+        this.weeksContainer = document.getElementById("weeks");
         this.nextWeekBtn = document.getElementById("nextWeekBtn");
         this.prevWeekBtn = document.getElementById("prevWeekBtn");
         this.addButton = document.getElementById("addButton");
@@ -21,6 +22,7 @@ export default class Calendar {
     setup() {
         this.calculateCurrentWeek();
         this.setupMonth();
+        this.setupTimes();
         this.setupControls();
         this.addSwipe();
         this.assignWeeks();
@@ -81,6 +83,24 @@ export default class Calendar {
         month.innerHTML = this.ctx.weekStart.toLocaleDateString('fr-FR', {month: "long"});
     }
 
+    setupTimes() {
+        const timeColumn = document.getElementById("dayTime");
+        const header = document.createElement("div");
+        header.className = "columnHeader";
+        const slots = document.createElement("div");
+        slots.className = "slots";
+        for (let hour = 0; hour < 24; hour++) {
+            const timeSlot = document.createElement("div");
+            timeSlot.setAttribute("data-hour", hour);
+            timeSlot.className = "time";
+            timeSlot.innerHTML = `${hour}:00`;
+            slots.appendChild(timeSlot);
+        }
+        timeColumn.appendChild(header);
+        timeColumn.appendChild(slots);
+        timeColumn.querySelector(`.time[data-hour="0"]`).style.visibility = "hidden";
+    }
+
     calculateCurrentWeek() {
         const now = new Date();
         this.ctx.weekStart = addDays(now, -getDayIndex(now));
@@ -102,16 +122,16 @@ export default class Calendar {
         this.weeks.nextWeek = new Week(this.ctx.nextWeekStart, this.weekOffset + 1, "next-week");
         this.weeks.prevWeek.hide();
         this.weeks.nextWeek.hide();
-        this.weeks.mainWeek.appendToParent(this.calendar);
+        this.weeks.mainWeek.appendToParent(this.weeksContainer);
         this.weeks.mainWeek.insertBefore(this.weeks.prevWeek);
         this.weeks.mainWeek.insertAfter(this.weeks.nextWeek);
     }
 
     showNextWeek() {
         this.weeks.nextWeek.show();
-        this.calendar.classList.add("move-left");
+        this.weeksContainer.classList.add("move-left");
         setTimeout(() => {
-            this.calendar.classList.remove("move-left");
+            this.weeksContainer.classList.remove("move-left");
             this.weekOffset += 1;
             this.ctx.weekStart = this.ctx.nextWeekStart;
             this.ctx.weekEnd = addDays(this.ctx.weekEnd, 7);
@@ -131,9 +151,9 @@ export default class Calendar {
 
     showPrevWeek() {
         this.weeks.prevWeek.show();
-        this.calendar.classList.add("move-right");
+        this.weeksContainer.classList.add("move-right");
         setTimeout(() => {
-            this.calendar.classList.remove("move-right");
+            this.weeksContainer.classList.remove("move-right");
             this.weekOffset += -1;
             this.ctx.weekStart = this.ctx.prevWeekStart;
             this.ctx.weekEnd = addDays(this.ctx.weekEnd, -7);
