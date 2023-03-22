@@ -12,7 +12,7 @@ export default class Week {
         this.weekStart = weekStart;
         this.weekOffset = weekOffset;
         this.container = this._createDomElements(className, weekStart);
-        this.show();
+        // this.show();
 
         this.events = [];
         this.eventService = new EventService();

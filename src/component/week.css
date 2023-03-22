@@ -2,50 +2,20 @@
 #weeks {
     display: flex;
     flex: 1;
+
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-snap-stop: always;
+    /* scroll-behavior: smooth; */
+    height: 100%;
 }
 
 .main-week, .prev-week, .next-week {
     display: flex;
     width: 100%;
-    transition: opacity 200ms ease-in;
-}
 
-.main-week {
-    position: relative;
-    top: 0;
-    left: 0;
-}
-
-.prev-week {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: -100%;
-}
-
-.next-week {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 100%;
-}
-
-.move-right {
-    animation: move-right 0.5s forwards;
-}
-
-.move-left {
-    animation: move-left 0.5s forwards;
-}
-
-@keyframes move-right {
-    from {transform: translate(0, 0);}
-    to {transform: translate(100%, 0);}
-}
-
-@keyframes move-left {
-    from {transform: translate(0, 0);}
-    to {transform: translate(-100%, 0);}
+    scroll-snap-align: start;
+    flex-shrink: 0;
 }
 
 .day {

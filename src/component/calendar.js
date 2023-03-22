@@ -24,16 +24,31 @@ export default class Calendar {
         this.setupMonth();
         this.setupTimes();
         this.setupControls();
-        this.addSwipe();
+        // this.addSwipe();
         this.assignWeeks();
+        this.scrollToStart();
     }
 
     setupControls() {  
         this.nextWeekBtn.addEventListener("click", () => {
-            this.showNextWeek();
+            this.weeksContainer.scrollBy({
+                top: 0,
+                left: this.weeksContainer.clientWidth,
+                behavior: "smooth",
+            });
+            setTimeout(() => {
+                this.showNextWeek();
+            }, 700)
         });
         this.prevWeekBtn.addEventListener("click", () => {
-            this.showPrevWeek();
+            this.weeksContainer.scrollBy({
+                top: 0,
+                left: -50,
+                behavior: "smooth",
+            });
+            setTimeout(() => {
+                this.showPrevWeek();
+            }, 700)
         });
         this.addButton.addEventListener("click", () => {
             if(this.ctx.principal) {
@@ -46,9 +61,22 @@ export default class Calendar {
         this.loadButton.addEventListener("click", () => {
             window.location.reload();
         });
+        this.checkResize();
+        this.checkScrollDirection();        
+    }
+
+    scrollToStart() {
         window.addEventListener("load", () => {
             scrollTo(0, 375);
+            this.weeksContainer.scrollBy({
+                top: 0,
+                left: this.weeksContainer.clientWidth,
+                behavior: "auto",
+            });        
         });
+    }
+
+    checkResize() {
         let lastWidth = window.innerWidth;
         window.addEventListener("resize", () => {
             if(window.innerWidth!=lastWidth) {
@@ -58,25 +86,43 @@ export default class Calendar {
         });
     }
 
-    addSwipe() {
-        let touchstartX = 0;
-        let touchendX = 0;
-        let that = this;
+    checkScrollDirection() {
+        this.weeksContainer.addEventListener('scroll', () => {
+            const { scrollLeft, clientWidth } = this.weeksContainer;
+            // console.log("clientWidth: ", clientWidth, "scrollLeft: ", scrollLeft);
 
-        function checkDirection() {
-        if (touchstartX - touchendX > 80) {that.showNextWeek()};
-        if (touchendX -touchstartX > 80) {that.showPrevWeek()};
-        }
-
-        this.calendar.addEventListener('touchstart', e => {
-        touchstartX = e.changedTouches[0].screenX;
-        });
-
-        this.calendar.addEventListener('touchend', e => {
-        touchendX = e.changedTouches[0].screenX;
-        checkDirection()
-        });
+            if(scrollLeft == 2 * clientWidth) {
+                console.log("scroll right");
+                setTimeout(() => {
+                    this.showNextWeek();
+                }, 200)            }
+            if(scrollLeft == 0) {
+                console.log("scroll left");
+                setTimeout(() => {
+                    this.showPrevWeek();
+                }, 200)            }
+          });
     }
+
+    // addSwipe() {
+    //     let touchstartX = 0;
+    //     let touchendX = 0;
+    //     let that = this;
+
+    //     function checkDirection() {
+    //         if (touchstartX - touchendX > 80) {that.showNextWeek()};
+    //         if (touchendX -touchstartX > 80) {that.showPrevWeek()};
+    //     }
+
+    //     this.calendar.addEventListener('touchstart', e => {
+    //         touchstartX = e.changedTouches[0].screenX;
+    //     });
+
+    //     this.calendar.addEventListener('touchend', e => {
+    //         touchendX = e.changedTouches[0].screenX;
+    //         checkDirection()
+    //     });
+    // }
 
     setupMonth() {
         const month = document.getElementById("currentMonth");
@@ -128,49 +174,35 @@ export default class Calendar {
     }
 
     showNextWeek() {
-        this.weeks.nextWeek.show();
-        this.weeksContainer.classList.add("move-left");
-        setTimeout(() => {
-            this.weeksContainer.classList.remove("move-left");
-            this.weekOffset += 1;
-            this.ctx.weekStart = this.ctx.nextWeekStart;
-            this.ctx.weekEnd = addDays(this.ctx.weekEnd, 7);
-            this.setupMonth();
-            
-            this.weeks.prevWeek.removeFromDom();
-            this.weeks.prevWeek = this.weeks.mainWeek;
-            this.weeks.mainWeek = this.weeks.nextWeek;
-            this.weeks.nextWeek = new Week(this.ctx.nextWeekStart, this.weekOffset + 1, "next-week");
-            this.weeks.prevWeek.className = "prev-week";
-            this.weeks.mainWeek.className = "main-week";
-            this.weeks.mainWeek.insertAfter(this.weeks.nextWeek);
-            this.weeks.prevWeek.hide();
-            this.weeks.nextWeek.hide();            
-            this.weeks.nextWeek.loadEvents();
-        },500);
+        this.weekOffset += 1;
+        this.ctx.weekStart = this.ctx.nextWeekStart;
+        this.ctx.weekEnd = addDays(this.ctx.weekEnd, 7);
+        this.setupMonth();
+        
+        this.weeks.prevWeek.removeFromDom();
+        this.weeks.prevWeek = this.weeks.mainWeek;
+        this.weeks.mainWeek = this.weeks.nextWeek;
+        this.weeks.nextWeek = new Week(this.ctx.nextWeekStart, this.weekOffset + 1, "next-week");
+        this.weeks.prevWeek.className = "prev-week";
+        this.weeks.mainWeek.className = "main-week";
+        this.weeks.mainWeek.insertAfter(this.weeks.nextWeek);        
+        this.weeks.nextWeek.loadEvents();
     }
 
     showPrevWeek() {
-        this.weeks.prevWeek.show();
-        this.weeksContainer.classList.add("move-right");
-        setTimeout(() => {
-            this.weeksContainer.classList.remove("move-right");
-            this.weekOffset += -1;
-            this.ctx.weekStart = this.ctx.prevWeekStart;
-            this.ctx.weekEnd = addDays(this.ctx.weekEnd, -7);
-            this.setupMonth();
+        this.weekOffset += -1;
+        this.ctx.weekStart = this.ctx.prevWeekStart;
+        this.ctx.weekEnd = addDays(this.ctx.weekEnd, -7);
+        this.setupMonth();
 
-            this.weeks.nextWeek.removeFromDom();
-            this.weeks.nextWeek = this.weeks.mainWeek;
-            this.weeks.mainWeek = this.weeks.prevWeek;
-            this.weeks.prevWeek = new Week(this.ctx.prevWeekStart, this.weekOffset - 1, "prev-week");
-            this.weeks.nextWeek.className = "next-week";
-            this.weeks.mainWeek.className = "main-week";
-            this.weeks.mainWeek.insertBefore(this.weeks.prevWeek);
-            this.weeks.prevWeek.hide();
-            this.weeks.nextWeek.hide();            
-            this.weeks.prevWeek.loadEvents();
-        },500);
+        this.weeks.nextWeek.removeFromDom();
+        this.weeks.nextWeek = this.weeks.mainWeek;
+        this.weeks.mainWeek = this.weeks.prevWeek;
+        this.weeks.prevWeek = new Week(this.ctx.prevWeekStart, this.weekOffset - 1, "prev-week");
+        this.weeks.nextWeek.className = "next-week";
+        this.weeks.mainWeek.className = "main-week";
+        this.weeks.mainWeek.insertBefore(this.weeks.prevWeek);           
+        this.weeks.prevWeek.loadEvents();
     }
 
     loadEvents() {
