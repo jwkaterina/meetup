@@ -67,12 +67,17 @@ export default class Calendar {
 
     scrollToStart() {
         window.addEventListener("load", () => {
-            scrollTo(0, 375);
+            // scrollTo(0, 375);
             this.weeksContainer.scrollBy({
                 top: 0,
                 left: this.weeksContainer.clientWidth,
                 behavior: "auto",
-            });        
+            });       
+            // document.getElementById("headings").scrollBy({
+            //     top: 0,
+            //     left: this.weeksContainer.clientWidth,
+            //     behavior: "auto",
+            // });   
         });
     }
 
@@ -89,7 +94,9 @@ export default class Calendar {
     checkScrollDirection() {
         this.weeksContainer.addEventListener('scroll', () => {
             const { scrollLeft, clientWidth } = this.weeksContainer;
-            // console.log("clientWidth: ", clientWidth, "scrollLeft: ", scrollLeft);
+            // console.log("clientWidth: ", clientWidth, "scrollLeft week: ", scrollLeft);
+            
+            document.getElementById("headings").scrollLeft = scrollLeft;  
 
             if(scrollLeft == 2 * clientWidth) {
                 console.log("scroll right");
@@ -101,9 +108,17 @@ export default class Calendar {
                 setTimeout(() => {
                     this.showPrevWeek();
                 }, 200)            }
-          });
+        });
+        // this.scrollSync();
     }
 
+    // scrollSync() {
+    //     document.getElementById("headings").addEventListener('scroll', () => {
+    //         const { scrollLeft, clientWidth } = document.getElementById('headings');
+    //         console.log("clientWidth: ", clientWidth, "scrollLeft heading: ", scrollLeft);
+    //     });
+    // }
+   
     // addSwipe() {
     //     let touchstartX = 0;
     //     let touchendX = 0;
