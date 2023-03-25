@@ -1,8 +1,6 @@
 
-
-#headings {
+#week-headings {
     margin-left: 50px;
-
     position: sticky;
     top: 80px;
     display: flex;
@@ -13,22 +11,20 @@
     z-index: 5;
 }
 
-#main-headings, #prev-headings, #next-headings {
+.main-week-headings, .prev-week-headings, .next-week-headings {
     display: flex;
     width: 100%;
-
     flex-shrink: 0;
 }
 
-.heading {
+.day-heading {
     font-size: 20px;
     padding: 10px 0px;
     height: 60px;
     text-align: center;
-    width: 100%;
 }
 
-#weeks {
+#week-slots {
     display: flex;
     flex: 1;
 
@@ -38,19 +34,18 @@
     /* scroll-behavior: smooth; */
 }
 
-.main-week, .prev-week, .next-week {
+.main-week-slots, .prev-week-slots, .next-week-slots {
     display: flex;
     width: 100%;
-
     scroll-snap-align: start;
     flex-shrink: 0;
 }
 
-.day {
+.day-heading, .day-slots {
     width: 100%;
 }
 
-.columnHeader {
+/* .columnHeader {
     position: sticky;
     top: 80px;
     text-align: center;
@@ -59,9 +54,9 @@
     height: 60px;
     background-color: var(--white);
     z-index: 1;
-}
+} */
 
-.day.currentDay .columnHeader, .day.currentDay .dayDisplay {
+.day-heading.currentDay, .day-heading.currentDay .dayDisplay {
     color: var(--green);
 }
 
@@ -72,7 +67,7 @@
 
 /* slots */
 
-.slots {
+.day-slots {
     position: relative;
     border-left: 1px solid var(--gray-lightest);
 }

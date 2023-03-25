@@ -10,8 +10,9 @@ export default class Calendar {
         this.eventCalendar = eventCalendar;
         this.eventService = new EventService();
         this.weekOffset = 0;
-        this.calendar = document.getElementById("calendar");
-        this.weeksContainer = document.getElementById("weeks");
+        this.calendar = document.getElementById("calendar-grid");
+        this.slotsContainer = document.getElementById("week-slots");
+        this.headingsContainer = document.getElementById("week-headings");
         this.nextWeekBtn = document.getElementById("nextWeekBtn");
         this.prevWeekBtn = document.getElementById("prevWeekBtn");
         this.addButton = document.getElementById("addButton");
@@ -31,9 +32,9 @@ export default class Calendar {
 
     setupControls() {  
         this.nextWeekBtn.addEventListener("click", () => {
-            this.weeksContainer.scrollBy({
+            this.slotsContainer.scrollBy({
                 top: 0,
-                left: this.weeksContainer.clientWidth,
+                left: this.slotsContainer.clientWidth,
                 behavior: "smooth",
             });
             setTimeout(() => {
@@ -41,7 +42,7 @@ export default class Calendar {
             }, 700)
         });
         this.prevWeekBtn.addEventListener("click", () => {
-            this.weeksContainer.scrollBy({
+            this.slotsContainer.scrollBy({
                 top: 0,
                 left: -50,
                 behavior: "smooth",
@@ -68,14 +69,14 @@ export default class Calendar {
     scrollToStart() {
         window.addEventListener("load", () => {
             // scrollTo(0, 375);
-            this.weeksContainer.scrollBy({
+            this.slotsContainer.scrollBy({
                 top: 0,
-                left: this.weeksContainer.clientWidth,
+                left: this.slotsContainer.clientWidth,
                 behavior: "auto",
             });       
             // document.getElementById("headings").scrollBy({
             //     top: 0,
-            //     left: this.weeksContainer.clientWidth,
+            //     left: this.slotsContainer.clientWidth,
             //     behavior: "auto",
             // });   
         });
@@ -92,11 +93,11 @@ export default class Calendar {
     }
 
     checkScrollDirection() {
-        this.weeksContainer.addEventListener('scroll', () => {
-            const { scrollLeft, clientWidth } = this.weeksContainer;
+        this.slotsContainer.addEventListener('scroll', () => {
+            const { scrollLeft, clientWidth } = this.slotsContainer;
             // console.log("clientWidth: ", clientWidth, "scrollLeft week: ", scrollLeft);
             
-            document.getElementById("headings").scrollLeft = scrollLeft;  
+            this.headingsContainer.scrollLeft = scrollLeft;  
 
             if(scrollLeft == 2 * clientWidth) {
                 console.log("scroll right");
@@ -145,20 +146,21 @@ export default class Calendar {
     }
 
     setupTimes() {
-        const timeColumn = document.getElementById("dayTime");
-        const header = document.createElement("div");
-        header.className = "columnHeader";
-        const slots = document.createElement("div");
-        slots.className = "slots";
+        const timeColumn = document.getElementById("time-slots");
+        // const header = document.createElement("div");
+        // header.className = "columnHeader";
+        // const slots = document.createElement("div");
+        // slots.className = "slots";
         for (let hour = 0; hour < 24; hour++) {
             const timeSlot = document.createElement("div");
             timeSlot.setAttribute("data-hour", hour);
             timeSlot.className = "time";
             timeSlot.innerHTML = `${hour}:00`;
-            slots.appendChild(timeSlot);
+            // slots.appendChild(timeSlot);
+            timeColumn.appendChild(timeSlot);
         }
-        timeColumn.appendChild(header);
-        timeColumn.appendChild(slots);
+        // timeColumn.appendChild(header);
+        // timeColumn.appendChild(slots);
         timeColumn.querySelector(`.time[data-hour="0"]`).style.visibility = "hidden";
     }
 
@@ -181,19 +183,28 @@ export default class Calendar {
         this.weeks.prevWeek = new Week(this.ctx.prevWeekStart, this.weekOffset - 1, "prev-week");
         this.weeks.mainWeek = new Week(this.ctx.weekStart, this.weekOffset, "main-week");
         this.weeks.nextWeek = new Week(this.ctx.nextWeekStart, this.weekOffset + 1, "next-week");
-        this.weeks.prevWeek.hide();
-        this.weeks.nextWeek.hide();
-        this.weeks.mainWeek.appendToParent(this.weeksContainer);
-        this.weeks.mainWeek.insertBefore(this.weeks.prevWeek);
-        this.weeks.mainWeek.insertAfter(this.weeks.nextWeek);
+        // this.weeks.prevWeek.hide();
+        // this.weeks.nextWeek.hide();
+        // this.weeks.mainWeek.headings.appendToParent(this.headingsContainer);
+        // this.weeks.mainWeek.insertBefore(this.weeks.prevWeek.headings);
+        // this.weeks.mainWeek.insertAfter(this.weeks.nextWeek.headings);
+        // this.weeks.mainWeek.slots.appendToParent(this.slotsContainer);
+        // this.weeks.mainWeek.insertBefore(this.weeks.prevWeek.slots);
+        // this.weeks.mainWeek.insertAfter(this.weeks.nextWeek.slots);
+        this.headingsContainer.appendChild(this.weeks.mainWeek.headings);
+        this.weeks.mainWeek.headings.before(this.weeks.prevWeek.headings);
+        this.weeks.mainWeek.headings.after(this.weeks.nextWeek.headings);
+        this.slotsContainer.appendChild(this.weeks.mainWeek.slots);
+        this.weeks.mainWeek.slots.before(this.weeks.prevWeek.slots);
+        this.weeks.mainWeek.slots.after(this.weeks.nextWeek.slots);
     }
 
     showNextWeek() {
         this.weekOffset += 1;
         this.ctx.weekStart = this.ctx.nextWeekStart;
-        this.ctx.weekEnd = addDays(this.ctx.weekEnd, 7);
         this.setupMonth();
-        
+
+        this.ctx.weekEnd = addDays(this.ctx.weekEnd, 7);
         this.weeks.prevWeek.removeFromDom();
         this.weeks.prevWeek = this.weeks.mainWeek;
         this.weeks.mainWeek = this.weeks.nextWeek;
@@ -207,9 +218,9 @@ export default class Calendar {
     showPrevWeek() {
         this.weekOffset += -1;
         this.ctx.weekStart = this.ctx.prevWeekStart;
-        this.ctx.weekEnd = addDays(this.ctx.weekEnd, -7);
         this.setupMonth();
 
+        this.ctx.weekEnd = addDays(this.ctx.weekEnd, -7);
         this.weeks.nextWeek.removeFromDom();
         this.weeks.nextWeek = this.weeks.mainWeek;
         this.weeks.mainWeek = this.weeks.prevWeek;

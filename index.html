@@ -20,12 +20,12 @@
 <body>
     <main>
         <!-- Header -->
-        <header class="header">
+        <header id="header">
             <div class="weekControls">
                 <i id="prevWeekBtn" class="fa-solid fa-angle-left i-btn"></i>
                 <i id="nextWeekBtn" class="fa-solid fa-angle-right i-btn"></i>
             </div>
-            <div id="heading">
+            <div id="title">
                 <img src="icons/Watchtower.svg" alt="">
                 <h1 id="currentMonth"></h1>
             </div>
@@ -44,7 +44,7 @@
                 <div id="loggedButton-circle" class="log logged"></div>
             </div>
         </header>
-        <!-- Droldown menu -->
+        <!-- Droldown -->
         <div id="dropdown">
             <div id="logoutButton" class="log">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
@@ -55,40 +55,13 @@
             </div>
         </div>
 
-        <div id="headings">
-            <div id="prev-headings">
-                <div class="heading">Lundi</div>
-                <div class="heading">Mardi</div>
-                <div class="heading">Mercredi</div>
-                <div class="heading">Jeudi</div>
-                <div class="heading">Vendredi</div>
-                <div class="heading">Samedi</div>
-                <div class="heading">Dimanche</div>
-            </div>
-            <div id="main-headings">
-                <div class="heading">Lundi</div>
-                <div class="heading">Mardi</div>
-                <div class="heading">Mercredi</div>
-                <div class="heading">Jeudi</div>
-                <div class="heading">Vendredi</div>
-                <div class="heading">Samedi</div>
-                <div class="heading">Dimanche</div>
-            </div>
-            <div id="next-headings">
-                <div class="heading">Lundi</div>
-                <div class="heading">Mardi</div>
-                <div class="heading">Mercredi</div>
-                <div class="heading">Jeudi</div>
-                <div class="heading">Vendredi</div>
-                <div class="heading">Samedi</div>
-                <div class="heading">Dimanche</div>
-            </div>
-        </div>
+        <section id="week-headings">
+        </section>
 
         <!-- Calendar -->
-        <section id="calendar">
-            <div id="dayTime"></div>
-            <div id="weeks"></div>
+        <section id="calendar-grid">
+            <div id="time-slots"></div>
+            <div id="week-slots"></div>
         </section>
 
         <!-- Event Modal -->

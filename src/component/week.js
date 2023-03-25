@@ -11,7 +11,8 @@ export default class Week {
         this.ctx = Context.getInstance();
         this.weekStart = weekStart;
         this.weekOffset = weekOffset;
-        this.container = this._createDomElements(className, weekStart);
+        this.headings = this._createHeadings(className, weekStart);
+        this.slots = this._createSlots(className, weekStart);
         // this.show();
 
         this.events = [];
@@ -34,107 +35,129 @@ export default class Week {
         this.container.remove();
     }
 
-    show() {
-        this.container.style.display = "flex";
-    }
+    // show() {
+    //     this.container.style.display = "flex";
+    // }
 
-    hide() {
-        this.container.style.display = "";
-    }
+    // hide() {
+    //     this.container.style.display = "";
+    // }
 
     set className(className) {
         this.container.className = className;
     }
 
-    _createDomElements(className, weekStart) {
-        const container = document.createElement("div");
-        container.className = className;
-        container.dataset.weekStart = dateString(weekStart);
+    _createHeadings(className, weekStart) {
+        const headings = document.createElement("div");
+        headings.className = `${className}-headings`;
+        headings.dataset.weekStart = dateString(weekStart);
 
-        container.innerHTML = `
-        <div data-name="Lundi" data-shortName="L" data-dayIndex = "0" class="day">           
+        headings.innerHTML = `
+        <div data-name="Lundi" data-shortName="L" data-dayIndex = "0" class="day-heading">           
         </div>
-        <div data-name="Mardi" data-shortName="M" data-dayIndex = "1" class="day">           
+        <div data-name="Mardi" data-shortName="M" data-dayIndex = "1" class="day-heading">           
         </div>
-        <div data-name="Mercredi" data-shortName="M" data-dayIndex = "2" class="day">           
+        <div data-name="Mercredi" data-shortName="M" data-dayIndex = "2" class="day-heading">           
         </div>
-        <div data-name="Jeudi" data-shortName="J" data-dayIndex = "3" class="day">            
+        <div data-name="Jeudi" data-shortName="J" data-dayIndex = "3" class="day-heading">            
         </div>
-        <div data-name="Vendredi" data-shortName="V" data-dayIndex = "4" class="day">           
+        <div data-name="Vendredi" data-shortName="V" data-dayIndex = "4" class="day-heading">           
         </div>
-        <div data-name="Samedi" data-shortName="S" data-dayIndex = "5" class="day">            
+        <div data-name="Samedi" data-shortName="S" data-dayIndex = "5" class="day-heading">            
         </div>
-        <div data-name="Dimanche" data-shortName="D" data-dayIndex = "6" class="day">           
+        <div data-name="Dimanche" data-shortName="D" data-dayIndex = "6" class="day-heading">           
         </div>
         `;
 
-        this._setupDays(container);
-        this._setupDates(container);
+        this._setupDays(headings);
+        this._setupDates(headings);
 
-        return container;
+        return headings;
     }
 
+    _createSlots(className, weekStart) {
+        const slots = document.createElement("div");
+        slots.className = `${className}-slots`;
+        slots.dataset.weekStart = dateString(weekStart);
 
-    _setupDays(container) {
-        const media = window.matchMedia("(max-width: 800px)");
-        const week = this;
+        slots.innerHTML = `
+        <div data-dayIndex = "0" class="day-slots">           
+        </div>
+        <div data-dayIndex = "1" class="day-slots">           
+        </div>
+        <div data-dayIndex = "2" class="day-slots">           
+        </div>
+        <div data-dayIndex = "3" class="day-slots">            
+        </div>
+        <div data-dayIndex = "4" class="day-slots">           
+        </div>
+        <div data-dayIndex = "5" class="day-slots">            
+        </div>
+        <div data-dayIndex = "6" class="day-slots">           
+        </div>
+        `;
 
-        const days = container.querySelectorAll(".day");
+        const days = slots.querySelectorAll(".day-slots");
         days.forEach((day) => {
-            const shortName = day.getAttribute("data-shortName");
-            const fullName = day.getAttribute("data-name");
-            const header = document.createElement("div");
-            header.className = "columnHeader";
-            if (media.matches) {
-                header.innerHTML = `${shortName}`;
-            } else {
-                header.innerHTML = `${fullName}`;
-            }
-            const dayDisplay = document.createElement("div")
-            dayDisplay.className = "dayDisplay";
-            header.appendChild(dayDisplay);
-            day.appendChild(header);
-
             const dayIndex = parseInt(day.getAttribute("data-dayIndex"));
-            const slots = document.createElement("div");
-            slots.className = "slots";
             for (let hour = 0; hour < 24; hour++) {
                 const slot = document.createElement("div");
                 slot.setAttribute("data-hour", hour);
                 slot.className = "slot";
-                slots.appendChild(slot);
+                day.appendChild(slot);
                 slot.addEventListener("click", () => {
                     if(week.ctx.principal) {
                         week.ctx.principal.clickSlot(hour, dayIndex);
                     }
                 })
             }
-            day.appendChild(slots);
+        });
+       
+        return slots;
+    }
+
+
+    _setupDays(headings) {
+        const media = window.matchMedia("(max-width: 800px)");
+        const week = this;
+
+        const days = headings.querySelectorAll(".day-heading");
+        days.forEach((day) => {
+            const shortName = day.getAttribute("data-shortName");
+            const fullName = day.getAttribute("data-name");
+            if (media.matches) {
+                day.innerHTML = `${shortName}`;
+            } else {
+                day.innerHTML = `${fullName}`;
+            }
+            const dayDisplay = document.createElement("div")
+            dayDisplay.className = "dayDisplay";
+            day.appendChild(dayDisplay);
         });
     }
 
-    _setupDates(container) {
+    _setupDates(headings) {
         for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
             const date = addDays(this.weekStart, dayIndex);
             const display = date.toLocaleDateString('fr-FR', {day: "numeric"});
-            container.querySelector(`.day[data-dayIndex="${dayIndex}"] .dayDisplay`).innerHTML = display;
+            headings.querySelector(`.day-heading[data-dayIndex="${dayIndex}"] .dayDisplay`).innerHTML = display;
         }
 
         if (this.weekOffset == 0) {
-            this._showCurrentDay(container);
+            this._showCurrentDay(headings);
         } else {
-            this._hideCurrentDay(container);
+            this._hideCurrentDay(headings);
         }
     }
 
-    _showCurrentDay(container) {
+    _showCurrentDay(headings) {
         const now = new Date();
         const dayIndex = getDayIndex(now);
-        container.querySelector(`.day[data-dayIndex="${dayIndex}"]`).classList.add("currentDay");
+        headings.querySelector(`.day-heading[data-dayIndex="${dayIndex}"]`).classList.add("currentDay");
     }
 
-    _hideCurrentDay(container) {
-        const days = container.querySelectorAll(".day");
+    _hideCurrentDay(headings) {
+        const days = headings.querySelectorAll(".day-heading");
         days.forEach((day) => {
             day.classList.remove("currentDay");
         });
@@ -149,7 +172,7 @@ export default class Week {
     }
 
     loadEvents() {
-        const events = this.container.querySelectorAll(".event");
+        const events = this.slots.querySelectorAll(".event");
         events.forEach((event) => {
             event.remove();
         });
