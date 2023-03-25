@@ -32,7 +32,8 @@ export default class Week {
     }
 
     removeFromDom() {
-        this.container.remove();
+        this.headings.remove();
+        this.slots.remove();
     }
 
     // show() {
@@ -44,7 +45,8 @@ export default class Week {
     // }
 
     set className(className) {
-        this.container.className = className;
+        this.headings.className = `${className}-headings`;
+        this.slots.className = `${className}-slots`;
     }
 
     _createHeadings(className, weekStart) {

@@ -211,7 +211,8 @@ export default class Calendar {
         this.weeks.nextWeek = new Week(this.ctx.nextWeekStart, this.weekOffset + 1, "next-week");
         this.weeks.prevWeek.className = "prev-week";
         this.weeks.mainWeek.className = "main-week";
-        this.weeks.mainWeek.insertAfter(this.weeks.nextWeek);        
+        this.weeks.mainWeek.headings.after(this.weeks.nextWeek.headings);
+        this.weeks.mainWeek.slots.after(this.weeks.nextWeek.slots);
         this.weeks.nextWeek.loadEvents();
     }
 
@@ -227,7 +228,8 @@ export default class Calendar {
         this.weeks.prevWeek = new Week(this.ctx.prevWeekStart, this.weekOffset - 1, "prev-week");
         this.weeks.nextWeek.className = "next-week";
         this.weeks.mainWeek.className = "main-week";
-        this.weeks.mainWeek.insertBefore(this.weeks.prevWeek);           
+        this.weeks.mainWeek.headings.before(this.weeks.prevWeek.headings);
+        this.weeks.mainWeek.slots.before(this.weeks.prevWeek.slots);
         this.weeks.prevWeek.loadEvents();
     }
 

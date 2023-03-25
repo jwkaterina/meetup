@@ -126,13 +126,12 @@ export default class Event {
         } 
         eventSlot.style.background = this.color;
 
-        const day = weekContainer.querySelector(`.day[data-dayIndex="${this.dayIndex}"]`);
-        const slots = day.querySelector(".slots");
-        slots.appendChild(eventSlot);
+        const day = weekContainer.querySelector(`.day-slots[data-dayIndex="${this.dayIndex}"]`);
+        day.appendChild(eventSlot);
     }
 
     findWeekContainer() {
-        const weeksContainer = document.getElementById("weeks");
+        const weeksContainer = document.getElementById("week-slots");
         for (const child of weeksContainer.children) {
             if(child.dataset.weekStart && child.dataset.weekStart === this.weekStart) {
                 return child;
