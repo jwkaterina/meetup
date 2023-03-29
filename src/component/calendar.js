@@ -32,33 +32,19 @@ export default class Calendar {
 
     setupControls() {  
         this.nextWeekBtn.addEventListener("click", () => {
-            this.slotsContainer.scrollBy({
-                top: 0,
-                left: this.slotsContainer.clientWidth,
-                behavior: "smooth",
-            });
-            setTimeout(() => {
-                this.showNextWeek();
-            }, 700)
+            this.scrollToRight();      
         });
         this.prevWeekBtn.addEventListener("click", () => {
-            this.slotsContainer.scrollBy({
-                top: 0,
-                left: -50,
-                behavior: "smooth",
-            });
-            setTimeout(() => {
-                this.showPrevWeek();
-            }, 700)
+            this.scrollToLeft();      
         });
         this.addButton.addEventListener("click", () => {
             if(this.ctx.principal) {
                 this.ctx.principal.createNewEvent()
             }
         });
-        // this.todayButton.addEventListener("click", () => {
-        //     this.showCurrentWeek()
-        // });
+        this.todayButton.addEventListener("click", () => {
+            this.showCurrentWeek();
+        });
         this.loadButton.addEventListener("click", () => {
             window.location.reload();
         });
@@ -68,19 +54,31 @@ export default class Calendar {
 
     scrollToStart() {
         window.addEventListener("load", () => {
-            // scrollTo(0, 375);
+            scrollTo(0, 375);
             this.slotsContainer.scrollBy({
                 top: 0,
                 left: this.slotsContainer.clientWidth,
                 behavior: "auto",
             });       
-            // document.getElementById("headings").scrollBy({
-            //     top: 0,
-            //     left: this.slotsContainer.clientWidth,
-            //     behavior: "auto",
-            // });   
         });
     }
+
+    scrollToLeft() {
+        this.slotsContainer.scrollBy({
+            top: 0,
+            left: - this.slotsContainer.clientWidth,
+            behavior: "smooth",
+        });
+    }
+
+    scrollToRight() {
+        this.slotsContainer.scrollBy({
+            top: 0,
+            left: this.slotsContainer.clientWidth,
+            behavior: "smooth",
+        });
+    }
+
 
     checkResize() {
         let lastWidth = window.innerWidth;
@@ -95,30 +93,26 @@ export default class Calendar {
     checkScrollDirection() {
         this.slotsContainer.addEventListener('scroll', () => {
             const { scrollLeft, clientWidth } = this.slotsContainer;
-            // console.log("clientWidth: ", clientWidth, "scrollLeft week: ", scrollLeft);
             
-            this.headingsContainer.scrollLeft = scrollLeft;  
 
             if(scrollLeft == 2 * clientWidth) {
-                console.log("scroll right");
-                setTimeout(() => {
-                    this.showNextWeek();
-                }, 200)            }
+                // console.log("scroll right");
+                setTimeout(async () => {
+                    this.createNextWeek();
+                    this.headingsContainer.scrollLeft = scrollLeft;
+                }, 200)            
+            }
             if(scrollLeft == 0) {
-                console.log("scroll left");
+                // console.log("scroll left");
                 setTimeout(() => {
-                    this.showPrevWeek();
-                }, 200)            }
-        });
-        // this.scrollSync();
-    }
+                    this.createPrevWeek();
+                    this.headingsContainer.scrollLeft = scrollLeft;
+                }, 200)            
+            }
+            this.headingsContainer.scrollLeft = scrollLeft;
 
-    // scrollSync() {
-    //     document.getElementById("headings").addEventListener('scroll', () => {
-    //         const { scrollLeft, clientWidth } = document.getElementById('headings');
-    //         console.log("clientWidth: ", clientWidth, "scrollLeft heading: ", scrollLeft);
-    //     });
-    // }
+        });
+    }
    
     // addSwipe() {
     //     let touchstartX = 0;
@@ -126,8 +120,8 @@ export default class Calendar {
     //     let that = this;
 
     //     function checkDirection() {
-    //         if (touchstartX - touchendX > 80) {that.showNextWeek()};
-    //         if (touchendX -touchstartX > 80) {that.showPrevWeek()};
+    //         if (touchstartX - touchendX > 80) {that.createNextWeek()};
+    //         if (touchendX -touchstartX > 80) {that.createPrevWeek()};
     //     }
 
     //     this.calendar.addEventListener('touchstart', e => {
@@ -147,20 +141,13 @@ export default class Calendar {
 
     setupTimes() {
         const timeColumn = document.getElementById("time-slots");
-        // const header = document.createElement("div");
-        // header.className = "columnHeader";
-        // const slots = document.createElement("div");
-        // slots.className = "slots";
         for (let hour = 0; hour < 24; hour++) {
             const timeSlot = document.createElement("div");
             timeSlot.setAttribute("data-hour", hour);
             timeSlot.className = "time";
             timeSlot.innerHTML = `${hour}:00`;
-            // slots.appendChild(timeSlot);
             timeColumn.appendChild(timeSlot);
         }
-        // timeColumn.appendChild(header);
-        // timeColumn.appendChild(slots);
         timeColumn.querySelector(`.time[data-hour="0"]`).style.visibility = "hidden";
     }
 
@@ -170,36 +157,43 @@ export default class Calendar {
         this.ctx.weekEnd = addDays(this.ctx.weekStart, 6);
     }
 
-    // showCurrentWeek() {
-    //     this.hideCurrentDay();
-    //     this.weekOffset = 0;
-    //     this.calculateCurrentWeek();
-    //     this.setupDates();
-    //     this.eventCalendar.loadEvents();
-    // }
+    showCurrentWeek() {
+        if(this.weekOffset === 0) {
+            return
+        } else if (this.weekOffset === 1) {
+            this.scrollToLeft();
+            setTimeout(() => {
+                this.createPrevWeek();
+            }, 700);          
+        } else if (this.weekOffset === -1) {
+            this.scrollToRight();
+            setTimeout(() => {
+                this.createNextWeek();
+            }, 700);       
+        } else if(this.weekOffset > 1) {
+
+        } else if(this.weekOffset < 1) {
+            
+        }
+
+        // this.hideCurrentDay();
+        // this.weekOffset = 0;
+        // this.calculateCurrentWeek();
+        // this.setupDates();
+        // this.eventCalendar.loadEvents();
+    }
 
     assignWeeks() {
         this.weeks = {};
         this.weeks.prevWeek = new Week(this.ctx.prevWeekStart, this.weekOffset - 1, "prev-week");
         this.weeks.mainWeek = new Week(this.ctx.weekStart, this.weekOffset, "main-week");
         this.weeks.nextWeek = new Week(this.ctx.nextWeekStart, this.weekOffset + 1, "next-week");
-        // this.weeks.prevWeek.hide();
-        // this.weeks.nextWeek.hide();
-        // this.weeks.mainWeek.headings.appendToParent(this.headingsContainer);
-        // this.weeks.mainWeek.insertBefore(this.weeks.prevWeek.headings);
-        // this.weeks.mainWeek.insertAfter(this.weeks.nextWeek.headings);
-        // this.weeks.mainWeek.slots.appendToParent(this.slotsContainer);
-        // this.weeks.mainWeek.insertBefore(this.weeks.prevWeek.slots);
-        // this.weeks.mainWeek.insertAfter(this.weeks.nextWeek.slots);
-        this.headingsContainer.appendChild(this.weeks.mainWeek.headings);
-        this.weeks.mainWeek.headings.before(this.weeks.prevWeek.headings);
-        this.weeks.mainWeek.headings.after(this.weeks.nextWeek.headings);
-        this.slotsContainer.appendChild(this.weeks.mainWeek.slots);
-        this.weeks.mainWeek.slots.before(this.weeks.prevWeek.slots);
-        this.weeks.mainWeek.slots.after(this.weeks.nextWeek.slots);
+        this.weeks.mainWeek.appendToParent(this.headingsContainer, this.slotsContainer);
+        this.weeks.mainWeek.insertBefore(this.weeks.prevWeek);
+        this.weeks.mainWeek.insertAfter(this.weeks.nextWeek);
     }
 
-    showNextWeek() {
+    createNextWeek() {
         this.weekOffset += 1;
         this.ctx.weekStart = this.ctx.nextWeekStart;
         this.setupMonth();
@@ -211,12 +205,11 @@ export default class Calendar {
         this.weeks.nextWeek = new Week(this.ctx.nextWeekStart, this.weekOffset + 1, "next-week");
         this.weeks.prevWeek.className = "prev-week";
         this.weeks.mainWeek.className = "main-week";
-        this.weeks.mainWeek.headings.after(this.weeks.nextWeek.headings);
-        this.weeks.mainWeek.slots.after(this.weeks.nextWeek.slots);
+        this.weeks.mainWeek.insertAfter(this.weeks.nextWeek);
         this.weeks.nextWeek.loadEvents();
     }
 
-    showPrevWeek() {
+    createPrevWeek() {
         this.weekOffset += -1;
         this.ctx.weekStart = this.ctx.prevWeekStart;
         this.setupMonth();
@@ -228,8 +221,7 @@ export default class Calendar {
         this.weeks.prevWeek = new Week(this.ctx.prevWeekStart, this.weekOffset - 1, "prev-week");
         this.weeks.nextWeek.className = "next-week";
         this.weeks.mainWeek.className = "main-week";
-        this.weeks.mainWeek.headings.before(this.weeks.prevWeek.headings);
-        this.weeks.mainWeek.slots.before(this.weeks.prevWeek.slots);
+        this.weeks.mainWeek.insertBefore(this.weeks.prevWeek);
         this.weeks.prevWeek.loadEvents();
     }
 

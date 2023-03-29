@@ -1,14 +1,15 @@
 
 #week-headings {
+    background-color: white;
     margin-left: 50px;
     position: sticky;
     top: 80px;
     display: flex;
     flex: 1;
     overflow-x: hidden;
-    scroll-snap-type: x mandatory;
-    scroll-snap-stop: always;
-    z-index: 5;
+    /* scroll-snap-type: x mandatory;
+    scroll-snap-stop: always; */
+    z-index: 2;
 }
 
 .main-week-headings, .prev-week-headings, .next-week-headings {
@@ -27,11 +28,9 @@
 #week-slots {
     display: flex;
     flex: 1;
-
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-snap-stop: always;
-    /* scroll-behavior: smooth; */
 }
 
 .main-week-slots, .prev-week-slots, .next-week-slots {
@@ -45,22 +44,12 @@
     width: 100%;
 }
 
-/* .columnHeader {
-    position: sticky;
-    top: 80px;
-    text-align: center;
-    font-size: 20px;
-    padding: 10px 0px;
-    height: 60px;
-    background-color: var(--white);
-    z-index: 1;
-} */
 
-.day-heading.currentDay, .day-heading.currentDay .dayDisplay {
+.day-heading.currentDay, .day-heading.currentDay .date-display {
     color: var(--green);
 }
 
-.dayDisplay {
+.date-display {
     font-size: 15px;
     color: var(--gray-darker);
 }
@@ -99,5 +88,9 @@
     .slot,
     .time {
         height: var(--slotHeightMobile);
+    }
+
+    #week-headings {
+        margin-left: 40px;
     }
 }

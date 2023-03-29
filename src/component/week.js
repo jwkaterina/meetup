@@ -13,36 +13,30 @@ export default class Week {
         this.weekOffset = weekOffset;
         this.headings = this._createHeadings(className, weekStart);
         this.slots = this._createSlots(className, weekStart);
-        // this.show();
 
         this.events = [];
         this.eventService = new EventService();
     }
 
     insertAfter(week) {
-        this.container.after(week.container);
+        this.headings.after(week.headings);
+        this.slots.after(week.slots);
     }
 
     insertBefore(week) {
-        this.container.before(week.container);
+        this.headings.before(week.headings);
+        this.slots.before(week.slots);
     }
 
-    appendToParent(parent) {
-        parent.appendChild(this.container);
+    appendToParent(headingsParent, slotsParent) {
+        headingsParent.appendChild(this.headings);
+        slotsParent.appendChild(this.slots);
     }
 
     removeFromDom() {
         this.headings.remove();
         this.slots.remove();
     }
-
-    // show() {
-    //     this.container.style.display = "flex";
-    // }
-
-    // hide() {
-    //     this.container.style.display = "";
-    // }
 
     set className(className) {
         this.headings.className = `${className}-headings`;
@@ -77,6 +71,53 @@ export default class Week {
         return headings;
     }
 
+    _setupDays(headings) {
+        const media = window.matchMedia("(max-width: 800px)");
+        const week = this;
+
+        const days = headings.querySelectorAll(".day-heading");
+        days.forEach((day) => {
+            const shortName = day.getAttribute("data-shortName");
+            const fullName = day.getAttribute("data-name");
+            if (media.matches) {
+                day.innerHTML = `${shortName}`;
+            } else {
+                day.innerHTML = `${fullName}`;
+            }
+            const dateDisplay = document.createElement("div")
+            dateDisplay.className = "date-display";
+            day.appendChild(dateDisplay);
+        });
+    }
+
+    _setupDates(headings) {
+        for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
+            const date = addDays(this.weekStart, dayIndex);
+            const display = date.toLocaleDateString('fr-FR', {day: "numeric"});
+            headings.querySelector(`.day-heading[data-dayIndex="${dayIndex}"] .date-display`).innerHTML = display;
+        }
+
+        if (this.weekOffset == 0) {
+            this._showCurrentDay(headings);
+        } else {
+            this._hideCurrentDay(headings);
+        }
+    }
+
+    _showCurrentDay(headings) {
+        const now = new Date();
+        const dayIndex = getDayIndex(now);
+        headings.querySelector(`.day-heading[data-dayIndex="${dayIndex}"]`).classList.add("currentDay");
+        console.log("Show current day");
+    }
+
+    _hideCurrentDay(headings) {
+        const days = headings.querySelectorAll(".day-heading");
+        days.forEach((day) => {
+            day.classList.remove("currentDay");
+        });
+    }
+
     _createSlots(className, weekStart) {
         const slots = document.createElement("div");
         slots.className = `${className}-slots`;
@@ -108,61 +149,14 @@ export default class Week {
                 slot.className = "slot";
                 day.appendChild(slot);
                 slot.addEventListener("click", () => {
-                    if(week.ctx.principal) {
-                        week.ctx.principal.clickSlot(hour, dayIndex);
+                    if(this.ctx.principal) {
+                        this.ctx.principal.clickSlot(hour, dayIndex);
                     }
                 })
             }
         });
        
         return slots;
-    }
-
-
-    _setupDays(headings) {
-        const media = window.matchMedia("(max-width: 800px)");
-        const week = this;
-
-        const days = headings.querySelectorAll(".day-heading");
-        days.forEach((day) => {
-            const shortName = day.getAttribute("data-shortName");
-            const fullName = day.getAttribute("data-name");
-            if (media.matches) {
-                day.innerHTML = `${shortName}`;
-            } else {
-                day.innerHTML = `${fullName}`;
-            }
-            const dayDisplay = document.createElement("div")
-            dayDisplay.className = "dayDisplay";
-            day.appendChild(dayDisplay);
-        });
-    }
-
-    _setupDates(headings) {
-        for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
-            const date = addDays(this.weekStart, dayIndex);
-            const display = date.toLocaleDateString('fr-FR', {day: "numeric"});
-            headings.querySelector(`.day-heading[data-dayIndex="${dayIndex}"] .dayDisplay`).innerHTML = display;
-        }
-
-        if (this.weekOffset == 0) {
-            this._showCurrentDay(headings);
-        } else {
-            this._hideCurrentDay(headings);
-        }
-    }
-
-    _showCurrentDay(headings) {
-        const now = new Date();
-        const dayIndex = getDayIndex(now);
-        headings.querySelector(`.day-heading[data-dayIndex="${dayIndex}"]`).classList.add("currentDay");
-    }
-
-    _hideCurrentDay(headings) {
-        const days = headings.querySelectorAll(".day-heading");
-        days.forEach((day) => {
-            day.classList.remove("currentDay");
-        });
     }
 
     pushEvent(event) {
@@ -187,7 +181,7 @@ export default class Week {
         .then(events => {
             this.events = events;
             this.events.forEach(evt => evt.show());
-            console.log(`Got events for weekStart: ${this.weekStart}`, events);
+            // console.log(`Got events for weekStart: ${this.weekStart}`, events);
         })
         .catch(err => console.log("Cannot Load Events:", err));
     };
