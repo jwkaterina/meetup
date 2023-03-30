@@ -18,6 +18,8 @@ export default class Calendar {
         this.addButton = document.getElementById("addButton");
         this.todayButton = document.getElementById("todayButton");
         this.loadButton = document.getElementById("loadButton");
+
+        this.NextWeekCreationInProgress = false;
     }
 
     setup() {
@@ -93,24 +95,27 @@ export default class Calendar {
     checkScrollDirection() {
         this.slotsContainer.addEventListener('scroll', () => {
             const { scrollLeft, clientWidth } = this.slotsContainer;
-            
+            this.headingsContainer.scrollLeft = scrollLeft;
 
-            if(scrollLeft == 2 * clientWidth) {
+            if(!this.NextWeekCreationInProgress && (scrollLeft + 5 > 2 * clientWidth)) {
+                // console.log("NextWeekCreationInProgress", this.NextWeekCreationInProgress);
+                // console.log("scrollWidth", scrollWidth);
+                // console.log("scrollLeft:", scrollLeft);
+                // console.log("clientWidth:", clientWidth);
+                // console.log("clientWidth * 2:", clientWidth * 2);
+                this.NextWeekCreationInProgress = true;
                 // console.log("scroll right");
                 setTimeout(async () => {
                     this.createNextWeek();
-                    this.headingsContainer.scrollLeft = scrollLeft;
-                }, 200)            
+                    this.NextWeekCreationInProgress = false;
+                }, 300)            
             }
             if(scrollLeft == 0) {
                 // console.log("scroll left");
                 setTimeout(() => {
                     this.createPrevWeek();
-                    this.headingsContainer.scrollLeft = scrollLeft;
-                }, 200)            
+                }, 300)            
             }
-            this.headingsContainer.scrollLeft = scrollLeft;
-
         });
     }
    
@@ -158,29 +163,55 @@ export default class Calendar {
     }
 
     showCurrentWeek() {
-        if(this.weekOffset === 0) {
+        if (this.weekOffset === 0) {
             return
         } else if (this.weekOffset === 1) {
             this.scrollToLeft();
-            setTimeout(() => {
-                this.createPrevWeek();
-            }, 700);          
         } else if (this.weekOffset === -1) {
-            this.scrollToRight();
-            setTimeout(() => {
-                this.createNextWeek();
-            }, 700);       
+            this.scrollToRight();   
         } else if(this.weekOffset > 1) {
-
+            this.backToCurrentWeek();
         } else if(this.weekOffset < 1) {
-            
+            this.forwardToCurrentWeek();
         }
+    }
 
-        // this.hideCurrentDay();
-        // this.weekOffset = 0;
-        // this.calculateCurrentWeek();
-        // this.setupDates();
-        // this.eventCalendar.loadEvents();
+    backToCurrentWeek() {
+        this.calculateCurrentWeek();
+        this.replacePrevWeek(this.ctx.weekStart, 0);
+        this.weekOffset = 1;
+        this.ctx.weekStart = this.ctx.nextWeekStart;
+        this.scrollToLeft();
+        setTimeout(() => {
+            this.replaceNextWeek(this.ctx.nextWeekStart, this.weekOffset + 1)
+        }, 1000)       
+    }
+
+    forwardToCurrentWeek() {
+        this.calculateCurrentWeek();
+        this.replaceNextWeek(this.ctx.weekStart, 0);
+        this.weekOffset = -1;
+        this.ctx.weekStart = this.ctx.prevWeekStart;
+        this.scrollToRight();
+        setTimeout(() => {
+            this.replacePrevWeek(this.ctx.prevWeekStart, this.weekOffset - 1)
+        }, 1000)   
+    }
+
+    replacePrevWeek(weekStart, weekOffset) {
+        this.weeks.prevWeek.removeFromDom();
+        this.weeks.prevWeek = new Week(weekStart, weekOffset, "prev-week");
+        this.weeks.mainWeek.insertBefore(this.weeks.prevWeek);
+        this.weeks.prevWeek.loadEvents();
+
+    }
+
+    replaceNextWeek(weekStart, weekOffset) {
+        this.weeks.nextWeek.removeFromDom();
+        this.weeks.nextWeek = new Week(weekStart, weekOffset, "next-week");
+        this.weeks.mainWeek.insertAfter(this.weeks.nextWeek);
+        this.weeks.nextWeek.loadEvents();
+
     }
 
     assignWeeks() {
@@ -196,32 +227,36 @@ export default class Calendar {
     createNextWeek() {
         this.weekOffset += 1;
         this.ctx.weekStart = this.ctx.nextWeekStart;
-        this.setupMonth();
-
         this.ctx.weekEnd = addDays(this.ctx.weekEnd, 7);
+        this.setupMonth();
         this.weeks.prevWeek.removeFromDom();
         this.weeks.prevWeek = this.weeks.mainWeek;
-        this.weeks.mainWeek = this.weeks.nextWeek;
-        this.weeks.nextWeek = new Week(this.ctx.nextWeekStart, this.weekOffset + 1, "next-week");
         this.weeks.prevWeek.className = "prev-week";
+        this.weeks.mainWeek = this.weeks.nextWeek;
         this.weeks.mainWeek.className = "main-week";
+
+        this.weeks.nextWeek = new Week(this.ctx.nextWeekStart, this.weekOffset + 1, "next-week");
         this.weeks.mainWeek.insertAfter(this.weeks.nextWeek);
+        this.headingsContainer.scrollLeft = this.slotsContainer.scrollLeft;
+
         this.weeks.nextWeek.loadEvents();
     }
 
     createPrevWeek() {
         this.weekOffset += -1;
         this.ctx.weekStart = this.ctx.prevWeekStart;
-        this.setupMonth();
-
         this.ctx.weekEnd = addDays(this.ctx.weekEnd, -7);
+        this.setupMonth();
         this.weeks.nextWeek.removeFromDom();
         this.weeks.nextWeek = this.weeks.mainWeek;
-        this.weeks.mainWeek = this.weeks.prevWeek;
-        this.weeks.prevWeek = new Week(this.ctx.prevWeekStart, this.weekOffset - 1, "prev-week");
         this.weeks.nextWeek.className = "next-week";
+        this.weeks.mainWeek = this.weeks.prevWeek;
         this.weeks.mainWeek.className = "main-week";
+
+        this.weeks.prevWeek = new Week(this.ctx.prevWeekStart, this.weekOffset - 1, "prev-week");
         this.weeks.mainWeek.insertBefore(this.weeks.prevWeek);
+        this.headingsContainer.scrollLeft = this.slotsContainer.scrollLeft;
+
         this.weeks.prevWeek.loadEvents();
     }
 
