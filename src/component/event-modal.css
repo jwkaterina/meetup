@@ -4,11 +4,15 @@
 
 #eventModal .flip-card-front {
     display: grid;
-    grid-template-rows: 2fr 1fr 7fr 2fr;
+    grid-template-rows: 2fr 1fr 1fr 7fr 2fr;
 }
 
 #eventModal .cancelButton {
     justify-self: end;
+}
+
+#eventModal .time {
+    color: white;
 }
 
 #eventModal .place {
@@ -24,6 +28,11 @@
     margin-left: 15px;
     font-size: 20px;
     color: black;
+}
+
+#eventModal .list {
+    padding-left: 0;
+    list-style-position: inside; 
 }
 
 #eventModal .members {

@@ -14,7 +14,7 @@ export default class EventModal {
         this.flipCardFront = this.container.querySelector(".flip-card-front");
         this.members = this.container.querySelector(".members");
         this.place = this.container.querySelector(".place");
-        this.type = this.container.querySelector(".type");
+        this.time = this.container.querySelector(".time");
     }
 
     hideEditButton() {
@@ -113,6 +113,10 @@ export default class EventModal {
 
     setMembers(txt) {
         this.members.innerHTML = txt;
+    }
+
+    setTime(date, start, end) {
+        this.time.innerHTML = `${date} ${start} - ${end}`;
     }
 
     setPlace(place, type) {

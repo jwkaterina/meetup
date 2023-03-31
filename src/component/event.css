@@ -20,11 +20,10 @@
     position: absolute;
     top: 0;
     right: 0;
-    border-left: solid 10px var(--yellow);
-    border-right: solid 10px var(--yellow);
+    border-left: solid 6px var(--yellow);
+    border-right: solid 6px var(--yellow);
     border-bottom: solid 10px transparent;
     border-top: solid 10px var(--yellow);
-    /* display: none; */
 }
 
 .event:hover {

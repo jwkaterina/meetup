@@ -55,6 +55,7 @@ export default class PrincipalCommon {
         let txt = "";
         txt = `<ol class="list">${lis}</ol>`;
 
+        this.eventModal.setTime(event.date, event.start, event.end);
         this.eventModal.setPlace(event.place, event.type);
         this.eventModal.setMembers(txt);
         this.eventModal.setCardColor(event.color);
