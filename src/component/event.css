@@ -15,6 +15,18 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
 }
 
+.mark:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-left: solid 10px var(--yellow);
+    border-right: solid 10px var(--yellow);
+    border-bottom: solid 10px transparent;
+    border-top: solid 10px var(--yellow);
+    /* display: none; */
+}
+
 .event:hover {
     background-color: var(--gray-darker) !important;
 }

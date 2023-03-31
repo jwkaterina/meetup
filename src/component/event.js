@@ -12,6 +12,7 @@ export default class Event {
         this.end = data.end;
         this.date = data.date;
         this.color = data.color;
+        this.type = data.type;
         this.slotHeight = 50;
         this.slotHeightMobile = 35;
     }
@@ -120,10 +121,18 @@ export default class Event {
         }
 
         if(this.memberIds.includes(ctx.principal.user.id)) {
-            this.color = "var(--blue)";
+            eventSlot.classList.add("mark");
         } else {
+            eventSlot.classList.remove("mark");
+
+        }
+
+        if(this.type == "présentoir mobile") {
             this.color = "var(--green)";
-        } 
+        } else {
+            this.color = "var(--blue)"
+        }
+        
         eventSlot.style.background = this.color;
 
         const day = weekContainer.querySelector(`.day-slots[data-dayIndex="${this.dayIndex}"]`);

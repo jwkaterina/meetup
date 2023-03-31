@@ -14,6 +14,7 @@ export default class EventModal {
         this.flipCardFront = this.container.querySelector(".flip-card-front");
         this.members = this.container.querySelector(".members");
         this.place = this.container.querySelector(".place");
+        this.type = this.container.querySelector(".type");
     }
 
     hideEditButton() {
@@ -114,10 +115,19 @@ export default class EventModal {
         this.members.innerHTML = txt;
     }
 
-    setPlace(place) {
+    setPlace(place, type) {
+        console.log(type);
+        let iconClass;
+        if(type == "présentoir mobile") {
+            // console.log("presentoir")
+            iconClass = "fa-sharp fa-solid fa-cart-flatbed-suitcase";
+        } else {
+            // console.log("territoire");
+            iconClass = "fa-sharp fa-solid fa-door-closed";
+        }
         this.place.innerHTML = `<a class="place" href="http://maps.google.com/?q=${place}" target="_blank">
-        <i id="mapIcon" class="fa-solid fa-map-location-dot"></i>
-        ${place}
-        </a>`
+        ${place}</a>
+        <i id="typeIcon" class="${iconClass}"></i>
+        `
     }
 }
