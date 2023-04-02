@@ -196,10 +196,10 @@ input, select {
     
     .modal {
         left: 5vw;
-        top: 25vh;
-        transform: translate(0, 0);
+        top: 50vh;
+        transform: translate(0, -220px);
         width: 90vw;
-        height: 50vh;
+        height: 450px;
     }
 
     .button, .shortInput, select, .select-items div, .select-selected, .label  {
@@ -208,7 +208,7 @@ input, select {
 
     .flip-card {
         width: 90vw;
-        height: 50vh;
+        height: 440px;
     }
 
     .flip {

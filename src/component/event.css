@@ -7,7 +7,7 @@
     width: calc(100% - 5px);
     line-height: 1rem;
     font-size: 0.8rem;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.8rem;
     color: var(--white);
     overflow: hidden;
     cursor: pointer;
@@ -38,7 +38,7 @@
 }
 
 #event-header i {
-    margin-left: 30px;
+    margin-right: 10px;
     font-size: 15px;
 }
 
@@ -48,7 +48,10 @@
 }
 
 @media (max-width: 800px) {
-    .circle {
+    /* .circle {
+        position: absolute;
+        top: 3px;
+        left: 3px;
         border-radius: 50%;
         width: 15px;
         line-height: 15px;
@@ -60,7 +63,22 @@
         font-weight: bold;
         display: inline-block;
         box-sizing: content-box;
-      }
+    } */
+
+    .event i {
+        color: var(--white);
+        position: absolute;
+        top: 2px;
+        left: 3px;
+        font-size: 15px;
+    }
+
+    .event p {
+        color: var(--white);
+        position: absolute;
+        right: 3px;
+        bottom: 2px;
+    }
 
     .event {
         width: calc(100% - 3px);

@@ -58,10 +58,10 @@ export default class Event {
         }
 
         let eventSlot;
-        let numberCircle;
+        // let numberCircle;
         if (weekContainer.querySelector(`[id='${this.id}']`)) {
             eventSlot = weekContainer.querySelector(`[id='${this.id}']`);
-            numberCircle = eventSlot.querySelector(".circle");
+            // numberCircle = eventSlot.querySelector(".circle");
         } else {
             eventSlot = document.createElement("div");
             eventSlot.className ="event";
@@ -70,11 +70,18 @@ export default class Event {
                 ctx.principal.openEventModal(this)
             });
 
-            numberCircle = document.createElement("div");
-            numberCircle.className = "circle";
-            numberCircle.style.display = "none";
-            eventSlot.appendChild(numberCircle);
+            // numberCircle = document.createElement("div");
+            // numberCircle.className = "circle";
+            // numberCircle.style.display = "none";
+            // eventSlot.appendChild(numberCircle);
             
+        }
+
+        let iconClass;
+        if(this.type == "présentoir mobile") {
+            iconClass = "fa-sharp fa-solid fa-cart-flatbed-suitcase";
+        } else {
+            iconClass = "fa-regular fa-building";
         }
 
         if (media.matches) {
@@ -82,9 +89,16 @@ export default class Event {
             eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
             eventSlot.style.bottom = 24 * h - (this.endHour + this.endMinutes / 60) * h + 3 + "px";
 
+            const icon = document.createElement("i");
+            icon.className = iconClass;
+            eventSlot.appendChild(icon);
+
             if(this.memberIds.length > 0) {
-                numberCircle.style.display = "inline-block";
-                numberCircle.innerHTML = this.memberIds.length;
+                // numberCircle.style.display = "inline-block";
+                // numberCircle.innerHTML = this.memberIds.length;
+                const number = document.createElement("p");
+                number.innerHTML = this.memberIds.length;
+                eventSlot.appendChild(number);
             }
         } else {
             const h = this.slotHeight;
@@ -95,13 +109,6 @@ export default class Event {
             let mainName = "???";
             if(ctx.users[mainId]) {
                 mainName = ctx.users[mainId].name;
-            }
-    
-            let iconClass;
-            if(this.type == "présentoir mobile") {
-                iconClass = "fa-sharp fa-solid fa-cart-flatbed-suitcase";
-            } else {
-                iconClass = "fa-regular fa-building";
             }
     
             let lis = "";
@@ -122,8 +129,8 @@ export default class Event {
             let txt = "";
             txt = `
             <div id="event-header">
-                <a class="place" target="_blank">${this.place}</a>
                 <i class="${iconClass}"></i>
+                <a class="place" target="_blank">${this.place}</a>
             </div>
             <ul class="list">${lis}</ul>`
             eventSlot.innerHTML = txt;

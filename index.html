@@ -99,13 +99,16 @@
                         <button type="button" class="cancelButton">
                             <div class="cross"></div>
                         </button>
-                        <div id="type-1">
-                            <input type="radio" id="territoire" name="type" value="territoire">
-                            <label for="territoire">Territoire</label>
-                        </div>
-                        <div id="type-2">
-                            <input type="radio" id="présentoir mobile" name="type" value="présentoir mobile" checked>
-                            <label for="présentoir mobile">Présentoir mobile</label>
+                        <div id="types">
+                            <div id="type-1" class="type">
+                                <input type="radio" id="territoire" name="type" value="territoire">
+                                <label for="territoire">Territoire</label>
+                            </div>
+                          
+                            <div id="type-2" class="type">
+                                <input type="radio" id="présentoir mobile" name="type" value="présentoir mobile" checked>
+                                <label for="présentoir mobile">Présentoir mobile</label>
+                            </div>
                         </div>
                         <div id="place" class="input-group">
                             <input required type="adress" id="eventPlace" class="shortInput" name="place" placeholder="Adresse ou Zoom"></input>

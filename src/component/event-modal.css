@@ -29,9 +29,9 @@
 }
 
 #typeIcon {
-    margin-left: 15px;
-    font-size: 20px;
-    color: var(--white);
+    margin-left: 20px;
+    font-size: 30px;
+    color: var(--black);
 }
 
 #eventModal .list {
@@ -61,8 +61,6 @@
 
 @media (max-width: 800px) {
     #eventModal .members {
-        color: var(--white);
-        text-align: center;
         line-height: 2rem;
         font-size: 1rem;
     }
