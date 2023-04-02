@@ -12,7 +12,11 @@
 }
 
 #eventModal .time {
-    color: white;
+    color: var(--white);
+    /* font-size: 15px; */
+    font-style: italic;
+    justify-self: center;
+    align-self: center;
 }
 
 #eventModal .place {
@@ -20,14 +24,14 @@
     font-style: italic;
 }
 
-#eventContent .place:hover {
+#eventModal .place:hover {
     color: var(--white);
 }
 
 #typeIcon {
     margin-left: 15px;
     font-size: 20px;
-    color: black;
+    color: var(--white);
 }
 
 #eventModal .list {

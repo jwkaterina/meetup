@@ -97,6 +97,13 @@ export default class Event {
                 mainName = ctx.users[mainId].name;
             }
     
+            let iconClass;
+            if(this.type == "présentoir mobile") {
+                iconClass = "fa-sharp fa-solid fa-cart-flatbed-suitcase";
+            } else {
+                iconClass = "fa-regular fa-building";
+            }
+    
             let lis = "";
             lis = `<li class="member" data-user-id="${mainId}">${mainName}</li>`;
             if(this.memberIds.includes(ctx.principal.user.id) && ctx.principal.user.id != mainId) {
@@ -113,10 +120,12 @@ export default class Event {
             });         
 
             let txt = "";
-            txt = `<a class="place" target="_blank">
-            <i class="fa-sharp fa-solid fa-location-dot"></i>
-            ${this.place}</a>
-                <ul class="list">${lis}</ul>`
+            txt = `
+            <div id="event-header">
+                <a class="place" target="_blank">${this.place}</a>
+                <i class="${iconClass}"></i>
+            </div>
+            <ul class="list">${lis}</ul>`
             eventSlot.innerHTML = txt;
         }
 
@@ -124,13 +133,12 @@ export default class Event {
             eventSlot.classList.add("mark");
         } else {
             eventSlot.classList.remove("mark");
-
         }
 
         if(this.type == "présentoir mobile") {
             this.color = "var(--green)";
         } else {
-            this.color = "var(--blue)"
+            this.color = "var(--blue)";
         }
         
         eventSlot.style.background = this.color;

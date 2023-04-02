@@ -149,11 +149,11 @@ export default class Calendar {
         for (let hour = 0; hour < 24; hour++) {
             const timeSlot = document.createElement("div");
             timeSlot.setAttribute("data-hour", hour);
-            timeSlot.className = "time";
+            timeSlot.className = "time-slot";
             timeSlot.innerHTML = `${hour}:00`;
             timeColumn.appendChild(timeSlot);
         }
-        timeColumn.querySelector(`.time[data-hour="0"]`).style.visibility = "hidden";
+        timeColumn.querySelector(`.time-slot[data-hour="0"]`).style.visibility = "hidden";
     }
 
     calculateCurrentWeek() {

@@ -30,11 +30,16 @@
     background-color: var(--gray-darker) !important;
 }
 
-.event .place {
+#event-header .place {
     text-decoration: underline;
     color: var(--white);
     font-size: 0.9rem;
     font-style: italic;
+}
+
+#event-header i {
+    margin-left: 30px;
+    font-size: 15px;
 }
 
 .event .list {

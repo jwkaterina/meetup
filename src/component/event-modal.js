@@ -116,7 +116,21 @@ export default class EventModal {
     }
 
     setTime(date, start, end) {
-        this.time.innerHTML = `${date} ${start} - ${end}`;
+        const newDate = new Date(date);
+        const newDateFormated = newDate.toLocaleDateString('fr-FR', {day: "numeric", month: "long"})
+        const startHour = start.slice(0, 2);
+        let startMin = start.slice(3);
+        if(startMin === "00") {
+            startMin = "";
+        }
+        console.log(start, startHour, startMin);
+
+        const endHour = end.slice(0, 2);
+        let endMin = end.slice(3);
+        if(endMin === "00") {
+            endMin = "";
+        }
+        this.time.innerHTML = `${newDateFormated} ${startHour}h${startMin} - ${endHour}h${endMin}`;
     }
 
     setPlace(place, type) {
@@ -127,7 +141,7 @@ export default class EventModal {
             iconClass = "fa-sharp fa-solid fa-cart-flatbed-suitcase";
         } else {
             // console.log("territoire");
-            iconClass = "fa-sharp fa-solid fa-door-closed";
+            iconClass = "fa-regular fa-building";
         }
         this.place.innerHTML = `<a class="place" href="http://maps.google.com/?q=${place}" target="_blank">
         ${place}</a>
