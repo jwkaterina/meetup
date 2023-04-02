@@ -261,7 +261,10 @@ export default class Calendar {
     }
 
     loadEvents() {
-        Object.values(this.weeks).forEach(week => week.loadEvents());
+        const showLoadingAnimation = true;
+        this.weeks.prevWeek.loadEvents();
+        this.weeks.mainWeek.loadEvents(showLoadingAnimation);
+        this.weeks.nextWeek.loadEvents();
     }
 
     async createEvent(event) {

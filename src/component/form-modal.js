@@ -21,7 +21,6 @@ export default class FormModal {
         this.flipCard = this.container.querySelector(".flip-card-inner");
         this.flipCardBack = this.container.querySelector(".flip-card-back");
         this.flipCardText = this.container.querySelector(".flipCardText");
-        this.loadingAnime = document.getElementById("loading-form");
     }
 
     get newStart() {

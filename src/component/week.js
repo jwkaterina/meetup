@@ -13,6 +13,7 @@ export default class Week {
         this.weekOffset = weekOffset;
         this.headings = this._createHeadings(className, weekStart);
         this.slots = this._createSlots(className, weekStart);
+        this.loadingAnime = document.getElementById("loading-form");
 
         this.events = [];
         this.eventService = new EventService();
@@ -167,18 +168,24 @@ export default class Week {
         event.show();
     }
 
-    loadEvents() {
+    loadEvents(showLoadingAnimation = false) {
         const events = this.slots.querySelectorAll(".event");
         events.forEach((event) => {
             event.remove();
         });
 
-        this._loadWeek();
+        this._loadWeek(showLoadingAnimation);
     }
 
-    _loadWeek() {
+    _loadWeek(showLoadingAnimation) {
+        if (showLoadingAnimation) {
+            this.loadingAnime.style.display = "block";
+        }
         this.events = this.eventService.loadEvents(dateString(this.weekStart))
         .then(events => {
+            if (showLoadingAnimation) {
+                this.loadingAnime.style.display = "none";
+            }
             this.events = events;
             this.events.forEach(evt => evt.show());
             // console.log(`Got events for weekStart: ${this.weekStart}`, events);
