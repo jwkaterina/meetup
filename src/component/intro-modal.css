@@ -38,7 +38,7 @@
     to {top: 50%; opacity: 1;}
 }
 
-@media (max-width: 800px) {
+@media (max-width: 850px) {
 
     #introModal {
         padding: 3vh 5vh;

@@ -135,17 +135,17 @@ export default class EventModal {
 
     setPlace(place, type) {
         console.log(type);
-        let iconClass;
+        let imgSrc;
         if(type == "présentoir mobile") {
             // console.log("presentoir")
-            iconClass = "fa-sharp fa-solid fa-cart-flatbed-suitcase";
+            imgSrc = "../icons/pm-b.png";
         } else {
             // console.log("territoire");
-            iconClass = "fa-regular fa-building";
+            imgSrc = "../icons/tr-b.png";
         }
         this.place.innerHTML = `<a class="place" href="http://maps.google.com/?q=${place}" target="_blank">
         ${place}</a>
-        <i id="typeIcon" class="${iconClass}"></i>
+        <img src="${imgSrc}" alt="">
         `
     }
 }

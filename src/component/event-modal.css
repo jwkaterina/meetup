@@ -22,16 +22,25 @@
 #eventModal .place {
     color: var(--black);
     font-style: italic;
+    display: flex;
+    justify-self: center;
+    align-self: center;
 }
 
 #eventModal .place:hover {
     color: var(--white);
 }
 
-#typeIcon {
+/* #typeIcon {
     margin-left: 20px;
     font-size: 30px;
     color: var(--black);
+} */
+
+#eventModal img {
+    margin-left: 20px;
+    width: 40px;
+    height: 40px;
 }
 
 #eventModal .list {
@@ -59,7 +68,7 @@
     color: var(--white);
 }
 
-@media (max-width: 800px) {
+@media (max-width: 850px) {
     #eventModal .members {
         line-height: 2rem;
         font-size: 1rem;

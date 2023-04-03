@@ -47,7 +47,7 @@ export default class Event {
 
     show() {
         const ctx = Context.getInstance();
-        const media = window.matchMedia("(max-width: 800px)");
+        const media = window.matchMedia("(max-width: 850px)");
 
         const weekContainer = this.findWeekContainer();
 
@@ -77,11 +77,13 @@ export default class Event {
             
         }
 
-        let iconClass;
+        let imgSrc;
         if(this.type == "présentoir mobile") {
-            iconClass = "fa-sharp fa-solid fa-cart-flatbed-suitcase";
+            // console.log("presentoir")
+            imgSrc = "../icons/pm-w.png";
         } else {
-            iconClass = "fa-regular fa-building";
+            // console.log("territoire");
+            imgSrc = "../icons/tr-w.png";
         }
 
         if (media.matches) {
@@ -89,9 +91,9 @@ export default class Event {
             eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
             eventSlot.style.bottom = 24 * h - (this.endHour + this.endMinutes / 60) * h + 3 + "px";
 
-            const icon = document.createElement("i");
-            icon.className = iconClass;
-            eventSlot.appendChild(icon);
+            const image = document.createElement("img");
+            image.src = imgSrc;
+            eventSlot.appendChild(image);
 
             if(this.memberIds.length > 0) {
                 // numberCircle.style.display = "inline-block";
@@ -129,7 +131,7 @@ export default class Event {
             let txt = "";
             txt = `
             <div id="event-header">
-                <i class="${iconClass}"></i>
+                <img src="${imgSrc}" alt="">
                 <a class="place" target="_blank">${this.place}</a>
             </div>
             <ul class="list">${lis}</ul>`

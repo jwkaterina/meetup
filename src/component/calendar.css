@@ -149,7 +149,7 @@ body {
     display: none;   
 }
 
-@media (max-width: 800px) {
+@media (max-width: 850px) {
     #header {
         padding: 10px 20px;
     }
