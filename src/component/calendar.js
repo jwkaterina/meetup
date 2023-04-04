@@ -94,7 +94,8 @@ export default class Calendar {
 
     checkScrollDirection() {
         this.slotsContainer.addEventListener('scroll', () => {
-            const { scrollLeft, clientWidth } = this.slotsContainer;
+            const { scrollLeft, clientWidth, scrollWidth } = this.slotsContainer;
+            console.log("scrollLeft: ", scrollLeft, "clientWidth: ", clientWidth, "scrollWidth: ", scrollWidth);
             this.headingsContainer.scrollLeft = scrollLeft;
 
             if(!this.NextWeekCreationInProgress && (scrollLeft + 5 > 2 * clientWidth)) {
@@ -230,8 +231,8 @@ export default class Calendar {
 
         this.weeks.nextWeek = new Week(this.ctx.nextWeekStart, this.weekOffset + 1, "next-week");
         this.weeks.mainWeek.insertAfter(this.weeks.nextWeek);
-        this.headingsContainer.scrollLeft = this.slotsContainer.scrollLeft;
-
+        this.headingsContainer.scrollLeft = this.headingsContainer.clientWidth;
+        this.slotsContainer.scrollLeft = this.slotsContainer.clientWidth;
         this.weeks.nextWeek.loadEvents();
     }
 
@@ -248,7 +249,8 @@ export default class Calendar {
 
         this.weeks.prevWeek = new Week(this.ctx.prevWeekStart, this.weekOffset - 1, "prev-week");
         this.weeks.mainWeek.insertBefore(this.weeks.prevWeek);
-        this.headingsContainer.scrollLeft = this.slotsContainer.scrollLeft;
+        this.headingsContainer.scrollLeft = this.headingsContainer.clientWidth;
+        this.slotsContainer.scrollLeft = this.slotsContainer.clientWidth;
 
         this.weeks.prevWeek.loadEvents();
     }
