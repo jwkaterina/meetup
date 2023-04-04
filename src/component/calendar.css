@@ -31,31 +31,33 @@ body {
 
 /* header */
 
-.header {
+#header {
     height: 80px;
     position: sticky;
     top: 0;
+    left: 0;
+    width: 100vw;
     text-align: center;
     padding: 10px 50px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    z-index: 1;
+    z-index: 2;
     background-color: var(--gray);
 }
 
-#heading {
+#title {
     display: flex;
     align-items: center;
 }
 
-.header img {
+#header img {
     width: 50px;
     height: 50px;
     margin: 0 10px 20px 10px;
 }
 
-.header h1 {
+#header h1 {
     color: var(--white);
     font-weight: normal;
     width: 100%;
@@ -73,7 +75,7 @@ body {
     font-size: 20px;
 }
 
-.header i {
+#header i {
     cursor: pointer;
     color: var(--white);
     transition: all 80ms linear;
@@ -82,7 +84,7 @@ body {
     height: 60px;
 }
 
-.header .i-btn:hover {
+#header .i-btn:hover {
     transform: scale(1.5);
 }
 
@@ -92,9 +94,9 @@ body {
 
 /* calendar */
 
-#calendar {
+#calendar-grid {
     display: flex;
-    width: 100%;
+    width: 100vw;
     transition: opacity 200ms ease-in;
 }
 
@@ -106,7 +108,7 @@ body {
     width: 100%;
     height: 100%;
     background-color: black;
-    z-index: 2;
+    z-index: 3;
     opacity: 0.8;
     /* transition: opacity 200ms ease-in; */
     animation: calendarFadeIn 0.2s ease-in-out;
@@ -126,79 +128,29 @@ body {
     to {opacity: 0;}
 }
 
-/* columns */
+#empty {
+    width: 50px;
+    height: 60px;
+    background-color: var(--white);
+    position: fixed;
+    top: 80px;
+    left: 0;
+    z-index: 2;
+}
 
-.dayTime {
-    width: 100%;
-    min-width: 50px;
-    max-width: 50px;
+#time-slots {
+    width: 50px;
     text-align: center;
     align-self: center;
     justify-self: center;
     background-color: var(--white);
     color: var(--gray);
-}
-
-.day {
-    width: 100%;
-    min-width: 110px;
-}
-
-.columnHeader {
-    position: sticky;
-    top: 80px;
-    text-align: center;
-    font-size: 20px;
-    padding: 10px 0px;
-    height: 60px;
-    background-color: var(--white);
     z-index: 1;
-}
-
-.day.currentDay .columnHeader, .day.currentDay .dayDisplay {
-    color: var(--green);
-}
-
-.dayDisplay {
-    font-size: 15px;
-    color: var(--gray-darker);
-}
-
-/* slots */
-
-.slots {
-    position: relative;
-    border-left: 1px solid var(--gray-lightest);
-}
-
-.slot,
-.time {
-    height: var(--slotHeight);
-}
-
-.time {
-    position: relative;
-    top: -8px;
-    font-size: 14px;
-    transition: all 0.5s linear ;
-}
-
-.slot {
-    border-top: 1px solid var(--gray-lightest);
-    background-color: var(--white);
-    transition: all 0.5s linear ;
-}
-
-.slot:hover {
-    cursor: pointer;
-    background-color: var(--gray-light);
 }
 
 .loading {
     z-index: 10;
     position: fixed;
-    top: 0;
-    left: 0;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -208,26 +160,22 @@ body {
     display: none;   
 }
 
-@media (max-width: 800px) {
-    :root {
-        --slotHeight: 50px;
-    }
-
-    .header {
+@media (max-width: 850px) {
+    #header {
         padding: 10px 20px;
     }
 
-    .header img {
+    #header img {
         width: 50px;
         height: 50px;
         margin: 0 10px 20px 20px;
     }
 
-    .header h1 {
+    #header h1 {
         font-size: 3vh;
     }
 
-    .header .i-btn:hover {
+    #header .i-btn:hover {
         transform: scale(1);
     }
 
@@ -257,17 +205,8 @@ body {
         font-size: 25px;
     }
 
-    .slot,
-    .time {
-        height: var(--slotHeightMobile);
-    }
-
-    .dayTime {
-        min-width: 30px;
-    }
-    
-    .day {
-        min-width: 30px;
+    #time-slots {
+        width: 40px;
     }
 }
 

@@ -93,7 +93,8 @@ export default class PrincipalEditor {
             end,
             date,
             memberIds: [],
-            color: "var(--green)"
+            color: "",
+            type: ""
         });
         this.ctx.currentEvent = event;
         this.openCreateFormModal(event);
@@ -127,6 +128,12 @@ export default class PrincipalEditor {
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;
+        this.formModal.types.forEach(type => {
+            if(event.type === type.value) {
+                type.checked = true;
+                console.log(event.type);
+            }
+        })
     }
 
     openConfirmModal() {
@@ -151,7 +158,6 @@ export default class PrincipalEditor {
                     this.formModal.close();
                 },1000);
                 console.log(e);
-
             }
             return false;
         } 
@@ -168,6 +174,11 @@ export default class PrincipalEditor {
             event.start = this.formModal.start.value;
             event.end = this.formModal.end.value;
             event.date = this.formModal.date.value;
+            this.formModal.types.forEach(type => {
+                if(type.checked) {
+                    event.type = type.value;
+                }
+            })
     
             const selectedIndex = this.formModal.name.selectedIndex;
             const newMainId = this.formModal.name.options[selectedIndex].dataset.editorId;
@@ -205,6 +216,11 @@ export default class PrincipalEditor {
             event.start = this.formModal.start.value;
             event.end = this.formModal.end.value;
             event.date = this.formModal.date.value;
+            this.formModal.types.forEach(type => {
+                if(type.checked) {
+                    event.type = type.value;
+                }
+            })
     
             const selectedIndex = this.formModal.name.selectedIndex;
             const newMainId = this.formModal.name.options[selectedIndex].dataset.editorId;

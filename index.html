@@ -20,12 +20,12 @@
 <body>
     <main>
         <!-- Header -->
-        <header class="header">
+        <header id="header">
             <div class="weekControls">
                 <i id="prevWeekBtn" class="fa-solid fa-angle-left i-btn"></i>
                 <i id="nextWeekBtn" class="fa-solid fa-angle-right i-btn"></i>
             </div>
-            <div id="heading">
+            <div id="title">
                 <img src="icons/Watchtower.svg" alt="">
                 <h1 id="currentMonth"></h1>
             </div>
@@ -44,6 +44,7 @@
                 <div id="loggedButton-circle" class="log logged"></div>
             </div>
         </header>
+        <!-- Droldown -->
         <div id="dropdown">
             <div id="logoutButton" class="log">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
@@ -53,24 +54,16 @@
                 <p class="log-text">Mes données</p>
             </div>
         </div>
-    
+
+        <section id="week-headings">
+        </section>
+
         <!-- Calendar -->
-        <section id="calendar">
-            <div class="dayTime">            
+        <section id="calendar-grid">
+            <div id="empty"></div>
+            <div id="time-slots">
             </div>
-            <div data-name="Lundi" data-shortName="L" data-dayIndex = "0" class="day">           
-            </div>
-            <div data-name="Mardi" data-shortName="M" data-dayIndex = "1" class="day">           
-            </div>
-            <div data-name="Mercredi" data-shortName="M" data-dayIndex = "2" class="day">           
-            </div>
-            <div data-name="Jeudi" data-shortName="J" data-dayIndex = "3" class="day">            
-            </div>
-            <div data-name="Vendredi" data-shortName="V" data-dayIndex = "4" class="day">           
-            </div>
-            <div data-name="Samedi" data-shortName="S" data-dayIndex = "5" class="day">            
-            </div>
-            <div data-name="Dimanche" data-shortName="D" data-dayIndex = "6" class="day">           
+            <div id="week-slots">
             </div>
         </section>
 
@@ -82,6 +75,7 @@
                         <button type="button" class="cancelButton">
                             <div class="cross"></div>
                         </button>
+                        <div class="time"></div>
                         <div class="place"></div>
                         <div class="members"></div>          
                         <div class="eventControls">
@@ -106,8 +100,18 @@
                         <button type="button" class="cancelButton">
                             <div class="cross"></div>
                         </button>
+                        <div id="types">
+                            <div id="type-1" class="type">
+                                <input type="radio" id="tr" name="type" value="tr">
+                                <label for="tr">Territoire</label>
+                            </div>
+                            <div id="type-2" class="type">
+                                <input type="radio" id="pm" name="type" value="pm" checked>
+                                <label for="pm">Présentoir mobile</label>
+                            </div>
+                        </div>
                         <div id="place" class="input-group">
-                            <input required type="adress" id="eventPlace" class="shortInput" name="place" placeholder="Adresse"></input>
+                            <input required type="adress" id="eventPlace" class="shortInput" name="place" placeholder="Adresse ou Zoom"></input>
                             <div class="alert">
                                 <div class="arrow"></div>
                                 <p>Ce champ est requis.</p>

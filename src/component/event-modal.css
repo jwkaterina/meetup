@@ -4,25 +4,41 @@
 
 #eventModal .flip-card-front {
     display: grid;
-    grid-template-rows: 2fr 1fr 7fr 2fr;
+    grid-template-rows: 2fr 1fr 1fr 7fr 2fr;
 }
 
 #eventModal .cancelButton {
     justify-self: end;
 }
 
+#eventModal .time {
+    color: var(--white);
+    font-style: italic;
+    justify-self: center;
+    align-self: center;
+}
+
 #eventModal .place {
     color: var(--black);
     font-style: italic;
+    display: flex;
+    justify-self: center;
+    align-self: center;
 }
 
-#eventContent .place:hover {
+#eventModal .place:hover {
     color: var(--white);
 }
 
-#mapIcon {
-    margin-right: 15px;
-    font-size: 20px;
+#eventModal img {
+    margin-left: 20px;
+    width: 40px;
+    height: 40px;
+}
+
+#eventModal .list {
+    padding-left: 0;
+    list-style-position: inside; 
 }
 
 #eventModal .members {
@@ -45,10 +61,8 @@
     color: var(--white);
 }
 
-@media (max-width: 800px) {
+@media (max-width: 850px) {
     #eventModal .members {
-        color: var(--white);
-        text-align: center;
         line-height: 2rem;
         font-size: 1rem;
     }

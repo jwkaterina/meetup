@@ -1,8 +1,7 @@
 import { Context } from "./ctx";
 
 export default class PrincipalUser {
-    constructor(calendar, principalCommon) {
-        this.calendar = calendar;
+    constructor(principalCommon) {
         this.ctx = Context.getInstance();
         this.common = principalCommon;
         this.common.eventModal.hideEditButton();

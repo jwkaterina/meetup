@@ -1,6 +1,7 @@
 import PrincipalUser from "./principal-user.js";
 import PrincipalEditor from "./principal-editor.js";
 import UserInfoService from "./service/userinfo";
+import { addDays } from "./helper";
 
 
 class Ctx {
@@ -14,8 +15,22 @@ class Ctx {
     this.weekEnd = null;
   }
 
+  get prevWeekStart() {
+    if (!this.weekStart) {
+      return null;
+    }
+    return addDays(this.weekStart, -7);
+  }
+
+  get nextWeekStart() {
+    if (!this.weekStart) {
+      return null;
+    }
+    return addDays(this.weekStart, 7);
+  }
+
   switchToUserMode(calendar, principalCommon) {
-    this.principal = new PrincipalUser(calendar, principalCommon);
+    this.principal = new PrincipalUser(principalCommon);
     document.getElementById("addButton").style.display = "none";            
     console.log("User Mode");
   }

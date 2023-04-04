@@ -1,7 +1,7 @@
 import { Hub } from "aws-amplify";
 import { Context } from "../src/ctx";
 import Auth from "../src/auth";
-import Calendar  from "../src/calendar";
+import EventCalendar  from "../src/event-calendar";
 import PrincipalCommon from "../src/principal"
 import user from "./utils/user.json";
 import editor from "./utils/editor.json";
@@ -10,7 +10,7 @@ import uninvited from "./utils/uninvited.json";
 import UserData from "../src/user-data";
 
 jest.mock("../src/ctx");
-jest.mock("../src/calendar");
+jest.mock("../src/event-calendar");
 jest.mock("../src/principal");
 jest.mock("../src/user-data");
 jest.mock("../src/component/intro-modal");
@@ -24,7 +24,7 @@ describe('Auth', () => {
     });
 
     const mockedLoadCalendarEvents = jest
-    .spyOn(Calendar.prototype, 'loadEvents')
+    .spyOn(EventCalendar.prototype, 'loadEvents')
     .mockImplementation(() => {});
 
     const mockeddisplayName = jest
@@ -68,7 +68,7 @@ describe('Auth', () => {
         .mockImplementation(() => {});
 
         //invoke
-        new Auth(new Calendar(), new UserData());
+        new Auth(new EventCalendar(), new UserData());
 
         //check
         expect(mockedHubListen).toBeCalledWith("auth", expect.anything());
@@ -95,7 +95,7 @@ describe('Auth', () => {
         });
 
         //invoke
-        const auth = new Auth(new Calendar(), new UserData());
+        const auth = new Auth(new EventCalendar(), new UserData());
         await auth.checkUser();
 
         //check
@@ -134,7 +134,7 @@ describe('Auth', () => {
         });
 
         //invoke
-        const auth = new Auth(new Calendar(), new UserData());
+        const auth = new Auth(new EventCalendar(), new UserData());
         await auth.checkUser();
 
         //check
@@ -173,7 +173,7 @@ describe('Auth', () => {
         });
 
         //invoke
-        const auth = new Auth(new Calendar(), new UserData());
+        const auth = new Auth(new EventCalendar(), new UserData());
         await auth.checkUser();
 
         //check
@@ -208,7 +208,7 @@ describe('Auth', () => {
         });
 
         //invoke
-        const auth = new Auth(new Calendar(), new UserData());
+        const auth = new Auth(new EventCalendar(), new UserData());
         auth.processUser(uninvited); //not using auth.checkUser() cause it catches Errors
 
         //check
