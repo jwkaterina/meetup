@@ -107,7 +107,6 @@ export default class Week {
         const now = new Date();
         const dayIndex = getDayIndex(now);
         headings.querySelector(`.day-heading[data-dayIndex="${dayIndex}"]`).classList.add("currentDay");
-        console.log("Show current day");
     }
 
     _hideCurrentDay(headings) {

@@ -131,8 +131,8 @@ export default class EventModal {
         this.time.innerHTML = `${newDateFormated} ${startHour}h${startMin} - ${endHour}h${endMin}`;
     }
 
-    setPlace(place, type) {
-        console.log(type);
+    setPlace(place, type = "pm") {
+        // console.log(type);
         let imgSrc;
         if(type == "pm") {
             imgSrc = "../icons/pm-b.png";

@@ -60,6 +60,7 @@ export default class PrincipalEditor {
     }
 
     openEventModal(event) {
+        // console.log(event.type);
         this.ctx.currentEvent = event;
         this.common.eventModal.open();
         this.common.addEventContent(event);
@@ -128,12 +129,22 @@ export default class PrincipalEditor {
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;
-        this.formModal.types.forEach(type => {
-            if(event.type === type.value) {
-                type.checked = true;
-                console.log(event.type);
-            }
-        })
+        if(event.type) {
+            this.formModal.types.forEach(type => {
+                if(type.value === event.type) {
+                    type.checked = true;
+                    console.log(event.type);
+                }
+            })
+        } else {
+            this.formModal.types.forEach(type => {
+                if(type.value === "pm") {
+                    type.checked = true;
+                    console.log(event.type);
+                }
+            })
+        }
+      
     }
 
     openConfirmModal() {
@@ -219,6 +230,7 @@ export default class PrincipalEditor {
             this.formModal.types.forEach(type => {
                 if(type.checked) {
                     event.type = type.value;
+                    console.log(event.type);
                 }
             })
     
@@ -296,7 +308,8 @@ export default class PrincipalEditor {
             end: "13:00",
             date: dateString(this.ctx.weekStart),
             memberIds: [],
-            color: "green",
+            color: "",
+            type: ""
         });
         this.ctx.currentEvent = event;
         this.openCreateFormModal(event);

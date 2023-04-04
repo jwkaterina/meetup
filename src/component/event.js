@@ -70,10 +70,13 @@ export default class Event {
         }
 
         let imgSrc;
-        if(this.type == "pm") {
-            imgSrc = "../icons/pm-w.png";
-        } else {
+        if(this.type && this.type !== "pm") {
             imgSrc = "../icons/tr-w.png";
+            this.color = "var(--blue)";
+        } else {
+            this.type = "pm";
+            imgSrc = "../icons/pm-w.png";
+            this.color = "var(--green)";
         }
 
         if (media.matches) {
@@ -130,12 +133,6 @@ export default class Event {
             eventSlot.classList.add("mark");
         } else {
             eventSlot.classList.remove("mark");
-        }
-
-        if(this.type == "pm") {
-            this.color = "var(--green)";
-        } else {
-            this.color = "var(--blue)";
         }
         
         eventSlot.style.background = this.color;
