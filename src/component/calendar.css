@@ -17,6 +17,10 @@
 
     --slotHeight: 50px;
     --slotHeightMobile: 35px;
+    --headerHeight: 80px;
+    --headingsHeight: 60px;
+    --timeWidth: 50px;
+    --timeWidthMobile: 40px;
 }
 
 * {
@@ -32,7 +36,7 @@ body {
 /* header */
 
 #header {
-    height: 80px;
+    height: var(--headerHeight);
     position: sticky;
     top: 0;
     left: 0;
@@ -129,17 +133,17 @@ body {
 }
 
 #empty {
-    width: 50px;
-    height: 60px;
+    width: var(--timeWidth);
+    height: var(--headingsHeight);
     background-color: var(--white);
     position: fixed;
-    top: 80px;
+    top: var(--headerHeight);
     left: 0;
     z-index: 2;
 }
 
 #time-slots {
-    width: 50px;
+    width: var(--timeWidth);
     text-align: center;
     align-self: center;
     justify-self: center;
@@ -205,8 +209,13 @@ body {
         font-size: 25px;
     }
 
+    #empty {
+        width: var(--timeWidthMobile);
+    
+    }
+
     #time-slots {
-        width: 40px;
+        width: var(--timeWidthMobile);
     }
 }
 

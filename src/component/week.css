@@ -1,9 +1,9 @@
 
 #week-headings {
     background-color: white;
-    margin-left: 50px;
+    margin-left: var(--timeWidth);
     position: sticky;
-    top: 80px;
+    top: var(--headerHeight);
     display: flex;
     flex: 1;
     overflow-x: hidden;
@@ -21,7 +21,7 @@
 .day-heading {
     font-size: 20px;
     padding: 10px 0px;
-    height: 60px;
+    height: var(--headingsHeight);
     text-align: center;
 }
 
@@ -91,6 +91,6 @@
     }
 
     #week-headings {
-        margin-left: 40px;
+        margin-left: var(--timeWidthMobile);
     }
 }

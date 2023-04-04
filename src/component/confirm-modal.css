@@ -32,10 +32,6 @@
 }
 
 @media (max-width: 850px) {
-    #confirmModal .flip-card {
-        width: 90vw;
-        height: 50vh;
-    }
 
     #modalTitle {
         height: 6vh;

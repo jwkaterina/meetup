@@ -66,11 +66,6 @@
         line-height: 2rem;
         font-size: 1rem;
     }
-    
-    #eventModal .flip-card {
-        width: 90vw;
-        height: 50vh;
-    }
 
     #eventModal .button:hover {
         background-color: var(--yellow);

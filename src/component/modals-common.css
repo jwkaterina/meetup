@@ -1,3 +1,10 @@
+:root {
+    --cardWidth: 500px;
+    --cardWidthMobile: 90vw;
+    --cardHeight: 500px;
+    --cardHeightMobile: 450px;
+}
+
 .modal {
     display: none;
     border-radius: 5px;
@@ -6,8 +13,8 @@
     transform: translate(-50%, -50%);
     position: fixed;
     z-index: 4;
-    width: 500px;
-    height: 500px;
+    width: var(--cardWidth);
+    height: var(--cardHeight);
 }
 
 .show-modal {
@@ -86,8 +93,8 @@
 
 .flip-card {
     background-color: transparent;
-    width: 500px;
-    height: 500px;
+    width: var(--cardWidth);
+    height: var(--cardHeight);
     perspective: 1000px;
 }
   
@@ -195,11 +202,11 @@ input, select {
     /* Modals */
     
     .modal {
-        left: 5vw;
-        top: 50vh;
-        transform: translate(0, -220px);
-        width: 90vw;
-        height: 450px;
+        left: calc((100vw - var(--cardWidthMobile)) / 2);
+        top: 50%;
+        transform: translate(0, -50%);
+        width: var(--cardWidthMobile);
+        height: var(--cardHeightMobile);
     }
 
     .button, .shortInput, select, .select-items div, .select-selected, .label  {
@@ -207,8 +214,8 @@ input, select {
     }
 
     .flip-card {
-        width: 90vw;
-        height: 440px;
+        width: var(--cardWidthMobile);
+        height: var(--cardHeightMobile);
     }
 
     .flip {

@@ -65,10 +65,10 @@
 #dropdown {
     background-color: var(--gray);
     position: fixed;
-    top: 80px;
+    top: var(--headerHeight);
     right: 0;
     z-index: 3;
-    height: 80px;
+    height: var(--headerHeight);
     width: 200px;
     text-align: center;
     display: none;
