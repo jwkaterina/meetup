@@ -1,5 +1,5 @@
 import './event.css';
-import { dateString, getDayIndex, generateId } from "../helper";
+import { dateString, getDayIndex, addDays } from "../helper";
 import { Context } from "../ctx";
 
 export default class Event {
@@ -12,6 +12,7 @@ export default class Event {
         this.end = data.end;
         this.date = data.date;
         this.color = data.color;
+        this.type = data.type;
         this.slotHeight = 50;
         this.slotHeightMobile = 35;
     }
@@ -46,34 +47,33 @@ export default class Event {
 
     show() {
         const ctx = Context.getInstance();
-        const media = window.matchMedia("(max-width: 800px)");
+        const media = window.matchMedia("(max-width: 850px)");
 
-        if (
-            this.date < dateString(ctx.weekStart) ||
-            this.date > dateString(ctx.weekEnd)
-        ) {
-            document.getElementById(`${this.id}`).remove();
+        const weekContainer = this.findWeekContainer();
+
+        if (!weekContainer) {
+            //TODO: Check if we really need to delete the event as weeks are immutable
+            // document.getElementById(`${this.id}`).remove();
             return;
         }
 
         let eventSlot;
-        let numberCircle;
-        if (document.getElementById(`${this.id}`)) {
-            eventSlot = document.getElementById(`${this.id}`);
-            numberCircle = eventSlot.querySelector(".circle");
+        if (weekContainer.querySelector(`[id='${this.id}']`)) {
+            eventSlot = weekContainer.querySelector(`[id='${this.id}']`);
         } else {
             eventSlot = document.createElement("div");
             eventSlot.className ="event";
             eventSlot.setAttribute("id", this.id);
             eventSlot.addEventListener("click", () => {
                 ctx.principal.openEventModal(this)
-            });
+            });            
+        }
 
-            numberCircle = document.createElement("div");
-            numberCircle.className = "circle";
-            numberCircle.style.display = "none";
-            eventSlot.appendChild(numberCircle);
-            
+        let imgSrc;
+        if(this.type == "pm") {
+            imgSrc = "../icons/pm-w.png";
+        } else {
+            imgSrc = "../icons/tr-w.png";
         }
 
         if (media.matches) {
@@ -81,9 +81,14 @@ export default class Event {
             eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
             eventSlot.style.bottom = 24 * h - (this.endHour + this.endMinutes / 60) * h + 3 + "px";
 
+            const image = document.createElement("img");
+            image.src = imgSrc;
+            eventSlot.appendChild(image);
+
             if(this.memberIds.length > 0) {
-                numberCircle.style.display = "inline-block";
-                numberCircle.innerHTML = this.memberIds.length;
+                const number = document.createElement("p");
+                number.innerHTML = this.memberIds.length;
+                eventSlot.appendChild(number);
             }
         } else {
             const h = this.slotHeight;
@@ -112,22 +117,40 @@ export default class Event {
             });         
 
             let txt = "";
-            txt = `<a class="place" target="_blank">
-            <i class="fa-sharp fa-solid fa-location-dot"></i>
-            ${this.place}</a>
-                <ul class="list">${lis}</ul>`
+            txt = `
+            <div id="event-header">
+                <img src="${imgSrc}" alt="">
+                <a class="place" target="_blank">${this.place}</a>
+            </div>
+            <ul class="list">${lis}</ul>`
             eventSlot.innerHTML = txt;
         }
 
         if(this.memberIds.includes(ctx.principal.user.id)) {
-            this.color = "var(--blue)";
+            eventSlot.classList.add("mark");
         } else {
+            eventSlot.classList.remove("mark");
+        }
+
+        if(this.type == "pm") {
             this.color = "var(--green)";
-        } 
+        } else {
+            this.color = "var(--blue)";
+        }
+        
         eventSlot.style.background = this.color;
 
-        const day = document.querySelector(`.day[data-dayIndex="${this.dayIndex}"]`);
-        const slots = day.querySelector(".slots");
-        slots.appendChild(eventSlot);
+        const day = weekContainer.querySelector(`.day-slots[data-dayIndex="${this.dayIndex}"]`);
+        day.appendChild(eventSlot);
+    }
+
+    findWeekContainer() {
+        const weeksContainer = document.getElementById("week-slots");
+        for (const child of weeksContainer.children) {
+            if(child.dataset.weekStart && child.dataset.weekStart === this.weekStart) {
+                return child;
+            }
+        }
+        return null;
     }
 }

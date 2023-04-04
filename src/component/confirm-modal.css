@@ -8,7 +8,7 @@
 
 #confirmModal .flip-card-front {
     display: grid;
-    grid-template-rows: 5fr 1fr;
+    grid-template-rows: 4fr 1fr;
 }
 
 #modalTitle {
@@ -31,7 +31,7 @@
     color: var(--white);
 }
 
-@media (max-width: 800px) {
+@media (max-width: 850px) {
     #confirmModal .flip-card {
         width: 90vw;
         height: 50vh;

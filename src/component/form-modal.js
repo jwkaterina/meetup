@@ -6,6 +6,7 @@ export default class FormModal {
         this.editors = editors;
 
         this.container = document.getElementById("formModal");
+        this.types = this.container.querySelectorAll('input[name="type"]');        
         this.place = document.getElementById("eventPlace");
         this.name = document.getElementById("eventMainName");
         this.date = document.getElementById("eventDate");
@@ -20,7 +21,6 @@ export default class FormModal {
         this.flipCard = this.container.querySelector(".flip-card-inner");
         this.flipCardBack = this.container.querySelector(".flip-card-back");
         this.flipCardText = this.container.querySelector(".flipCardText");
-        this.loadingAnime = document.getElementById("loading-form");
     }
 
     get newStart() {

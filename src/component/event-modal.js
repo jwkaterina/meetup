@@ -14,6 +14,7 @@ export default class EventModal {
         this.flipCardFront = this.container.querySelector(".flip-card-front");
         this.members = this.container.querySelector(".members");
         this.place = this.container.querySelector(".place");
+        this.time = this.container.querySelector(".time");
     }
 
     hideEditButton() {
@@ -114,10 +115,33 @@ export default class EventModal {
         this.members.innerHTML = txt;
     }
 
-    setPlace(place) {
+    setTime(date, start, end) {
+        const newDate = new Date(date);
+        const newDateFormated = newDate.toLocaleDateString('fr-FR', {day: "numeric", month: "long"})
+        const startHour = start.slice(0, 2);
+        let startMin = start.slice(3);
+        if(startMin === "00") {
+            startMin = "";
+        }
+        const endHour = end.slice(0, 2);
+        let endMin = end.slice(3);
+        if(endMin === "00") {
+            endMin = "";
+        }
+        this.time.innerHTML = `${newDateFormated} ${startHour}h${startMin} - ${endHour}h${endMin}`;
+    }
+
+    setPlace(place, type) {
+        console.log(type);
+        let imgSrc;
+        if(type == "pm") {
+            imgSrc = "../icons/pm-b.png";
+        } else {
+            imgSrc = "../icons/tr-b.png";
+        }
         this.place.innerHTML = `<a class="place" href="http://maps.google.com/?q=${place}" target="_blank">
-        <i id="mapIcon" class="fa-solid fa-map-location-dot"></i>
-        ${place}
-        </a>`
+        ${place}</a>
+        <img src="${imgSrc}" alt="">
+        `
     }
 }

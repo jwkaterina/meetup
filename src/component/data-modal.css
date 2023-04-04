@@ -121,7 +121,7 @@
   }
   
 
-@media (max-width: 800px) {
+@media (max-width: 850px) {
 
     #dataModal .button:hover {
         background-color: var(--yellow);

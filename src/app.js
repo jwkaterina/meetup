@@ -1,4 +1,4 @@
-import Calendar from "./calendar";
+import Calendar from "./component/calendar";
 import { Amplify } from 'aws-amplify';
 import awsconfig from './aws-exports';
 import Auth from "./auth";
@@ -11,6 +11,7 @@ export default class App {
         this.configureAmplify();
         Amplify.configure(awsconfig);
         this.calendar = new Calendar();
+
         this.calendar.setup();
 
         if(process.env.WEBPACK_ENV === 'production') {
