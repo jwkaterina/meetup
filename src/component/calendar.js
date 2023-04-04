@@ -98,20 +98,13 @@ export default class Calendar {
             this.headingsContainer.scrollLeft = scrollLeft;
 
             if(!this.NextWeekCreationInProgress && (scrollLeft + 5 > 2 * clientWidth)) {
-                // console.log("NextWeekCreationInProgress", this.NextWeekCreationInProgress);
-                // console.log("scrollWidth", scrollWidth);
-                // console.log("scrollLeft:", scrollLeft);
-                // console.log("clientWidth:", clientWidth);
-                // console.log("clientWidth * 2:", clientWidth * 2);
                 this.NextWeekCreationInProgress = true;
-                // console.log("scroll right");
                 setTimeout(async () => {
                     this.createNextWeek();
                     this.NextWeekCreationInProgress = false;
                 }, 300)            
             }
             if(scrollLeft == 0) {
-                // console.log("scroll left");
                 setTimeout(() => {
                     this.createPrevWeek();
                 }, 300)            

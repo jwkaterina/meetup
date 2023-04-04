@@ -93,7 +93,7 @@ export default class PrincipalEditor {
             end,
             date,
             memberIds: [],
-            color: "var(--green)",
+            color: "",
             type: ""
         });
         this.ctx.currentEvent = event;
@@ -158,7 +158,6 @@ export default class PrincipalEditor {
                     this.formModal.close();
                 },1000);
                 console.log(e);
-
             }
             return false;
         } 
@@ -178,7 +177,6 @@ export default class PrincipalEditor {
             this.formModal.types.forEach(type => {
                 if(type.checked) {
                     event.type = type.value;
-                    // console.log(event.type);
                 }
             })
     
@@ -221,7 +219,6 @@ export default class PrincipalEditor {
             this.formModal.types.forEach(type => {
                 if(type.checked) {
                     event.type = type.value;
-                    // console.log(event.type);
                 }
             })
     

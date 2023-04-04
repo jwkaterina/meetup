@@ -58,31 +58,21 @@ export default class Event {
         }
 
         let eventSlot;
-        // let numberCircle;
         if (weekContainer.querySelector(`[id='${this.id}']`)) {
             eventSlot = weekContainer.querySelector(`[id='${this.id}']`);
-            // numberCircle = eventSlot.querySelector(".circle");
         } else {
             eventSlot = document.createElement("div");
             eventSlot.className ="event";
             eventSlot.setAttribute("id", this.id);
             eventSlot.addEventListener("click", () => {
                 ctx.principal.openEventModal(this)
-            });
-
-            // numberCircle = document.createElement("div");
-            // numberCircle.className = "circle";
-            // numberCircle.style.display = "none";
-            // eventSlot.appendChild(numberCircle);
-            
+            });            
         }
 
         let imgSrc;
-        if(this.type == "présentoir mobile") {
-            // console.log("presentoir")
+        if(this.type == "pm") {
             imgSrc = "../icons/pm-w.png";
         } else {
-            // console.log("territoire");
             imgSrc = "../icons/tr-w.png";
         }
 
@@ -96,8 +86,6 @@ export default class Event {
             eventSlot.appendChild(image);
 
             if(this.memberIds.length > 0) {
-                // numberCircle.style.display = "inline-block";
-                // numberCircle.innerHTML = this.memberIds.length;
                 const number = document.createElement("p");
                 number.innerHTML = this.memberIds.length;
                 eventSlot.appendChild(number);
@@ -144,7 +132,7 @@ export default class Event {
             eventSlot.classList.remove("mark");
         }
 
-        if(this.type == "présentoir mobile") {
+        if(this.type == "pm") {
             this.color = "var(--green)";
         } else {
             this.color = "var(--blue)";

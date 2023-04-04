@@ -123,8 +123,6 @@ export default class EventModal {
         if(startMin === "00") {
             startMin = "";
         }
-        console.log(start, startHour, startMin);
-
         const endHour = end.slice(0, 2);
         let endMin = end.slice(3);
         if(endMin === "00") {
@@ -136,11 +134,9 @@ export default class EventModal {
     setPlace(place, type) {
         console.log(type);
         let imgSrc;
-        if(type == "présentoir mobile") {
-            // console.log("presentoir")
+        if(type == "pm") {
             imgSrc = "../icons/pm-b.png";
         } else {
-            // console.log("territoire");
             imgSrc = "../icons/tr-b.png";
         }
         this.place.innerHTML = `<a class="place" href="http://maps.google.com/?q=${place}" target="_blank">

@@ -13,7 +13,6 @@
 
 #eventModal .time {
     color: var(--white);
-    /* font-size: 15px; */
     font-style: italic;
     justify-self: center;
     align-self: center;
@@ -30,12 +29,6 @@
 #eventModal .place:hover {
     color: var(--white);
 }
-
-/* #typeIcon {
-    margin-left: 20px;
-    font-size: 30px;
-    color: var(--black);
-} */
 
 #eventModal img {
     margin-left: 20px;
