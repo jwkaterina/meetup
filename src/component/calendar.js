@@ -93,6 +93,7 @@ export default class Calendar {
     }
 
     checkScrollDirection() {
+        
         this.slotsContainer.addEventListener('scroll', () => {
             const { scrollLeft, clientWidth, scrollWidth } = this.slotsContainer;
             console.log("scrollLeft: ", scrollLeft, "clientWidth: ", clientWidth, "scrollWidth: ", scrollWidth);
@@ -103,12 +104,15 @@ export default class Calendar {
                 setTimeout(async () => {
                     this.createNextWeek();
                     this.NextWeekCreationInProgress = false;
-                }, 300)            
+                }, 500)            
             }
-            if(scrollLeft == 0) {
+            if(!this.NextWeekCreationInProgress && scrollLeft < 5) {
+                this.NextWeekCreationInProgress = true;
                 setTimeout(() => {
                     this.createPrevWeek();
-                }, 300)            
+                    this.NextWeekCreationInProgress = false;
+
+                }, 500)            
             }
         });
     }
