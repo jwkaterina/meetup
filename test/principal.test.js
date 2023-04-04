@@ -37,6 +37,7 @@ describe('PrincipalCommon', function () {
             date: "2023-01-17",
             memberIds: ["1", "2"],
             color: "green",
+            type: "pm"
         });
 
         document.body.innerHTML = `
@@ -47,6 +48,7 @@ describe('PrincipalCommon', function () {
                         <button type="button" class="cancelButton">
                             <div class="cross"></div>
                         </button>
+                        <div class="time"></div>
                         <div class="place"></div>
                         <div class="members"></div>          
                         <div class="eventControls">
