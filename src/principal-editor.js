@@ -60,7 +60,6 @@ export default class PrincipalEditor {
     }
 
     openEventModal(event) {
-        // console.log(event.type);
         this.ctx.currentEvent = event;
         this.common.eventModal.open();
         this.common.addEventContent(event);
@@ -133,14 +132,12 @@ export default class PrincipalEditor {
             this.formModal.types.forEach(type => {
                 if(type.value === event.type) {
                     type.checked = true;
-                    console.log(event.type);
                 }
             })
         } else {
             this.formModal.types.forEach(type => {
                 if(type.value === "pm") {
                     type.checked = true;
-                    console.log(event.type);
                 }
             })
         }

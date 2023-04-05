@@ -96,6 +96,7 @@
 /* Custom radio */
 
 #types label {
+    width: 100%;
     padding-left: 15px;
     line-height: 20px;
     display: inline-block;

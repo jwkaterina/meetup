@@ -100,9 +100,7 @@ export default class Calendar {
     checkScrollDirection() {
         
         this.slotsContainer.addEventListener('scroll', () => {
-            const { scrollLeft, clientWidth, scrollWidth } = this.slotsContainer;
-            console.log("scrollLeft: ", scrollLeft, "clientWidth: ", clientWidth, "scrollWidth: ", scrollWidth);
-            this.headingsContainer.scrollLeft = scrollLeft;
+            const { scrollLeft, clientWidth } = this.slotsContainer;
 
             if(!this.NextWeekCreationInProgress && (scrollLeft + 5 > 2 * clientWidth)) {
                 this.NextWeekCreationInProgress = true;
