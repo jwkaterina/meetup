@@ -13,8 +13,6 @@ export default class Event {
         this.date = data.date;
         this.color = data.color;
         this.type = data.type;
-        this.slotHeight = 50;
-        this.slotHeightMobile = 35;
     }
 
     get dayIndex() {
@@ -46,10 +44,8 @@ export default class Event {
     }
 
     show() {
-        const ctx = Context.getInstance();
-        const media = window.matchMedia("(max-width: 850px)");
-
         const weekContainer = this.findWeekContainer();
+        const ctx = Context.getInstance();
 
         if (!weekContainer) {
             //TODO: Check if we really need to delete the event as weeks are immutable
@@ -57,88 +53,7 @@ export default class Event {
             return;
         }
 
-        let eventSlot;
-        if (weekContainer.querySelector(`[id='${this.id}']`)) {
-            eventSlot = weekContainer.querySelector(`[id='${this.id}']`);
-        } else {
-            eventSlot = document.createElement("div");
-            eventSlot.className ="event";
-            eventSlot.setAttribute("id", this.id);
-            eventSlot.addEventListener("click", () => {
-                ctx.principal.openEventModal(this)
-            });            
-        }
-
-        let imgSrc;
-        if(this.type && this.type !== "pm") {
-            imgSrc = "../icons/tr-w.png";
-            this.color = "var(--blue)";
-        } else {
-            this.type = "pm";
-            imgSrc = "../icons/pm-w.png";
-            this.color = "var(--green)";
-        }
-
-        if (media.matches) {
-            const h = this.slotHeightMobile;
-            eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
-            eventSlot.style.bottom = 24 * h - (this.endHour + this.endMinutes / 60) * h + 3 + "px";
-
-            const image = document.createElement("img");
-            image.src = imgSrc;
-            eventSlot.appendChild(image);
-
-            if(this.memberIds.length > 0) {
-                const number = document.createElement("p");
-                number.innerHTML = this.memberIds.length;
-                eventSlot.appendChild(number);
-            }
-        } else {
-            const h = this.slotHeight;
-            eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
-            eventSlot.style.bottom = 24 * h - (this.endHour + this.endMinutes / 60) * h + 5 + "px";
-
-            const mainId = this.memberIds[0];
-            let mainName = "???";
-            if(ctx.users[mainId]) {
-                mainName = ctx.users[mainId].name;
-            }
-    
-            let lis = "";
-            lis = `<li class="member" data-user-id="${mainId}">${mainName}</li>`;
-            if(this.memberIds.includes(ctx.principal.user.id) && ctx.principal.user.id != mainId) {
-                lis += `<li class="member" data-user-id="${ctx.principal.user.id}">${ctx.principal.user.name}</li>`;
-            }
-            this.memberIds.forEach((id) => {
-                if(id != mainId && id != ctx.principal.user.id) {
-                    let memberName = "???"
-                    if(ctx.users[id]) {
-                        memberName = ctx.users[id].name;
-                    }
-                    lis += `<li class="member" data-user-id="${id}">${memberName}</li>`;
-                }
-            });         
-
-            let txt = "";
-            txt = `
-            <div id="event-header">
-                <img src="${imgSrc}" alt="">
-                <a class="place" target="_blank">${this.place}</a>
-            </div>
-            <ul class="list">${lis}</ul>`
-            eventSlot.innerHTML = txt;
-        }
-
-        if(this.memberIds.includes(ctx.principal.user.id)) {
-            eventSlot.classList.add("mark");
-        } else {
-            eventSlot.classList.remove("mark");
-        }
-        
-        eventSlot.style.background = this.color;
-
-        const day = weekContainer.querySelector(`.day-slots[data-dayIndex="${this.dayIndex}"]`);
-        day.appendChild(eventSlot);
+        this.createEventElement(weekContainer, ctx);
     }
 
     findWeekContainer() {
@@ -149,5 +64,86 @@ export default class Event {
             }
         }
         return null;
+    }
+
+    createEventElement(weekContainer, ctx) {
+        let eventSlot, image, number;
+        if (weekContainer.querySelector(`[id='${this.id}']`)) {
+            eventSlot = weekContainer.querySelector(`[id='${this.id}']`);
+            image = eventSlot.querySelector(".event-img");
+            number = eventSlot.querySelector(".event-number");
+        } else {
+            eventSlot = document.createElement("div");
+            eventSlot.className ="event";
+            eventSlot.setAttribute("id", this.id);
+            eventSlot.addEventListener("click", () => {
+                ctx.principal.openEventModal(this)
+            });            
+            image = document.createElement("img");
+            image.className = "event-img";
+            eventSlot.appendChild(image);
+            number = document.createElement("p");
+            number.className = "event-number";
+            eventSlot.appendChild(number);
+
+            const day = weekContainer.querySelector(`.day-slots[data-dayIndex="${this.dayIndex}"]`);
+            day.appendChild(eventSlot);
+        }
+
+        this.setImage(image);
+        this.setNumber(number);
+        this.setColor(eventSlot);
+        this.setPosition(eventSlot);
+        this.setMark(eventSlot, ctx);
+
+        return eventSlot
+    }
+
+    setImage(image) {
+        let imgSrc;
+        if(this.type && this.type !== "pm") {
+            imgSrc = "../icons/tr-w.png";
+        } else {
+            this.type = "pm";
+            imgSrc = "../icons/pm-w.png";
+        }
+
+        image.src = imgSrc;
+    }
+
+    setNumber(number) {
+        number.innerHTML = this.memberIds.length;
+    }
+
+    setColor(eventSlot) {
+        if(this.type && this.type !== "pm") {
+            this.color = "var(--blue)";
+        } else {
+            this.type = "pm";
+            this.color = "var(--green)";
+        }
+
+        eventSlot.style.background = this.color;
+    }
+
+    setPosition(eventSlot) {
+        const media = window.matchMedia("(max-width: 850px)");
+        const h = document.querySelector(".slot").offsetHeight;
+
+        if (media.matches) {
+            eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
+            eventSlot.style.bottom = 24 * h - (this.endHour + this.endMinutes / 60) * h + 3 + "px";
+        } else {
+            eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
+            eventSlot.style.bottom = 24 * h - (this.endHour + this.endMinutes / 60) * h + 5 + "px";
+        }
+    }
+
+    setMark(eventSlot, ctx) {
+        if(this.memberIds.includes(ctx.principal.user.id)) {
+            eventSlot.classList.add("mark");
+        } else {
+            eventSlot.classList.remove("mark");
+        }
     }
 }
