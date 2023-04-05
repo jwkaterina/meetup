@@ -63,7 +63,7 @@
 /* Checkbox */
 
 #checkbox label {
-  padding-left: 28px;
+  padding-left: 15px;
   line-height: 20px;
   display: inline-block;
 }
@@ -97,8 +97,7 @@
   height: 10px;
   border: solid var(--gray-darkest);
   border-width: 0 3px 3px 0;
-  /* transform: rotate(45deg); */
-  transition: all 0.2s ease;
+  transition: all 0.4s cubic-bezier(.45,1.8,.5,.75);
 }
 
 #checkbox input:not(:checked):after {

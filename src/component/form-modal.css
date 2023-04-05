@@ -97,7 +97,7 @@
 /* Custom radio */
 
 #types label {
-    padding-left: 28px;
+    padding-left: 15px;
     line-height: 20px;
     display: inline-block;
     color: var(--black);
@@ -114,8 +114,8 @@
 #types input:before {
     content: '';
     position: absolute;
-    left: 0;
-    top: 0;
+    left: -1px;
+    top: -1px;
     width: 18px;
     height: 18px;
     border: 1px solid #ddd;
@@ -129,10 +129,10 @@
     height: 12px;
     background: var(--blue);
     position: absolute;
-    top: 4px;
-    left: 4px;
+    top: 3px;
+    left: 3px;
     border-radius: 100%;
-    transition: all 0.2s ease;
+    transition: all 0.4s cubic-bezier(.45,1.8,.5,.75);
 }
 
 #types input:not(:checked):after {
