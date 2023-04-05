@@ -48,8 +48,6 @@ export default class Event {
         const ctx = Context.getInstance();
 
         if (!weekContainer) {
-            //TODO: Check if we really need to delete the event as weeks are immutable
-            // document.getElementById(`${this.id}`).remove();
             return;
         }
 
