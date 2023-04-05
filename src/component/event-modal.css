@@ -38,7 +38,7 @@
 
 #eventModal .list {
     padding-left: 0;
-    list-style-position: inside; 
+    /* list-style-position: inside;  */
 }
 
 #eventModal .members {
@@ -63,6 +63,7 @@
 
 @media (max-width: 850px) {
     #eventModal .members {
+        padding: 0 30px;
         line-height: 2rem;
         font-size: 1rem;
     }

@@ -8,17 +8,13 @@
 
 #confirmModal .flip-card-front {
     display: grid;
-    grid-template-rows: 4fr 1fr;
+    grid-template-rows: 11fr 2fr;
 }
 
 #modalTitle {
     align-self: center;
     color: var(--black);
     text-align: center;
-}
-
-#confirmModal .eventControls {
-    align-self: center;
 }
 
 #confirmModal .button {
