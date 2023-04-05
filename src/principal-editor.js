@@ -227,7 +227,6 @@ export default class PrincipalEditor {
             this.formModal.types.forEach(type => {
                 if(type.checked) {
                     event.type = type.value;
-                    console.log(event.type);
                 }
             })
     

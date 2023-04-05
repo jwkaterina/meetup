@@ -101,6 +101,7 @@ export default class Calendar {
         
         this.slotsContainer.addEventListener('scroll', () => {
             const { scrollLeft, clientWidth } = this.slotsContainer;
+            this.headingsContainer.scrollLeft = scrollLeft;
 
             if(!this.NextWeekCreationInProgress && (scrollLeft + 5 > 2 * clientWidth)) {
                 this.NextWeekCreationInProgress = true;
