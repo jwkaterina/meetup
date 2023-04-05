@@ -56,7 +56,12 @@ export default class Calendar {
 
     scrollToStart() {
         window.addEventListener("load", () => {
-            scrollTo(0, 375);
+            const media = window.matchMedia("(max-width: 850px)");
+            if (media.matches) {
+                scrollTo(0, 260);
+            } else {
+                scrollTo(0, 375);
+            }
             this.slotsContainer.scrollBy({
                 top: 0,
                 left: this.slotsContainer.clientWidth,
@@ -107,6 +112,7 @@ export default class Calendar {
                 }, 500)            
             }
             if(!this.NextWeekCreationInProgress && scrollLeft < 5) {
+
                 this.NextWeekCreationInProgress = true;
                 setTimeout(() => {
                     this.createPrevWeek();
