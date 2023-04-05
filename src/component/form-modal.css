@@ -98,7 +98,6 @@
 
 #types label {
     padding-left: 28px;
-    cursor: pointer;
     line-height: 20px;
     display: inline-block;
     color: var(--black);
@@ -109,7 +108,9 @@
     position: relative;
     width: 18px;
     height: 18px;
+    cursor: pointer;
 }
+
 #types input:before {
     content: '';
     position: absolute;
@@ -119,7 +120,7 @@
     height: 18px;
     border: 1px solid #ddd;
     border-radius: 100%;
-    background: #fff;
+    background: var(--white);
 }
 
 #types input:after {
@@ -133,6 +134,7 @@
     border-radius: 100%;
     transition: all 0.2s ease;
 }
+
 #types input:not(:checked):after {
     opacity: 0;
     transform: scale(0);
@@ -221,8 +223,4 @@
         background-color: var(--blue);
         color: var(--white);
     }
-
-    /* #types input, #types label {
-        display: block;
-    } */
 }
