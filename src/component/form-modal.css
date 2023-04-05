@@ -1,8 +1,7 @@
 #formModal .flip-card-front {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 0.6fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    /* grid-template-rows: repeat(7, 1fr); */
+    grid-template-rows: 1fr 2fr 2fr 2fr 2fr 2fr 2fr;
 }
 
 #formModal .flip-card-front, #formModal .flip-card-back {
