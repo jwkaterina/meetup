@@ -132,7 +132,6 @@ export default class EventModal {
     }
 
     setPlace(place, type = "pm") {
-        // console.log(type);
         let imgSrc;
         if(type == "tr") {
             imgSrc = "../icons/tr-b.png";
