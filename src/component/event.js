@@ -13,6 +13,7 @@ export default class Event {
         this.date = data.date;
         this.color = data.color;
         this.type = data.type;
+        this.slotHeight = document.querySelector(".slot").offsetHeight;
     }
 
     get dayIndex() {
@@ -125,8 +126,7 @@ export default class Event {
 
     setPosition(eventSlot) {
         const media = window.matchMedia("(max-width: 850px)");
-        const h = document.querySelector(".slot").offsetHeight;
-
+        const h = this.slotHeight;
         if (media.matches) {
             eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
             eventSlot.style.bottom = 24 * h - (this.endHour + this.endMinutes / 60) * h + 3 + "px";
