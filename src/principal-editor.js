@@ -61,6 +61,7 @@ export default class PrincipalEditor {
 
     openEventModal(event) {
         this.ctx.currentEvent = event;
+        console.log(event.type, event.color);
         this.common.eventModal.open();
         this.common.addEventContent(event);
         this.common.eventModal.showEditButton();
@@ -116,6 +117,7 @@ export default class PrincipalEditor {
 
     openChangeFormModal() {
         const event = this.ctx.currentEvent;
+        console.log(event.type, event.color);
         this.formModal.open();
         this.formModal.writeOnFlip("Ça y est! Le groupe est changé.");
         this.formModal.showUpdateButton();
@@ -187,6 +189,8 @@ export default class PrincipalEditor {
                     event.type = type.value;
                 }
             })
+
+            console.log(event.type, event.color);
     
             const selectedIndex = this.formModal.name.selectedIndex;
             const newMainId = this.formModal.name.options[selectedIndex].dataset.editorId;
@@ -228,7 +232,13 @@ export default class PrincipalEditor {
                 if(type.checked) {
                     event.type = type.value;
                 }
-            })
+            });
+            if(event.type === "tr") {
+                event.color = "var(--blue)";
+            } else {
+                event.color = "var(--green)";
+            }
+            console.log(event.type, event.color);
     
             const selectedIndex = this.formModal.name.selectedIndex;
             const newMainId = this.formModal.name.options[selectedIndex].dataset.editorId;
