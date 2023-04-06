@@ -27,7 +27,7 @@
     color: var(--white);
 }
 
-@media (max-width: 850px) {
+@media (max-width: 720px) {
 
     #modalTitle {
         height: 6vh;

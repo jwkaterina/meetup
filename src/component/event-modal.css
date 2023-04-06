@@ -61,7 +61,7 @@
     color: var(--white);
 }
 
-@media (max-width: 850px) {
+@media (max-width: 720px) {
     #eventModal .members {
         padding: 0 30px;
         line-height: 2rem;

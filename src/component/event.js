@@ -125,7 +125,7 @@ export default class Event {
     }
 
     setPosition(eventSlot) {
-        const media = window.matchMedia("(max-width: 850px)");
+        const media = window.matchMedia("(max-width: 720px)");
         const h = this.slotHeight;
         if (media.matches) {
             eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
