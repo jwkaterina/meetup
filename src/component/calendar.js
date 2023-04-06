@@ -121,26 +121,6 @@ export default class Calendar {
             }
         });
     }
-   
-    // addSwipe() {
-    //     let touchstartX = 0;
-    //     let touchendX = 0;
-    //     let that = this;
-
-    //     function checkDirection() {
-    //         if (touchstartX - touchendX > 80) {that.createNextWeek()};
-    //         if (touchendX -touchstartX > 80) {that.createPrevWeek()};
-    //     }
-
-    //     this.calendar.addEventListener('touchstart', e => {
-    //         touchstartX = e.changedTouches[0].screenX;
-    //     });
-
-    //     this.calendar.addEventListener('touchend', e => {
-    //         touchendX = e.changedTouches[0].screenX;
-    //         checkDirection()
-    //     });
-    // }
 
     setupMonth() {
         const month = document.getElementById("currentMonth");
