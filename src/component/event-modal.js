@@ -106,7 +106,7 @@ export default class EventModal {
         this.flipCardText.textContent = text;
     }
     
-    setCardColor(color) {
+    setCardColor(color = "var(--green)") {
         this.flipCardBack.style.background = color;
         this.flipCardFront.style.background = color;
     }
@@ -134,10 +134,10 @@ export default class EventModal {
     setPlace(place, type = "pm") {
         // console.log(type);
         let imgSrc;
-        if(type == "pm") {
-            imgSrc = "../icons/pm-b.png";
-        } else {
+        if(type == "tr") {
             imgSrc = "../icons/tr-b.png";
+        } else {
+            imgSrc = "../icons/pm-b.png";
         }
         this.place.innerHTML = `<a class="place" href="http://maps.google.com/?q=${place}" target="_blank">
         ${place}</a>
