@@ -99,7 +99,7 @@ export default class Event {
 
     setImage(image) {
         let imgSrc;
-        if(this.type && this.type !== "pm") {
+        if(this.type && this.type === "tr") {
             imgSrc = "../icons/tr-w.png";
         } else {
             this.type = "pm";
@@ -114,13 +114,12 @@ export default class Event {
     }
 
     setColor(eventSlot) {
-        if(this.type && this.type !== "pm") {
+        if(this.type && this.type === "tr") {
             this.color = "var(--blue)";
         } else {
             this.type = "pm";
             this.color = "var(--green)";
         }
-
         eventSlot.style.background = this.color;
     }
 
