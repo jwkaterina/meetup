@@ -90,6 +90,10 @@
         height: var(--slotHeightMobile);
     }
 
+    .time-slot {
+        font-size: 10px;
+    }
+
     #week-headings {
         margin-left: var(--timeWidthMobile);
     }
