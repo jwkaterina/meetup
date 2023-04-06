@@ -110,7 +110,7 @@
   transform: rotate(45deg) scale(1);
 }
 
-@media (max-width: 850px) {
+@media (max-width: 720px) {
 
     #dataModal .button:hover {
         background-color: var(--yellow);

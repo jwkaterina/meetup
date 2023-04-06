@@ -197,7 +197,7 @@ input, select {
     height: 20px;
 }
 
-@media (max-width: 850px) {
+@media (max-width: 720px) {
 
     /* Modals */
     

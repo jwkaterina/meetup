@@ -84,7 +84,7 @@
     background-color: var(--gray-light);
 }
 
-@media (max-width: 850px) {
+@media (max-width: 720px) {
     .slot,
     .time-slot {
         height: var(--slotHeightMobile);

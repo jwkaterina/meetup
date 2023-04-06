@@ -73,7 +73,7 @@ export default class Week {
     }
 
     _setupDays(headings) {
-        const media = window.matchMedia("(max-width: 850px)");
+        const media = window.matchMedia("(max-width: 720px)");
         const days = headings.querySelectorAll(".day-heading");
         days.forEach((day) => {
             const shortName = day.getAttribute("data-shortName");

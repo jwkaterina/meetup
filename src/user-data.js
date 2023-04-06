@@ -126,7 +126,7 @@ export default class UserData {
 
         const initials = firstName.substring(0, 1).toUpperCase() + lastName.substring(0, 1).toUpperCase();
 
-        const media = window.matchMedia("(max-width: 850px)");
+        const media = window.matchMedia("(max-width: 720px)");
         if (media.matches) {
             this.logMobile.style.display = "inline-block";
             this.logMobile.innerHTML = initials;

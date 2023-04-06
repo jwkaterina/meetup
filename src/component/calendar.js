@@ -56,7 +56,7 @@ export default class Calendar {
 
     scrollToStart() {
         window.addEventListener("load", () => {
-            const media = window.matchMedia("(max-width: 850px)");
+            const media = window.matchMedia("(max-width: 720px)");
             if (media.matches) {
                 scrollTo(0, 260);
             } else {
