@@ -149,54 +149,6 @@ input, select {
     width: 100%;
 }
 
-/* Alert */
-
-.alert {
-    background-color: var(--yellow);
-    position: relative;
-    top: -10px;
-    width: 70%;
-    visibility: hidden;
-    color: var(--black);
-    text-align: left;
-    border-radius: 0 2px 2px 2px;
-}
-
-#start .alert, #end .alert {
-    width: 100%;
-}
-  
-.show-message {
-    visibility: visible !important;
-}
-  
-.alert .arrow {
-    position: absolute;
-    top: -10px;
-    left: 10px;
-    border: 5px solid;
-    border-color: transparent transparent var(--yellow) var(--yellow);
-}
-
-/* Errors */
-#errors {
-    width: 100%;
-    background-color: var(--yellow);
-    grid-column: 1 / span 2;
-    grid-row: 6;
-    align-self: end;
-    text-align: center;
-    visibility: hidden;
-    border-radius: 2px;
-}
-
-.alert, #errors {
-    font-size: 0.8rem;
-    /* font-weight: bold; */
-    padding: 0.1rem;
-    height: 20px;
-}
-
 @media (max-width: 720px) {
 
     /* Modals */
@@ -228,19 +180,5 @@ input, select {
 
     .flip-card-front, .flip-card-back {
         padding: 20px 40px;
-    }
-
-    .alert, #errors {
-        font-weight: bold;
-        height: 1rem;
-        font-size: 0.7rem;
-    }
-
-    .alert {
-        top: -0.3rem;
-    }
-
-    .alert .arrow {
-        left: 0.3rem;
     }
 }
