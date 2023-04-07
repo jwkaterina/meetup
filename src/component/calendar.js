@@ -27,7 +27,6 @@ export default class Calendar {
         this.setupMonth();
         this.setupTimes();
         this.setupControls();
-        // this.addSwipe();
         this.assignWeeks();
         this.scrollToStart();
     }
