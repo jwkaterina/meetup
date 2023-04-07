@@ -16,11 +16,11 @@
     --gray-lightest: #F2F6F8;
 
     --slotHeight: 50px;
-    --slotHeightMobile: 40px;
+    --slotHeightMobile: 35px;
     --headerHeight: 80px;
     --headingsHeight: 60px;
     --timeWidth: 50px;
-    --timeWidthMobile: 35px;
+    --timeWidthMobile: 40px;
 }
 
 * {
