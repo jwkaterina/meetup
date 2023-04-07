@@ -2,7 +2,7 @@
     --cardWidth: 500px;
     --cardWidthMobile: 90vw;
     --cardHeight: 500px;
-    --cardHeightMobile: 450px;
+    --cardHeightMobile: 400px;
 }
 
 .modal {
@@ -210,7 +210,7 @@ input, select {
     }
 
     .button, .shortInput, select, .select-items div, .select-selected, .label  {
-        padding: 1vh 2vh;
+        padding: 6px 12px;
     }
 
     .flip-card {
@@ -227,7 +227,7 @@ input, select {
     }
 
     .flip-card-front, .flip-card-back {
-        padding: 3vh 5vh;
+        padding: 20px 40px;
     }
 
     .alert, #errors {
