@@ -1,3 +1,7 @@
+:root {
+    --slotHeight: 50px;
+    --slotHeightMobile: 35px;
+}
 
 #week-headings {
     background-color: white;
