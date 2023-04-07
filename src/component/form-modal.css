@@ -48,6 +48,7 @@
 #date {
     grid-column: 1 / span 2;
     grid-row: 5;
+    width: 100%;
 }
 
 #start {
@@ -66,6 +67,13 @@
 #formModal .eventControls {
     grid-column: 1 / span 2;
     grid-row: 7;
+}
+
+#errors {
+    grid-column: 1 / span 2;
+    grid-row: 7;
+    align-self: end;
+    width: 100%;
 }
 
 #formModal .button {
@@ -209,6 +217,50 @@
     display: none;
 }
 
+/* Alert */
+
+.alert {
+    background-color: var(--yellow);
+    position: relative;
+    top: -10px;
+    width: 70%;
+    visibility: hidden;
+    color: var(--black);
+    text-align: left;
+    border-radius: 0 2px 2px 2px;
+}
+
+#start .alert, #end .alert {
+    width: 100%;
+}
+  
+.show-message {
+    visibility: visible !important;
+}
+  
+.alert .arrow {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    border: 5px solid;
+    border-color: transparent transparent var(--yellow) var(--yellow);
+}
+
+/* Errors */
+#errors {
+    background-color: var(--yellow);
+    text-align: center;
+    visibility: hidden;
+    border-radius: 2px;
+}
+
+.alert, #errors {
+    font-size: 0.8rem;
+    /* font-weight: bold; */
+    padding: 0.1rem;
+    height: 20px;
+}
+
 @media (max-width: 720px) {
     .select-items {
         height: 25vh;
@@ -222,5 +274,19 @@
     #formModal .deleteButton:hover {
         background-color: var(--blue);
         color: var(--white);
+    }
+
+    .alert, #errors {
+        font-weight: bold;
+        height: 1rem;
+        font-size: 0.7rem;
+    }
+
+    .alert {
+        top: -0.3rem;
+    }
+
+    .alert .arrow {
+        left: 0.3rem;
     }
 }
