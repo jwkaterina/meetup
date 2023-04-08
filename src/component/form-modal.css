@@ -277,7 +277,11 @@
     }
 
     #eventDate {
-        width: calc(90vw - 40px);
+        width: 70vw;
+    }
+
+    #eventStart, #eventEnd {
+        width: 32vw;
     }
 
     .alert, #errors {

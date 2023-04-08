@@ -179,6 +179,6 @@ input, select {
     }
 
     .flip-card-front, .flip-card-back {
-        padding: 20px 40px;
+        padding: 20px 10vw;
     }
 }
