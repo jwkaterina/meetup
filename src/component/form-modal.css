@@ -276,6 +276,10 @@
         color: var(--white);
     }
 
+    #eventDate {
+        width: 90vw;
+    }
+
     .alert, #errors {
         /* font-weight: bold; */
         height: 1rem;
