@@ -255,10 +255,10 @@
 }
 
 .alert, #errors {
-    font-size: 0.8rem;
-    /* font-weight: bold; */
-    padding: 0.1rem;
+    font-size: 14px;
+    padding-left: 5px;
     height: 20px;
+    line-height: 20px;
 }
 
 @media (max-width: 720px) {
@@ -277,9 +277,11 @@
     }
 
     .alert, #errors {
-        font-weight: bold;
+        /* font-weight: bold; */
         height: 1rem;
-        font-size: 0.7rem;
+        font-size: 0.8rem;
+        line-height: 1rem;
+        padding-left: 0.5rem;
     }
 
     .alert {
