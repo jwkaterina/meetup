@@ -277,7 +277,7 @@
     }
 
     #eventDate {
-        width: 90vw;
+        width: calc(90vw - 40px);
     }
 
     .alert, #errors {
