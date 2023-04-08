@@ -279,13 +279,13 @@
     #eventDate {
         width: 70vw;
         padding: 7px 12px;
-        height: 35px;
+        height: 36px;
     }
 
     #eventStart, #eventEnd {
         width: 32vw;
         padding: 7px 12px;
-        height: 35px;
+        height: 36px;
     }
 
     .alert, #errors {
