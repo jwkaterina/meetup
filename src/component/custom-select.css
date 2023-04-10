@@ -62,3 +62,13 @@
 .same-as-selected {
     display: none;
 }
+
+@media (max-width: 720px) {
+    .select-selected:after {
+        top: calc(50% - 10px);
+    }
+    
+    .select-selected.select-arrow-active:after {
+        top: calc(50% - 20px);
+    }
+}
