@@ -7,14 +7,15 @@
     left: 0;
     right: 0;
     z-index: 5;
-    height: 250px;
+    height: 0;
     overflow: auto;
+    transition: height 0.3s;
 }
 
 .select-selected:after {
     position: absolute;
     content: "";
-    top: 25%;
+    top: calc(50% - 13px);
     right: 15px;
     width: 0;
     height: 0;
@@ -24,7 +25,7 @@
 
 .select-selected.select-arrow-active:after {
     border-color: transparent transparent var(--gray-light) transparent;
-    top: 7px;
+    top: calc(50% - 23px);
 }
 
 .select-items div,.select-selected {
@@ -48,13 +49,14 @@
     color: var(--gray-light)
 }
 
-.select-selected.select-arrow-active {
+.select-selected.select-active {
     border: 1px solid var(--blue);
     color: var(--black);
 }
 
-.select-hide {
-    display: none;
+.select-show {
+    height: 250px;
+    transition: height 0.8s ease;
 }
 
 .same-as-selected {

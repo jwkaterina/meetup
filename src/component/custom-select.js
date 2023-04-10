@@ -32,13 +32,19 @@ export default class CustomSelect {
 
         selectedItem.addEventListener("click",(e) => {
             e.stopPropagation();
-            selectItems.classList.toggle("select-hide");
+            selectItems.classList.toggle("select-show");
             selectedItem.classList.toggle("select-arrow-active");
+            selectedItem.classList.add("select-active");
         });
 
-        document.addEventListener("click", () => {
-            selectedItem.classList.remove("select-arrow-active");
-            selectItems.classList.add("select-hide");
+        document.addEventListener("click", (e) => {
+            if (!e.target.matches('.select-selected') && !e.target.parentNode.matches('.select-items')) {
+                selectedItem.classList.remove("select-active");
+            }
+            if (selectItems.classList.contains('select-show')) {
+                selectItems.classList.remove("select-show");
+                selectedItem.classList.remove("select-arrow-active");
+            }
         });
     }
 
@@ -63,11 +69,9 @@ export default class CustomSelect {
             selectItems.remove();
         } 
         selectItems = document.createElement("div");
-        selectItems.className = "select-items select-hide";
+        selectItems.className = "select-items";
         const h = document.querySelector(".shortInput").clientHeight;
         selectItems.style.top = h - 1 + "px";
-
-        // this.createOptions(selectedId, selectedItem, selectItems);
         this.container.appendChild(selectItems);
 
         return selectItems;
@@ -96,6 +100,7 @@ export default class CustomSelect {
                         break;
                     }
                 }
+                selectedItem.classList.add("select-arrow-active");
             });
         selectItems.appendChild(option);
         }
