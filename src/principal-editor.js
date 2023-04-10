@@ -3,6 +3,7 @@ import Event from "./component/event";
 import ValidationError from "./error/validation-error";
 import FormModal from "./component/form-modal";
 import ConfirmModal from "./component/confirm-modal";
+import CustomSelect from "./component/custom-select";
 import { dateString, addDays } from "./helper";
 
 export default class PrincipalEditor {
@@ -12,11 +13,13 @@ export default class PrincipalEditor {
         this.common = principalCommon;
         this.formModal = null;
         this.confirmModal = null;
+        this.customSelect = null;
         this.loadingAnime = document.getElementById("loading-form");
 
         this.ctx.usersLoadedPromise.then(() => {
-            this.formModal = new FormModal(this.ctx.editors);
+            this.formModal = new FormModal();
             this.confirmModal = new ConfirmModal();
+            this.customSelect = new CustomSelect(this.ctx.editors);
             this.loadEventListeners();
         });
     }
@@ -108,7 +111,7 @@ export default class PrincipalEditor {
         this.formModal.hideUpdateButton();
 
         this.formModal.place.value = event.place;
-        this.formModal.showOptions(this.user.id, this.user);
+        this.customSelect.showOptions(this.user.id, this.user);
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;
@@ -123,7 +126,7 @@ export default class PrincipalEditor {
         this.formModal.hideCreateButton();
 
         this.formModal.place.value = event.place;
-        this.formModal.showOptions(event.memberIds[0], this.user);
+        this.customSelect.showOptions(event.memberIds[0], this.user);
         this.formModal.date.disabled = true;
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
@@ -187,8 +190,8 @@ export default class PrincipalEditor {
                     event.type = type.value;
                 }
             })    
-            const selectedIndex = this.formModal.name.selectedIndex;
-            const newMainId = this.formModal.name.options[selectedIndex].dataset.editorId;
+            const selectedIndex = this.customSelect.select.selectedIndex;
+            const newMainId = this.customSelect.select.options[selectedIndex].dataset.editorId;
             event.memberIds[0] = newMainId;
             try {
                 await this.calendar.createEvent(event);
@@ -234,8 +237,8 @@ export default class PrincipalEditor {
                 event.color = "var(--green)";
             }
     
-            const selectedIndex = this.formModal.name.selectedIndex;
-            const newMainId = this.formModal.name.options[selectedIndex].dataset.editorId;
+            const selectedIndex = this.customSelect.select.selectedIndex;
+            const newMainId = this.customSelect.select.options[selectedIndex].dataset.editorId;
             if(event.memberIds.includes(newMainId) && event.memberIds[0] !== newMainId) {
                 const index = event.memberIds.indexOf(newMainId);
                 event.memberIds.splice(index, 1);
