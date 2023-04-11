@@ -85,8 +85,8 @@ export default class PrincipalEditor {
         const start = hour.toString().padStart(2, "0") + ":00";
         const end =
             hour < 23
-                ? (hour + 1).toString().padStart(2, "0") + ":00"
-                : hour.toString().padStart(2, "0") + ":59";
+                ? (hour + 1).toString().padStart(2, "0") + ":30"
+                : "23:59";
 
         const date = dateString(addDays(this.ctx.weekStart, dayIndex));
         const event = new Event({
@@ -308,7 +308,7 @@ export default class PrincipalEditor {
             weekStart: dateString(this.ctx.weekStart),
             place: "",
             start: "12:00",
-            end: "13:00",
+            end: "13:30",
             date: dateString(this.ctx.weekStart),
             memberIds: [],
             color: "",
