@@ -209,7 +209,7 @@ export default class Week {
 
         if(collision) {
             throw new ValidationError(`Cela se heurte au groupe (${collision.start} - ${collision.end}).`);
-
+        }
         const duration =
             (new Date(`${newDate}T${newEnd}`).getTime() -
                 new Date(`${newDate}T${newStart}`).getTime()) /
@@ -217,6 +217,6 @@ export default class Week {
         if (duration <= 0 || duration === 0) {
             throw new ValidationError('La durée doit être plus que "0"');
         }
-        }
+    
     }   
 }
