@@ -185,7 +185,6 @@ export default class Week {
             }
             this.events = events;
             this.events.forEach(evt => evt.show());
-            // console.log(`Got events for weekStart: ${this.weekStart}`, events);
         })
         .catch(err => console.log("Cannot Load Events:", err));
     };

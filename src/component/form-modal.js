@@ -6,7 +6,6 @@ export default class FormModal {
         this.container = document.getElementById("formModal");
         this.types = this.container.querySelectorAll('input[name="type"]');        
         this.place = document.getElementById("eventPlace");
-        // this.name = document.getElementById("eventMainName");
         this.date = document.getElementById("eventDate");
         this.start = document.getElementById("eventStart");
         this.end = document.getElementById("eventEnd");
