@@ -263,7 +263,8 @@ export default class Calendar {
 
     async deleteEvent(id) {
         const removedEvent = Object.values(this.weeks)
-        .find(week => week.deleteEvent(id) != null);
+        .map(week => week.deleteEvent(id))
+        .find(evt => evt != null);
         if (removedEvent) {
             return await this.eventService.deleteEvent(removedEvent);
         } else {

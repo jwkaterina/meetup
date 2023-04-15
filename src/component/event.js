@@ -1,5 +1,5 @@
 import './event.css';
-import { dateString, getDayIndex, addDays } from "../helper";
+import { getDayIndex } from "../helper";
 import { Context } from "../ctx";
 
 export default class Event {
