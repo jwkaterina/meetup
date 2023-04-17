@@ -1,17 +1,23 @@
 import Event from "../src/component/event";
 import { Context } from "../src/ctx";
-import EventCalendar  from "../src/event-calendar";
+import Calendar from "../src/component/calendar";
 import PrincipalCommon from "../src/principal";
 import User from "../src/user";
 
-jest.mock("../src/event-calendar");
+jest.mock("../src/component/calendar");
 
 describe('PrincipalCommon', function () {
 
+    document.querySelector = jest.fn(() => {
+        return {
+            offsetHeight: 50
+        }
+    });
+
     const mockedCreateEvent = jest.fn(() => Promise.resolve());
     const mockedUpdateEvent = jest.fn(() => Promise.resolve());
-    EventCalendar.mockImplementation(() => {
-        const actualModule = jest.requireActual("../src/event-calendar");
+    Calendar.mockImplementation(() => {
+        const actualModule = jest.requireActual("../src/component/calendar");
         return {
             ...actualModule,
             // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -37,7 +43,7 @@ describe('PrincipalCommon', function () {
             date: "2023-01-17",
             memberIds: ["1", "2"],
             color: "green",
-            type: "pm"
+            type: "pm", 
         });
 
         document.body.innerHTML = `
@@ -71,7 +77,7 @@ describe('PrincipalCommon', function () {
 
     it('should populate eventModal with content from event object', () => {
         //init
-        const principal = new PrincipalCommon(new EventCalendar(), user);
+        const principal = new PrincipalCommon(new Calendar(), user);
 
         //invoke
         principal.addEventContent(event);
@@ -91,7 +97,7 @@ describe('PrincipalCommon', function () {
 
     it('should add name to current event', async () => {
         //init
-        const principal = new PrincipalCommon(new EventCalendar(), user);
+        const principal = new PrincipalCommon(new Calendar(), user);
         const ctx = Context.getInstance();
         ctx.currentEvent = event;
 
@@ -107,7 +113,7 @@ describe('PrincipalCommon', function () {
 
     it('should delete name from current event', async () => {
         //init
-        const principal = new PrincipalCommon(new EventCalendar(), user);
+        const principal = new PrincipalCommon(new Calendar(), user);
         const event = new Event({
             weekStart: "2023-01-16",
             place: "",
@@ -116,6 +122,7 @@ describe('PrincipalCommon', function () {
             date: "2023-01-18",
             memberIds: ["1", user.id],
             color: "green",
+            type: "pm",
         });
         const ctx = Context.getInstance();
         ctx.currentEvent = event;
@@ -135,7 +142,7 @@ describe('PrincipalCommon', function () {
         const ctx = Context.getInstance();
         ctx.currentEvent = event;
 
-        const principal = new PrincipalCommon(new EventCalendar(), user);
+        const principal = new PrincipalCommon(new Calendar(), user);
 
         //invoke
         await principal.deleteName();

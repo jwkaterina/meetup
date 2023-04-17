@@ -28,6 +28,12 @@ class LocalStorageMock {
 
 describe('EventService', () => {
 
+    document.querySelector = jest.fn(() => {
+      return {
+          offsetHeight: 50
+      }
+    });
+
     global.localStorage = new LocalStorageMock;
     global.localStorage.setItem('events', JSON.stringify(events));
 
@@ -37,7 +43,7 @@ describe('EventService', () => {
         const eventsService = new EventService();
 
         //invoke
-        const res = await eventsService._loadFromLocalStorage(date);
+        const res = await eventsService._loadFromLocalStorage(dateString(date));
 
         //check
         expect(res.length).toBe(2);
@@ -64,7 +70,7 @@ describe('EventService', () => {
       eventsService._saveToLocalStorage(event);
 
       //check
-      const res = await eventsService._loadFromLocalStorage(new Date(2023, 0, 9));
+      const res = await eventsService._loadFromLocalStorage(dateString(new Date(2023, 0, 9)));
       expect(res.length).toBe(3);
   });
 });
