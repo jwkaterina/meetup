@@ -99,6 +99,7 @@ export default class PrincipalEditor {
             color: "",
             type: ""
         });
+        console.log(event);
         this.ctx.currentEvent = event;
         this.openCreateFormModal(event);
     }
@@ -316,9 +317,5 @@ export default class PrincipalEditor {
         });
         this.ctx.currentEvent = event;
         this.openCreateFormModal(event);
-    }
-
-    showLoadingAnimation() {
-
     }
 }
