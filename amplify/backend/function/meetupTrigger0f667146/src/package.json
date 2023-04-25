@@ -7,6 +7,7 @@
   "dependencies": {
     "@aws-sdk/client-ssm": "^3.258.0",
     "https": "^1.0.0",
+    "luxon": "^3.3.0",
     "web-push": "^3.5.0"
   }
 }
