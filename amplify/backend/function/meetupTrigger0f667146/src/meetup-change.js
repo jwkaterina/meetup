@@ -261,7 +261,7 @@ class MeetupUpdateEvent extends MeetupChangeEvent {
         
         const newMeetup = super.parseNewIgamge(evt);
 
-        if (!newMeetup) {
+        if (!newMeetup || newMeetup.expired) {
             return null;
         }
 
