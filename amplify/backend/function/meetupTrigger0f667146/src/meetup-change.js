@@ -3,6 +3,7 @@ const EntityError = require('./entity-error');
 const MeetupEntity = require('./meetup-entity');
 const MeetupChangeEntity = require('./meetup-change-entity');
 const MeetupNotificationEntity = require('./meetup-notification');
+const { DateTime } = require('luxon');
 
 class MeetupChangeEvent {
 
@@ -297,6 +298,13 @@ class MeetupDeleteEvent extends MeetupChangeEvent {
         const meetup = super.parseOldIgamge(evt);
 
         if (!meetup) {
+            return null;
+        }
+
+        const eventDate = DateTime.fromISO(meetup.date);
+        const now = DateTime.now();
+
+        if(eventDate < now) {
             return null;
         }
 
