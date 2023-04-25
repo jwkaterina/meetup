@@ -1,3 +1,4 @@
+const { DateTime } = require('luxon');
 const Item = require('./item');
 const MeetupChangeEntity = require('./meetup-change-entity');
 
@@ -40,6 +41,13 @@ class MeetupEntity {
 
     get weekStart() {
         return this.item.pk.substring(MeetupEntity.PK_PREFIX.length);
+    }
+
+    get expired() {
+        const eventDate = DateTime.fromISO(this.date);
+        const now = DateTime.now();
+
+        return eventDate.plus({ days: 1}) < now
     }
 
     /**
