@@ -214,15 +214,14 @@
             </div>
         </div>
 
-        <template>
-            <!-- Intro Modal -->
-            <div id="introModal">
-                <img src="icons/emoji.png" alt="">
-                <p class="lead">Contact la personne responsable afin qu'elle puisse t'ajouter à un groupe dédié</p>
-                <div class="eventControls">
-                    <input type="button" value="Ok" class="button okButton">
-                </div>
-          </template>
+        <!-- Intro Modal -->
+        <div id="introModal">
+            <img src="icons/emoji.png" alt="">
+            <p class="lead">Contact la personne responsable afin qu'elle puisse t'ajouter à un groupe dédié</p>
+            <div class="eventControls">
+                <input type="button" value="Ok" class="button okButton">
+            </div>
+        </div>
 
         <!-- Loading Animation -->
         <div class="loading">
@@ -236,8 +235,8 @@
         </div>
 
         <!-- Snackbar -->
-        <div id="snackbar">Oups! Quelque chose s'est mal passé...</div>
-
+        <!-- <div id="snackbar">Oups! Quelque chose s'est mal passé...</div> -->
+        <custom-snackbar text="Quelque chose s'est mal passé..."></custom-snackbar>
     </main>    
 </body>
 </html>

@@ -2,25 +2,19 @@ import './intro-modal.css';
 
 export default class IntroModal {
     constructor() {
-        this.template = document.getElementsByTagName("template")[0];
-        this.clon = this.template.content.cloneNode(true);
-
+        this.container = document.getElementById("introModal");
+        this.okButton = this.container.querySelector(".okButton");
+        this.okButton.addEventListener("click", () => this.close());
     }
 
     show() {
-        document.body.appendChild(this.clon);
-
+        this.container.classList.add("show");
         document.body.classList.add("opaque");
         document.body.style.overflow = 'hidden';
-        const container = document.getElementById("introModal");
-
-        const okButton = container.querySelector(".okButton");
-        okButton.addEventListener("click", () => this.close());
     }
 
     close() {
-        const container = document.getElementById("introModal");
-        container.remove();
+        this.container.classList.remove("show");
         document.body.classList.add("transparent");
         setTimeout(() => {
             document.body.classList.remove("transparent");

@@ -5,7 +5,7 @@
     grid-template-rows: 3fr 2fr 1fr;
     border-radius: 5px;
     left: 50%;
-    top: 50%;
+    top: -50%;
     transform: translate(-50%,-50%);
     position: fixed;
     z-index: 4;
@@ -13,7 +13,12 @@
     height: 500px;
     background-color: white;
     color: black;
-    visibility: visible;
+    visibility: hidden;
+    opacity: 0;
+    /* animation: introFadein 0.5s forwards; */
+}
+
+#introModal.show {
     animation: introFadein 0.5s forwards;
 }
 
@@ -34,8 +39,8 @@
 }
 
 @keyframes introFadein {
-    from {top: -50%; opacity: 0;}
-    to {top: 50%; opacity: 1;}
+    from {top: -50%; opacity: 0; visibility: hidden;}
+    to {top: 50%; opacity: 1; visibility: visible;}
 }
 
 @media (max-width: 720px) {
