@@ -1,4 +1,3 @@
-// import './event.css';
 import './custom-event.js'
 import { getDayIndex } from "../helper";
 import { Context } from "../ctx";

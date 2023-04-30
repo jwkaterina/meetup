@@ -4,6 +4,7 @@ class EventSlot extends HTMLElement {
 
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.shadowRoot.querySelector('.event-img').src = this.getAttribute('imgsrc');
     }
 
     setNumber() {
@@ -39,11 +40,12 @@ const template = document.createElement('template');
 template.innerHTML = `
     <style>
         * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
     .event {
+        box-sizing: border-box;
         display: flex;
         flex-direction: column;
         position: absolute;
