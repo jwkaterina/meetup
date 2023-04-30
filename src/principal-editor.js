@@ -5,6 +5,7 @@ import FormModal from "./component/form-modal";
 import ConfirmModal from "./component/confirm-modal";
 import CustomSelect from "./component/custom-select";
 import { dateString, addDays } from "./helper";
+import "./component/snackbar";
 
 export default class PrincipalEditor {
     constructor(calendar, principalCommon) {
@@ -14,6 +15,7 @@ export default class PrincipalEditor {
         this.formModal = null;
         this.confirmModal = null;
         this.customSelect = null;
+        this.snackbar = document.querySelector("snack-bar");
         this.loadingAnime = document.getElementById("loading-form");
 
         this.ctx.usersLoadedPromise.then(() => {
@@ -165,7 +167,7 @@ export default class PrincipalEditor {
             if (e instanceof ValidationError) {
                 this.formModal.showError(e.message);
             } else {
-                this.common.snackbar.show("Oups! Quelque chose s'est mal passé...");
+                this.snackbar.show("Oups! Quelque chose s'est mal passé...");
                 setTimeout(() => {
                     this.formModal.close();
                 },1000);
@@ -205,7 +207,7 @@ export default class PrincipalEditor {
                 }, 500);
             } catch (err) {
                 this.loadingAnime.style.display = "none";
-                this.common.snackbar.show("Oups! Impossible de créer un groupe...");
+                this.snackbar.show("Oups! Impossible de créer un groupe...");
                 setTimeout(() => {
                     this.formModal.close();
                 },1000);
@@ -258,7 +260,7 @@ export default class PrincipalEditor {
              
             } catch (err) {
                 this.loadingAnime.style.display = "none";
-                this.common.snackbar.show("Oups! Impossible de changer un groupe...");
+                this.snackbar.show("Oups! Impossible de changer un groupe...");
                 setTimeout(() => {
                     this.formModal.close();
                 },1000);
@@ -279,7 +281,7 @@ export default class PrincipalEditor {
 
             if (!res.success) {
                 this.loadingAnime.style.display = "none";
-                this.common.snackbar.show("Oups! Impossible d'effacer un groupe...");
+                this.snackbar.show("Oups! Impossible d'effacer un groupe...");
                 setTimeout(() => {
                     this.confirmModal.close();
                 },1000);
@@ -296,7 +298,7 @@ export default class PrincipalEditor {
             document.getElementById(id).remove();
         } catch (err) {
             this.loadingAnime.style.display = "none";
-            this.common.snackbar.show("Oups! Impossible d'effacer un groupe...");
+            this.snackbar.show("Oups! Impossible d'effacer un groupe...");
             setTimeout(() => {
                 this.confirmModal.close();
             },1000);            

@@ -1,6 +1,7 @@
 import UserInfoService from "./service/userinfo";
 import DataModal from "./component/data-modal";
-import Snackbar from "./component/snackbar";
+import "./component/snackbar";
+
 import { Context } from "./ctx";
 import "./user-data.css";
 
@@ -10,7 +11,7 @@ export default class UserData {
         this.webpush = webpush;
         this.ctx = Context.getInstance();
         this.dataModal = new DataModal();
-        this.snackbar = new Snackbar();
+        this.snackbar = document.querySelector("snack-bar");
         this.logMobile = document.getElementById("loggedButton-circle");
         this.logPC = document.getElementById("loggedButton-name");
         this.loadingAnime = document.getElementById("loading-data");
@@ -74,7 +75,7 @@ export default class UserData {
         const user = this.ctx.principal.user;
 
         if(!this.userInfo.canUpdatePrincipalAttributes()) {
-            this.dataModal.disableButtons();
+            this.dataModal.disableButtons();            
             this.loadingAnime.style.display = "block";
             setTimeout(() => {
                 this.loadingAnime.style.display = "none";
@@ -95,7 +96,6 @@ export default class UserData {
             user.firstName = this.dataModal.firstName.value;
             user.lastName = this.dataModal.lastName.value;
     
-            console.log(user);
             try{
                 await this.userInfo.updatePrincipal(user);
 

@@ -1,11 +1,10 @@
 import { API, Auth } from "aws-amplify";
 import { encode } from "universal-base64url";
-
-import Snackbar from "../component/snackbar";
+import "../component/snackbar";
 
 export default class WebPushService {
   constructor() {
-    this.snackbar = new Snackbar();
+    this.snackbar = document.querySelector("snack-bar");
     this.swRegistration = null;
   }
 
