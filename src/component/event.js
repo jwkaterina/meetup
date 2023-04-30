@@ -1,4 +1,5 @@
-import './event.css';
+// import './event.css';
+import './custom-event.js'
 import { getDayIndex } from "../helper";
 import { Context } from "../ctx";
 
@@ -14,6 +15,7 @@ export default class Event {
         this.color = data.color;
         this.type = data.type;
         this.slotHeight = document.querySelector(".slot").offsetHeight;
+        this.slotWidth = document.querySelector(".slot").offsetWidth;
     }
 
     get dayIndex() {
@@ -66,31 +68,22 @@ export default class Event {
     }
 
     createEventElement(weekContainer, ctx) {
-        let eventSlot, image, number;
+        let eventSlot;
         if (weekContainer.querySelector(`[id='${this.id}']`)) {
             eventSlot = weekContainer.querySelector(`[id='${this.id}']`);
-            image = eventSlot.querySelector(".event-img");
-            number = eventSlot.querySelector(".event-number");
         } else {
-            eventSlot = document.createElement("div");
-            eventSlot.className ="event";
+            eventSlot = document.createElement("event-slot");
             eventSlot.setAttribute("id", this.id);
             eventSlot.addEventListener("click", () => {
                 ctx.principal.openEventModal(this)
             });            
-            image = document.createElement("img");
-            image.className = "event-img";
-            eventSlot.appendChild(image);
-            number = document.createElement("p");
-            number.className = "event-number";
-            eventSlot.appendChild(number);
 
             const day = weekContainer.querySelector(`.day-slots[data-dayIndex="${this.dayIndex}"]`);
             day.appendChild(eventSlot);
         }
 
-        this.setImage(image);
-        this.setNumber(number);
+        this.setNumber(eventSlot);
+        this.setImage(eventSlot);
         this.setColor(eventSlot);
         this.setPosition(eventSlot);
         this.setMark(eventSlot, ctx);
@@ -98,7 +91,7 @@ export default class Event {
         return eventSlot
     }
 
-    setImage(image) {
+    setImage(eventSlot) {
         let imgSrc;
         if(this.type && this.type === "tr") {
             imgSrc = "../icons/tr-w.png";
@@ -107,11 +100,14 @@ export default class Event {
             imgSrc = "../icons/pm-w.png";
         }
 
-        image.src = imgSrc;
+        eventSlot.setAttribute("imgsrc", imgSrc);
+        eventSlot.setImage();
     }
 
-    setNumber(number) {
-        number.innerHTML = this.memberIds.length;
+    setNumber(eventSlot) {
+        const number = this.memberIds.length;
+        eventSlot.setAttribute("number", number);
+        eventSlot.setNumber();
     }
 
     setColor(eventSlot) {
@@ -121,26 +117,36 @@ export default class Event {
             this.type = "pm";
             this.color = "var(--green)";
         }
-        eventSlot.style.background = this.color;
+        eventSlot.setAttribute("color", this.color);
+        eventSlot.setColor();    
     }
 
     setPosition(eventSlot) {
         const media = window.matchMedia("(max-width: 720px)");
         const h = this.slotHeight;
+        const w = this.slotWidth;
+
+        let top, bottom, width;
         if (media.matches) {
-            eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
-            eventSlot.style.bottom = 24 * h - (this.endHour + this.endMinutes / 60) * h + 3 + "px";
+            top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
+            bottom = 24 * h - (this.endHour + this.endMinutes / 60) * h + 3 + "px";
+            width = (w - 3) + "px";
         } else {
-            eventSlot.style.top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
-            eventSlot.style.bottom = 24 * h - (this.endHour + this.endMinutes / 60) * h + 5 + "px";
+            top = (this.startHour + this.startMinutes / 60 ) * h + 1 + "px";
+            bottom = 24 * h - (this.endHour + this.endMinutes / 60) * h + 5 + "px";
+            width = (w - 5) + "px";
         }
+        eventSlot.setAttribute("top", top);
+        eventSlot.setAttribute("bottom", bottom);
+        eventSlot.setAttribute("width", width);
+        eventSlot.setPosition();  
     }
 
     setMark(eventSlot, ctx) {
         if(this.memberIds.includes(ctx.principal.user.id)) {
-            eventSlot.classList.add("mark");
+            eventSlot.addMark();
         } else {
-            eventSlot.classList.remove("mark");
+            eventSlot.removeMark();
         }
     }
 }
