@@ -1,5 +1,5 @@
 import { Context } from "./ctx";
-import Snackbar from "./component/snackbar";
+import "./component/snackbar";
 import EventModal from "./component/event-modal";
 
 
@@ -9,7 +9,7 @@ export default class PrincipalCommon {
         this.user = user;
         this.ctx = Context.getInstance();
         this.eventModal = new EventModal();
-        this.snackbar = new Snackbar();
+        this.snackbar = document.querySelector("snack-bar");
         this.loadingAnime = document.getElementById("loading-event");
 
         this.loadEventListeners();
@@ -81,7 +81,7 @@ export default class PrincipalCommon {
             event.show();
         } catch (err) {
             this.loadingAnime.style.display = "none";
-            this.showSnackbar("Oups! Impossible de s'inscrire...");
+            this.snackbar.show("Oups! Impossible de s'inscrire...");
             setTimeout(() => {
                 this.eventModal.close();
             },1000);   
@@ -114,7 +114,7 @@ export default class PrincipalCommon {
             event.show();
         } catch (err) {
             this.loadingAnime.style.display = "none";
-            this.showSnackbar("Oups! Impossible d'annuler...");
+            this.snackbar.show("Oups! Impossible d'annuler...");
             setTimeout(() => {
                 this.eventModal.close();
             },1000);   

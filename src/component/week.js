@@ -4,7 +4,6 @@ import EventService from "../service/event";
 import { Context } from "../ctx";
 import "./week.css";
 
-
 export default class Week {
     constructor(weekStart, weekOffset, className) {
 
