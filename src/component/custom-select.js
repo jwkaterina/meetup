@@ -19,6 +19,15 @@ export default class CustomSelect {
         }
         Object.values(this.editors)
         .filter(editor => editor.id != mainId && editor.id != user.id)
+        .sort(( a, b ) => {
+            if ( a.name < b.name ){
+              return -1;
+            }
+            if ( a.name > b.name ){
+              return 1;
+            }
+            return 0;
+          })
         .forEach(editor => options += `<option value="${editor.name}" data-editor-id="${editor.id}">${editor.name}</option>`);
         this.select.innerHTML = options;
         this.customizeSelect();

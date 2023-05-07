@@ -8,7 +8,7 @@
 
 #confirmModal .flip-card-front {
     display: grid;
-    grid-template-rows: 11fr 2fr;
+    grid-template-rows: 13fr 2fr;
 }
 
 #modalTitle {

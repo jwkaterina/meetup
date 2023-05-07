@@ -59,6 +59,7 @@ export default class PrincipalCommon {
         this.eventModal.setPlace(event.place, event.type);
         this.eventModal.setMembers(txt);
         this.eventModal.setCardColor(event.color);
+        this.eventModal.setComment(event.comment);
     }
 
     async addName() {

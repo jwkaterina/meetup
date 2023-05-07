@@ -1,7 +1,7 @@
 #formModal .flip-card-front {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr 2fr 2fr 2fr 2fr 2fr 2fr;
+    grid-template-rows: 1fr 2fr 2fr 2fr 2fr 2fr 2fr 2fr;
 }
 
 #formModal .flip-card-front, #formModal .flip-card-back {
@@ -64,9 +64,15 @@
     justify-self: end;
 }
 
-#formModal .eventControls {
+#comment {
     grid-column: 1 / span 2;
     grid-row: 7;
+    width: 100%;
+}
+
+#formModal .eventControls {
+    grid-column: 1 / span 2;
+    grid-row: 8;
 }
 
 #errors {
@@ -157,8 +163,8 @@
 
 .alert {
     background-color: var(--yellow);
-    position: relative;
-    top: -10px;
+    position: absolute;
+    bottom: 7px;
     width: 70%;
     color: var(--black);
     text-align: left;
@@ -170,7 +176,7 @@
 }
   
 .show-message {
-    visibility: visible !important;
+    display: block !important;
 }
   
 .alert .arrow {
@@ -191,7 +197,7 @@
 }
 
 .alert, #errors {
-    visibility: hidden;
+    display: none;
     font-size: 14px;
     padding-left: 5px;
     height: 20px;
@@ -233,7 +239,8 @@
     }
 
     .alert {
-        top: -0.3rem;
+        position: absolute;
+        bottom: 0.5rem;
     }
 
     .alert .arrow {

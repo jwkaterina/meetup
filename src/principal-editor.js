@@ -99,9 +99,9 @@ export default class PrincipalEditor {
             date,
             memberIds: [],
             color: "",
-            type: ""
+            type: "",
+            comment: ""
         });
-        console.log(event);
         this.ctx.currentEvent = event;
         this.openCreateFormModal(event);
     }
@@ -118,6 +118,7 @@ export default class PrincipalEditor {
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;
+        this.formModal.comment.value = event.comment;
     }
 
     openChangeFormModal() {
@@ -134,6 +135,9 @@ export default class PrincipalEditor {
         this.formModal.date.value = event.date;
         this.formModal.start.value = event.start;
         this.formModal.end.value = event.end;
+        if(event.comment) {
+            this.formModal.comment.value = event.comment;
+        } 
         if(event.type) {
             this.formModal.types.forEach(type => {
                 if(type.value === event.type) {
@@ -147,7 +151,6 @@ export default class PrincipalEditor {
                 }
             })
         }
-      
     }
 
     openConfirmModal() {
@@ -188,11 +191,13 @@ export default class PrincipalEditor {
             event.start = this.formModal.start.value;
             event.end = this.formModal.end.value;
             event.date = this.formModal.date.value;
+            event.comment = this.formModal.comment.value;
             this.formModal.types.forEach(type => {
                 if(type.checked) {
                     event.type = type.value;
                 }
             })    
+
             const selectedIndex = this.customSelect.select.selectedIndex;
             const newMainId = this.customSelect.select.options[selectedIndex].dataset.editorId;
             event.memberIds[0] = newMainId;
@@ -229,6 +234,9 @@ export default class PrincipalEditor {
             event.start = this.formModal.start.value;
             event.end = this.formModal.end.value;
             event.date = this.formModal.date.value;
+            event.date = this.formModal.date.value;
+            event.comment = this.formModal.comment.value;
+
             this.formModal.types.forEach(type => {
                 if(type.checked) {
                     event.type = type.value;

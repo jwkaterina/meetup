@@ -9,8 +9,9 @@ export default class FormModal {
         this.date = document.getElementById("eventDate");
         this.start = document.getElementById("eventStart");
         this.end = document.getElementById("eventEnd");
+        this.comment = document.getElementById("eventComment");
         this.errors = document.getElementById("errors");
-        this.inputs = this.container.querySelectorAll(".shortInput");
+        this.inputs = this.container.querySelectorAll("[required]");
         this.createButton = this.container.querySelector(".createButton");
         this.updateButton = this.container.querySelector(".updateButton");
         this.deleteButton = this.container.querySelector(".deleteButton");

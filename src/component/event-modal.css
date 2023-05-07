@@ -4,7 +4,7 @@
 
 #eventModal .flip-card-front {
     display: grid;
-    grid-template-rows: 2fr 1fr 1fr 7fr 2fr;
+    grid-template-rows: 2fr 1fr 1fr 9fr 2fr;
 }
 
 #eventModal .cancelButton {
@@ -24,6 +24,11 @@
     display: flex;
     justify-self: center;
     align-self: center;
+}
+
+#eventModal .comment {
+    display: none;
+    color: var(--black);
 }
 
 #eventModal .place:hover {
