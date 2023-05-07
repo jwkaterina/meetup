@@ -15,6 +15,10 @@ class EventSlot extends HTMLElement {
         this.shadowRoot.querySelector('.event-img').src = this.getAttribute('imgsrc');
     }
 
+    setText() {
+        this.shadowRoot.querySelector('.event-text').innerText = this.getAttribute('text');
+    }
+
     setColor() {
         this.shadowRoot.querySelector('.event').style.background = this.getAttribute('color');
     }
@@ -92,6 +96,14 @@ template.innerHTML = `
         font-size: 15px;
         font-weight: bold;
     }
+
+    .event-text {
+        color: var(--white);
+        position: absolute;
+        top: 12.5px;
+        left: 40px;
+        font-size: 15px;
+    }
     
     @media (max-width: 720px) {
         .mark:after {
@@ -123,6 +135,7 @@ template.innerHTML = `
     </style>
     <div class="event">
         <img class="event-img">
+        <p class="event-text"></p>
         <p class="event-number"></p>
     </div>
 `;

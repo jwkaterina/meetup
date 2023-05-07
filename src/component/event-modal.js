@@ -15,6 +15,7 @@ export default class EventModal {
         this.members = this.container.querySelector(".members");
         this.place = this.container.querySelector(".place");
         this.time = this.container.querySelector(".time");
+        this.comment = this.container.querySelector(".comment");
     }
 
     hideEditButton() {
@@ -142,5 +143,16 @@ export default class EventModal {
         ${place}</a>
         <img src="${imgSrc}" alt="">
         `
+    }
+
+    setComment(text = "") {
+        if(text === "") {
+            this.comment.style.display = "";
+            this.flipCardFront.style.gridTemplateRows = "2fr 1fr 1fr 9fr 2fr";
+        } else {
+            this.comment.innerHTML = text;
+            this.comment.style.display = "block";
+            this.flipCardFront.style.gridTemplateRows = "2fr 1fr 1fr 1fr 8fr 2fr";
+        }
     }
 }

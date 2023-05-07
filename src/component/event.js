@@ -13,6 +13,7 @@ export default class Event {
         this.date = data.date;
         this.color = data.color;
         this.type = data.type;
+        this.comment = data.comment;
         this.slotHeight = document.querySelector(".slot").offsetHeight;
         this.slotWidth = document.querySelector(".slot").offsetWidth;
     }
@@ -47,13 +48,12 @@ export default class Event {
 
     show() {
         const weekContainer = this.findWeekContainer();
-        const ctx = Context.getInstance();
 
         if (!weekContainer) {
             return;
         }
 
-        this.createEventElement(weekContainer, ctx);
+        this.createEventElement(weekContainer);
     }
 
     findWeekContainer() {
@@ -66,7 +66,7 @@ export default class Event {
         return null;
     }
 
-    createEventElement(weekContainer, ctx) {
+    createEventElement(weekContainer) {
         let eventSlot;
         if (weekContainer.querySelector(`[id='${this.id}']`)) {
             eventSlot = weekContainer.querySelector(`[id='${this.id}']`);
@@ -81,11 +81,17 @@ export default class Event {
             day.appendChild(eventSlot);
         }
 
+        const ctx = Context.getInstance();
+        const media = window.matchMedia("(max-width: 720px)");
+
         this.setNumber(eventSlot);
         this.setImage(eventSlot);
         this.setColor(eventSlot);
-        this.setPosition(eventSlot);
+        this.setPosition(eventSlot, media);
         this.setMark(eventSlot, ctx);
+        if(!media.matches) {
+            this.setText(eventSlot, ctx);
+        }
 
         return eventSlot
     }
@@ -109,6 +115,17 @@ export default class Event {
         eventSlot.setNumber();
     }
 
+    setText(eventSlot, ctx) {
+        let mainName = "???"
+        const mainId = this.memberIds[0];         
+        if(ctx.users[mainId]) {
+            mainName = ctx.users[mainId].name;
+        }  
+
+        eventSlot.setAttribute("text", mainName)
+        eventSlot.setText();
+    }
+
     setColor(eventSlot) {
         if(this.type && this.type === "tr") {
             this.color = "var(--blue)";
@@ -120,8 +137,7 @@ export default class Event {
         eventSlot.setColor();    
     }
 
-    setPosition(eventSlot) {
-        const media = window.matchMedia("(max-width: 720px)");
+    setPosition(eventSlot, media) {
         const h = this.slotHeight;
         const w = this.slotWidth;
 
