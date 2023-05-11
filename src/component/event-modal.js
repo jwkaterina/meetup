@@ -114,6 +114,11 @@ export default class EventModal {
 
     setMembers(txt) {
         this.members.innerHTML = txt;
+        const list = document.querySelector(".list");
+        if(list.firstChild.innerHTML === "UNDEFINED UNDEFINED") {
+            list.firstChild.style.display = "none";
+            list.setAttribute("start", 2);
+        } 
     }
 
     setTime(date, start, end) {
