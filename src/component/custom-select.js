@@ -8,9 +8,14 @@ export default class CustomSelect {
     }
 
     showOptions(mainId, user) {
+        const undefinedUser = Object.values(this.editors).filter(editor => editor.name === "UNDEFINED UNDEFINED")[0];
+        const undefinedName = "Autre";
+
         let mainName = "???";
-        if(this.editors[mainId]) {
+        if(this.editors[mainId] && mainId !== undefinedUser.id) {
             mainName = this.editors[mainId].name;
+        } else if(mainId === undefinedUser.id){
+            mainName = undefinedName;
         }
        
         let options = `<option value="${mainName}" data-editor-id="${mainId}">${mainName}</option>`;
@@ -28,7 +33,13 @@ export default class CustomSelect {
             }
             return 0;
           })
-        .forEach(editor => options += `<option value="${editor.name}" data-editor-id="${editor.id}">${editor.name}</option>`);
+        .forEach(editor => {
+            if(editor.id === undefinedUser.id) {
+                options += `<option value=${undefinedName} data-editor-id=${undefinedUser.id}>${undefinedName}</option>`;
+            } else {
+                options += `<option value="${editor.name}" data-editor-id="${editor.id}">${editor.name}</option>`;
+            }
+        });
         this.select.innerHTML = options;
         this.customizeSelect();
     }

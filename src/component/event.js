@@ -118,9 +118,11 @@ export default class Event {
     setText(eventSlot, ctx) {
         let mainName = "???"
         const mainId = this.memberIds[0];         
-        if(ctx.users[mainId]) {
+        if(ctx.users[mainId] && ctx.users[mainId].name !== "UNDEFINED UNDEFINED") {
             mainName = ctx.users[mainId].name;
-        }  
+        } else {
+            mainName = "";
+        }
 
         eventSlot.setAttribute("text", mainName)
         eventSlot.setText();
