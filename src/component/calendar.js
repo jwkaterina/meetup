@@ -180,6 +180,14 @@ export default class Calendar {
         }, 1000)   
     }
 
+    replaceCurrentWeek(weekStart, weekOffset) {
+        this.weeks.mainWeek.removeFromDom();
+        this.weeks.mainWeek = new Week(weekStart, weekOffset, "main-week");
+        this.weeks.mainWeek.appendToParent(this.headingsContainer, this.slotsContainer);
+        this.weeks.mainWeek.loadEvents();
+
+    }
+
     replacePrevWeek(weekStart, weekOffset) {
         this.weeks.prevWeek.removeFromDom();
         this.weeks.prevWeek = new Week(weekStart, weekOffset, "prev-week");
@@ -242,6 +250,25 @@ export default class Calendar {
 
         this.weeks.prevWeek.loadEvents();
     }
+
+    calculateWeekoffset(newWeekstart) {
+        // console.log(newWeekstart, this.ctx.weekStart);
+        const timeBetween = newWeekstart.getTime() - this.ctx.weekStart.getTime();
+        const numberofweeks = timeBetween / 1000 /60/60/24/7;
+        const weekOffset = Math.ceil(numberofweeks);
+        // console.log(weekOffset);
+        return weekOffset;
+    }
+
+    moveToGivenWeek(weekStart) {
+        const weekOffSet = this.calculateWeekoffset(weekStart);
+        this.replaceCurrentWeek(weekStart, weekOffSet);
+        this.replacePrevWeek(addDays(weekStart, - 7), weekOffSet - 1);
+        this.replaceNextWeek(addDays(weekStart, 7), weekOffSet + 1);
+        this.ctx.weekStart = weekStart;
+        this.weekOffset = weekOffSet;
+    }
+   
 
     loadEvents() {
         const showLoadingAnimation = true;

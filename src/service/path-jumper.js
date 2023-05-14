@@ -1,16 +1,19 @@
+// import { Context } from "../ctx";
+
 export default class PathJumper {
-    constructor() {
-        this._parsePath(window.location.pathname);
+
+    static parsePath() {
+        const pathname = window.location.pathname;
+        // console.log(pathname);
+        const pathArr = pathname.split("/");
+        const weekStart = new Date(pathArr[pathArr.length - 2]);
+        const eventId = pathArr[pathArr.length - 1];
+        // console.log(weekStart, eventId);
+        this.weekStart = weekStart;
     }
 
-    _parsePath(pathname) {
-        console.log(pathname);
-        /**
-         * 1. Parse pathname
-         * 2. Update Context
-         * 
-         */
-        
+    get weekStart() {
+        this.weekStart;
     }
 
     static generateLink(weekStart, id) {
