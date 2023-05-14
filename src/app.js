@@ -5,9 +5,13 @@ import Auth from "./auth";
 import UserData from "./user-data";
 import ServiceWorkerConfigService from './service/service-worker-config';
 import WebPushService from './service/webpush';
+import PathJumper from "./service/path-jumper";
 
 export default class App {
     constructor() {
+        new PathJumper();
+        const link = PathJumper.generateLink('2023-05-08', '123');
+        console.log(link);
         this.configureAmplify();
         Amplify.configure(awsconfig);
         this.calendar = new Calendar();

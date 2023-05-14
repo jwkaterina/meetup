@@ -17,7 +17,8 @@ module.exports = merge(common, {
     },
     hot: true,
     watchFiles: ['src/*', 'index.html'],
-    port: 3000
+    port: 3000,
+    historyApiFallback: true
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
