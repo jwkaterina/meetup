@@ -86,7 +86,7 @@ export default class Event {
 
         this.setNumber(eventSlot);
         this.setImage(eventSlot);
-        this.setColor(eventSlot);
+        this.setColor(eventSlot, ctx);
         this.setPosition(eventSlot, media);
         this.setMark(eventSlot, ctx);
         if(!media.matches) {
@@ -128,13 +128,18 @@ export default class Event {
         eventSlot.setText();
     }
 
-    setColor(eventSlot) {
-        if(this.type && this.type === "tr") {
-            this.color = "var(--blue)";
+    setColor(eventSlot, ctx) {
+        if(ctx.currentEvent && (!ctx.currentEvent.id || ctx.currentEvent.id === this.id)) {
+            this.color = "var(--yellow)";
         } else {
-            this.type = "pm";
-            this.color = "var(--green)";
+            if(this.type && this.type === "tr") {
+                this.color = "var(--blue)";
+            } else {
+                this.type = "pm";
+                this.color = "var(--green)";
+            }
         }
+       
         eventSlot.setAttribute("color", this.color);
         eventSlot.setColor();    
     }
