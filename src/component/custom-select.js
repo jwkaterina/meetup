@@ -23,7 +23,7 @@ export default class CustomSelect {
             options += `<option value="${user.name}" data-editor-id="${user.id}">${user.name}</option>`
         }
         Object.values(this.editors)
-        .filter(editor => editor.id != mainId && editor.id != user.id)
+        .filter(editor => editor.id != mainId && editor.id != user.id && editor.id !== undefinedUser.id)
         .sort(( a, b ) => {
             if ( a.name < b.name ){
               return -1;
@@ -34,12 +34,9 @@ export default class CustomSelect {
             return 0;
           })
         .forEach(editor => {
-            if(editor.id === undefinedUser.id) {
-                options += `<option value=${undefinedName} data-editor-id=${undefinedUser.id}>${undefinedName}</option>`;
-            } else {
-                options += `<option value="${editor.name}" data-editor-id="${editor.id}">${editor.name}</option>`;
-            }
+            options += `<option value="${editor.name}" data-editor-id="${editor.id}">${editor.name}</option>`;
         });
+        options += `<option value=${undefinedName} data-editor-id=${undefinedUser.id}>${undefinedName}</option>`;        
         this.select.innerHTML = options;
         this.customizeSelect();
     }
