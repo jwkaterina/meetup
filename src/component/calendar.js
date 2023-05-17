@@ -111,7 +111,7 @@ export default class Calendar {
     backToCurrentWeek() {
         this.ctx.weekStart = this.ctx.currentWeekStart;
         this.ctx.weekEnd = this.ctx.currentWeekEnd;        
-        this.replacePrevWeek(this.ctx.currentWeekStart, 0);
+        this.replacePrevWeek(this.ctx.weekStart, 0);
         this.ctx.weekOffset = 1;
         this.ctx.weekStart = this.ctx.nextWeekStart;
         this.scroller.scrollToLeft();
@@ -121,7 +121,7 @@ export default class Calendar {
     forwardToCurrentWeek() {
         this.ctx.weekStart = this.ctx.currentWeekStart;
         this.ctx.weekEnd = this.ctx.currentWeekEnd;
-        this.replaceNextWeek(this.ctx.currentWeekStart, 0);
+        this.replaceNextWeek(this.ctx.weekStart, 0);
         this.ctx.weekOffset = -1;
         this.ctx.weekStart = this.ctx.prevWeekStart;
         this.scroller.scrollToRight();

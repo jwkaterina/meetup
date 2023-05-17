@@ -7,8 +7,9 @@
     grid-template-rows: 2fr 1fr 1fr 9fr 2fr;
 }
 
-#eventModal .cancelButton {
-    justify-self: end;
+#eventModal .upperButtons {
+    display: flex;
+    justify-content: space-between;
 }
 
 #eventModal .time {
@@ -47,7 +48,6 @@
 
 #eventModal .members {
     overflow: auto;
-    /* padding: 0 50px; */
     color: var(--white);
     text-align: center;
     line-height: 2rem;
@@ -65,9 +65,23 @@
     color: var(--white);
 }
 
+.shareButton {
+    height: 40px;
+    width: 40px;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    margin-left: 0!important;
+}
+
+.shareButton img {
+    margin: 0!important;
+    height: 30px!important;
+    width: 30px!important;
+}
+
 @media (max-width: 720px) {
     #eventModal .members {
-        /* padding: 0 30px; */
         line-height: 2rem;
         font-size: 1rem;
     }

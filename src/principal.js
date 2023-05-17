@@ -1,7 +1,7 @@
 import { Context } from "./ctx";
 import "./component/snackbar";
 import EventModal from "./component/event-modal";
-
+import PathJumper from "./service/path-jumper";
 
 export default class PrincipalCommon {
     constructor(calendar, user) {
@@ -27,6 +27,9 @@ export default class PrincipalCommon {
         this.eventModal.cancelButton.addEventListener("click", (e) => {
             this.eventModal.close();
             this.ctx.currentEvent = null;
+        });
+        this.eventModal.shareButton.addEventListener("click", (e) => {
+            PathJumper.generateLink();
         });
     }
 
