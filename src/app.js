@@ -5,15 +5,15 @@ import Auth from "./auth";
 import UserData from "./user-data";
 import ServiceWorkerConfigService from './service/service-worker-config';
 import WebPushService from './service/webpush';
+import PathJumper from "./service/path-jumper";
 
 export default class App {
-    constructor() {
+    constructor() {  
+        PathJumper.parsePath();
         this.configureAmplify();
         Amplify.configure(awsconfig);
         this.calendar = new Calendar();
-
         this.calendar.setup();
-
         if(process.env.WEBPACK_ENV === 'production') {
             this.webpush = new WebPushService();
             this.serviceWorkerConfig = new ServiceWorkerConfigService();
