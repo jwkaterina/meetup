@@ -165,15 +165,6 @@ export default class Week {
     }
 
     loadEvents(showLoadingAnimation = false) {
-        const events = this.slots.querySelectorAll(".event");
-        events.forEach((event) => {
-            event.remove();
-        });
-
-        this._loadWeek(showLoadingAnimation);
-    }
-
-    _loadWeek(showLoadingAnimation) {
         if (showLoadingAnimation) {
             this.loadingAnime.style.display = "block";
         }
@@ -186,7 +177,7 @@ export default class Week {
             this.events.forEach(evt => evt.show());
         })
         .catch(err => console.log("Cannot Load Events:", err));
-    };
+    }
 
     deleteEvent(id) {
         const index = this.events.findIndex(evt => evt.id == id);
@@ -215,6 +206,5 @@ export default class Week {
         if (duration <= 0 || duration === 0) {
             throw new ValidationError('La durée doit être plus que "0"');
         }
-    
-    }   
+    }
 }
