@@ -19,8 +19,12 @@ class EventSlot extends HTMLElement {
         this.shadowRoot.querySelector('.event-text').innerText = this.getAttribute('text');
     }
 
-    setColor() {
-        this.shadowRoot.querySelector('.event').style.background = this.getAttribute('color');
+    setColor(isCurrent) {
+        if(isCurrent === true) {
+            this.shadowRoot.querySelector('.event').style.background = "var(--yellow)";
+        } else {
+            this.shadowRoot.querySelector('.event').style.background = this.getAttribute('color');
+        }
     }
 
     setPosition() {

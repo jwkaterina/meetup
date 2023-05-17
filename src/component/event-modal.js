@@ -8,6 +8,7 @@ export default class EventModal {
         this.joinButton = this.container.querySelector(".joinButton");
         this.deleteButton = this.container.querySelector(".deleteButton");
         this.cancelButton = this.container.querySelector(".cancelButton");
+        this.shareButton = this.container.querySelector(".shareButton");
         this.flipCard = this.container.querySelector(".flip-card-inner");
         this.flipCardText = this.container.querySelector(".flipCardText");
         this.flipCardBack = this.container.querySelector(".flip-card-back");
