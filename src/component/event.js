@@ -129,19 +129,22 @@ export default class Event {
     }
 
     setColor(eventSlot, ctx) {
-        if(ctx.currentEvent && (!ctx.currentEvent.id || ctx.currentEvent.id === this.id)) {
-            this.color = "var(--yellow)";
+        let isCurrent;
+        if(ctx.currentEvent && (!ctx.currentEvent.id || ctx.currentEvent.id === this.id) || ctx.parsedEventId === this.id) {
+            isCurrent = true;
         } else {
-            if(this.type && this.type === "tr") {
-                this.color = "var(--blue)";
-            } else {
-                this.type = "pm";
-                this.color = "var(--green)";
-            }
+            isCurrent = false;
+        }
+
+        if(this.type && this.type === "tr") {
+            this.color = "var(--blue)";
+        } else {
+            this.type = "pm";
+            this.color = "var(--green)";
         }
        
         eventSlot.setAttribute("color", this.color);
-        eventSlot.setColor();    
+        eventSlot.setColor(isCurrent);    
     }
 
     setPosition(eventSlot, media) {

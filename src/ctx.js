@@ -10,6 +10,7 @@ class Ctx {
     this.editors = {};
     this.usersLoadedPromise = null;
     this.currentEvent = null;
+    this.parsedEventId = null;
     this.weekStart = null;
     this.weekEnd = null;
     this.weekOffset = null;

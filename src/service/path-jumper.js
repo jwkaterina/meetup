@@ -14,14 +14,10 @@ export default class PathJumper {
             ctx.weekStart = new Date(parsedWeek);
             ctx.calculateWeekOffset();
         }
-    }
 
-    get weekStart() {
-        this.weekStart;
-    }
-
-    get eventID() {
-        this.eventId
+        if(parsedEventId !== "") {
+            ctx.parsedEventId = parsedEventId;
+        }
     }
 
     static generateLink(weekStart, id) {
