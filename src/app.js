@@ -9,13 +9,11 @@ import PathJumper from "./service/path-jumper";
 
 export default class App {
     constructor() {  
+        PathJumper.parsePath();
         this.configureAmplify();
         Amplify.configure(awsconfig);
         this.calendar = new Calendar();
         this.calendar.setup();
-        PathJumper.parsePath();
-        this.calendar.moveToGivenWeek(PathJumper.weekStart);
-
         if(process.env.WEBPACK_ENV === 'production') {
             this.webpush = new WebPushService();
             this.serviceWorkerConfig = new ServiceWorkerConfigService();

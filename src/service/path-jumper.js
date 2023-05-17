@@ -1,19 +1,27 @@
-// import { Context } from "../ctx";
+import '../component/event-slot';
+import { Context } from '../ctx';
 
 export default class PathJumper {
 
     static parsePath() {
+        const ctx = Context.getInstance();
         const pathname = window.location.pathname;
-        // console.log(pathname);
         const pathArr = pathname.split("/");
-        const weekStart = new Date(pathArr[pathArr.length - 2]);
-        const eventId = pathArr[pathArr.length - 1];
-        // console.log(weekStart, eventId);
-        this.weekStart = weekStart;
+        const parsedWeek = pathArr[pathArr.length - 2];
+        const parsedEventId = pathArr[pathArr.length - 1];
+
+        if(parsedWeek !== "") {
+            ctx.weekStart = new Date(parsedWeek);
+            ctx.calculateWeekOffset();
+        }
     }
 
     get weekStart() {
         this.weekStart;
+    }
+
+    get eventID() {
+        this.eventId
     }
 
     static generateLink(weekStart, id) {

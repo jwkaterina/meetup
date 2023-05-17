@@ -1,8 +1,7 @@
 import PrincipalUser from "./principal-user.js";
 import PrincipalEditor from "./principal-editor.js";
 import UserInfoService from "./service/userinfo";
-import { addDays } from "./helper";
-
+import { addDays, getDayIndex } from "./helper";
 
 class Ctx {
   constructor() {
@@ -13,6 +12,17 @@ class Ctx {
     this.currentEvent = null;
     this.weekStart = null;
     this.weekEnd = null;
+    this.weekOffset = null;
+  }
+
+  get currentWeekStart() {
+    const now = new Date();
+    return addDays(now, -getDayIndex(now));
+  }
+
+  get currentWeekEnd() {
+    const now = new Date();
+    return addDays(now, 6 - getDayIndex(now));
   }
 
   get prevWeekStart() {
@@ -28,6 +38,12 @@ class Ctx {
     }
     return addDays(this.weekStart, 7);
   }
+
+  calculateWeekOffset() {
+    const timeBetween = this.weekStart.getTime() - this.currentWeekStart.getTime();
+    const numberofweeks = timeBetween / 1000 /60/60/24/7;
+    this.weekOffset = Math.ceil(numberofweeks);
+}
 
   switchToUserMode(calendar, principalCommon) {
     this.principal = new PrincipalUser(principalCommon);
