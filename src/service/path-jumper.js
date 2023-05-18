@@ -30,9 +30,6 @@ export default class PathJumper {
         const id = ctx.currentEvent.id;
         const origin = window.origin;
         const link = `${origin}/#${weekStart}/${id}`;
-        navigator.clipboard.writeText(link);
-        document.querySelector("snack-bar").show("Le lien est copié!");
-
         console.log(link);
         return link;
     }
