@@ -5,7 +5,14 @@ export default class PathJumper {
 
     static parsePath() {
         const ctx = Context.getInstance();
-        const pathname = window.location.pathname;
+        const pathnames = window.location.pathname.split('#');
+
+        if(pathnames.length != 2) {
+            return;
+        }
+
+        const pathname = pathnames[1];
+
         const pathArr = pathname.split("/");
         const parsedWeek = pathArr[pathArr.length - 2];
         const parsedEventId = pathArr[pathArr.length - 1];
@@ -23,7 +30,7 @@ export default class PathJumper {
         const weekStart = dateString(ctx.weekStart);
         const id = ctx.currentEvent.id;
         const origin = window.origin;
-        const link = `${origin}/${weekStart}/${id}`;
+        const link = `${origin}/#${weekStart}/${id}`;
         navigator.clipboard.writeText(link);
         document.querySelector("snack-bar").show("Le lien est copié!");
 
