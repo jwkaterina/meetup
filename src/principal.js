@@ -129,11 +129,7 @@ export default class PrincipalCommon {
     writeMessage() {
         const event = this.ctx.currentEvent;
         const link = PathJumper.generateLink();
-        let txt = link + '\n\n' + 
-        `RDV ${event.dayOfWeek} ${event.dayOfMonth} à ${event.startHour}h` + '\n';
-        if(event.place) {
-            txt += `Lieu: ${event.place}` + '\n';
-        }
+        const txt = link + '\n\n' + event.toString();
         navigator.clipboard.writeText(txt);
         document.querySelector("snack-bar").show("Le lien est copié!");
     }
