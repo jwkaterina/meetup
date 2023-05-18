@@ -63,14 +63,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Custom template using Handlebars',
       template: 'index.html',
-      'meta': {
-        'og:type': 'website',
-        'og:title': 'Meetup',
-        'og:description': 'Meetings Booking Application',
-        'og:image': `${domain}/icons/meetup-bg-1200.png`,
-        'og:image:type': 'image/png',
-        'og:image:width': '1200',
-        'og:image:height': '630',
+      meta: {
+        'og:type': { property: 'og:type', content: 'website' },
+        'og:title': { property: 'og:title', content: 'Meetup' },
+        'og:description': { property: 'og:description', content: 'Meetings Booking Application' },
+        'og:image': { property: 'og:image', content: `${domain}/icons/meetup-bg-1200.png` },
+        'og:image:type': { property: 'og:image:type', content: 'image/png' },
+        'og:image:width': { property: 'og:image:width', content: '1200' },
+        'og:image:height': { property: 'og:image:height', content: '630' },
       }
     }),
     new CopyWebpackPlugin({
