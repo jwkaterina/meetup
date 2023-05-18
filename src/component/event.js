@@ -57,6 +57,19 @@ export default class Event {
         return date.setLocale('fr-FR').day;
     }
 
+    toString() {
+        let result = `RDV ${this.dayOfWeek} ${this.dayOfMonth} à ${this.startHour}`;
+        if (this.startMinutes === '00') {
+            result += 'h\n';
+        } else {
+            result += `:${this.startMinutes}h\n`
+        }
+        if(this.place) {
+            result += `Lieu: ${this.place}` + '\n';
+        }
+        return result;
+    }
+
     show() {
         const weekContainer = this.findWeekContainer();
 
