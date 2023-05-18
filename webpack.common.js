@@ -5,6 +5,8 @@ const postCssNormalize = require('postcss-normalize');
 
 const path = require('path');
 
+const domain = process.env.DOMAIN || 'http://localhost:3000';
+
 module.exports = {
   entry: './src/main.js',
   output: {
@@ -60,7 +62,16 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Custom template using Handlebars',
-      template: 'index.html'
+      template: 'index.html',
+      'meta': {
+        'og:type': 'website',
+        'og:title': 'Meetup',
+        'og:description': 'Meetings Booking Application',
+        'og:image': `${domain}/icons/meetup-bg-1200.png`,
+        'og:image:type': 'image/png',
+        'og:image:width': '1200',
+        'og:image:height': '630',
+      }
     }),
     new CopyWebpackPlugin({
       patterns: ['manifest.1.json', {from: 'src/icons', to: 'icons'}, {from: 'src/fonts', to: 'fonts'}]
