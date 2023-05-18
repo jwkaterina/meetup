@@ -5,13 +5,12 @@ export default class PathJumper {
 
     static parsePath() {
         const ctx = Context.getInstance();
-        const pathnames = window.location.pathname.split('#');
-
-        if(pathnames.length != 2) {
+        const hash = window.location.hash;
+        if (!hash) {
             return;
         }
 
-        const pathname = pathnames[1];
+        const pathname = hash.slice(1);
 
         const pathArr = pathname.split("/");
         const parsedWeek = pathArr[pathArr.length - 2];
