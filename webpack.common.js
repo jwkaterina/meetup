@@ -66,7 +66,7 @@ module.exports = {
       meta: {
         'og:type': { property: 'og:type', content: 'website' },
         'og:title': { property: 'og:title', content: 'Meetup' },
-        'og:description': { property: 'og:description', content: 'Meetings Booking Application' },
+        'og:description': { property: 'og:description', content: 'Meetings Organiser' },
         'og:image': { property: 'og:image', content: `${domain}/icons/meetup-bg-1200.png` },
         'og:image:type': { property: 'og:image:type', content: 'image/png' },
         'og:image:width': { property: 'og:image:width', content: '1200' },
