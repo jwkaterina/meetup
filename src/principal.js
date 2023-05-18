@@ -29,7 +29,7 @@ export default class PrincipalCommon {
             this.ctx.currentEvent = null;
         });
         this.eventModal.shareButton.addEventListener("click", (e) => {
-            PathJumper.generateLink();
+            this.writeMessage();
         });
     }
 
@@ -124,5 +124,17 @@ export default class PrincipalCommon {
             },1000);   
             console.log("Cannot delete user name:", err);
         } 
+    }
+
+    writeMessage() {
+        const event = this.ctx.currentEvent;
+        const link = PathJumper.generateLink();
+        let txt = link + '\n\n' + 
+        `RDV ${event.dayOfWeek} ${event.dayOfMonth} à ${event.startHour}h` + '\n';
+        if(event.place) {
+            txt += `Lieu: ${event.place}` + '\n';
+        }
+        navigator.clipboard.writeText(txt);
+        document.querySelector("snack-bar").show("Le lien est copié!");
     }
 }

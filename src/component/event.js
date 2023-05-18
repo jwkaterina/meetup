@@ -1,6 +1,7 @@
 import './event-slot.js'
 import { getDayIndex } from "../helper";
 import { Context } from "../ctx";
+import { DateTime } from 'luxon';
 
 export default class Event {
     constructor(data) {
@@ -44,6 +45,16 @@ export default class Event {
 
     get endMinutes() {
         return parseInt(this.end.substring(3, 5));
+    }
+
+    get dayOfWeek() {
+        const date = DateTime.fromISO(this.date);
+        return date.setLocale('fr-FR').weekdayLong;
+    }
+
+    get dayOfMonth() {
+        const date = DateTime.fromISO(this.date);
+        return date.setLocale('fr-FR').day;
     }
 
     show() {
