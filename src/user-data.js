@@ -10,7 +10,7 @@ export default class UserData {
         this.userInfo = new UserInfoService();
         this.webpush = webpush;
         this.ctx = Context.getInstance();
-        this.dataModal = new DataModal();
+        this.dataModal = DataModal.build();
         this.snackbar = document.querySelector("snack-bar");
         this.logMobile = document.getElementById("loggedButton-circle");
         this.logPC = document.getElementById("loggedButton-name");

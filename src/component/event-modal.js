@@ -1,9 +1,11 @@
 import './event-modal.css';
 import './modals-common.css';
+import html from './event-modal.hbs'
 
 export default class EventModal {
-    constructor() {
-        this.container = document.getElementById("eventModal");
+    constructor(container) {
+        this.container = container;
+        this.container.innerHTML = html();
         this.editButton = this.container.querySelector(".editButton");
         this.joinButton = this.container.querySelector(".joinButton");
         this.deleteButton = this.container.querySelector(".deleteButton");
@@ -160,5 +162,13 @@ export default class EventModal {
             this.comment.style.display = "block";
             this.flipCardFront.style.gridTemplateRows = "2fr 1fr 1fr 1fr 8fr 2fr";
         }
+    }
+
+    static build(parent = document.body) {
+        const container = document.createElement("div");
+        container.id = "eventModal";
+        container.className = "modal";
+        parent.appendChild(container);
+        return new EventModal(container);
     }
 }

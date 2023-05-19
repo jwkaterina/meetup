@@ -1,0 +1,65 @@
+<div class="flip-card">
+    <div class="flip-card-inner">
+        <div class="flip-card-front">
+            <button type="button" class="cancelButton">
+                <div class="cross"></div>
+            </button>
+            <div id="types">
+                <div id="type-1" class="type">
+                    <input type="radio" id="tr" name="type" value="tr">
+                    <label for="tr">Territoire</label>
+                </div>
+                <div id="type-2" class="type">
+                    <input type="radio" id="pm" name="type" value="pm" checked>
+                    <label for="pm">Présentoir mobile</label>
+                </div>
+            </div>
+            <div id="place" class="input-group">
+                <input type="adress" id="eventPlace" class="shortInput" name="place" placeholder="Adresse ou Zoom"></input>
+                <div class="alert">
+                    <div class="arrow"></div>
+                    <p>Ce champ est requis.</p>
+                </div>
+            </div>
+            <div id="name" class="input-group custom-select">
+                <select id="eventMainName" class="shortInput" name="name">
+                </select>
+            </div>
+            <div id="date" class="input-group">
+                <input required type="date" id="eventDate" class="shortInput" name="date"></input>
+                <div class="alert">
+                    <div class="arrow"></div>
+                    <p>Ce champ est requis.</p>
+                </div>
+            </div>
+            <div id="start" class="input-group">
+                <input required type="time" id="eventStart" class="shortInput" name="time"></input>
+                <div class="alert">
+                    <div class="arrow"></div>
+                    <p>C'est requis.</p>
+                </div>
+            </div>
+            <div id="end" class="input-group">
+                <input required type="time" id="eventEnd" class="shortInput" name="time"></input>
+                <div class="alert">
+                    <div class="arrow"></div>
+                    <p>C'est requis.</p>
+                </div>
+            </div>
+            <div id="comment" class="input-group">
+                <input type="text" id="eventComment" class="shortInput" name="comment" placeholder="Commentaire"></input>
+            </div>
+            <div class="eventControls">
+                <input type="button" value="Créer" class="button createButton">
+                <input type="button" value="Changer" class="button updateButton">
+                <input type="button" value="Effacer" class="button deleteButton">
+            </div>
+            <div id="errors">
+                <p></p>
+            </div>  
+        </div>
+        <div class="flip-card-back">
+            <h2 class="flipCardText">Ça y est! Le groupe est créé.</h2> 
+        </div>
+    </div>
+</div>

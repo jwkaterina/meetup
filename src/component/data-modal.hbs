@@ -1,0 +1,36 @@
+<div class="flip-card">
+    <div class="flip-card-inner">
+        <div class="flip-card-front">
+            <button type="button" class="cancelButton">
+                <div class="cross"></div>
+            </button>
+            <p id="intro">Tu peux modifier tes données ici</p>
+            <div id="firstName" class="input-group">
+                <input required type="name" id="user-firstName" class="shortInput" name="firstName" placeholder="Prénom"></input>
+                <div class="alert">
+                    <div class="arrow"></div>
+                    <p>Ce champ est requis.</p>
+                </div>
+                <p class="label" id="firstName-label">Prénom: Kateryna</p>
+            </div> 
+            <div id="lastName" class="input-group">
+                <input required type="name" id="user-lastName" class="shortInput" name="lastName" placeholder="Nom"></input>
+                <div class="alert">
+                    <div class="arrow"></div>
+                    <p>Ce champ est requis.</p>
+                </div>
+                <p class="label" id="lastName-label">Nom: Logoshko</p>
+            </div> 
+            <div id="checkbox">
+                <input type="checkbox" id="messages" name="messages" value="messages">
+                <label for="messages">Veux-tu recevoir les messages?</label>
+            </div>
+            <div class="eventControls">
+                <input type="button" value="Soumettre" class="button submitButton">
+            </div>
+        </div>     
+        <div class="flip-card-back">
+            <h2 class="flipCardText">Ça y est! Tes données sont à jour.</h2> 
+        </div>
+    </div>
+</div>

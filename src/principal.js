@@ -8,7 +8,7 @@ export default class PrincipalCommon {
         this.calendar = calendar;
         this.user = user;
         this.ctx = Context.getInstance();
-        this.eventModal = new EventModal();
+        this.eventModal = EventModal.build();
         this.snackbar = document.querySelector("snack-bar");
         this.loadingAnime = document.getElementById("loading-event");
 

@@ -47,7 +47,7 @@ export default class Auth {
     processUser(user) {
         const groups = this.parseUserGroups(user);
         if (!this.hasApproved(groups)) {
-            const introModal = new IntroModal();
+            const introModal = IntroModal.build();
             introModal.show();
             console.log('uninvited user signed in');
             return;

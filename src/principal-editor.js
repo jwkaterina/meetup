@@ -19,8 +19,8 @@ export default class PrincipalEditor {
         this.loadingAnime = document.getElementById("loading-form");
 
         this.ctx.usersLoadedPromise.then(() => {
-            this.formModal = new FormModal();
-            this.confirmModal = new ConfirmModal();
+            this.formModal = FormModal.build();
+            this.confirmModal = ConfirmModal.build();
             this.customSelect = new CustomSelect(this.ctx.editors);
             this.loadEventListeners();
         });
