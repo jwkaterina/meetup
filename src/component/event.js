@@ -58,13 +58,14 @@ export default class Event {
     }
 
     toString() {
-        let result = `RDV ${this.dayOfWeek} ${this.dayOfMonth} à ${this.startHour}`;
-        if (this.startMinutes === '00') {
-            result += 'h\n';
-        } else {
-            result += `:${this.startMinutes}h\n`
+        let result = `RDV ${this.dayOfWeek} ${this.dayOfMonth} à ${this.startHour}h`;
+        if (this.startMinutes !== '0' && this.startMinutes !== '00') {
+            result += `:${this.startMinutes}`
         }
-        if(this.place) {
+
+        result += '\n';
+
+        if(this.place && this.place.charAt(0) !== '?') {
             result += `Lieu: ${this.place}` + '\n';
         }
         return result;
