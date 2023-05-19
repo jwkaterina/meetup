@@ -20,8 +20,8 @@ export default class PrincipalEditor {
 
         this.ctx.usersLoadedPromise.then(() => {
             this.formModal = FormModal.build();
+            this.customSelect = new CustomSelect(this.ctx.editors, this.formModal.customSelectContainer);
             this.confirmModal = ConfirmModal.build();
-            this.customSelect = new CustomSelect(this.ctx.editors);
             this.loadEventListeners();
         });
     }

@@ -1,13 +1,43 @@
+import html from './custom-select.hbs';
+import selectOptionsHtml from './custom-select-options.hbs';
 import './custom-select.css';
 
-export default class CustomSelect {
+class Select {
     constructor(editors) {
+        this.container = document.createElement("select");
+        this.container.id = "eventMainName";
+        this.container.className = "shortInput";
+        this.container.setAttribute("name", "name");
         this.editors = editors;
-        this.container = document.querySelector(".custom-select")
-        this.select = this.container.querySelector("select");
     }
 
-    showOptions(mainId, user) {
+    get selectedName() {
+        const index = this.container.selectedIndex;
+        return this.container.options[index].innerHTML;
+    }
+
+    get selectedEditorId() {
+        const index = this.container.selectedIndex;
+        return this.container.options[index].dataset.editorId;
+    }
+
+    get options() {
+        const result = [];
+        for (let i = 0; i < this.container.length; i++) {
+            result.push({
+                selectName: this.#getNameAtIndex(i),
+                selectEditorId: this.#getEditorIdAtIndex(i),
+                selected: this.#getEditorIdAtIndex(i) == this.selectedEditorId
+            });
+        }
+        return result;
+    }
+
+    set selectedIndex(index) {
+        this.container.selectedIndex = index;
+    }
+
+    createOptions(mainId, user) {
         const undefinedUser = Object.values(this.editors).filter(editor => editor.name === "UNDEFINED UNDEFINED")[0];
         const undefinedName = "Autre";
 
@@ -17,10 +47,11 @@ export default class CustomSelect {
         } else if(mainId === undefinedUser.id){
             mainName = undefinedName;
         }
-       
-        let options = `<option value="${mainName}" data-editor-id="${mainId}">${mainName}</option>`;
+
+        const options = [];
+        options.push({selectName: mainName, selectEditorId: mainId});
         if(user.id != mainId) {
-            options += `<option value="${user.name}" data-editor-id="${user.id}">${user.name}</option>`
+            options.push({selectName: user.name, selectEditorId: user.id});
         }
         Object.values(this.editors)
         .filter(editor => editor.id != mainId && editor.id != user.id && editor.id !== undefinedUser.id)
@@ -34,18 +65,47 @@ export default class CustomSelect {
             return 0;
           })
         .forEach(editor => {
-            options += `<option value="${editor.name}" data-editor-id="${editor.id}">${editor.name}</option>`;
+            options.push({selectName: editor.name, selectEditorId: editor.id});
         });
-        options += `<option value=${undefinedName} data-editor-id=${undefinedUser.id}>${undefinedName}</option>`;        
-        this.select.innerHTML = options;
-        this.customizeSelect();
+        options.push({selectName: undefinedName, selectEditorId: undefinedUser.id});
+
+        this.container.innerHTML = selectOptionsHtml({options});
     }
 
-    customizeSelect() {
-        const selectedId = this.select.options[this.select.selectedIndex].dataset.editorId;
-        const selectedItem = this.createSeletedItem();
-        const selectItems = this.createSelectItems(selectedId, selectedItem);
-        this.createOptions(selectedId, selectedItem, selectItems);
+    #getNameAtIndex(index) {
+        return this.container.options[index].innerHTML;
+    }
+
+    #getEditorIdAtIndex(index) {
+        return this.container.options[index].dataset.editorId;
+    }
+}
+
+export default class CustomSelect {
+    constructor(editors, container) {
+        this.editors = editors;
+        this.container = container;
+        this.select = new Select(editors);
+    }
+
+    showOptions(mainId, user) {
+        this.select.createOptions(mainId, user);
+
+        const h = document.querySelector(".shortInput").clientHeight;
+
+        this.container.innerHTML = html({
+            selectedName: this.select.selectedName,
+            selectedEditorId: this.select.selectedEditorId,
+            styleTop: h - 1,
+            options: this.select.options
+        });
+        this.container.appendChild(this.select.container);
+        this.#registerListeners();
+    }
+
+    #registerListeners() {
+        const selectedItem = this.container.querySelector(".select-selected");
+        const selectItems = this.container.querySelector(".select-items");
 
         selectedItem.addEventListener("click",(e) => {
             e.stopPropagation();
@@ -63,63 +123,16 @@ export default class CustomSelect {
                 selectedItem.classList.remove("select-arrow-active");
             }
         });
-    }
 
-    createSeletedItem() {
-        let selectedItem = document.querySelector(".select-selected");
-        if(selectedItem) {
-            selectedItem.remove();
-        } 
-        selectedItem = document.createElement("div");
-        selectedItem.className = "select-selected";
-        selectedItem.innerHTML = this.select.options[this.select.selectedIndex].innerHTML;
-        const selectedId = this.select.options[this.select.selectedIndex].dataset.editorId;
-        selectedItem.dataset.editorId = selectedId;
-        this.container.appendChild(selectedItem);
-
-        return selectedItem;
-    }
-
-    createSelectItems(selectedId, selectedItem) {
-        let selectItems = document.querySelector(".select-items");
-        if(selectItems) {
-            selectItems.remove();
-        } 
-        selectItems = document.createElement("div");
-        selectItems.className = "select-items";
-        const h = document.querySelector(".shortInput").clientHeight;
-        selectItems.style.top = h - 1 + "px";
-        this.container.appendChild(selectItems);
-
-        return selectItems;
-    }
-
-    createOptions(selectedId, selectedItem, selectItems) {
-        for (let i = 0; i < this.select.length; i++) {
-            const option = document.createElement("div");
-            option.innerHTML = this.select.options[i].innerHTML;
-            option.dataset.editorId = this.select.options[i].dataset.editorId;
-            if (option.dataset.editorId == selectedId) {
-                option.className = "same-as-selected";
-            };
-
+        for (const option of selectItems.children) {
             option.addEventListener("click", () => {
-                const prevOption = selectedItem;
-                for (let j = 0; j < this.select.length; j++) {
-                    const optionId = option.dataset.editorId;
-                    if (this.select.options[i].dataset.editorId == optionId) {
-                        this.select.selectedIndex = i;
-                        prevOption.innerHTML = option.innerHTML;
-                        prevOption.dataset.editorId = optionId;
-                        const sameAsSelected = option.parentNode.querySelector(".same-as-selected");
-                        sameAsSelected.classList.remove("same-as-selected");
-                        option.className = "same-as-selected";
-                        break;
-                    }
-                }
-                selectedItem.classList.add("select-arrow-active");
+                this.select.selectedIndex = parseInt(option.dataset.index);
+                selectedItem.innerHTML = option.innerHTML;
+                selectedItem.dataset.editorId = option.dataset.editorId;;
+                const sameAsSelected = option.parentNode.querySelector(".same-as-selected");
+                sameAsSelected.classList.remove("same-as-selected");
+                option.className = "same-as-selected";
             });
-        selectItems.appendChild(option);
         }
     }
 }

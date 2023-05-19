@@ -35,6 +35,10 @@ export default class FormModal {
         return this.date.value;
     }
 
+    get customSelectContainer() {
+        return this.container.querySelector("#name");
+    }
+
     hideCreateButton() {
         this.createButton.style.display = "none";
     }
