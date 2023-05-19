@@ -3,7 +3,7 @@ import Event from "./component/event";
 import ValidationError from "./error/validation-error";
 import FormModal from "./component/form-modal";
 import ConfirmModal from "./component/confirm-modal";
-import CustomSelect from "./component/custom-select";
+import CustomSelect from "./component/form-modal-select-custom";
 import { dateString, addDays } from "./helper";
 import "./component/snackbar";
 
