@@ -56,13 +56,17 @@ module.exports = {
       { 
         test: /\.(png|svg|jpg|jpeg|gif|map)$/i,
         type: 'asset/resource'
-      }  
+      },
+      {
+        test: /\.hbs$/,
+        loader: 'handlebars-loader'
+      } 
     ]
   },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Custom template using Handlebars',
-      template: 'index.html',
+      template: 'src/index.hbs',
       meta: {
         'og:type': { property: 'og:type', content: 'website' },
         'og:title': { property: 'og:title', content: 'Meetup' },

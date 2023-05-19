@@ -1,6 +1,12 @@
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=jwkaterina_meetup&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=jwkaterina_meetup) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=jwkaterina_meetup&metric=bugs)](https://sonarcloud.io/summary/new_code?id=jwkaterina_meetup)
 
 # Project Development
+
+## Templating Engine
+This project uses [Handlebars](https://handlebarsjs.com) templates to construct complex html.
+
+See [Examples](https://github.com/pcardune/handlebars-loader/tree/main/examples) how to use it.
+
 ## Git
 Use [Semantic Commit Messages](https://nitayneeman.com/posts/understanding-semantic-commit-messages-using-git-and-angular/)
 
