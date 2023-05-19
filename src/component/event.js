@@ -60,7 +60,7 @@ export default class Event {
     toString() {
         let result = `RDV ${this.dayOfWeek} ${this.dayOfMonth} à ${this.startHour}h`;
         if (this.startMinutes !== '0' && this.startMinutes !== '00') {
-            result += `:${this.startMinutes}`
+            result += `${this.startMinutes}`
         }
 
         result += '\n';
