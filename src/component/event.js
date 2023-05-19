@@ -39,6 +39,10 @@ export default class Event {
         return parseInt(this.start.substring(3, 5));
     }
 
+    get startMinutesStr() {
+        return this.start.substring(3, 5);
+    }
+
     get endHour() {
         return parseInt(this.end.substring(0, 2));
     }
@@ -59,8 +63,8 @@ export default class Event {
 
     toString() {
         let result = `RDV ${this.dayOfWeek} ${this.dayOfMonth} à ${this.startHour}h`;
-        if (this.startMinutes !== '0' && this.startMinutes !== '00') {
-            result += `${this.startMinutes}`
+        if (this.startMinutes != 0) {
+            result += `${this.startMinutesStr}`
         }
 
         result += '\n';
