@@ -20,6 +20,6 @@ export class Snackbar extends HTMLElement {
     }
 }
 
-window.customElements.define('snack-bar', Snackbar);
+window.customElements.get('snack-bar') || window.customElements.define('snack-bar', Snackbar);
 
 

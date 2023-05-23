@@ -3,17 +3,12 @@ import Calendar from "../src/component/calendar";
 import PrincipalCommon from "../src/principal";
 import { Context } from "../src/ctx";
 import FormModal from "../src/component/form-modal";
-import ConfirmModal from "../src/component/confirm-modal";
-import CustomSelect from "../src/component/custom-select";
-import { dateString, addDays } from "../src/helper";
-
 
 jest.mock("../src/component/calendar");
 jest.mock("../src/principal");
 jest.mock("../src/ctx");
-jest.mock("../src/component/form-modal");
 jest.mock("../src/component/confirm-modal");
-jest.mock("../src/component/custom-select");
+jest.mock("../src/component/form-modal-select-custom");
 
 describe('PrincipalEditor', function () {
     const mockedOpenCreateFormModal = jest
@@ -29,7 +24,10 @@ describe('PrincipalEditor', function () {
         <div class="main-week-slots" data-week-start="2023-04-17">
             <div data-dayindex="0" class="day-slots">           
                 <div data-hour="0" class="slot"></div>
+            </div>
         </div>
+    </div>
+    <snack-bar text="Quelque chose s'est mal passé..."></snack-bar>
     `;
 
     Context.getInstance.mockImplementation(() => {

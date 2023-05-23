@@ -46,4 +46,4 @@ class EventSlot extends HTMLElement {
     }
 }
 
-window.customElements.define('event-slot', EventSlot);
+window.customElements.get('event-slot') || window.customElements.define('event-slot', EventSlot);
