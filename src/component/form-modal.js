@@ -1,9 +1,11 @@
+import html from './form-modal.hbs'
 import './form-modal.css';
 import './modals-common.css';
 
 export default class FormModal {
-    constructor() {
-        this.container = document.getElementById("formModal");
+    constructor(container) {
+        this.container = container;
+        this.container.innerHTML = html();
         this.types = this.container.querySelectorAll('input[name="type"]');        
         this.place = document.getElementById("eventPlace");
         this.date = document.getElementById("eventDate");
@@ -31,6 +33,10 @@ export default class FormModal {
 
     get newDate() {
         return this.date.value;
+    }
+
+    get customSelectContainer() {
+        return this.container.querySelector("#name");
     }
 
     hideCreateButton() {
@@ -155,5 +161,13 @@ export default class FormModal {
             alert.classList.remove("show-message");
         });
         return true;
+    }
+
+    static build(parent = document.body) {
+        const container = document.createElement("div");
+        container.id = "formModal";
+        container.className = "modal";
+        parent.appendChild(container);
+        return new FormModal(container);
     }
 }

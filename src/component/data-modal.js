@@ -1,9 +1,11 @@
+import html from './data-modal.hbs';
 import './data-modal.css';
 import './modals-common.css';
 
 export default class DataModal {
-    constructor() {
-        this.container = document.getElementById("dataModal");
+    constructor(container) {
+        this.container = container;
+        this.container.innerHTML = html();
         this.firstName = document.getElementById("user-firstName");
         this.lastName = document.getElementById("user-lastName");
         this.phoneNumber = document.getElementById("user-phoneNumber");
@@ -129,5 +131,13 @@ export default class DataModal {
 
     _saveNotificationSettingsToLocalStorage(enabled) {
         localStorage.setItem("notificationsEnabled", String(enabled));
+    }
+
+    static build(parent = document.body) {
+        const container = document.createElement("div");
+        container.id = "dataModal";
+        container.className = "modal";
+        parent.appendChild(container);
+        return new DataModal(container);
     }
 }

@@ -3,7 +3,7 @@ import Event from "./component/event";
 import ValidationError from "./error/validation-error";
 import FormModal from "./component/form-modal";
 import ConfirmModal from "./component/confirm-modal";
-import CustomSelect from "./component/custom-select";
+import CustomSelect from "./component/form-modal-select-custom";
 import { dateString, addDays } from "./helper";
 import "./component/snackbar";
 
@@ -19,9 +19,9 @@ export default class PrincipalEditor {
         this.loadingAnime = document.getElementById("loading-form");
 
         this.ctx.usersLoadedPromise.then(() => {
-            this.formModal = new FormModal();
-            this.confirmModal = new ConfirmModal();
-            this.customSelect = new CustomSelect(this.ctx.editors);
+            this.formModal = FormModal.build();
+            this.customSelect = new CustomSelect(this.ctx.editors, this.formModal.customSelectContainer);
+            this.confirmModal = ConfirmModal.build();
             this.loadEventListeners();
         });
     }
@@ -40,11 +40,23 @@ export default class PrincipalEditor {
             this.common.eventModal.hideModal();
         });
 
-        this.formModal.createButton.addEventListener("click", async () => {
-            this.createEvent();
+        this.formModal.createButton.addEventListener("click", () => {
+            (async () => {
+                try {
+                    await this.createEvent();
+                } catch (err) {
+                    console.log('Cannot create Event: ', err);
+                }
+            })();
         });
-        this.formModal.updateButton.addEventListener("click", async () => {
-            this.updateEvent();
+        this.formModal.updateButton.addEventListener("click", () => {
+            (async () => {
+                try {
+                    await this.updateEvent();
+                } catch (err) {
+                    console.log('Cannot update Event: ', err);
+                }
+            })();
         });
         this.formModal.deleteButton.addEventListener("click", async () => {
             this.openConfirmModal();
@@ -54,9 +66,15 @@ export default class PrincipalEditor {
             this.formModal.close();
             this.ctx.currentEvent = null;
         });
-        this.confirmModal.yesButton.addEventListener("click", async () => {
-            this.deleteEvent();
-            this.ctx.currentEvent = null;
+        this.confirmModal.yesButton.addEventListener("click", () => {
+            (async () => {
+                try {
+                    await this.deleteEvent();
+                    this.ctx.currentEvent = null;
+                } catch (err) {
+                    console.log('Cannot delete Event: ', err);
+                }
+            })();
         });
         this.confirmModal.noButton.addEventListener("click", () => {
             this.confirmModal.close();
@@ -163,8 +181,6 @@ export default class PrincipalEditor {
         }
         try {
             this.calendar.checkEvent(event, this.formModal.newStart, this.formModal.newEnd, this.formModal.newDate);
-           
-            // this.ctx.currentEvent = null;
             return true;
         } catch (e) {
             if (e instanceof ValidationError) {

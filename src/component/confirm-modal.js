@@ -1,9 +1,11 @@
+import html from './confirm-modal.hbs';
 import './confirm-modal.css';
 import './modals-common.css';
 
 export default class ConfirmModal {
-    constructor() {
-        this.container = document.getElementById("confirmModal");
+    constructor(container) {
+        this.container = container;
+        this.container.innerHTML = html();
         this.yesButton = this.container.querySelector(".yesButton");
         this.noButton = this.container.querySelector(".noButton");
         this.flipCard = this.container.querySelector(".flip-card-inner");
@@ -64,5 +66,13 @@ export default class ConfirmModal {
             this.flipCard.classList.remove("flip");
             this.flipCardBack.style.display = "none";
         },2000); 
+    }
+
+    static build(parent = document.body) {
+        const container = document.createElement("div");
+        container.id = "confirmModal";
+        container.className = "modal";
+        parent.appendChild(container);
+        return new ConfirmModal(container);
     }
 }

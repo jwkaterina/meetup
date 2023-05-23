@@ -47,7 +47,7 @@ export default class Auth {
     processUser(user) {
         const groups = this.parseUserGroups(user);
         if (!this.hasApproved(groups)) {
-            const introModal = new IntroModal();
+            const introModal = IntroModal.build();
             introModal.show();
             console.log('uninvited user signed in');
             return;
@@ -79,12 +79,14 @@ export default class Auth {
 
     setupControls() {
         this.loginButton.addEventListener("click", () => AmplifyAuth.federatedSignIn());
-        this.logoutButton.addEventListener("click", async () => {
-            try {
-                await AmplifyAuth.signOut();
-            } catch (err) {
-                console.log('error signing out: ', err);
-            }
+        this.logoutButton.addEventListener("click", () => {
+            (async () => {
+                try {
+                    await AmplifyAuth.signOut();
+                } catch (err) {
+                    console.log('error signing out: ', err);
+                }
+            })();
         });
     }
 }

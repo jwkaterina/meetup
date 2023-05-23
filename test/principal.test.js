@@ -47,28 +47,6 @@ describe('PrincipalCommon', function () {
         });
 
         document.body.innerHTML = `
-        <div id="eventModal" class="modal">
-            <div class="flip-card">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <button type="button" class="cancelButton">
-                            <div class="cross"></div>
-                        </button>
-                        <div class="time"></div>
-                        <div class="place"></div>
-                        <div class="members"></div>          
-                        <div class="eventControls">
-                            <input type="button" value="S'inscrire" class="button joinButton">
-                            <input type="button" value="Annuler" class="button deleteButton">
-                            <input type="button" value="Éditer" class="button editButton">
-                        </div>   
-                    </div>
-                    <div class="flip-card-back">
-                        <h2 class="flipCardText">Bonne prédication!</h2> 
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="loading">
             <img id="loading-event" src="icons/loading-event.gif" alt="">
         </div>
