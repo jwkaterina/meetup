@@ -79,12 +79,14 @@ export default class Auth {
 
     setupControls() {
         this.loginButton.addEventListener("click", () => AmplifyAuth.federatedSignIn());
-        this.logoutButton.addEventListener("click", async () => {
-            try {
-                await AmplifyAuth.signOut();
-            } catch (err) {
-                console.log('error signing out: ', err);
-            }
+        this.logoutButton.addEventListener("click", () => {
+            (async () => {
+                try {
+                    await AmplifyAuth.signOut();
+                } catch (err) {
+                    console.log('error signing out: ', err);
+                }
+            })();
         });
     }
 }

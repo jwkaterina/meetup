@@ -69,7 +69,7 @@ describe('Auth', () => {
         .mockImplementation(() => {});
 
         //invoke
-        new Auth(new Calendar(), new UserData());
+        const _ = new Auth(new Calendar(), new UserData());
 
         //check
         expect(mockedHubListen).toBeCalledWith("auth", expect.anything());

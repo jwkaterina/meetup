@@ -40,11 +40,23 @@ export default class PrincipalEditor {
             this.common.eventModal.hideModal();
         });
 
-        this.formModal.createButton.addEventListener("click", async () => {
-            this.createEvent();
+        this.formModal.createButton.addEventListener("click", () => {
+            (async () => {
+                try {
+                    await this.createEvent();
+                } catch (err) {
+                    console.log('Cannot create Event: ', err);
+                }
+            })();
         });
-        this.formModal.updateButton.addEventListener("click", async () => {
-            this.updateEvent();
+        this.formModal.updateButton.addEventListener("click", () => {
+            (async () => {
+                try {
+                    await this.updateEvent();
+                } catch (err) {
+                    console.log('Cannot update Event: ', err);
+                }
+            })();
         });
         this.formModal.deleteButton.addEventListener("click", async () => {
             this.openConfirmModal();
@@ -54,9 +66,15 @@ export default class PrincipalEditor {
             this.formModal.close();
             this.ctx.currentEvent = null;
         });
-        this.confirmModal.yesButton.addEventListener("click", async () => {
-            this.deleteEvent();
-            this.ctx.currentEvent = null;
+        this.confirmModal.yesButton.addEventListener("click", () => {
+            (async () => {
+                try {
+                    await this.deleteEvent();
+                    this.ctx.currentEvent = null;
+                } catch (err) {
+                    console.log('Cannot delete Event: ', err);
+                }
+            })();
         });
         this.confirmModal.noButton.addEventListener("click", () => {
             this.confirmModal.close();

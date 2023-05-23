@@ -16,20 +16,38 @@ export default class PrincipalCommon {
     }
 
     loadEventListeners() {
-        this.eventModal.joinButton.addEventListener("click", async () => {
-            this.addName(this.eventModal);
-            this.ctx.currentEvent = null;
+        this.eventModal.joinButton.addEventListener("click", () => {
+            (async () => {
+                try {
+                    await this.addName(this.eventModal);
+                    this.ctx.currentEvent = null;
+                } catch (err) {
+                    console.log('Cannot add name: ', err);
+                }
+            })();
         });
-        this.eventModal.deleteButton.addEventListener("click", async () => {
-            this.deleteName(this.eventModal);
-            this.ctx.currentEvent = null;
+        this.eventModal.deleteButton.addEventListener("click", () => {
+            (async () => {
+                try {
+                    await this.deleteName(this.eventModal);
+                    this.ctx.currentEvent = null;
+                } catch (err) {
+                    console.log('Cannot delete name: ', err);
+                }
+            })();
         });
         this.eventModal.cancelButton.addEventListener("click", (e) => {
             this.eventModal.close();
             this.ctx.currentEvent = null;
         });
         this.eventModal.shareButton.addEventListener("click", (e) => {
-            this.writeMessage();
+            (async () => {
+                try {
+                    await this.writeMessage();
+                } catch (err) {
+                    console.log('Cannot copy link to clipboard: ', err);
+                }
+            })();
         });
     }
 
@@ -126,11 +144,11 @@ export default class PrincipalCommon {
         } 
     }
 
-    writeMessage() {
+    async writeMessage() {
         const event = this.ctx.currentEvent;
         const link = PathJumper.generateLink();
         const txt = link + '\n\n' + event.toString();
-        navigator.clipboard.writeText(txt);
+        await navigator.clipboard.writeText(txt);
         document.querySelector("snack-bar").show("Le lien est copié!");
     }
 }
