@@ -214,8 +214,7 @@ export default class PrincipalEditor {
                 }
             })    
 
-            const selectedIndex = this.customSelect.select.selectedIndex;
-            const newMainId = this.customSelect.select.options[selectedIndex].dataset.editorId;
+            const newMainId = this.customSelect.select.selectedEditorId;
             event.memberIds[0] = newMainId;
             try {
                 await this.calendar.createEvent(event);
@@ -264,8 +263,7 @@ export default class PrincipalEditor {
                 event.color = "var(--green)";
             }
     
-            const selectedIndex = this.customSelect.select.selectedIndex;
-            const newMainId = this.customSelect.select.options[selectedIndex].dataset.editorId;
+            const newMainId = this.customSelect.select.selectedEditorId;
             if(event.memberIds.includes(newMainId) && event.memberIds[0] !== newMainId) {
                 const index = event.memberIds.indexOf(newMainId);
                 event.memberIds.splice(index, 1);
