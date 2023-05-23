@@ -37,7 +37,7 @@ describe('PrincipalEditor', function () {
         }
     });
 
-    it('clickSlot should create event with end hour less than 23', () => {
+    it('clickSlot should create event with end hour less than 23', async () => {
         //init
         const hour = 15;
         const dayIndex = 4;
@@ -56,7 +56,7 @@ describe('PrincipalEditor', function () {
                 start: "15:00",
                 weekStart: "2023-04-17"
             })
-          )
+        );
     });
 
     it('clickSlot should create event with end hour equal to 23', () => {
@@ -105,6 +105,8 @@ describe('PrincipalEditor', function () {
 
         //check
         expect(result).toBe(false);
+        expect(mockedLoadEventListeners).toHaveBeenCalled();
+        expect(mockedFormIsValid).toHaveBeenCalled();
     });
 
     it('validateEvent should return true if form is valid and event checked', async () => {
@@ -135,6 +137,9 @@ describe('PrincipalEditor', function () {
 
         //check
         expect(result).toBe(true);
+        expect(mockedLoadEventListeners).toHaveBeenCalled();
+        expect(mockedFormIsValid).toHaveBeenCalled();
+        expect(mockedCheckEvent).toHaveBeenCalled();
     });
 
     it('validateEvent should return false if event check did not pass', async () => {
@@ -180,5 +185,6 @@ describe('PrincipalEditor', function () {
 
         //check
         expect(result).toBe(false);
+        expect(mockedLoadEventListeners).toHaveBeenCalled();
     });
 });

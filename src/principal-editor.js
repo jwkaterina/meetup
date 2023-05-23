@@ -181,8 +181,6 @@ export default class PrincipalEditor {
         }
         try {
             this.calendar.checkEvent(event, this.formModal.newStart, this.formModal.newEnd, this.formModal.newDate);
-           
-            // this.ctx.currentEvent = null;
             return true;
         } catch (e) {
             if (e instanceof ValidationError) {
