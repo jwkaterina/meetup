@@ -1,8 +1,10 @@
+import html from './intro-modal.hbs'
 import './intro-modal.css';
 
 export default class IntroModal {
-    constructor() {
-        this.container = document.getElementById("introModal");
+    constructor(container) {
+        this.container = container;
+        this.container.innerHTML = html();
         this.okButton = this.container.querySelector(".okButton");
         this.okButton.addEventListener("click", () => this.close());
     }
@@ -21,5 +23,12 @@ export default class IntroModal {
             document.body.classList.remove("opaque");
             document.body.style.overflow = 'auto'; 
         }, 200); 
+    }
+
+    static build(parent = document.body) {
+        const container = document.createElement("div");
+        container.id = "introModal";
+        parent.appendChild(container);
+        return new DataModal(container);
     }
 }

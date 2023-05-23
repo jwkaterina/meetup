@@ -3,17 +3,12 @@ import Calendar from "../src/component/calendar";
 import PrincipalCommon from "../src/principal";
 import { Context } from "../src/ctx";
 import FormModal from "../src/component/form-modal";
-import ConfirmModal from "../src/component/confirm-modal";
-import CustomSelect from "../src/component/custom-select";
-import { dateString, addDays } from "../src/helper";
-
 
 jest.mock("../src/component/calendar");
 jest.mock("../src/principal");
 jest.mock("../src/ctx");
-jest.mock("../src/component/form-modal");
 jest.mock("../src/component/confirm-modal");
-jest.mock("../src/component/custom-select");
+jest.mock("../src/component/form-modal-select-custom");
 
 describe('PrincipalEditor', function () {
     const mockedOpenCreateFormModal = jest
@@ -29,7 +24,10 @@ describe('PrincipalEditor', function () {
         <div class="main-week-slots" data-week-start="2023-04-17">
             <div data-dayindex="0" class="day-slots">           
                 <div data-hour="0" class="slot"></div>
+            </div>
         </div>
+    </div>
+    <snack-bar text="Quelque chose s'est mal passé..."></snack-bar>
     `;
 
     Context.getInstance.mockImplementation(() => {
@@ -39,7 +37,7 @@ describe('PrincipalEditor', function () {
         }
     });
 
-    it('clickSlot should create event with end hour less than 23', () => {
+    it('clickSlot should create event with end hour less than 23', async () => {
         //init
         const hour = 15;
         const dayIndex = 4;
@@ -58,7 +56,7 @@ describe('PrincipalEditor', function () {
                 start: "15:00",
                 weekStart: "2023-04-17"
             })
-          )
+        );
     });
 
     it('clickSlot should create event with end hour equal to 23', () => {
@@ -107,6 +105,8 @@ describe('PrincipalEditor', function () {
 
         //check
         expect(result).toBe(false);
+        expect(mockedLoadEventListeners).toHaveBeenCalled();
+        expect(mockedFormIsValid).toHaveBeenCalled();
     });
 
     it('validateEvent should return true if form is valid and event checked', async () => {
@@ -137,6 +137,9 @@ describe('PrincipalEditor', function () {
 
         //check
         expect(result).toBe(true);
+        expect(mockedLoadEventListeners).toHaveBeenCalled();
+        expect(mockedFormIsValid).toHaveBeenCalled();
+        expect(mockedCheckEvent).toHaveBeenCalled();
     });
 
     it('validateEvent should return false if event check did not pass', async () => {
@@ -182,5 +185,6 @@ describe('PrincipalEditor', function () {
 
         //check
         expect(result).toBe(false);
+        expect(mockedLoadEventListeners).toHaveBeenCalled();
     });
 });

@@ -8,6 +8,7 @@ import editor from "./utils/editor.json";
 import admin from "./utils/admin.json";
 import uninvited from "./utils/uninvited.json";
 import UserData from "../src/user-data";
+import IntroModal from "../src/component/intro-modal";
 
 jest.mock("../src/ctx");
 jest.mock("../src/component/calendar");
@@ -68,7 +69,7 @@ describe('Auth', () => {
         .mockImplementation(() => {});
 
         //invoke
-        new Auth(new Calendar(), new UserData());
+        new Auth(new Calendar(), new UserData()); // NOSONAR
 
         //check
         expect(mockedHubListen).toBeCalledWith("auth", expect.anything());
@@ -206,12 +207,19 @@ describe('Auth', () => {
                 fetchUsers: mockedFetchUsers
             }
         });
+        const mockedIntroModalShow = jest.fn();
+        IntroModal.build = jest.fn().mockImplementation(() => {
+            return {
+                show: mockedIntroModalShow
+            }
+        });
 
         //invoke
         const auth = new Auth(new Calendar(), new UserData());
         auth.processUser(uninvited); //not using auth.checkUser() cause it catches Errors
 
         //check
+        expect(mockedIntroModalShow).toBeCalledTimes(1);
         expect(PrincipalCommon).toBeCalledTimes(0);
         expect(mockedFetchUsers).toBeCalledTimes(0);
         expect(mockedSwitchToUserMode).toBeCalledTimes(0);

@@ -26,4 +26,12 @@ module.exports = {
   },
 
   setupFiles: ["<rootDir>/__mocks__/dom.js"],
+
+  transform: {
+    "\\.[jt]sx?$": "babel-jest",
+    "^.+\\.hbs$": "<rootDir>/node_modules/handlebars-jest"
+  },
+  // transformIgnorePatterns: [
+  //   "node_modules/(?!uuid)/" //see: https://jestjs.io/docs/configuration#transformignorepatterns-arraystring
+  // ]
 };
