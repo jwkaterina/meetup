@@ -30,9 +30,11 @@ export default class ServiceWorkerConfigService {
 
         // Add some additional logging to localhost, pointing developers to the
         // service worker/PWA documentation.
-        navigator.serviceWorker.ready.then(() =>
+        navigator.serviceWorker.ready.then(registration => {
+          console.log('ServiceWorkerRegistration:', registration);
           console.log('This web app is being served cache-first by a service ' +
-            'worker. To learn more, visit https://cra.link/PWA'));
+            'worker. To learn more, visit https://cra.link/PWA');
+        }).catch(err => console.log(err));
       } else {
         // Is not localhost. Just register service worker
         this.registerValidSW(swUrl, config);
@@ -53,7 +55,7 @@ export default class ServiceWorkerConfigService {
         (contentType != null && contentType.indexOf('javascript') === -1)
       ) {
         // No service worker found. Probably a different app. Reload the page.
-        navigator.serviceWorker.ready.then((registration) => {
+        navigator.serviceWorker.ready.then(registration => {
           return registration.unregister().then(() => window.location.reload());
         }).catch(err => console.log(err));
       } else {
