@@ -15,6 +15,8 @@ import { StaleWhileRevalidate } from 'workbox-strategies';
 
 import { formatDate } from '../helper';
 
+const origin = self.location.origin;
+
 clientsClaim();
 self.skipWaiting();
 
@@ -67,7 +69,8 @@ registerRoute(
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
 self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
+  if (event.origin == origin && event.data && event.data.type === 'SKIP_WAITING') {
+    console.log('ServiceWorker received message SKIP_WAITING');
     self.skipWaiting();
   }
 });
@@ -211,8 +214,6 @@ function createMeetupUpdateMessage(payload) {
   }
   return `Date\t: ${formatDate(payload.newMeetup.date)} à ${payload.newMeetup.start}h\nAvant\t: ${payload.oldMeetup.place}\nPrésent\t: ${payload.newMeetup.place}`;
 }
-
-const origin = self.location.origin;
 
 self.addEventListener('notificationclick', function(event) {
   console.log('[Service Worker] Notification click received.');

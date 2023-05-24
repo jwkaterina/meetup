@@ -8,25 +8,26 @@ import WebPushService from './service/webpush';
 import PathJumper from "./service/path-jumper";
 
 export default class App {
-    constructor() {  
+    static configure() {
         PathJumper.parsePath();
-        this.configureAmplify();
-        this.calendar = new Calendar();
-        this.calendar.setup();
+        App.configureAmplify();
+        const calendar = new Calendar();
+        calendar.setup();
+        let userData;
         if(process.env.WEBPACK_ENV === 'production') {
-            this.webpush = new WebPushService();
-            this.serviceWorkerConfig = new ServiceWorkerConfigService();
-            this.serviceWorkerConfig.register(this.webpush);
-            this.userData = new UserData(this.webpush);
+            const webpush = new WebPushService();
+            const serviceWorkerConfig = new ServiceWorkerConfigService();
+            serviceWorkerConfig.register(webpush);
+            userData = new UserData(webpush);
         } else {
-            this.userData = new UserData(null);
+            userData = new UserData(null);
         }
-        this.auth = new Auth(this.calendar, this.userData);
-        this.auth.checkUser()
+        const auth = new Auth(calendar, userData);
+        auth.checkUser()
         .catch(err => console.log('Cnanot check user:', err));
     }
 
-    configureAmplify() {
+    static configureAmplify() {
         awsconfig.oauth.redirectSignIn = `${window.location.origin}/`;
         awsconfig.oauth.redirectSignOut = `${window.location.origin}/`;
         Amplify.configure(awsconfig);
