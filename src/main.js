@@ -1,5 +1,5 @@
 import App from "./app.js";
 
 (() => {
-    new App();
+    App.configure();
 })();

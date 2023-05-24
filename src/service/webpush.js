@@ -68,7 +68,8 @@ export default class WebPushService {
         return;
       }
       console.log("Existing Subscription is not present on the backend. Resubscribing...");
-      this.unsubscribe();
+      this.unsubscribe()
+      .catch(err => console.log('Cannot usubscribe user:', err));
     }
     const key = await this.getWebPushKey();
     if(!key) {
