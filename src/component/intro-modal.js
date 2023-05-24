@@ -29,6 +29,6 @@ export default class IntroModal {
         const container = document.createElement("div");
         container.id = "introModal";
         parent.appendChild(container);
-        return new DataModal(container);
+        return new IntroModal(container);
     }
 }

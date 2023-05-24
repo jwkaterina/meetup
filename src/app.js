@@ -11,7 +11,6 @@ export default class App {
     constructor() {  
         PathJumper.parsePath();
         this.configureAmplify();
-        Amplify.configure(awsconfig);
         this.calendar = new Calendar();
         this.calendar.setup();
         if(process.env.WEBPACK_ENV === 'production') {
