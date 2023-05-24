@@ -55,7 +55,7 @@
     }
 
     @keyframes introFadein {
-        from {top: -50vh; opacity: 0;}
-        to {top: 25vh; opacity: 1;}
+        from {top: -50vh; opacity: 0; visibility: hidden}
+        to {top: 25vh; opacity: 1; visibility: visible;}
     }
 }
