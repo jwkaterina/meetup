@@ -11,7 +11,6 @@ export default class App {
     constructor() {  
         PathJumper.parsePath();
         this.configureAmplify();
-        Amplify.configure(awsconfig);
         this.calendar = new Calendar();
         this.calendar.setup();
         if(process.env.WEBPACK_ENV === 'production') {
@@ -23,7 +22,8 @@ export default class App {
             this.userData = new UserData(null);
         }
         this.auth = new Auth(this.calendar, this.userData);
-        this.auth.checkUser();
+        this.auth.checkUser()
+        .catch(err => console.log('Cnanot check user:', err));
     }
 
     configureAmplify() {
