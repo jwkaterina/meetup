@@ -22,7 +22,8 @@ export default class App {
             this.userData = new UserData(null);
         }
         this.auth = new Auth(this.calendar, this.userData);
-        this.auth.checkUser();
+        this.auth.checkUser()
+        .catch(err => console.log('Cnanot check user:', err));
     }
 
     configureAmplify() {
