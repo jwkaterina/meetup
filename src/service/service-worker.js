@@ -14,6 +14,7 @@ import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
 import { formatDate } from '../helper';
+import PathJumper from './path-jumper';
 
 const origin = self.location.origin;
 
@@ -143,7 +144,7 @@ self.addEventListener('push', function(event) {
 
   const payload = event.data.json();
 
-  const { title, message } = parsePushPayload(payload);
+  const { title, message, link } = parsePushPayload(payload);
 
   if(!title || !message) {
     return;
@@ -152,6 +153,7 @@ self.addEventListener('push', function(event) {
   const options = {
     body: message,
     icon: 'icons/favicon.ico',
+    data: {link}
   };
 
   const registration = self.registration;
@@ -164,7 +166,8 @@ function parsePushPayload(payload) {
 
     return {
       title: 'Meetup',
-      message: 'Tu a été abonné aux notifications'
+      message: 'Tu a été abonné aux notifications',
+      link: origin
     }
   }
 
@@ -172,7 +175,8 @@ function parsePushPayload(payload) {
 
     return {
       title: 'Le groupe a été annulée',
-      message: `Date: ${formatDate(payload.oldMeetup.date)} à ${payload.oldMeetup.start}h`
+      message: `Date: ${formatDate(payload.oldMeetup.date)} à ${payload.oldMeetup.start}h`,
+      link: origin
     }
   }
 
@@ -183,19 +187,22 @@ function parsePushPayload(payload) {
     if (!message) {
       return {
         title: null,
-        message: null
+        message: null,
+        link: origin
       }
     }
 
     return {
       title: 'Le groupe a était modifié',
-      message: message
+      message: message,
+      link: generateLink(payload)
     }
   }
 
   return {
     title: null,
-    message: null
+    message: null,
+    link: origin
   }
 }
 
@@ -215,12 +222,34 @@ function createMeetupUpdateMessage(payload) {
   return `Date\t: ${formatDate(payload.newMeetup.date)} à ${payload.newMeetup.start}h\nAvant\t: ${payload.oldMeetup.place}\nPrésent\t: ${payload.newMeetup.place}`;
 }
 
+function generateLink(payload) {
+  const pkPrefix = "weekstart_";
+  const skPrefix = "event_";
+
+  if(!payload?.newMeetup?.item?.pk || !payload?.newMeetup?.item?.sk) {
+    return origin
+  }
+
+  const weekStart = payload.newMeetup.item.pk.substring(pkPrefix.length);
+  const eventId = payload.newMeetup.item.sk.substring(skPrefix.length);
+
+  return PathJumper.generateLinkWithParams(origin, weekStart, eventId);
+}
+
 self.addEventListener('notificationclick', function(event) {
   console.log('[Service Worker] Notification click received.');
 
-  event.notification.close();
+  const notification = event.notification;
+
+  notification.close();
+
+  let link = origin;
+
+  if(notification.data?.link) {
+    link = notification.data?.link;
+  }
 
   event.waitUntil(
-    clients.openWindow(origin)
+    clients.openWindow(link)
   );
 });

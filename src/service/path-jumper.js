@@ -29,7 +29,11 @@ export default class PathJumper {
         const weekStart = dateString(ctx.weekStart);
         const id = ctx.currentEvent.id;
         const origin = window.origin;
-        const link = `${origin}/#${weekStart}/${id}`;
+        return PathJumper.generateLinkWithParams(origin, weekStart, id);
+    }
+
+    static generateLinkWithParams(origin, weekStart, eventId) {
+        const link = `${origin}/#${weekStart}/${eventId}`;
         console.log(link);
         return link;
     }
