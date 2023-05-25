@@ -17,7 +17,7 @@ class MeetupNotification {
 
     async getSubscriptions() {
         if(!this.userIds || this.userIds.length == 0) {
-            return result;
+            return [];
         }
 
         const promises = [];
