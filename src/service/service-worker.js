@@ -14,7 +14,6 @@ import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
 import { formatDate } from '../helper';
-import PathJumper from './path-jumper';
 
 const origin = self.location.origin;
 
@@ -233,7 +232,7 @@ function generateLink(payload) {
   const weekStart = payload.newMeetup.item.pk.substring(pkPrefix.length);
   const eventId = payload.newMeetup.item.sk.substring(skPrefix.length);
 
-  return PathJumper.generateLinkWithParams(origin, weekStart, eventId);
+  return `${origin}/#${weekStart}/${eventId}`;
 }
 
 self.addEventListener('notificationclick', function(event) {
