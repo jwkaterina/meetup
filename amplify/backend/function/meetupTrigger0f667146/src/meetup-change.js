@@ -102,7 +102,7 @@ class MeetupChangeEvent {
             return null;
         }
 
-        return new MeetupEntity(pk, sk, date, place, start, end);
+        return new MeetupEntity(pk, sk, date, place === 'EMPTY' ? '' : place, start, end);
     }
 
     static parsePK(imageName, image) {
@@ -171,8 +171,7 @@ class MeetupChangeEvent {
         }
 
         if (!image.place.S) {
-            console.log(`Broken MeetupChangeEvent DynamoDb Item. No ${imageName}.place.S`);
-            return null;
+            return "EMPTY";
         }
         return image.place.S;
     }
