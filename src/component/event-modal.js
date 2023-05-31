@@ -124,20 +124,11 @@ export default class EventModal {
         } 
     }
 
-    setTime(date, start, end) {
+    setTime(date, startHour, startMin) {
         const newDate = new Date(date);
         const newDateFormated = newDate.toLocaleDateString('fr-FR', {day: "numeric", month: "long"})
-        const startHour = start.slice(0, 2);
-        let startMin = start.slice(3);
-        if(startMin === "00") {
-            startMin = "";
-        }
-        const endHour = end.slice(0, 2);
-        let endMin = end.slice(3);
-        if(endMin === "00") {
-            endMin = "";
-        }
-        this.time.innerHTML = `${newDateFormated} ${startHour}h${startMin} - ${endHour}h${endMin}`;
+        console.log(startHour, startMin)
+        this.time.innerHTML = `${newDateFormated} ${startHour}h${startMin}`;
     }
 
     setPlace(place, type = "pm") {
