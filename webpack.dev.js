@@ -18,6 +18,7 @@ module.exports = merge(common, {
     hot: true,
     watchFiles: ['src/*', 'index.html'],
     port: 3000,
+    allowedHosts: "all",
     historyApiFallback: true
   },
   plugins: [
