@@ -78,7 +78,7 @@ module.exports = {
       }
     }),
     new CopyWebpackPlugin({
-      patterns: ['manifest.1.json', {from: 'src/icons', to: 'icons'}, {from: 'src/fonts', to: 'fonts'}]
+      patterns: ['manifest.2.json', {from: 'src/icons', to: 'icons'}, {from: 'src/fonts', to: 'fonts'}]
     }),
     new MiniCssExtractPlugin()
   ]
