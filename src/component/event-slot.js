@@ -17,7 +17,6 @@ class EventSlot extends HTMLElement {
 
     setImage() {
         this.shadowRoot.querySelector('.event-img').src = this.getAttribute('imgsrc');
-        this.shadowRoot.querySelector('.event-img').style.height = this.getAttribute('height');
     }
 
     setText() {

@@ -133,25 +133,8 @@ export default class Event {
             imgSrc = "../icons/pm-w.png";
         }
 
-        const media = window.matchMedia("(max-width: 720px)");
-
-        let height;
-        if(this.type === "tr" || this.type === "pm") {
-            height = "30px";
-        } else {
-            height = "20px";
-        }
-
-        if(media.matches) {
-            if(this.type === "tr" || this.type === "pm") {
-                height = "25px";
-            } else {
-                height = "17px";
-            }
-        }
 
         eventSlot.setAttribute("imgsrc", imgSrc);
-        eventSlot.setAttribute("height", height);
         eventSlot.setImage();
     }
 
