@@ -126,12 +126,32 @@ export default class Event {
         let imgSrc;
         if(this.type && this.type === "tr") {
             imgSrc = "../icons/tr-w.png";
+        } else if(this.type && this.type === "zoom") {
+            imgSrc = "../icons/zoom-w.png";
         } else {
             this.type = "pm";
             imgSrc = "../icons/pm-w.png";
         }
 
+        const media = window.matchMedia("(max-width: 720px)");
+
+        let height;
+        if(this.type === "tr" || this.type === "pm") {
+            height = "30px";
+        } else {
+            height = "20px";
+        }
+
+        if(media.matches) {
+            if(this.type === "tr" || this.type === "pm") {
+                height = "25px";
+            } else {
+                height = "17px";
+            }
+        }
+
         eventSlot.setAttribute("imgsrc", imgSrc);
+        eventSlot.setAttribute("height", height);
         eventSlot.setImage();
     }
 
@@ -164,6 +184,8 @@ export default class Event {
 
         if(this.type && this.type === "tr") {
             this.color = "var(--blue)";
+        } else if(this.type && this.type === "zoom") {
+            this.color = "var(--gray-lighter)";
         } else {
             this.type = "pm";
             this.color = "var(--green)";

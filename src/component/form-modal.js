@@ -13,7 +13,7 @@ export default class FormModal {
         this.end = document.getElementById("eventEnd");
         this.comment = document.getElementById("eventComment");
         this.errors = document.getElementById("errors");
-        this.inputs = this.container.querySelectorAll("[required]");
+        this.requiredInputs = this.container.querySelectorAll("[required]");
         this.createButton = this.container.querySelector(".createButton");
         this.updateButton = this.container.querySelector(".updateButton");
         this.deleteButton = this.container.querySelector(".deleteButton");
@@ -144,9 +144,9 @@ export default class FormModal {
     }
 
     formIsValid() {
-        const inputs = Array.from(this.inputs);
+        const inputs = Array.from(this.requiredInputs);
 
-        if (inputs.find((input) => {return input.value == "";})) {
+        if (inputs.find((input) => {return input.value == ""})) {
             inputs.forEach((input) => {
                 if (input.value == "") {
                     const alert = input.nextElementSibling;
