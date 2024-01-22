@@ -141,16 +141,13 @@ export default class EventModal {
             imgSrc = "../icons/pm-b.png";
         }
 
-        let height;
         if(type === "tr" || type === "pm") {
-            height = "40px";
             this.place.innerHTML = `<a class="place" href="http://maps.google.com/?q=${place}"      target="_blank">${place}</a>
-            <img style="height:${height}" src="${imgSrc}" alt="">
+            <img src="${imgSrc}" alt="">
             `
         } else {
-            height = "27px";
             this.place.innerHTML = `<p class="place">${place}</p>
-            <img style="height:${height}" src="${imgSrc}" alt="">
+            <img src="${imgSrc}" alt="">
             `
         }
     }
