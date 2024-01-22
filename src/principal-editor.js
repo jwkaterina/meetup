@@ -203,7 +203,6 @@ export default class PrincipalEditor {
             this.formModal.disableButtons();
             this.loadingAnime.style.display = "block";
 
-            event.place = this.formModal.place.value;
             event.start = this.formModal.start.value;
             event.end = this.formModal.end.value;
             event.date = this.formModal.date.value;
@@ -213,6 +212,12 @@ export default class PrincipalEditor {
                     event.type = type.value;
                 }
             })    
+
+            if(event.type === "zoom") {
+                event.place = "Zoom";
+            } else {
+                event.place = this.formModal.place.value;
+            }
 
             const newMainId = this.customSelect.select.selectedEditorId;
             event.memberIds[0] = newMainId;
@@ -245,7 +250,6 @@ export default class PrincipalEditor {
             this.formModal.disableButtons();
             this.loadingAnime.style.display = "block";
 
-            event.place = this.formModal.place.value;
             event.start = this.formModal.start.value;
             event.end = this.formModal.end.value;
             event.date = this.formModal.date.value;
@@ -257,10 +261,19 @@ export default class PrincipalEditor {
                     event.type = type.value;
                 }
             });
+
+            if(event.type === "zoom") {
+                event.place = "Zoom";
+            } else {
+                event.place = this.formModal.place.value;
+            }
+
             if(event.type === "tr") {
                 event.color = "var(--blue)";
-            } else {
+            } else if(event.type === "pm") {
                 event.color = "var(--green)";
+            } else {
+                event.color = "var(--gray-base)";
             }
     
             const newMainId = this.customSelect.select.selectedEditorId;
@@ -337,7 +350,8 @@ export default class PrincipalEditor {
             date: dateString(this.ctx.weekStart),
             memberIds: [],
             color: "",
-            type: ""
+            type: "",
+            comment: ""
         });
         this.ctx.currentEvent = event;
         this.openCreateFormModal(event);
